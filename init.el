@@ -94,7 +94,7 @@
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history))
   :config
-  (setq ivy-initial-inputs-alist nil) ;; This cancels the ^ in the search
+  (setq ivy-initial-inputs-alist nil)) ;; This cancels the ^ in the search
 
 (use-package helpful
   :custom
@@ -107,4 +107,4 @@
   ([remap describe-key] . helpful-key))
 
 (use-package doom-themes
-   :init (load-theme 'doom-palenight t
+  :init (load-theme 'doom-one t))
