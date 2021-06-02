@@ -155,3 +155,18 @@
 
 (rune/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/github-repos")
+    (setq projectile-project-search-path '("~/github-repos")))
+  (setq projectile-switch-project-action 'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+i
