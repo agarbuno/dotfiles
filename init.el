@@ -18,7 +18,6 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-
 ;; Initialize package sources
 (require 'package)
 
@@ -112,12 +111,12 @@
   :init (load-theme 'doom-dracula t))
 
 (use-package general
-;;  :after evil
+  :after evil
   :config
   (general-create-definer rune/leader-keys
-;;    :keymaps '(normal insert visual emacs)
-;;    :prefix "SPC"
-    :prefix "C-SPC")
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
 
   (rune/leader-keys
     "t"  '(:ignore t :which-key "toggles")
@@ -155,4 +154,4 @@
   ("f" nil "finished" :exit t))
 
 (rune/leader-keys
-  "ts" 'hydra-text-scale/body : which-key "scale text")
+  "ts" '(hydra-text-scale/body :which-key "scale text"))
