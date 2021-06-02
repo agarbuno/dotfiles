@@ -13,7 +13,7 @@
 ;; Change font size
 ;;(set-face-attribute 'default nil :font "Fira Code Retina" :height 280)
 ;; Change default themes
-(load-theme 'wombat)
+;; (load-theme 'wombat)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -107,4 +107,4 @@
   ([remap describe-key] . helpful-key))
 
 (use-package doom-themes
-  :init (load-theme 'doom-one t))
+  :init (load-theme 'doom-dracula t))
