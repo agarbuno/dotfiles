@@ -111,6 +111,18 @@
 (use-package doom-themes
   :init (load-theme 'doom-dracula t))
 
+(use-package general
+;;  :after evil
+  :config
+  (general-create-definer rune/leader-keys
+;;    :keymaps '(normal insert visual emacs)
+;;    :prefix "SPC"
+    :prefix "C-SPC")
+
+  (rune/leader-keys
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")))
+
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -142,4 +154,5 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
-
+(rune/leader-keys
+  "ts" 'hydra-text-scale/body : which-key "scale text")
