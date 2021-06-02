@@ -92,6 +92,7 @@
   :bind (("M-x" . counsel-M-x)
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x C-f" . counsel-find-file)
+	 ("C-M-j" . 'counsel-switch-buffer)
 	 :map minibuffer-local-map
 	 ("C-r" . 'counsel-minibuffer-history))
   :config
@@ -109,8 +110,6 @@
 
 (use-package doom-themes
   :init (load-theme 'doom-dracula t))
-
-
 
 (use-package evil
   :init
@@ -142,3 +141,5 @@
   ("j" text-scale-increase "in")
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
+
+
