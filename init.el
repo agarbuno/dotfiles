@@ -8,7 +8,11 @@
 (menu-bar-mode -1)                 ; Disable menur bar
 
 ;; Set up visible bell
-(setq visibile-bell t)
+;;(setq visibile-bell t)
+(setq visible-bell nil)
+(setq ring-bell-function (lambda ()
+			   (invert-face 'mode-line)
+			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
 ;; Change font size
 ;;(set-face-attribute 'default nil :font "Fira Code Retina" :height 280)
@@ -174,4 +178,9 @@
   ;;:commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+(use-package forge)
+
+(use-package org)
+
 
