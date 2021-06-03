@@ -181,6 +181,22 @@
 
 (use-package forge)
 
-(use-package org)
+(defun rune/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq evil-auto-indent nil))
 
+  ;;:hook (org-mode . rune/org-mode-setup)
 
+(use-package org
+  :config
+  (setq org-ellipsis " ▾"
+        org-hide-emphasis-markers nil))
+  
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))

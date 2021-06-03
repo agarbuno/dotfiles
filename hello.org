@@ -24,8 +24,8 @@
 
 ** Subheading
 
-   **More** _content_!
-  
+   **More** _content_! /italics/
+   
 * TODO Second heading
 
   #+begin_src emacs-lisp
@@ -35,5 +35,4 @@
 
 
   #+end_src
-
-
+  
