@@ -15,7 +15,14 @@
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
 ;; Change font size
-;;(set-face-attribute 'default nil :font "Fira Code Retina" :height 280)
+(set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
+
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
+
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170 :weight 'regular)
+
 ;; Change default themes
 ;; (load-theme 'wombat)
 
