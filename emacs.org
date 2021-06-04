@@ -15,8 +15,8 @@ The following variables are used to tweak some of the configuration pieces for u
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar agarbuno/default-font-size 180)
-(defvar agarbuno/default-variable-font-size 180)
+(defvar agarbuno/default-font-size 150)
+(defvar agarbuno/default-variable-font-size 150)
 
 #+end_src
 
