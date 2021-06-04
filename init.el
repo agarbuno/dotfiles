@@ -14,6 +14,10 @@
 			   (invert-face 'mode-line)
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
+;; You will most likely need to adjust this font size for your system!
+(defvar rune/default-font-size 180)
+(defvar rune/default-variable-font-size 180)
+
 ;; Change font size
 ;;(set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
 
@@ -262,6 +266,24 @@
 		  ((org-agenda-overriding-header "Cancelled Projects")
 		   (org-agenda-files org-agenda-files)))))
 	  ))
+
+  (setq org-capture-templates
+	`(("t" "Tasks / Projects")
+	  ("tt" "Task" entry
+	   (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+	  
+	  ("j" "Notepad")
+	  ("jj" "Notes" entry
+           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Notes")
+           "\n* %<%I:%M %p> :notes:\n\n%?\n\n"
+           :empty-lines 1)
+	  ("jm" "Meeting Notes" entry
+           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Meetings")
+           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+           :empty-lines 1)
+    	  )
+	)
   
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
