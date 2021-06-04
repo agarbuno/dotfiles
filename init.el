@@ -303,9 +303,17 @@
   :hook (org-mode . agarbuno/org-mode-visual-fill))
 
 (org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (python . t)))
+    'org-babel-load-languages
+    '((emacs-lisp . t)
+      (python . t)))
+
+(with-eval-after-load 'org
+  ;; This is needed as of Org 9.2
+  (require 'org-tempo)
+
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 
