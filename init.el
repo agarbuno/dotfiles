@@ -284,6 +284,10 @@
            :empty-lines 1)
     	  )
 	)
+
+  (define-key global-map (kbd "C-c j")
+    (lambda () (interactive) (org-capture nil "j")))
+
   
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
