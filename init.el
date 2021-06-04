@@ -15,13 +15,13 @@
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
 ;; Change font size
-(set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
+;;(set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
+;;(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170 :weight 'regular)
+;;(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170 :weight 'regular)
 
 ;; Change default themes
 ;; (load-theme 'wombat)
@@ -195,9 +195,8 @@
   (visual-line-mode 1)
   (setq evil-auto-indent nil))
 
-  ;;:hook (org-mode . rune/org-mode-setup)
-
 (use-package org
+  :hook (org-mode . rune/org-mode-setup)
   :config
   (setq org-ellipsis " ▾"
         org-hide-emphasis-markers nil))
@@ -217,4 +216,26 @@
                 (org-level-6 . 1.1)
                 (org-level-7 . 1.1)
                 (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+  (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face))
+  (set-face-attribute 'org-table nil    :inherit 'fixed-pitch))
+
+(defun rune/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . rune/org-mode-visual-fill))
+
+
+;; Make sure org-indent face is available
+(require 'org-indent)
+
+;; Ensure that anything that should be fixed-pitch in Org files appears that way
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
