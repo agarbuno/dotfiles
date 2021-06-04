@@ -2,8 +2,8 @@
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar agarbuno/default-font-size 100)
-(defvar agarbuno/default-variable-font-size 100)
+(defvar agarbuno/default-font-size 180)
+(defvar agarbuno/default-variable-font-size 180)
 
 ;; Initialize package sources
 (require 'package)
