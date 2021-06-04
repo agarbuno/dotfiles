@@ -227,7 +227,6 @@
 ;;(setq org-todo-keywords
 ;;  '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
 
-
 (defun rune/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
         visual-fill-column-center-text t)
