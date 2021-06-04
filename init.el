@@ -19,16 +19,13 @@
 (defvar rune/default-variable-font-size 180)
 
 ;; Change font size
-;;(set-face-attribute 'default nil :font "Fira Code Retina" :height 160)
+(set-face-attribute 'default nil :font "Fira Code Retina")
 
 ;; Set the fixed pitch face
-;;(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height 160)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina")
 
 ;; Set the variable pitch face
-;;(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170 :weight 'regular)
-
-;; Change default themes
-;; (load-theme 'wombat)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :weight 'regular)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -301,6 +298,9 @@
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 
+;; Make sure org-indent face is available
+(require 'org-indent)
+
 (dolist (face '((org-level-1 . 1.2)
                 (org-level-2 . 1.1)
                 (org-level-3 . 1.05)
@@ -310,7 +310,6 @@
                 (org-level-7 . 1.1)
                 (org-level-8 . 1.1)))
   (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face))
-  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
@@ -327,9 +326,6 @@
   (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
-;;(setq org-todo-keywords
-;;  '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
-
 (defun rune/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
         visual-fill-column-center-text t)
@@ -338,7 +334,4 @@
 (use-package visual-fill-column
   :hook (org-mode . rune/org-mode-visual-fill))
 
-
-;; Make sure org-indent face is available
-(require 'org-indent)
 
