@@ -205,8 +205,16 @@
 	'("~/github-repos/dotfiles/orgfiles/tasks.org"))
 
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d!)")))
+	'((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d)")))
 
+  (setq org-refile-targets
+	'(("archive.org" :maxlevel . 1)
+	  ("tasks.org" :maxlevel . 1)))
+
+  ;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  
   (setq org-agenda-custom-commands
 	'(("d" "Dashboard"
 	   ((agenda "" ((org-deadline-warning-days 7)))
