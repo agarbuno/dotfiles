@@ -199,7 +199,12 @@
   :hook (org-mode . rune/org-mode-setup)
   :config
   (setq org-ellipsis " ▾"
-        org-hide-emphasis-markers nil))
+        org-hide-emphasis-markers nil)
+  (setq org-agenda-files
+	'("~/github-repos/dotfiles/orgfiles/tasks.org"))
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t))
   
 (use-package org-bullets
   :after org
@@ -217,7 +222,11 @@
                 (org-level-7 . 1.1)
                 (org-level-8 . 1.1)))
   (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face))
-  (set-face-attribute 'org-table nil    :inherit 'fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch))
+
+;;(setq org-todo-keywords
+;;  '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
+
 
 (defun rune/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
