@@ -119,7 +119,7 @@
   ([remap describe-key] . helpful-key))
 
 (use-package doom-themes
-  :init (load-theme 'doom-dracula t))
+  :init (load-theme 'doom-monokai-pro t))
 
 (use-package general
   :after evil

@@ -1,6 +1,6 @@
-* Active
+* Active                                                     :tutorial:learn:
 
-** TODO Mandar research statements
+** TODO Mandar research statements                            :collab:email:
 DEADLINE: <2021-06-11 Fri>
 ** TODO Agendar reunion con Jose Reyes
 SCHEDULED: <2021-06-04 Fri>
