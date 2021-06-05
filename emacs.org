@@ -50,6 +50,21 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 
 #+end_src
 
+** No Litering
+
+#+begin_src emacs-lisp
+
+  (setq no-littering-etc-directory
+          (expand-file-name "config/" user-emacs-directory))
+  (setq no-littering-var-directory
+          (expand-file-name "data/" user-emacs-directory))
+  (require 'no-littering)
+
+  (setq auto-save-file-name-transforms
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
+#+end_src
+
 * Basic UI Configuration
 
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.  If you're just getting started in Emacs, the menu bar might be helpful so you can remove the =(menu-bar-mode -1)= line if you'd like to still see that.
@@ -595,7 +610,6 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
 
 #+end_src
 
-
 ** Commenting
 
 Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=) doesn't always comment things in the way you might expect so we use [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] to provide a more familiar behavior.  I've bound it to =M-/= since other editors sometimes use this binding but you could also replace Emacs' =M-;= binding with this command.
@@ -660,7 +674,6 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
   :hook (prog-mode . rainbow-delimiters-mode))
 
 #+end_src
-
 
 * Terminal
 
