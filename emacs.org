@@ -1,5 +1,8 @@
+#+Author:: Alfredo Garbuno
 #+title: Emacs From Scratch Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+
+Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwil][David Wilson]]. 
 
 * Welcome!
 
