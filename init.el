@@ -193,7 +193,7 @@
   (all-the-icons-ivy-rich-mode 1))
 
 (use-package ivy-rich
-  :after ivy
+  :after all-the-icons-ivy-rich
   :init
   (ivy-rich-mode 1))
 
