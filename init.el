@@ -5,6 +5,17 @@
 (defvar agarbuno/default-font-size 150)
 (defvar agarbuno/default-variable-font-size 150)
 
+(defun agarbuno/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'agarbuno/display-startup-time)
+
+;; "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
+
 ;; Initialize package sources
 (require 'package)
 
@@ -16,12 +27,13 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-  ;; Initialize use-package on non-Linux platforms
+    ;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+    (package-install 'use-package))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+(setq use-package-verbose t)
 
 (use-package no-littering)
 
@@ -82,15 +94,18 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (use-package general
+  :after evil
   :config
-  (general-create-definer rune/leader-keys
+  (general-create-definer agarbuno/leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
     :global-prefix "C-SPC")
 
-  (rune/leader-keys
+  (agarbuno/leader-keys
     "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")))
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
+    ))
 
 (use-package evil
   :init
@@ -115,7 +130,8 @@
   :config
   (evil-collection-init))
 
-(use-package command-log-mode)
+(use-package command-log-mode
+  :commands command-log-mode)
 
 (use-package doom-themes
   :init (load-theme 'doom-monokai-pro t))
@@ -127,9 +143,10 @@
   :custom ((doom-modeline-height 15)))
 
 (use-package which-key
-  :init (which-key-mode)
+  :defer 0 
   :diminish which-key-mode
   :config
+  (which-key-mode)
   (setq which-key-idle-delay 1))
 
 (use-package ivy
@@ -148,9 +165,11 @@
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
   :config
+  ;; (message "Ivy got loaded!")
   (ivy-mode 1))
 
 (use-package ivy-rich
+  :after ivy
   :init
   (ivy-rich-mode 1))
 
@@ -162,6 +181,7 @@
   (counsel-mode 1))
 
 (use-package helpful
+  :commands (helpful-callable helpful-variable helpful-command helpful-key)
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)
@@ -171,7 +191,8 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-(use-package hydra)
+(use-package hydra
+  :defer t)
 
 (defhydra hydra-text-scale (:timeout 4)
   "scale text"
@@ -179,7 +200,7 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
-(rune/leader-keys
+(agarbuno/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 (defun agarbuno/org-font-setup ()
@@ -214,6 +235,7 @@
   (visual-line-mode 1))
 
 (use-package org
+  :commands (org-capture org-agenda)
   :hook (org-mode . agarbuno/org-mode-setup)
   :config
   (setq org-ellipsis " ▾")
@@ -222,90 +244,87 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
 
-(setq org-agenda-files
-      '("~/github-repos/dotfiles/orgfiles/tasks.org"))
+  (setq org-agenda-files
+        '("~/github-repos/dotfiles/orgfiles/tasks.org"))
 
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d)")))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d)")))
 
-(setq org-refile-targets
-      '(("archive.org" :maxlevel . 1)
-        ("tasks.org" :maxlevel . 1)))
+  (setq org-refile-targets
+        '(("archive.org" :maxlevel . 1)
+          ("tasks.org" :maxlevel . 1)))
 
 ;; Save Org buffers after refiling!
-(advice-add 'org-refile :after 'org-save-all-org-buffers)
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-(setq org-agenda-custom-commands
-      '(("d" "Dashboard"
-         ((agenda "" ((org-deadline-warning-days 7)))
-          (todo "NEXT"
-                ((org-agenda-overriding-header "Next Tasks")))
-          (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-deadline-warning-days 7)))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))
+            (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
-        ("n" "Next Tasks"
-         ((todo "NEXT"
-                ((org-agenda-overriding-header "Next Tasks")))))
+          ("n" "Next Tasks"
+           ((todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))))
 
-        ("W" "Work Tasks" tags-todo "+work-email")
+          ("W" "Work Tasks" tags-todo "+work-email")
 
         ;; Low-effort next actions
-        ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-         ((org-agenda-overriding-header "Low Effort Tasks")
-          (org-agenda-max-todos 20)
-          (org-agenda-files org-agenda-files)))
+          ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+           ((org-agenda-overriding-header "Low Effort Tasks")
+            (org-agenda-max-todos 20)
+            (org-agenda-files org-agenda-files)))
 
-        ("w" "Workflow Status"
-         ((todo "WAIT"
-                ((org-agenda-overriding-header "Waiting on External")
-                 (org-agenda-files org-agenda-files)))
-          (todo "REVIEW"
-                ((org-agenda-overriding-header "In Review")
-                 (org-agenda-files org-agenda-files)))
-          (todo "PLAN"
-                ((org-agenda-overriding-header "In Planning")
-                 (org-agenda-todo-list-sublevels nil)
-                 (org-agenda-files org-agenda-files)))
-          (todo "BACKLOG"
-                ((org-agenda-overriding-header "Project Backlog")
-                 (org-agenda-todo-list-sublevels nil)
-                 (org-agenda-files org-agenda-files)))
-          (todo "READY"
-                ((org-agenda-overriding-header "Ready for Work")
-                 (org-agenda-files org-agenda-files)))
-          (todo "ACTIVE"
-                ((org-agenda-overriding-header "Active Projects")
-                 (org-agenda-files org-agenda-files)))
-          (todo "COMPLETED"
-                ((org-agenda-overriding-header "Completed Projects")
-                 (org-agenda-files org-agenda-files)))
-          (todo "CANC"
-                ((org-agenda-overriding-header "Cancelled Projects")
-                 (org-agenda-files org-agenda-files)))))
-        ))
+          ("w" "Workflow Status"
+           ((todo "WAIT"
+                  ((org-agenda-overriding-header "Waiting on External")
+                   (org-agenda-files org-agenda-files)))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "In Review")
+                   (org-agenda-files org-agenda-files)))
+            (todo "PLAN"
+                  ((org-agenda-overriding-header "In Planning")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "BACKLOG"
+                  ((org-agenda-overriding-header "Project Backlog")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "READY"
+                  ((org-agenda-overriding-header "Ready for Work")
+                   (org-agenda-files org-agenda-files)))
+            (todo "ACTIVE"
+                  ((org-agenda-overriding-header "Active Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "COMPLETED"
+                  ((org-agenda-overriding-header "Completed Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "CANC"
+                  ((org-agenda-overriding-header "Cancelled Projects")
+                   (org-agenda-files org-agenda-files)))))
+          ))
 
+  (setq org-capture-templates
+        `(("t" "Tasks / Projects")
+          ("tt" "Task" entry
+           (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
+          ("j" "Notepad")
+          ("jj" "Notes" entry
+           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Notes")
+           "\n* %<%I:%M %p> :notes:\n\n%?\n\n"
+           :empty-lines 1)
 
-(setq org-capture-templates
-      `(("t" "Tasks / Projects")
-        ("tt" "Task" entry
-         (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
-         "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("jm" "Meeting Notes" entry
+           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Meetings")
+           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+           :empty-lines 1)
+          )
+        ) 
 
-        ("j" "Notepad")
-        ("jj" "Notes" entry
-         (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Notes")
-         "\n* %<%I:%M %p> :notes:\n\n%?\n\n"
-         :empty-lines 1)
-
-        ("jm" "Meeting Notes" entry
-         (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Meetings")
-         "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-         :empty-lines 1)
-        )
-      )
-
-
-(define-key global-map (kbd "C-c j")
+  (define-key global-map (kbd "C-c j")
     (lambda () (interactive) (org-capture nil "jj")))
 
   (agarbuno/org-font-setup))
@@ -369,7 +388,8 @@
 (use-package lsp-treemacs
   :after lsp)
 
-(use-package lsp-ivy)
+(use-package lsp-ivy
+  :after lsp)
 
 (use-package company
    :after lsp-mode
@@ -401,24 +421,29 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 (use-package counsel-projectile
+  :after projectile
   :config (counsel-projectile-mode))
 
 (use-package magit
+   :commands magit-status
    :custom
    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+;; 
 ;;(use-package evil-magit
 ;;:after magit)
 
  ;; NOTE: Make sure to configure a GitHub token before using this package!
  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
  ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
- (use-package forge)
+ (use-package forge
+   :after magit)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package term
+  :commands term 
   :config
   (setq explicit-shell-file-name "zsh") ;; Change this to zsh, etc
   (setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
@@ -457,7 +482,8 @@
         eshell-hist-ignoredups t
         eshell-scroll-to-bottom-on-input t))
 
-(use-package eshell-git-prompt)
+(use-package eshell-git-prompt
+  :after eshell)
 
 (use-package eshell
   :hook (eshell-first-time-mode . efs/configure-eshell)
@@ -478,12 +504,15 @@
     "h" 'dired-single-up-directory
     "l" 'dired-single-buffer))
 
-(use-package dired-single)
+(use-package dired-single
+  :after dired)
 
 (use-package all-the-icons-dired
+  :after dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (use-package dired-open
+  :after dired
   :config
   ;; Doesn't work as expected!
   (add-to-list 'dired-open-functions #'dired-open-xdg t)

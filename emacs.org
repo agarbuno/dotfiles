@@ -27,6 +27,52 @@ The following variables are used to tweak some of the configuration pieces for u
 
 In this document I've added links in many places that lead you to documentation for the various packages we use.  If you're looking at this file in Emacs, you can put your cursor on a link and press =C-c C-o= or run =M-x org-open-at-point= to open the link in your web browser.
 
+* Startup Benchmarking
+** Boot time
+
+Add a function to =emacs-startup-hook= to print out the duration of Emacs startup:
+
+#+begin_src emacs-lisp
+
+  (defun agarbuno/display-startup-time ()
+    (message "Emacs loaded in %s with %d garbage collections."
+             (format "%.2f seconds"
+                     (float-time
+                      (time-subtract after-init-time before-init-time)))
+             gcs-done))
+
+  (add-hook 'emacs-startup-hook #'agarbuno/display-startup-time)
+
+#+end_src
+All startup behavior is happening in the =normal-top-level= function!
+
+A helpful manual page is [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html][Summary: Sequence of Actions at Startup]].
+
+*** The most important tip: don't load any packages!
+
+=use-package= gives you a few different ways to defer package loading:
+
+- =:hook= - Package will be loaded the first time one of the hooks is invoked
+- =:bind= - Package will be loaded the first time one of the key bindings is used
+- =:commands= - Package will be loaded when one of the commands are used
+- =:mode= - Package will be loaded the first time a file with a particular extension is opened
+- =:after= - Load this package after other specific packages are loaded
+- =:defer= - If you don't use any of the other options, this one will defer loading until after startup
+
+There are a [[https://github.com/jwiegley/use-package#getting-started][few other options]] =use-package= provides, but these are all the most likely ones you would use.
+
+The strategy is to look at all of your =use-package= expressions and decide whether it *really* needs to be loaded immediately at startup!
+
+If you want to make sure a package gets loaded at startup despite the use of any of the options above, use =:demand t=.
+
+Let's try it!
+
+#+begin_src emacs-lisp
+
+      ;; "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))))
+
+#+end_src
+
 * Package System Setup
 ** Basic package setup
 
@@ -45,12 +91,13 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
   (unless package-archive-contents
     (package-refresh-contents))
 
-    ;; Initialize use-package on non-Linux platforms
+      ;; Initialize use-package on non-Linux platforms
   (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
+      (package-install 'use-package))
 
   (require 'use-package)
   (setq use-package-always-ensure t)
+  (setq use-package-verbose t) 
 
 #+end_src
 
@@ -150,15 +197,18 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
   (use-package general
+    :after evil
     :config
-    (general-create-definer rune/leader-keys
+    (general-create-definer agarbuno/leader-keys
       :keymaps '(normal insert visual emacs)
       :prefix "SPC"
       :global-prefix "C-SPC")
 
-    (rune/leader-keys
+    (agarbuno/leader-keys
       "t"  '(:ignore t :which-key "toggles")
-      "tt" '(counsel-load-theme :which-key "choose theme")))
+      "tt" '(counsel-load-theme :which-key "choose theme")
+      "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
+      ))
 
   (use-package evil
     :init
@@ -193,7 +243,8 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-(use-package command-log-mode)
+  (use-package command-log-mode
+    :commands command-log-mode)
 
 #+end_src
 
@@ -230,11 +281,12 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 1))
+  (use-package which-key
+    :defer 0 
+    :diminish which-key-mode
+    :config
+    (which-key-mode)
+    (setq which-key-idle-delay 1))
 
 #+end_src
 
@@ -246,34 +298,36 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-    (use-package ivy
-      :diminish
-      :bind (("C-s" . swiper)
-             :map ivy-minibuffer-map
-             ("TAB" . ivy-alt-done)
-             ("C-l" . ivy-alt-done)
-             ("C-j" . ivy-next-line)
-             ("C-k" . ivy-previous-line)
-             :map ivy-switch-buffer-map
-             ("C-k" . ivy-previous-line)
-             ("C-l" . ivy-done)
-             ("C-d" . ivy-switch-buffer-kill)
-             :map ivy-reverse-i-search-map
-             ("C-k" . ivy-previous-line)
-             ("C-d" . ivy-reverse-i-search-kill))
-      :config
-      (ivy-mode 1))
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    ;; (message "Ivy got loaded!")
+    (ivy-mode 1))
 
-    (use-package ivy-rich
-      :init
-      (ivy-rich-mode 1))
+  (use-package ivy-rich
+    :after ivy
+    :init
+    (ivy-rich-mode 1))
 
-    (use-package counsel
-      :bind (("C-M-j" . 'counsel-switch-buffer)
-             :map minibuffer-local-map
-             ("C-r" . 'counsel-minibuffer-history))
-      :config
-      (counsel-mode 1))
+  (use-package counsel
+    :bind (("C-M-j" . 'counsel-switch-buffer)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history))
+    :config
+    (counsel-mode 1))
 
 #+end_src
 
@@ -284,6 +338,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 #+begin_src emacs-lisp
 
   (use-package helpful
+    :commands (helpful-callable helpful-variable helpful-command helpful-key)
     :custom
     (counsel-describe-function-function #'helpful-callable)
     (counsel-describe-variable-function #'helpful-variable)
@@ -301,16 +356,17 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 #+begin_src emacs-lisp
 
-  (use-package hydra)
+    (use-package hydra
+      :defer t)
 
-  (defhydra hydra-text-scale (:timeout 4)
-    "scale text"
-    ("j" text-scale-increase "in")
-    ("k" text-scale-decrease "out")
-    ("f" nil "finished" :exit t))
+    (defhydra hydra-text-scale (:timeout 4)
+      "scale text"
+      ("j" text-scale-increase "in")
+      ("k" text-scale-decrease "out")
+      ("f" nil "finished" :exit t))
 
-  (rune/leader-keys
-    "ts" '(hydra-text-scale/body :which-key "scale text"))
+    (agarbuno/leader-keys
+      "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 #+end_src
 
@@ -364,6 +420,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (visual-line-mode 1))
 
   (use-package org
+    :commands (org-capture org-agenda)
     :hook (org-mode . agarbuno/org-mode-setup)
     :config
     (setq org-ellipsis " ▾")
@@ -372,90 +429,87 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (setq org-log-done 'time)
     (setq org-log-into-drawer t)
 
-  (setq org-agenda-files
-        '("~/github-repos/dotfiles/orgfiles/tasks.org"))
+    (setq org-agenda-files
+          '("~/github-repos/dotfiles/orgfiles/tasks.org"))
 
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d)")))
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d)")))
 
-  (setq org-refile-targets
-        '(("archive.org" :maxlevel . 1)
-          ("tasks.org" :maxlevel . 1)))
+    (setq org-refile-targets
+          '(("archive.org" :maxlevel . 1)
+            ("tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+    (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-  (setq org-agenda-custom-commands
-        '(("d" "Dashboard"
-           ((agenda "" ((org-deadline-warning-days 7)))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks")))
-            (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+    (setq org-agenda-custom-commands
+          '(("d" "Dashboard"
+             ((agenda "" ((org-deadline-warning-days 7)))
+              (todo "NEXT"
+                    ((org-agenda-overriding-header "Next Tasks")))
+              (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
-          ("n" "Next Tasks"
-           ((todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks")))))
+            ("n" "Next Tasks"
+             ((todo "NEXT"
+                    ((org-agenda-overriding-header "Next Tasks")))))
 
-          ("W" "Work Tasks" tags-todo "+work-email")
+            ("W" "Work Tasks" tags-todo "+work-email")
 
           ;; Low-effort next actions
-          ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-           ((org-agenda-overriding-header "Low Effort Tasks")
-            (org-agenda-max-todos 20)
-            (org-agenda-files org-agenda-files)))
+            ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+             ((org-agenda-overriding-header "Low Effort Tasks")
+              (org-agenda-max-todos 20)
+              (org-agenda-files org-agenda-files)))
 
-          ("w" "Workflow Status"
-           ((todo "WAIT"
-                  ((org-agenda-overriding-header "Waiting on External")
-                   (org-agenda-files org-agenda-files)))
-            (todo "REVIEW"
-                  ((org-agenda-overriding-header "In Review")
-                   (org-agenda-files org-agenda-files)))
-            (todo "PLAN"
-                  ((org-agenda-overriding-header "In Planning")
-                   (org-agenda-todo-list-sublevels nil)
-                   (org-agenda-files org-agenda-files)))
-            (todo "BACKLOG"
-                  ((org-agenda-overriding-header "Project Backlog")
-                   (org-agenda-todo-list-sublevels nil)
-                   (org-agenda-files org-agenda-files)))
-            (todo "READY"
-                  ((org-agenda-overriding-header "Ready for Work")
-                   (org-agenda-files org-agenda-files)))
-            (todo "ACTIVE"
-                  ((org-agenda-overriding-header "Active Projects")
-                   (org-agenda-files org-agenda-files)))
-            (todo "COMPLETED"
-                  ((org-agenda-overriding-header "Completed Projects")
-                   (org-agenda-files org-agenda-files)))
-            (todo "CANC"
-                  ((org-agenda-overriding-header "Cancelled Projects")
-                   (org-agenda-files org-agenda-files)))))
-          ))
+            ("w" "Workflow Status"
+             ((todo "WAIT"
+                    ((org-agenda-overriding-header "Waiting on External")
+                     (org-agenda-files org-agenda-files)))
+              (todo "REVIEW"
+                    ((org-agenda-overriding-header "In Review")
+                     (org-agenda-files org-agenda-files)))
+              (todo "PLAN"
+                    ((org-agenda-overriding-header "In Planning")
+                     (org-agenda-todo-list-sublevels nil)
+                     (org-agenda-files org-agenda-files)))
+              (todo "BACKLOG"
+                    ((org-agenda-overriding-header "Project Backlog")
+                     (org-agenda-todo-list-sublevels nil)
+                     (org-agenda-files org-agenda-files)))
+              (todo "READY"
+                    ((org-agenda-overriding-header "Ready for Work")
+                     (org-agenda-files org-agenda-files)))
+              (todo "ACTIVE"
+                    ((org-agenda-overriding-header "Active Projects")
+                     (org-agenda-files org-agenda-files)))
+              (todo "COMPLETED"
+                    ((org-agenda-overriding-header "Completed Projects")
+                     (org-agenda-files org-agenda-files)))
+              (todo "CANC"
+                    ((org-agenda-overriding-header "Cancelled Projects")
+                     (org-agenda-files org-agenda-files)))))
+            ))
 
+    (setq org-capture-templates
+          `(("t" "Tasks / Projects")
+            ("tt" "Task" entry
+             (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
+             "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
 
+            ("j" "Notepad")
+            ("jj" "Notes" entry
+             (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Notes")
+             "\n* %<%I:%M %p> :notes:\n\n%?\n\n"
+             :empty-lines 1)
 
-  (setq org-capture-templates
-        `(("t" "Tasks / Projects")
-          ("tt" "Task" entry
-           (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+            ("jm" "Meeting Notes" entry
+             (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Meetings")
+             "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+             :empty-lines 1)
+            )
+          ) 
 
-          ("j" "Notepad")
-          ("jj" "Notes" entry
-           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Notes")
-           "\n* %<%I:%M %p> :notes:\n\n%?\n\n"
-           :empty-lines 1)
-	
-          ("jm" "Meeting Notes" entry
-           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Meetings")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :empty-lines 1)
-          )
-        )
-
-
-  (define-key global-map (kbd "C-c j")
+    (define-key global-map (kbd "C-c j")
       (lambda () (interactive) (org-capture nil "jj")))
 
     (agarbuno/org-font-setup))
@@ -606,7 +660,8 @@ Try these commands with =M-x=:
 
 #+begin_src emacs-lisp
 
-  (use-package lsp-ivy)
+  (use-package lsp-ivy
+    :after lsp)
 
 #+end_src
 
@@ -664,6 +719,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     (setq projectile-switch-project-action #'projectile-dired))
 
   (use-package counsel-projectile
+    :after projectile
     :config (counsel-projectile-mode))
 
 #+end_src
@@ -674,17 +730,20 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+begin_src emacs-lisp
 
-   (use-package magit
-     :custom
-     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+     (use-package magit
+       :commands magit-status
+       :custom
+       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-  ;;(use-package evil-magit
-  ;;:after magit)
+    ;; 
+    ;;(use-package evil-magit
+    ;;:after magit)
 
-   ;; NOTE: Make sure to configure a GitHub token before using this package!
-   ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-   ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-   (use-package forge)
+     ;; NOTE: Make sure to configure a GitHub token before using this package!
+     ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+     ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+     (use-package forge
+       :after magit)
 
 #+end_src
 
@@ -721,6 +780,7 @@ Run a terminal with =M-x term!=
 #+begin_src emacs-lisp
 
   (use-package term
+    :commands term 
     :config
     (setq explicit-shell-file-name "zsh") ;; Change this to zsh, etc
     (setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
@@ -800,34 +860,35 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 
 #+begin_src emacs-lisp
 
-  (defun efs/configure-eshell ()
-    ;; Save command history when commands are entered
-    (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+    (defun efs/configure-eshell ()
+      ;; Save command history when commands are entered
+      (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
-    ;; Truncate buffer for performance
-    (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+      ;; Truncate buffer for performance
+      (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
 
-    ;; Bind some useful keys for evil-mode
-    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
-    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
-    (evil-normalize-keymaps)
+      ;; Bind some useful keys for evil-mode
+      (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
+      (evil-define-key '(normal insert visual) eshell-mode-map (kbd "<home>") 'eshell-bol)
+      (evil-normalize-keymaps)
 
-    (setq eshell-history-size         10000
-          eshell-buffer-maximum-lines 10000
-          eshell-hist-ignoredups t
-          eshell-scroll-to-bottom-on-input t))
+      (setq eshell-history-size         10000
+            eshell-buffer-maximum-lines 10000
+            eshell-hist-ignoredups t
+            eshell-scroll-to-bottom-on-input t))
 
-  (use-package eshell-git-prompt)
+    (use-package eshell-git-prompt
+      :after eshell)
 
-  (use-package eshell
-    :hook (eshell-first-time-mode . efs/configure-eshell)
-    :config
+    (use-package eshell
+      :hook (eshell-first-time-mode . efs/configure-eshell)
+      :config
 
-    (with-eval-after-load 'esh-opt
-      (setq eshell-destroy-buffer-when-process-dies t)
-      (setq eshell-visual-commands '("htop" "zsh" "vim")))
+      (with-eval-after-load 'esh-opt
+        (setq eshell-destroy-buffer-when-process-dies t)
+        (setq eshell-visual-commands '("htop" "zsh" "vim")))
 
-    (eshell-git-prompt-use-theme 'powerline))
+      (eshell-git-prompt-use-theme 'powerline))
 
 #+end_src
 
@@ -863,7 +924,8 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
        "h" 'dired-single-up-directory
        "l" 'dired-single-buffer))
 
-   (use-package dired-single)
+   (use-package dired-single
+     :after dired)
 
 
  #+end_src
@@ -915,6 +977,7 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 #+begin_src emacs-lisp
 
   (use-package all-the-icons-dired
+    :after dired
     :hook (dired-mode . all-the-icons-dired-mode))
 
 #+end_src
@@ -925,13 +988,14 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 
 #+begin_src emacs-lisp
 
-(use-package dired-open
-  :config
-  ;; Doesn't work as expected!
-  (add-to-list 'dired-open-functions #'dired-open-xdg t)
-  ;; -- OR! --
-  (setq dired-open-extensions '(("png" . "preview")
-                                ("mkv" . "preview"))))
+  (use-package dired-open
+    :after dired
+    :config
+    ;; Doesn't work as expected!
+    (add-to-list 'dired-open-functions #'dired-open-xdg t)
+    ;; -- OR! --
+    (setq dired-open-extensions '(("png" . "preview")
+                                  ("mkv" . "preview"))))
 
 #+end_src
 
@@ -946,3 +1010,5 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
     "H" 'dired-hide-dotfiles-mode))
 
 #+end_src
+
+
