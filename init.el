@@ -5,6 +5,11 @@
 (defvar agarbuno/default-font-size 150)
 (defvar agarbuno/default-variable-font-size 150)
 
+;; Make frame transparency overridable
+(defvar agarbuno/frame-transparency '(90 . 90))
+
+(setq gc-cons-threshold (* 2 1000 1000))
+
 (defun agarbuno/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
            (format "%.2f seconds"
@@ -74,10 +79,16 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
+;; Set frame transparency
+(set-frame-parameter (selected-frame) 'alpha agarbuno/frame-transparency)
+(add-to-list 'default-frame-alist `(alpha . ,agarbuno/frame-transparency))
+(set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
-	         vterm-mode-hook	
+                 vterm-mode-hook	
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
@@ -465,7 +476,7 @@
   (setq explicit-shell-file-name "powershell.exe")
   (setq explicit-powershell.exe-args '()))
 
-(defun efs/configure-eshell ()
+(defun agarbuno/configure-eshell ()
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
@@ -486,7 +497,7 @@
   :after eshell)
 
 (use-package eshell
-  :hook (eshell-first-time-mode . efs/configure-eshell)
+  :hook (eshell-first-time-mode . agarbuno/configure-eshell)
   :config
 
   (with-eval-after-load 'esh-opt
