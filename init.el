@@ -6,7 +6,7 @@
 (defvar agarbuno/default-variable-font-size 150)
 
 ;; Make frame transparency overridable
-(defvar agarbuno/frame-transparency '(90 . 90))
+(defvar agarbuno/frame-transparency '(95 . 95))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 

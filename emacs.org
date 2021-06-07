@@ -22,7 +22,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar agarbuno/default-variable-font-size 150)
 
   ;; Make frame transparency overridable
-  (defvar agarbuno/frame-transparency '(90 . 90))
+  (defvar agarbuno/frame-transparency '(95 . 95))
 
 #+end_src
 
@@ -599,9 +599,7 @@ This snippet adds a hook to =org-mode= buffers so that =agarbuno/org-babel-tangl
 #+end_src
 
 * Development
-
 ** Languages
-
 *** Language Servers
 
 **** lsp-mode
@@ -699,6 +697,89 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     :hook (company-mode . company-box-mode))
 
 #+end_src
+
+*** Python Environment
+
+We use =lsp-mode= and =dap-mode= to provide a more complete development environment for Python in Emacs.  Check out [[https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/][the =pyls= configuration]] in the =lsp-mode= documentation for more details.
+
+Make sure you have the =pyls= language server installed before trying =lsp-mode=!
+
+#+begin_src sh :tangle no
+
+pip install --user "python-language-server[all]"
+
+#+end_src
+
+There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
+
+*Note* I am using lsp-jedi as =pyls= seems to be deprecated. The instructions to install it are as follows: 
+
+#+begin_src emacs-lisp :tangle no
+  M-x package-install lsp-jedi
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+
+  (use-package lsp-jedi
+    :ensure t
+    :config
+    (with-eval-after-load "lsp-mode"
+      (add-to-list 'lsp-disabled-clients 'pyls)
+      (add-to-list 'lsp-enabled-clients 'jedi)))
+
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  (use-package dap-mode)
+
+  (use-package python-mode
+    :ensure t
+    :hook (python-mode . lsp-deferred)
+    :custom
+    ;; NOTE: Set these if Python 3 is called "python3" on your system!
+    (python-shell-interpreter "python3")
+    (dap-python-executable "python3")
+    (dap-python-debugger 'debugpy)
+      :config
+      (require 'dap-python))
+
+#+end_src
+
+** Debugging
+
+I recommend watching "Emacs IDE - How to Debug Your Code with dap-mode" to learn more about the features!
+
+Configuration instructions: https://emacs-lsp.github.io/dap-mode/page/configuration/#python
+
+However, we will use =debugpy= (=ptvsd= is deprecated):
+
+#+begin_src sh
+
+pip install debugpy
+
+#+end_src
+
+Run =dap-debug= and select the pytest configuration.  Fails due to python2!
+
+Set =dap-python-executable= to =python3=
+
+Running the default pytest configuration doesn't launch from the correct path, let's edit the configuration with =dap-debug-edit-template=:
+
+#+begin_src emacs-lisp :tangle no
+
+(dap-register-debug-template
+  "Python :: Run pytest (gallery-dl)"
+  (list :type "python"
+        :cwd "/home/daviwil/Projects/Code/gallery-dl"
+        :module "pytest"
+        :request "launch"
+	      :debugger 'debugpy
+        :name "Python :: Run pytest (gallery-dl)"))
+
+#+end_src
+
+However, this still doesn't work correctly from within a file in the project folder.  dap-mode bug?
+
 
 ** Commenting
 
