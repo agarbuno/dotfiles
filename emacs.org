@@ -309,36 +309,44 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
 #+begin_src emacs-lisp
 
-  (use-package ivy
-    :diminish
-    :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
-    :config
-    ;; (message "Ivy got loaded!")
-    (ivy-mode 1))
+    (use-package ivy
+      :diminish
+      :bind (("C-s" . swiper)
+             :map ivy-minibuffer-map
+             ("TAB" . ivy-alt-done)
+             ("C-l" . ivy-alt-done)
+             ("C-j" . ivy-next-line)
+             ("C-k" . ivy-previous-line)
+             :map ivy-switch-buffer-map
+             ("C-k" . ivy-previous-line)
+             ("C-l" . ivy-done)
+             ("C-d" . ivy-switch-buffer-kill)
+             :map ivy-reverse-i-search-map
+             ("C-k" . ivy-previous-line)
+             ("C-d" . ivy-reverse-i-search-kill))
+      :config
+      ;; (message "Ivy got loaded!")
+      (ivy-mode 1))
 
-  (use-package ivy-rich
-    :after ivy
-    :init
-    (ivy-rich-mode 1))
 
-  (use-package counsel
-    :bind (("C-M-j" . 'counsel-switch-buffer)
-           :map minibuffer-local-map
-           ("C-r" . 'counsel-minibuffer-history))
-    :config
-    (counsel-mode 1))
+    (use-package counsel
+      :bind (("C-M-j" . 'counsel-switch-buffer)
+             :map minibuffer-local-map
+             ("C-r" . 'counsel-minibuffer-history))
+      :config
+      (counsel-mode 1))
+
+    (use-package all-the-icons-ivy-rich
+      :after ivy
+      :init
+      (all-the-icons-ivy-rich-mode 1))
+
+    (use-package ivy-rich
+      :after ivy
+      :init
+      (ivy-rich-mode 1))
+
+
 
 #+end_src
 
@@ -378,6 +386,21 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
     (agarbuno/leader-keys
       "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+#+end_src
+
+** Completions with ivy and prescient
+
+#+begin_src emacs-lisp
+
+  (use-package ivy-prescient
+    :after counsel
+    :config
+    (ivy-prescient-mode 1)
+    (prescient-persist-mode 1))
+
+  (setq prescient-sort-length-enable nil)
+  (setq ivy-prescient-retain-classic-highlighting t)
 
 #+end_src
 
@@ -1154,3 +1177,57 @@ Each item lists the default Emacs binding followed by the evil-mode binding.  No
 | =evil-window-next=  | ~C-w C-w~ | Select the next visible window     |
 | =evil-window-prev=  | ~C-w W~   | Select the previous visible window |
 | =ffap-other-window= | ~C-w C-f~ | Open a file in another window      |
+
+Commands to switch focus on windows
+
+- =evil-window-left= - ~C-w h~
+- =evil-window-right= - ~C-w l~
+- =evil-window-up= - ~C-w k~
+- =evil-window-down= - ~C-w j~
+
+*** moving buffers between windows
+
+Use =buffer-move= for a more general solution:
+
+- =buf-move=: Turn on a mode where you can move the current buffer around with arrow keys, any other key finishes it
+- =buf-move-left=
+- =buf-move-right=
+- =buf-move-up=
+- =buf-move-down=
+
+#+begin_src emacs-lisp
+
+  (use-package buffer-move)
+
+#+end_src
+
+*** go back to window configuration
+
+=winner-mode= provides useful functions for undoing and redoing window configurations:
+
+- =winner-undo= (~C-c left~ or ~C-w u~ bound below)
+- =winner-redo= (~C-c right~ or ~C-w U~ bound below)
+
+#+begin_src emacs-lisp
+
+  (use-package winner-mode
+    :ensure nil
+    :bind (:map evil-window-map
+           ("u" . winner-undo)
+           ("U" . winner-redo))
+    :config
+    (winner-mode))
+
+#+end_src
+
+*** winum-mode
+
+This mode shows numbers in your windows' mode lines to tell you what keys you can press after using the key binding =C-x w=.  Check out the [[https://github.com/deb0ch/emacs-winum][winum-mode]] page for more useful tips!
+
+#+begin_src emacs-lisp
+
+  (use-package winum
+    :config
+    (winum-mode))
+
+#+end_src

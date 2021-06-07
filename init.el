@@ -179,10 +179,6 @@
   ;; (message "Ivy got loaded!")
   (ivy-mode 1))
 
-(use-package ivy-rich
-  :after ivy
-  :init
-  (ivy-rich-mode 1))
 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
@@ -190,6 +186,16 @@
          ("C-r" . 'counsel-minibuffer-history))
   :config
   (counsel-mode 1))
+
+(use-package all-the-icons-ivy-rich
+  :after ivy
+  :init
+  (all-the-icons-ivy-rich-mode 1))
+
+(use-package ivy-rich
+  :after ivy
+  :init
+  (ivy-rich-mode 1))
 
 (use-package helpful
   :commands (helpful-callable helpful-variable helpful-command helpful-key)
@@ -213,6 +219,15 @@
 
 (agarbuno/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(use-package ivy-prescient
+  :after counsel
+  :config
+  (ivy-prescient-mode 1)
+  (prescient-persist-mode 1))
+
+(setq prescient-sort-length-enable nil)
+(setq ivy-prescient-retain-classic-highlighting t)
 
 (defun agarbuno/org-font-setup ()
   ;; Replace list hyphen with dot
@@ -539,3 +554,17 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
+
+(use-package buffer-move)
+
+(use-package winner-mode
+  :ensure nil
+  :bind (:map evil-window-map
+         ("u" . winner-undo)
+         ("U" . winner-redo))
+  :config
+  (winner-mode))
+
+(use-package winum
+  :config
+  (winum-mode))
