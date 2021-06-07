@@ -1,2 +1,2 @@
 # dotfiles
-Config files for Emacs environmente
+Config files for Emacs environment
