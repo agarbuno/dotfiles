@@ -598,6 +598,15 @@ This snippet adds a hook to =org-mode= buffers so that =agarbuno/org-babel-tangl
 
 #+end_src
 
+** Auto-markup symbols
+This package makes it much easier to edit =Org= documents when =org-hide-emphasis-markers= is turned on. It temporarily shows the emphasis markers around certain markup elements when you place your cursor inside of them. No more fumbling around with === and =*= characters!
+
+#+begin_src emacs-lisp
+  (use-package org-appear
+    :hook (org-mode . org-appear-mode))
+
+#+end_src
+
 * Development
 ** Languages
 *** Language Servers
@@ -779,7 +788,6 @@ Running the default pytest configuration doesn't launch from the correct path, l
 #+end_src
 
 However, this still doesn't work correctly from within a file in the project folder.  dap-mode bug?
-
 
 ** Commenting
 

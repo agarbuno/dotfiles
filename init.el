@@ -379,6 +379,9 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'agarbuno/org-babel-tangle-config)))
 
+(use-package org-appear
+  :hook (org-mode . org-appear-mode))
+
 (defun agarbuno/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
