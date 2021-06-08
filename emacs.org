@@ -2,7 +2,7 @@
 #+title: Emacs From Scratch Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
-Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwil][David Wilson]]. 
+Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwil][David Wilson]].
 
 * Welcome!
 
@@ -102,7 +102,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 
   (require 'use-package)
   (setq use-package-always-ensure t)
-  (setq use-package-verbose t) 
+  (setq use-package-verbose t)
 
 #+end_src
 
@@ -175,7 +175,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
                   term-mode-hook
-                   vterm-mode-hook	
+                   vterm-mode-hook
                   shell-mode-hook
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
@@ -293,7 +293,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 #+begin_src emacs-lisp
 
   (use-package which-key
-    :defer 0 
+    :defer 0
     :diminish which-key-mode
     :config
     (which-key-mode)
@@ -541,7 +541,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
              "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
              :empty-lines 1)
             )
-          ) 
+          )
 
     (define-key global-map (kbd "C-c j")
       (lambda () (interactive) (org-capture nil "jj")))
@@ -571,7 +571,7 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 #+begin_src emacs-lisp
 
   (defun agarbuno/org-mode-visual-fill ()
-    (setq visual-fill-column-width 100
+    (setq visual-fill-column-width 110
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1))
 
@@ -630,6 +630,105 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 
 #+end_src
 
+** Org Roam
+
+#+begin_src emacs-lisp
+
+  (use-package org-roam
+    :hook
+    (after-init . org-roam-mode)
+    :custom
+    (org-roam-directory "~/Notes/Roam/")
+    (org-roam-completion-everywhere t)
+    (org-roam-completion-system 'default)
+    (org-roam-capture-templates
+      '(("d" "default" plain
+         #'org-roam-capture--get-point
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+title: ${title}\n"
+         :unnarrowed t)
+        ("r" "reference" plain
+         #'org-roam-capture--get-point
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+title: ${title}\n"
+         :unnarrowed t)
+        ("ll" "link note" plain
+         #'org-roam-capture--get-point
+         "* %^{Link}"
+         :file-name "Inbox"
+         :olp ("Links")
+         :unnarrowed t
+         :immediate-finish)
+        ("lt" "link task" entry
+         #'org-roam-capture--get-point
+         "* TODO %^{Link}"
+         :file-name "Inbox"
+         :olp ("Tasks")
+         :unnarrowed t
+         :immediate-finish)))
+    (org-roam-dailies-directory "Journal/")
+    (org-roam-dailies-capture-templates
+      '(("d" "default" entry
+         #'org-roam-capture--get-point
+         "* %?"
+         :file-name "Journal/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+        ("t" "Task" entry
+         #'org-roam-capture--get-point
+         "* TODO %?\n  %U\n  %a\n  %i"
+         :file-name "Journal/%<%Y-%m-%d>"
+         :olp ("Tasks")
+         :empty-lines 1
+         :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+        ("j" "journal" entry
+         #'org-roam-capture--get-point
+         "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
+         :file-name "Journal/%<%Y-%m-%d>"
+         :olp ("Log")
+         :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+        ("l" "log entry" entry
+         #'org-roam-capture--get-point
+         "* %<%I:%M %p> - %?"
+         :file-name "Journal/%<%Y-%m-%d>"
+         :olp ("Log")
+         :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+        ("m" "meeting" entry
+         #'org-roam-capture--get-point
+         "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
+         :file-name "Journal/%<%Y-%m-%d>"
+         :olp ("Log")
+         :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
+    :bind (:map org-roam-mode-map
+            (("C-c n l"   . org-roam)
+             ("C-c n f"   . org-roam-find-file)
+             ("C-c n d"   . org-roam-dailies-find-date)
+             ("C-c n c"   . org-roam-dailies-capture-today)
+             ("C-c n C r" . org-roam-dailies-capture-tomorrow)
+             ("C-c n t"   . org-roam-dailies-find-today)
+             ("C-c n y"   . org-roam-dailies-find-yesterday)
+             ("C-c n r"   . org-roam-dailies-find-tomorrow)
+             ("C-c n g"   . org-roam-graph))
+           :map org-mode-map
+           (("C-c n i" . org-roam-insert))
+           (("C-c n I" . org-roam-insert-immediate))))
+
+
+
+#+end_src
+
+** Deft
+
+#+begin_src emacs-lisp
+
+  (use-package deft
+    :commands (deft)
+    :config (setq deft-directory "~/Notes/Roam"
+                  deft-recursive t
+                  deft-extensions '("md" "org")))
+
+#+end_src
 * Development
 ** Languages
 *** Language Servers
@@ -744,7 +843,7 @@ pip install --user "python-language-server[all]"
 
 There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
 
-*Note* I am using lsp-jedi as =pyls= seems to be deprecated. The instructions to install it are as follows: 
+*Note* I am using lsp-jedi as =pyls= seems to be deprecated. The instructions to install it are as follows:
 
 #+begin_src emacs-lisp :tangle no
   M-x package-install lsp-jedi
@@ -858,7 +957,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
        :custom
        (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-    ;; 
+    ;;
     ;;(use-package evil-magit
     ;;:after magit)
 
@@ -903,7 +1002,7 @@ Run a terminal with =M-x term!=
 #+begin_src emacs-lisp
 
   (use-package term
-    :commands term 
+    :commands term
     :config
     (setq explicit-shell-file-name "zsh") ;; Change this to zsh, etc
     (setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
@@ -1033,7 +1132,7 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 - =S-RET= / =g O= - Open file in "other" window
 - =M-RET= - Show file in other window without focusing (previewing files)
 - =g o= (=dired-view-file=) - Open file but in a "preview" mode, close with =q=
-  
+
 ** Configuration
 
  #+begin_src emacs-lisp
@@ -1052,7 +1151,7 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 
 
  #+end_src
- 
+
 ** File Operations
 
 *** Marking files
@@ -1095,8 +1194,8 @@ For more thoughts on Eshell, check out these articles by Pierre Neidhardt:
 - =S= - Create a symbolic link to this file
 - =L= - Load an Emacs Lisp file into Emacs
 
-** File Icons in Dired 
-  
+** File Icons in Dired
+
 #+begin_src emacs-lisp
 
   (use-package all-the-icons-dired
