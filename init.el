@@ -649,3 +649,5 @@
 (use-package winum
   :config
   (winum-mode))
+
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))

@@ -1055,7 +1055,7 @@ One advantage of =shell-mode= on Windows is that it's the only way to run =cmd.e
 
 #+end_src
 
-** Eshell
+** eshell (windows)
 
 [[https://www.gnu.org/software/emacs/manual/html_mono/eshell.html#Contributors-to-Eshell][Eshell]] is Emacs' own shell implementation written in Emacs Lisp.  It provides you with a cross-platform implementation (even on Windows!) of the common GNU utilities you would find on Linux and macOS (=ls=, =rm=, =mv=, =grep=, etc).  It also allows you to call Emacs Lisp functions directly from the shell and you can even set up aliases (like aliasing =vim= to =find-file=).  Eshell is also an Emacs Lisp REPL which allows you to evaluate full expressions at the shell.
 
@@ -1323,4 +1323,11 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
     :config
     (winum-mode))
 
+#+end_src
+
+* Productivity
+** Latex in org mode
+
+#+begin_src emacs-lisp
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 #+end_src
