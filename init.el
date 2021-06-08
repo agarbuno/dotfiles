@@ -88,7 +88,8 @@
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
-                 vterm-mode-hook
+                vterm-mode-hook
+                deft-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
@@ -459,10 +460,12 @@
                ("C-c n d"   . org-roam-dailies-find-date)
                ("C-c n c"   . org-roam-dailies-capture-today)
                ("C-c n C r" . org-roam-dailies-capture-tomorrow)
-               ("C-c n t"   . org-roam-dailies-find-today)
+               ("C-c n j"   . org-roam-dailies-find-today)
                ("C-c n y"   . org-roam-dailies-find-yesterday)
                ("C-c n r"   . org-roam-dailies-find-tomorrow)
-               ("C-c n g"   . org-roam-graph))
+               ("C-c n g"   . org-roam-graph)
+               ("C-c n t"   . org-roam-tag-add)
+               ("C-c n T"   . org-roam-tag-delete))
          :map org-mode-map
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))
