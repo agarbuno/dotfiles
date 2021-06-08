@@ -88,7 +88,7 @@
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
-                 vterm-mode-hook	
+                 vterm-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
@@ -154,7 +154,7 @@
   :custom ((doom-modeline-height 15)))
 
 (use-package which-key
-  :defer 0 
+  :defer 0
   :diminish which-key-mode
   :config
   (which-key-mode)
@@ -336,22 +336,11 @@
           ("tt" "Task" entry
            (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-
-          ("j" "Notepad")
-          ("jj" "Notes" entry
-           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Notes")
-           "\n* %<%I:%M %p> :notes:\n\n%?\n\n"
-           :empty-lines 1)
-
-          ("jm" "Meeting Notes" entry
-           (file+olp+datetree "~/github-repos/dotfiles/orgfiles/notes.org" "Meetings")
-           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :empty-lines 1)
           )
-        ) 
+        )
 
-  (define-key global-map (kbd "C-c j")
-    (lambda () (interactive) (org-capture nil "jj")))
+  (define-key global-map (kbd "C-c t t")
+    (lambda () (interactive) (org-capture nil "tt")))
 
   (agarbuno/org-font-setup))
 
@@ -544,7 +533,7 @@
    :custom
    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;; 
+;;
 ;;(use-package evil-magit
 ;;:after magit)
 
@@ -558,7 +547,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package term
-  :commands term 
+  :commands term
   :config
   (setq explicit-shell-file-name "zsh") ;; Change this to zsh, etc
   (setq explicit-zsh-args '())         ;; Use 'explicit-<shell>-args for shell-specific args
