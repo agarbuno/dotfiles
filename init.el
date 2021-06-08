@@ -383,8 +383,8 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'agarbuno/org-babel-tangle-config)))
 
-(use-package org-appear
-  :hook (org-mode . org-appear-mode))
+;; (use-package org-appear
+    ;; :hook (org-mode . org-appear-mode))
 
 (use-package org-roam
   :hook
@@ -426,13 +426,6 @@
        #'org-roam-capture--get-point
        "* %?"
        :file-name "Journal/%<%Y-%m-%d>"
-       :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
-      ("t" "Task" entry
-       #'org-roam-capture--get-point
-       "* TODO %?\n  %U\n  %a\n  %i"
-       :file-name "Journal/%<%Y-%m-%d>"
-       :olp ("Tasks")
-       :empty-lines 1
        :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
       ("j" "journal" entry
        #'org-roam-capture--get-point
