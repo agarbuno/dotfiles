@@ -391,6 +391,7 @@
     ;; :hook (org-mode . org-appear-mode))
 
 (use-package org-roam
+  :demand t 
   :hook
   (after-init . org-roam-mode)
   :custom
@@ -453,16 +454,15 @@
        :olp ("Log")
        :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
 
-  :bind (
+  :bind (("C-c n f"   . org-roam-find-file)
          :map org-roam-mode-map
               (("C-c n l"   . org-roam)
-               ("C-c n f"   . org-roam-find-file)
-               ("C-c n d"   . org-roam-dailies-find-date)
                ("C-c n c"   . org-roam-dailies-capture-today)
                ("C-c n C r" . org-roam-dailies-capture-tomorrow)
-               ("C-c n j"   . org-roam-dailies-find-today)
-               ("C-c n y"   . org-roam-dailies-find-yesterday)
-               ("C-c n r"   . org-roam-dailies-find-tomorrow)
+               ("C-c n ?" . org-roam-dailies-find-date)
+               ("C-c n j" . org-roam-dailies-find-today)
+               ("C-c n y" . org-roam-dailies-find-yesterday)
+               ("C-c n r" . org-roam-dailies-find-tomorrow)
                ("C-c n g"   . org-roam-graph)
                ("C-c n t"   . org-roam-tag-add)
                ("C-c n T"   . org-roam-tag-delete))
@@ -474,9 +474,12 @@
 
 (use-package deft
   :commands (deft)
-  :config (setq deft-directory "~/Google Drive/orgfiles/notes/"
-                deft-recursive t
-                deft-extensions '("md" "org")))
+  :bind
+  ("C-c n d" . deft)
+  :config
+  (setq deft-directory "~/Google Drive/orgfiles/notes/"
+        deft-recursive t
+        deft-extensions '("md" "org")))
 
 (defun agarbuno/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
