@@ -1325,9 +1325,21 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
 
 #+end_src
 
+
 * Productivity
 ** Latex in org mode
 
+$\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
+
 #+begin_src emacs-lisp
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+#+end_src
+** CDLaTeX
+
+To be able to speed-up math environments and templates. 
+
+#+begin_src emacs-lisp
+
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+
 #+end_src
