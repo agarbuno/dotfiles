@@ -342,6 +342,9 @@
   (define-key global-map (kbd "C-c t t")
     (lambda () (interactive) (org-capture nil "tt")))
 
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+
   (agarbuno/org-font-setup))
 
 (use-package org-bullets
@@ -393,6 +396,7 @@
   (org-roam-directory "~/Google Drive/orgfiles/notes/")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'default)
+
   (org-roam-capture-templates
     '(("d" "default" plain
        #'org-roam-capture--get-point
@@ -420,7 +424,9 @@
        :olp ("Tasks")
        :unnarrowed t
        :immediate-finish)))
+
   (org-roam-dailies-directory "Journal/")
+
   (org-roam-dailies-capture-templates
     '(("d" "default" entry
        #'org-roam-capture--get-point
@@ -445,19 +451,23 @@
        :file-name "Journal/%<%Y-%m-%d>"
        :olp ("Log")
        :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
-  :bind (:map org-roam-mode-map
-          (("C-c n l"   . org-roam)
-           ("C-c n f"   . org-roam-find-file)
-           ("C-c n d"   . org-roam-dailies-find-date)
-           ("C-c n c"   . org-roam-dailies-capture-today)
-           ("C-c n C r" . org-roam-dailies-capture-tomorrow)
-           ("C-c n t"   . org-roam-dailies-find-today)
-           ("C-c n y"   . org-roam-dailies-find-yesterday)
-           ("C-c n r"   . org-roam-dailies-find-tomorrow)
-           ("C-c n g"   . org-roam-graph))
+
+  :bind (
+         :map org-roam-mode-map
+              (("C-c n l"   . org-roam)
+               ("C-c n f"   . org-roam-find-file)
+               ("C-c n d"   . org-roam-dailies-find-date)
+               ("C-c n c"   . org-roam-dailies-capture-today)
+               ("C-c n C r" . org-roam-dailies-capture-tomorrow)
+               ("C-c n t"   . org-roam-dailies-find-today)
+               ("C-c n y"   . org-roam-dailies-find-yesterday)
+               ("C-c n r"   . org-roam-dailies-find-tomorrow)
+               ("C-c n g"   . org-roam-graph))
          :map org-mode-map
-         (("C-c n i" . org-roam-insert))
-         (("C-c n I" . org-roam-insert-immediate))))
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))
+         )
+  )
 
 (use-package deft
   :commands (deft)
