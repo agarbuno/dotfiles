@@ -271,14 +271,20 @@
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-        '("~/github-repos/dotfiles/orgfiles/tasks.org"))
+      '("~/Google Drive/orgfiles/agenda/tasks.org"))
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NOTES(n)" "|" "DONE(d)")))
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")))
 
   (setq org-refile-targets
         '(("archive.org" :maxlevel . 1)
           ("tasks.org" :maxlevel . 1)))
+
+  (setq org-todo-keyword-faces
+        '(("TODO" . (:foreground "hot pink" :weight bold))
+          ("DONE" . (:foreground "spring green" :weight bold))
+          ("NEXT" . (:foreground "dark orange" :weight bold))
+          ))
 
 ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -295,12 +301,6 @@
                   ((org-agenda-overriding-header "Next Tasks")))))
 
           ("W" "Work Tasks" tags-todo "+work-email")
-
-        ;; Low-effort next actions
-          ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-           ((org-agenda-overriding-header "Low Effort Tasks")
-            (org-agenda-max-todos 20)
-            (org-agenda-files org-agenda-files)))
 
           ("w" "Workflow Status"
            ((todo "WAIT"
@@ -334,7 +334,7 @@
   (setq org-capture-templates
         `(("t" "Tasks / Projects")
           ("tt" "Task" entry
-           (file+olp "~/github-repos/dotfiles/orgfiles/tasks.org" "Active")
+           (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Active")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
           )
         )
@@ -390,7 +390,7 @@
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory "~/Notes/Roam/")
+  (org-roam-directory "~/Google Drive/orgfiles/notes/")
   (org-roam-completion-everywhere t)
   (org-roam-completion-system 'default)
   (org-roam-capture-templates
@@ -461,7 +461,7 @@
 
 (use-package deft
   :commands (deft)
-  :config (setq deft-directory "~/Notes/Roam"
+  :config (setq deft-directory "~/Google Drive/orgfiles/notes/"
                 deft-recursive t
                 deft-extensions '("md" "org")))
 
