@@ -493,7 +493,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("NEXT" . (:foreground "dark orange" :weight bold))
             ))
 
-  ;; Save Org buffers after refiling!
+    ;; Save Org buffers after refiling!
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
     (setq org-agenda-custom-commands
@@ -501,7 +501,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
              ((agenda "" ((org-deadline-warning-days 7)))
               (todo "NEXT"
                     ((org-agenda-overriding-header "Next Tasks")))
-              (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+              (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))
+              ))
 
             ("n" "Next Tasks"
              ((todo "NEXT"
@@ -551,7 +552,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (global-set-key (kbd "C-c a") 'org-agenda)
     (global-set-key (kbd "C-c t c") 'org-capture)
-  
+
     (agarbuno/org-font-setup))
 
 #+end_src
@@ -739,6 +740,16 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
     (setq deft-directory "~/Google Drive/orgfiles/notes/"
           deft-recursive t
           deft-extensions '("md" "org")))
+
+#+end_src
+** Links y contenido web
+#+begin_src emacs-lisp
+
+  (use-package org-web-tools
+    :after org
+    :bind
+    ("C-c n l" . org-web-tools-insert-link-for-url)
+    )
 
 #+end_src
 * Development
