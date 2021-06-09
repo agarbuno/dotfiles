@@ -537,7 +537,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
       (lambda () (interactive) (org-capture nil "tt")))
 
     (global-set-key (kbd "C-c a") 'org-agenda)
-    (global-set-key (kbd "C-c c") 'org-capture)
+    (global-set-key (kbd "C-c t c") 'org-capture)
   
     (agarbuno/org-font-setup))
 
@@ -629,7 +629,7 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 #+begin_src emacs-lisp
 
   (use-package org-roam
-    :demand t 
+    ;; :demand t 
     :hook
     (after-init . org-roam-mode)
     :custom
@@ -693,9 +693,10 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
 
     :bind (("C-c n f"   . org-roam-find-file)
+           ("C-c n c"   . org-roam-capture)
            :map org-roam-mode-map
                 (("C-c n l"   . org-roam)
-                 ("C-c n c"   . org-roam-dailies-capture-today)
+                 ("C-c n C t"   . org-roam-dailies-capture-today)
                  ("C-c n C r" . org-roam-dailies-capture-tomorrow)
                  ("C-c n ?" . org-roam-dailies-find-date)
                  ("C-c n j" . org-roam-dailies-find-today)
