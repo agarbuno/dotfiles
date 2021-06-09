@@ -141,6 +141,19 @@ You can also use =M-x auto-package-update-now= to update right now!
 
 #+end_src
 
+** Inmortal buffers
+#+begin_src emacs-lisp
+
+  (defun agarbuno/immortal-buffers ()
+    (if (or (eq (current-buffer) (get-buffer "*scratch*"))
+            (eq (current-buffer) (get-buffer "*Messages*")))
+        (progn (bury-buffer)
+               nil)
+      t))
+
+  (add-hook 'kill-buffer-query-functions 'agarbuno/immortal-buffers)
+
+#+end_src
 * Basic UI Configuration
 
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.  If you're just getting started in Emacs, the menu bar might be helpful so you can remove the =(menu-bar-mode -1)= line if you'd like to still see that.
