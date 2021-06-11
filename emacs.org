@@ -220,6 +220,14 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  (global-set-key (kbd "M-a") '(lambda () (interactive) (insert "á")))
+  (global-set-key (kbd "M-e") '(lambda () (interactive) (insert "é")))
+  (global-set-key (kbd "M-i") '(lambda () (interactive) (insert "í")))
+  (global-set-key (kbd "M-o") '(lambda () (interactive) (insert "ó")))
+  (global-set-key (kbd "M-u") '(lambda () (interactive) (insert "ú")))
+  (global-set-key (kbd "M-y") '(lambda () (interactive) (insert "ü")))
+  (global-set-key (kbd "M-n") '(lambda () (interactive) (insert "ñ")))
+
 
   (use-package general
     :after evil
