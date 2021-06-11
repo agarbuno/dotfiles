@@ -710,8 +710,8 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
            :map org-roam-mode-map
                 (("C-c n f"   . org-roam-find-file)
                  ("C-c n c"   . org-roam-capture)
-                 ("C-c n m"   . org-roam)
-                 ("C-c n C t" . org-roam-dailies-capture-today)
+                 ("C-c n b"   . org-roam)
+                 ("C-c n m"   . org-roam-dailies-capture-today)
                  ("C-c n C r" . org-roam-dailies-capture-tomorrow)
                  ("C-c n ?" . org-roam-dailies-find-date)
                  ("C-c n j" . org-roam-dailies-find-today)
