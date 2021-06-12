@@ -220,6 +220,7 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+  ;; Adds accents in spanish
   (global-set-key (kbd "M-a") '(lambda () (interactive) (insert "á")))
   (global-set-key (kbd "M-e") '(lambda () (interactive) (insert "é")))
   (global-set-key (kbd "M-i") '(lambda () (interactive) (insert "í")))
