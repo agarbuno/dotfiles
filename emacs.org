@@ -696,9 +696,9 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
          "* %?"
          :file-name "Journal/%<%Y-%m-%d>"
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
-        ("j" "journal" entry
+        ("t" "talks" entry
          #'org-roam-capture--get-point
-         "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
+         "* %<%I:%M %p> - %^{Talk Title}  :talks:\n\n%?\n\n"
          :file-name "Journal/%<%Y-%m-%d>"
          :olp ("Log")
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
