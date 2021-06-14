@@ -1363,7 +1363,6 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
 
 #+end_src
 
-
 * Productivity
 ** Latex in org mode
 
@@ -1379,5 +1378,27 @@ To be able to speed-up math environments and templates.
 #+begin_src emacs-lisp
 
   (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+
+#+end_src
+
+** Screenshots
+
+Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/][zzamboni.org | How to insert screenshots in Org documents on macOS]]
+
+#+begin_src emacs-lisp
+  (use-package org-download
+      :after org
+      :defer nil
+      :custom
+      (org-download-method 'directory)
+      (org-download-image-dir "images")
+      (org-download-heading-lvl nil)
+      (org-download-timestamp "%Y%m%d-%H%M%S_")
+      (org-image-actual-width 800)
+      (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
+      :bind
+      ("C-c n s" . org-download-screenshot)
+      :config
+      (require 'org-download))
 
 #+end_src
