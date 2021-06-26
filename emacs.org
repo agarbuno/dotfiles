@@ -228,6 +228,9 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   (global-set-key (kbd "M-u") '(lambda () (interactive) (insert "ú")))
   (global-set-key (kbd "M-y") '(lambda () (interactive) (insert "ü")))
   (global-set-key (kbd "M-n") '(lambda () (interactive) (insert "ñ")))
+  ;;
+  (global-set-key (kbd "<s-up>")   'beginning-of-buffer)
+  (global-set-key (kbd "<s-down>") 'end-of-buffer)
 
 
   (use-package general
