@@ -216,6 +216,8 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.  [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs modes with Vi-like keybindings for evil-mode.
 
+For more keybinding configurations take a look in: [[https://emacs.stackexchange.com/questions/62227/enable-os-x-keys-in-emacs][key bindings - Enable OS X keys in Emacs - Emacs Stack Exchange]]
+
 #+begin_src emacs-lisp
 
   ;; Make ESC quit prompts
@@ -228,10 +230,11 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
   (global-set-key (kbd "M-u") '(lambda () (interactive) (insert "ú")))
   (global-set-key (kbd "M-y") '(lambda () (interactive) (insert "ü")))
   (global-set-key (kbd "M-n") '(lambda () (interactive) (insert "ñ")))
-  ;;
-  (global-set-key (kbd "<s-up>")   'beginning-of-buffer)
-  (global-set-key (kbd "<s-down>") 'end-of-buffer)
-
+  ;; For macOS type of keybindings
+  (global-set-key (kbd "<s-up>")    'beginning-of-buffer)
+  (global-set-key (kbd "<s-down>")  'end-of-buffer)
+  (global-set-key (kbd "<s-left>")  'beginning-of-line)
+  (global-set-key (kbd "<s-right>") 'end-of-line)
 
   (use-package general
     :after evil
