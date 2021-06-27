@@ -852,21 +852,20 @@ Try these commands with =M-x=:
 We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
 
 #+begin_src emacs-lisp
+  (use-package company
+    :after lsp-mode
+    :hook ((lsp-mode . company-mode)
+           (LaTeX-mode . company-mode))
+    :bind (:map company-active-map
+                ("<tab>" . company-complete-selection))
+    (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
 
-    (use-package company
-       :after lsp-mode
-       :hook ((lsp-mode . company-mode)
-              (latex-mode . company-mode))
-       :bind (:map company-active-map
-              ("<tab>" . company-complete-selection))
-             (:map lsp-mode-map
-              ("<tab>" . company-indent-or-complete-common))
-       :custom
-       (company-minimum-prefix-length 1)
-       (company-idle-delay 0.0))
-
-    (use-package company-box
-      :hook (company-mode . company-box-mode))
+  (use-package company-box
+    :hook (company-mode . company-box-mode))
 
 #+end_src
 
@@ -1475,25 +1474,6 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     )
 #+end_src
 
-#+begin_src emacs-lisp
-    (use-package company-auctex
-      :after (company auctex)
-      :config
-      (company-auctex-init))
-
-    (use-package company-bibtex
-      :after (company auctex)
-      :config
-      (add-to-list 'company-backends 'company-bibtex))
-
-    (setq company-bibtex-bibliography
-          '("~/Google Drive/orgfiles/references/bibliography.bib"))
-
-    (use-package company-reftex
-      :after reftex
-      )
-
-#+end_src
 
 #+begin_src emacs-lisp
   (use-package reftex
