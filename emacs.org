@@ -160,39 +160,40 @@ This section configures basic UI settings that remove unneeded elements to make 
 
 #+begin_src emacs-lisp
 
-  (setq inhibit-startup-message t)
+    (setq inhibit-startup-message t)
 
-  (scroll-bar-mode -1)        ; Disable visible scrollbar
-  (tool-bar-mode -1)          ; Disable the toolbar
-  (tooltip-mode -1)           ; Disable tooltips
-  (set-fringe-mode 10)        ; Give some breathing room
+    (scroll-bar-mode -1)        ; Disable visible scrollbar
+    (tool-bar-mode -1)          ; Disable the toolbar
+    (tooltip-mode -1)           ; Disable tooltips
+    (set-fringe-mode 10)        ; Give some breathing room
 
-  (menu-bar-mode -1)            ; Disable the menu bar
+    (menu-bar-mode -1)            ; Disable the menu bar
 
-  ;; Set up the visible bell
-  (setq visible-bell nil)
-  (setq ring-bell-function (lambda ()
-                             (invert-face 'mode-line)
-                             (run-with-timer 0.1 nil 'invert-face 'mode-line)))
+    ;; Set up the visible bell
+    (setq visible-bell nil)
+    (setq ring-bell-function (lambda ()
+                               (invert-face 'mode-line)
+                               (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
 
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
+    (column-number-mode)
+    (global-display-line-numbers-mode t)
 
-  ;; Set frame transparency
-  (set-frame-parameter (selected-frame) 'alpha agarbuno/frame-transparency)
-  (add-to-list 'default-frame-alist `(alpha . ,agarbuno/frame-transparency))
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+    ;; Set frame transparency
+    (set-frame-parameter (selected-frame) 'alpha agarbuno/frame-transparency)
+    (add-to-list 'default-frame-alist `(alpha . ,agarbuno/frame-transparency))
+    (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+    (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-  ;; Disable line numbers for some modes
-  (dolist (mode '(org-mode-hook
-                  term-mode-hook
-                  vterm-mode-hook
-                  deft-mode-hook
-                  shell-mode-hook
-                  eshell-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    ;; Disable line numbers for some modes
+    (dolist (mode '(org-mode-hook
+                    term-mode-hook
+                    vterm-mode-hook
+                    deft-mode-hook
+                    shell-mode-hook
+                    eshell-mode-hook
+                    pdf-view-mode-hook))
+      (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 #+end_src
 
@@ -1370,6 +1371,89 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
 #+end_src
 
 * Productivity
+** Latex editing
+ Based on:
+ - [[https://tex.stackexchange.com/questions/364361/how-to-set-syntax-highlighting-for-citep-as-same-as-cite-in-auctex][macros - How to set syntax highlighting for \citep as same as \cite in AUCTeX? - TeX - LaTeX Stack Exchange]]
+
+#+begin_src emacs-lisp
+  (use-package latex
+    :ensure auctex
+    ;; :custom
+    ;; Activate for forward and inverse search
+    ;; (TeX-source-correlate-mode t)
+    ;; (TeX-source-correlate-method 'synctex)
+    :config
+    (setq font-latex-match-reference-keywords
+          '(
+            ("cite" "[{")
+            ("citep" "[{")
+            ("cite*" "[{")
+            )
+          )
+    (setq TeX-parse-self t)
+
+    (pdf-tools-install)
+    ;; Use pdf-tools to open PDF files
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+          TeX-source-correlate-start-server t)
+
+    ;; default page width behavior
+    (setq-default pdf-view-display-size 'fit-page) 
+
+    ;; pdf-tools  zooming to better rendering 
+    (setq pdf-view-resize-factor 1.1)
+
+    ;; Prevent superscripts and subscripts from being displayed in a
+    ;; different font size.
+    (setq font-latex-fontify-script nil)
+
+    ;; Prevent section headers from being displayed in different font
+    ;; sizes.
+    (setq font-latex-fontify-sectioning 1)
+
+    ;; Don't be afraid to break inline math between lines.
+    (setq LaTeX-fill-break-at-separators nil)
+
+    (setq TeX-source-correlate-method 'synctex)
+    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+
+    ;; Update PDF buffers after successful LaTeX runs
+    (add-hook 'TeX-after-compilation-finished-functions
+              #'TeX-revert-document-buffer)
+
+    )
+#+end_src
+
+Use =mic-paren= to highlight parehthesis for math environments in latex.
+
+#+begin_src emacs-lisp
+  (use-package mic-paren
+    :after latex
+    :config
+    (add-hook 'TeX-mode-hook
+              (lambda ()
+                (font-lock-add-keywords nil
+                                        '(("\\\\alpha" 0 font-lock-warning-face t)))
+                ))
+  )
+#+end_src
+
+*** Parenthesis
+
+#+begin_src emacs-lisp
+  (use-package smartparens
+    :init
+    (smartparens-global-strict-mode 1)
+   )
+#+end_src
+
+*** PDF Viewer
+
+#+begin_src emacs-lisp
+  (use-package pdf-tools
+    :after latex)
+#+end_src
+
 ** Latex in org mode
 
 $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
