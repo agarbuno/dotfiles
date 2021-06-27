@@ -759,7 +759,7 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
           deft-extensions '("md" "org")))
 
 #+end_src
-** Links y contenido web
+* Links y contenido web
 #+begin_src emacs-lisp
 
   (use-package org-web-tools
@@ -1428,6 +1428,8 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
     (add-hook 'TeX-after-compilation-finished-functions
               #'TeX-revert-document-buffer)
 
+  (add-hook 'LaTeX-mode-hook #'visual-line-mode)
+
     )
 #+end_src
 
@@ -1510,6 +1512,20 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 
           reftex-cite-prompt-optional-args nil
           reftex-cite-cleanup-optional-args t))
+#+end_src
+
+*** Autocompletion with lsp
+
+#+begin_src emacs-lisp
+
+  (use-package lsp-latex
+    :after auctex
+    :config
+    (add-hook 'TeX-mode-hook 'lsp)
+    (add-hook 'LaTeX-mode-hook 'lsp)
+    )
+
+
 #+end_src
 
 ** Latex in org mode
