@@ -1380,15 +1380,12 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
   (use-package latex
     :ensure auctex
     :custom
-
     (reftex-plug-into-AUCTeX t)
     (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"))
-
     (LaTeX-indent-level 4
                         LaTeX-item-indent 0
                         TeX-brace-indent-level 4
                         TeX-newline-function 'newline-and-indent)
-
     :config
     (setq font-latex-match-reference-keywords
           '(
@@ -1398,39 +1395,31 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
             )
           )
     (setq TeX-parse-self t)
-
     (pdf-tools-install)
     ;; Use pdf-tools to open PDF files
     (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
           TeX-source-correlate-start-server t)
-
     ;; default page width behavior
     (setq-default pdf-view-display-size 'fit-page) 
-
     ;; pdf-tools  zooming to better rendering 
     (setq pdf-view-resize-factor 1.1)
-
     ;; Prevent superscripts and subscripts from being displayed in a
     ;; different font size.
     (setq font-latex-fontify-script nil)
-
     ;; Prevent section headers from being displayed in different font
     ;; sizes.
     (setq font-latex-fontify-sectioning 1)
-
     ;; Don't be afraid to break inline math between lines.
     (setq LaTeX-fill-break-at-separators nil)
-
     (setq TeX-source-correlate-method 'synctex)
     (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-
     ;; Update PDF buffers after successful LaTeX runs
     (add-hook 'TeX-after-compilation-finished-functions
               #'TeX-revert-document-buffer)
-
-  (add-hook 'LaTeX-mode-hook #'visual-line-mode)
-
+    ;; (add-hook 'LaTeX-mode-hook #'visual-line-mode)
+    ;; (add-hook 'LaTeX-mode-hook #'visual-fill-column-mode)
     )
+
 #+end_src
 
 Use =mic-paren= to highlight parehthesis for math environments in latex.
