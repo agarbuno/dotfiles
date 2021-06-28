@@ -660,7 +660,7 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 #+begin_src emacs-lisp
 
   (use-package org-roam
-    ;; :demand t 
+    ;; :demand t
     :hook
     (after-init . org-roam-mode)
     :custom
@@ -1377,48 +1377,49 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
  - [[https://tex.stackexchange.com/questions/364361/how-to-set-syntax-highlighting-for-citep-as-same-as-cite-in-auctex][macros - How to set syntax highlighting for \citep as same as \cite in AUCTeX? - TeX - LaTeX Stack Exchange]]
 
 #+begin_src emacs-lisp
-  (use-package latex
-    :ensure auctex
-    :custom
-    (reftex-plug-into-AUCTeX t)
-    (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"))
-    (LaTeX-indent-level 4
-                        LaTeX-item-indent 0
-                        TeX-brace-indent-level 4
-                        TeX-newline-function 'newline-and-indent)
-    :config
-    (setq font-latex-match-reference-keywords
-          '(
-            ("cite" "[{")
-            ("citep" "[{")
-            ("cite*" "[{")
+    (use-package latex
+      :ensure auctex
+      :custom
+      (reftex-plug-into-AUCTeX t)
+      (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                     "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+      (LaTeX-indent-level 4
+                          LaTeX-item-indent 0
+                          TeX-brace-indent-level 4
+                          TeX-newline-function 'newline-and-indent)
+      :config
+      (setq font-latex-match-reference-keywords
+            '(
+              ("cite" "[{")
+              ("citep" "[{")
+              ("cite*" "[{")
+              )
             )
-          )
-    (setq TeX-parse-self t)
-    (pdf-tools-install)
-    ;; Use pdf-tools to open PDF files
-    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-          TeX-source-correlate-start-server t)
-    ;; default page width behavior
-    (setq-default pdf-view-display-size 'fit-page) 
-    ;; pdf-tools  zooming to better rendering 
-    (setq pdf-view-resize-factor 1.1)
-    ;; Prevent superscripts and subscripts from being displayed in a
-    ;; different font size.
-    (setq font-latex-fontify-script nil)
-    ;; Prevent section headers from being displayed in different font
-    ;; sizes.
-    (setq font-latex-fontify-sectioning 1)
-    ;; Don't be afraid to break inline math between lines.
-    (setq LaTeX-fill-break-at-separators nil)
-    (setq TeX-source-correlate-method 'synctex)
-    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-    ;; Update PDF buffers after successful LaTeX runs
-    (add-hook 'TeX-after-compilation-finished-functions
-              #'TeX-revert-document-buffer)
-    ;; (add-hook 'LaTeX-mode-hook #'visual-line-mode)
-    ;; (add-hook 'LaTeX-mode-hook #'visual-fill-column-mode)
-    )
+      (setq TeX-parse-self t)
+      (pdf-tools-install)
+      ;; Use pdf-tools to open PDF files
+      (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+            TeX-source-correlate-start-server t)
+      ;; default page width behavior
+      (setq-default pdf-view-display-size 'fit-page)
+      ;; pdf-tools  zooming to better rendering
+      (setq pdf-view-resize-factor 1.1)
+      ;; Prevent superscripts and subscripts from being displayed in a
+      ;; different font size.
+      (setq font-latex-fontify-script nil)
+      ;; Prevent section headers from being displayed in different font
+      ;; sizes.
+      (setq font-latex-fontify-sectioning 1)
+      ;; Don't be afraid to break inline math between lines.
+      (setq LaTeX-fill-break-at-separators nil)
+      (setq TeX-source-correlate-method 'synctex)
+      (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+      ;; Update PDF buffers after successful LaTeX runs
+      (add-hook 'TeX-after-compilation-finished-functions
+                #'TeX-revert-document-buffer)
+      ;; (add-hook 'LaTeX-mode-hook #'visual-line-mode)
+      ;; (add-hook 'LaTeX-mode-hook #'visual-fill-column-mode)
+      )
 
 #+end_src
 
@@ -1453,16 +1454,52 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     :after latex)
 #+end_src
 
+*** BibTex
+#+begin_src emacs-lisp
+    (use-package bibtex
+      :defer t ; built-in with Emacs
+      :custom
+      (bibtex-autokey-titleword-length 0)
+      (bibtex-autokey-titleword-separator "")
+      (bibtex-autokey-titlewords 0)
+      (bibtex-autokey-year-length 4)
+      (bibtex-autokey-year-title-separator "")
+      (bibtex-align-at-equal-sign t)
+      :config
+      (defun agarbuno/bibtex-generate-autokey ()
+        (interactive)
+        ;; first we delete the existing key
+        (bibtex-beginning-of-entry)
+        (re-search-forward bibtex-entry-maybe-empty-head)
+        (if (match-beginning bibtex-key-in-head)
+            (delete-region (match-beginning bibtex-key-in-head)
+                           (match-end bibtex-key-in-head)))
+        (let* ((names (bibtex-autokey-get-names))
+               (year (bibtex-autokey-get-year))
+               (existing-keys (bibtex-parse-keys))
+               key)
+          (setq key (format "%s%s" names year))
+          (let ((ret key))
+            (cl-loop for c
+                     from ?b to ?z
+                     while (assoc ret existing-keys)
+                     do (setq ret (format "%s%c" key c)))
+            ret)))
+      (advice-add #'bibtex-generate-autokey :override #'agarbuno/bibtex-generate-autokey)
+      )
+
+#+end_src
 *** Reference management
 
 #+begin_src emacs-lisp
-  (use-package ivy-bibtex
-    :config
-    (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"))
-    (setq bibtex-completion-pdf-symbol "⌘")
-    (setq bibtex-completion-notes-symbol "✎")
-    (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
-    )
+    (use-package ivy-bibtex
+      :config
+      (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                             "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+      (setq bibtex-completion-pdf-symbol "⌘")
+      (setq bibtex-completion-notes-symbol "✎")
+      (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+      )
 #+end_src
 
 
@@ -1527,7 +1564,7 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 #+end_src
 ** CDLaTeX
 
-To be able to speed-up math environments and templates in org-mode. 
+To be able to speed-up math environments and templates in org-mode.
 
 #+begin_src emacs-lisp
 
