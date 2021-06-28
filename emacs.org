@@ -657,6 +657,8 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 
 ** Org Roam
 
+For more option for customization see: [[https://www.reddit.com/r/orgmode/comments/lmlsdr/simple_question_re_orgroam_how_to_access_capture/][Simple question re org-roam - how to access capture templates? : orgmode]]
+
 #+begin_src emacs-lisp
 
   (use-package org-roam
@@ -706,7 +708,7 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
         ("t" "talks" entry
          #'org-roam-capture--get-point
-         "* %<%I:%M %p> - %^{Talk Title}  :talks:\n\n%?\n\n"
+         "* %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
          :file-name "Journal/%<%Y-%m-%d>"
          :olp ("Log")
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
