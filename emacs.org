@@ -1487,37 +1487,38 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 
 *** BibTex
 #+begin_src emacs-lisp
-    (use-package bibtex
-      :defer t ; built-in with Emacs
-      :custom
-      (bibtex-autokey-titleword-length 0)
-      (bibtex-autokey-titleword-separator "")
-      (bibtex-autokey-titlewords 0)
-      (bibtex-autokey-year-length 4)
-      (bibtex-autokey-year-title-separator "")
-      (bibtex-align-at-equal-sign t)
-      :config
-      (defun agarbuno/bibtex-generate-autokey ()
-        (interactive)
-        ;; first we delete the existing key
-        (bibtex-beginning-of-entry)
-        (re-search-forward bibtex-entry-maybe-empty-head)
-        (if (match-beginning bibtex-key-in-head)
-            (delete-region (match-beginning bibtex-key-in-head)
-                           (match-end bibtex-key-in-head)))
-        (let* ((names (bibtex-autokey-get-names))
-               (year (bibtex-autokey-get-year))
-               (existing-keys (bibtex-parse-keys))
-               key)
-          (setq key (format "%s%s" names year))
-          (let ((ret key))
-            (cl-loop for c
-                     from ?b to ?z
-                     while (assoc ret existing-keys)
-                     do (setq ret (format "%s%c" key c)))
-            ret)))
-      (advice-add #'bibtex-generate-autokey :override #'agarbuno/bibtex-generate-autokey)
-      )
+  (use-package bibtex
+    :defer t ; built-in with Emacs
+    :custom
+    (bibtex-autokey-titleword-length 0)
+    (bibtex-autokey-titleword-separator "")
+    (bibtex-autokey-titlewords 0)
+    (bibtex-autokey-year-length 4)
+    (bibtex-autokey-year-title-separator "")
+    (bibtex-align-at-equal-sign t)
+    (bibtex-autokey-name-case-convert-function 'capitalize)
+    :config
+    (defun agarbuno/bibtex-generate-autokey ()
+      (interactive)
+      ;; first we delete the existing key
+      (bibtex-beginning-of-entry)
+      (re-search-forward bibtex-entry-maybe-empty-head)
+      (if (match-beginning bibtex-key-in-head)
+          (delete-region (match-beginning bibtex-key-in-head)
+                         (match-end bibtex-key-in-head)))
+      (let* ((names (bibtex-autokey-get-names))
+             (year (bibtex-autokey-get-year))
+             (existing-keys (bibtex-parse-keys))
+             key)
+        (setq key (format "%s%s" names year))
+        (let ((ret key))
+          (cl-loop for c
+                   from ?b to ?z
+                   while (assoc ret existing-keys)
+                   do (setq ret (format "%s%c" key c)))
+          ret)))
+    (advice-add #'bibtex-generate-autokey :override #'agarbuno/bibtex-generate-autokey)
+    )
 
 #+end_src
 *** Reference management
