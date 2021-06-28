@@ -489,6 +489,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
     :hook (org-mode . agarbuno/org-mode-setup)
     :config
     (setq org-ellipsis " ▾")
+    (setq org-support-shift-select t)
 
     (setq org-agenda-start-with-log-mode t)
     (setq org-log-done 'time)
