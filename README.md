@@ -9,8 +9,7 @@
 
 ---
 
-I wanted to make this configuration simple, powerful and ergonomic by choosing
-the most trivial keyboard possible.
+Setting up a beautiful and useful tool for my workflow. Many sources have been used as inspiration to set this up. 
 
 <!-- <p align="center"><img src="assets/emacs-preview.png"/></p> -->
 
