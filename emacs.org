@@ -22,7 +22,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar agarbuno/default-variable-font-size 150)
 
   ;; Make frame transparency overridable
-  (defvar agarbuno/frame-transparency '(95 . 95))
+  (defvar agarbuno/frame-transparency '(97 . 97))
 
 #+end_src
 
@@ -303,7 +303,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
   (use-package doom-themes
     :init (load-theme 'doom-monokai-pro t))
-
+    ;; :config (load-theme 'doom-nord t))
 #+end_src
 
 ** Better Modeline
@@ -381,8 +381,6 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
       :after all-the-icons-ivy-rich
       :init
       (ivy-rich-mode 1))
-
-
 
 #+end_src
 
@@ -1629,3 +1627,5 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (require 'org-download))
 
 #+end_src
+
+
