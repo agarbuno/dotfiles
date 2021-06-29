@@ -12,7 +12,7 @@
 I wanted to make this configuration simple, powerful and ergonomic by choosing
 the most trivial keyboard possible.
 
-<p align="center"><img src="assets/emacs-preview.png"/></p>
+<!-- <p align="center"><img src="assets/emacs-preview.png"/></p> -->
 
 <blockquote>
 	Font: <a href="https://github.com/tonsky/FiraCode">Fira Code Retina</a> 20px <br>
