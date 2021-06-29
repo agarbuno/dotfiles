@@ -181,7 +181,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 
   ;; Set frame transparency
   (set-frame-parameter (selected-frame) 'alpha agarbuno/frame-transparency)
-  (add-to-list 'default-frame-alist `(alpha . ,agarbuno/frame-transparency))
+  (add-to-list 'default-frame-alist `(alpha . agarbuno/frame-transparency))
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -239,42 +239,46 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (global-set-key (kbd "<s-left>")  'beginning-of-line)
   (global-set-key (kbd "<s-right>") 'end-of-line)
 
-  (use-package general
-    :after evil
-    :config
-    (general-create-definer agarbuno/leader-keys
-      :keymaps '(normal insert visual emacs)
-      :prefix "SPC"
-      :global-prefix "C-SPC")
+#+end_src
 
-    (agarbuno/leader-keys
-      "t"  '(:ignore t :which-key "toggles")
-      "tt" '(counsel-load-theme :which-key "choose theme")
-      "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
-      ))
+#+begin_src emacs-lisp
 
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump nil)
-    :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+    (use-package general
+      :after evil
+      :config
+      (general-create-definer agarbuno/leader-keys
+        :keymaps '(normal insert visual emacs)
+        :prefix "SPC"
+        :global-prefix "C-SPC")
 
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+      (agarbuno/leader-keys
+        "t"  '(:ignore t :which-key "toggles")
+        "tt" '(counsel-load-theme :which-key "choose theme")
+        "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
+        ))
 
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
+    (use-package evil
+      :init
+      (setq evil-want-integration t)
+      (setq evil-want-keybinding nil)
+      (setq evil-want-C-u-scroll t)
+      (setq evil-want-C-i-jump nil)
+      :config
+      (evil-mode 1)
+      (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+      (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
+      ;; Use visual line motions even outside of visual-line-mode buffers
+      (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+      (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+      (evil-set-initial-state 'messages-buffer-mode 'normal)
+      (evil-set-initial-state 'dashboard-mode 'normal))
+
+    (use-package evil-collection
+      :after evil
+      :config
+      (evil-collection-init))
 
 #+end_src
 
@@ -832,6 +836,17 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
 
   (setq org-noter-property-doc-file "INTERLEAVE_PDF"
         org-noter-property-note-location "INTERLEAVE_PAGE_NOTE")
+#+end_src
+** Header
+#+begin_src emacs-lisp
+  (use-package org-sticky-header
+    :hook (org-mode . org-sticky-header-mode)
+    :config
+    ;; Show full path in header
+    (setq org-sticky-header-full-path 'full)
+    ;; Use > instead of / as separator
+    (setq org-sticky-header-outline-path-separator " > ")
+    )
 #+end_src
 * Links y contenido web
 #+begin_src emacs-lisp
@@ -1457,9 +1472,10 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 
 #+begin_src emacs-lisp
   (use-package smartparens
-    :init
+    :custom
     (smartparens-global-strict-mode nil)
    )
+
 #+end_src
 
 *** PDF Viewer
