@@ -193,8 +193,10 @@ This section configures basic UI settings that remove unneeded elements to make 
                   shell-mode-hook
                   eshell-mode-hook
                   reftex-select-bib-mode-hook
+                  pdf-outline-buffer-mode-hook
                   pdf-view-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+    (add-hook mode (lambda () (display-line-numbers-mode 0)))
+    )
 
 #+end_src
 
