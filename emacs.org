@@ -605,6 +605,8 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 
 #+end_src
 
+** Agenda
+See interesting configurations [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][here]].
 ** Configure Babel Languages
 
 To execute or export code in =org-mode= code blocks, you'll need to set up =org-babel-load-languages= for each language you'd like to use.  [[https://orgmode.org/worg/org-contrib/babel/languages.html][This page]] documents all of the languages that you can use with =org-babel=.
@@ -765,30 +767,25 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 ** Bibliography
 
 #+begin_src emacs-lisp
-        (use-package org-roam-bibtex
-          :after org-roam
-          :hook (org-roam-mode . org-roam-bibtex-mode)
-          :config
-          (require 'org-ref)
-          (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                              "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+  (use-package org-roam-bibtex
+    :after org-roam
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :config
+    (require 'org-ref)
+    (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                        "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
 
-          ;; see org-ref for use of these variables
-          (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-                org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                               "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
-                org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/")
+    ;; see org-ref for use of these variables
+    (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
+          org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                         "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
+          org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
+          org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
+          org-ref-show-broken-links t)
 
-          ;; since I use ivy-bibtex
-          (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                                 "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
-                bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs"
-                bibtex-completion-notes-path "~/Google Drive/orgfiles/references/bibtex-notes")
-
-          (setq org-ref-completion-library 'org-ref-ivy-cite)
-          (require 'org-ref-ivy-cite)
-
-          )
+    (setq org-ref-completion-library 'org-ref-ivy-cite)
+    (require 'org-ref-ivy-cite)
+    )
 #+end_src
 
 * Links y contenido web
@@ -1474,7 +1471,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 #+begin_src emacs-lisp
   (use-package smartparens
     :init
-    (smartparens-global-strict-mode 1)
+    (smartparens-global-strict-mode nil)
    )
 #+end_src
 
