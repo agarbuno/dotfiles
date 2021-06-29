@@ -777,7 +777,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 
     (setq org-ref-completion-library 'org-ref-ivy-cite)
     (require 'org-ref-ivy-cite)
-  
+
     ;; see org-ref for use of these variables
     (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
           org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
@@ -785,8 +785,14 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
           org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
           org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
           org-ref-show-broken-links t)
+
+    (setq orb-templates
+          '(("r" "ref" plain (function org-roam-capture--get-point) "%?"
+             :file-name "References/${citekey}"
+             :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n"
+             :unnarrowed t)))
     )
-#+end_src
+    #+end_src
 
 * Links y contenido web
 #+begin_src emacs-lisp
