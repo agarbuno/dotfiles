@@ -529,6 +529,14 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("NEXT" . (:foreground "dark orange" :weight bold))
             ))
 
+    (setq org-tag-alist
+          '((:startgroup)
+                                          ; Put mutually exclusive tags here
+            (:endgroup)
+            ("research" . ?r)
+            ("note" . ?n)
+            ("idea" . ?i)))
+
     ;; Save Org buffers after refiling!
     (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
@@ -538,7 +546,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
               (todo "NEXT"
                     ((org-agenda-overriding-header "Next Tasks")))
               (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))
-              (tags-todo "agenda/RESEARCH" ((org-agenda-overriding-header "Research Projects")))
+              (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
               ))
 
             ("n" "Next Tasks"
