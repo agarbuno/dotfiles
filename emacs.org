@@ -1367,6 +1367,14 @@ Commands to switch focus on windows
 - =evil-window-up= - ~C-w k~
 - =evil-window-down= - ~C-w j~
 
+  #+begin_src emacs-lisp
+    ;; For macOS type of keybindings
+    (global-set-key (kbd "<M-s-up>")    'evil-window-up)
+    (global-set-key (kbd "<M-s-down>")  'evil-window-down)
+    (global-set-key (kbd "<M-s-left>")  'evil-window-left)
+    (global-set-key (kbd "<M-s-right>") 'evil-window-right)
+  #+end_src
+
 *** moving buffers between windows
 
 Use =buffer-move= for a more general solution:
