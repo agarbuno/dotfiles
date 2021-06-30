@@ -22,7 +22,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar agarbuno/default-variable-font-size 150)
 
   ;; Make frame transparency overridable
-  (defvar agarbuno/frame-transparency '(97 . 97))
+  (defvar agarbuno/frame-transparency '(95 . 95))
 
 #+end_src
 
@@ -181,7 +181,7 @@ This section configures basic UI settings that remove unneeded elements to make 
 
   ;; Set frame transparency
   (set-frame-parameter (selected-frame) 'alpha agarbuno/frame-transparency)
-  (add-to-list 'default-frame-alist `(alpha . agarbuno/frame-transparency))
+  (add-to-list 'default-frame-alist `(alpha . ,agarbuno/frame-transparency))
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -323,11 +323,17 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
 #+begin_src emacs-lisp
 
-(use-package all-the-icons)
+  (use-package all-the-icons)
 
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+  (use-package doom-modeline
+      :init (doom-modeline-mode 1)
+      :custom ((doom-modeline-height 15)))
+
+  (use-package minions
+    :config
+    (setq doom-modeline-minor-modes t)
+    (minions-mode 1)
+    )
 
 #+end_src
 
@@ -1072,7 +1078,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     ("C-c p" . projectile-command-map)
     :init
     ;; NOTE: Set this to the folder where you keep your Git repos!
-    (when (file-directory-p "~/gtihub-repos")
+    (when (file-directory-p "~/github-repos")
       (setq projectile-project-search-path '("~/github-repos")))
     (setq projectile-switch-project-action #'projectile-dired))
 
@@ -1088,20 +1094,20 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+begin_src emacs-lisp
 
-     (use-package magit
-       :commands magit-status
-       :custom
-       (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  (use-package magit
+    :commands magit-status
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+    (add-hook 'text-mode-hook 'disable-evil-mode)
+    )
 
-    ;;
-    ;;(use-package evil-magit
-    ;;:after magit)
+  ;; This disables evil mode in text windows
 
-     ;; NOTE: Make sure to configure a GitHub token before using this package!
-     ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-     ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-     (use-package forge
-       :after magit)
+  ;; NOTE: Make sure to configure a GitHub token before using this package!
+  ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
+  ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
+  (use-package forge
+    :after magit)
 
 #+end_src
 
@@ -1232,7 +1238,10 @@ One advantage of =shell-mode= on Windows is that it's the only way to run =cmd.e
    (use-package dired-single
      :after dired)
 
-
+   (use-package all-the-icons-dired
+     :after dired
+     :config
+     (setq all-the-icons-dired-monochrome nil))
  #+end_src
 
 ** File Operations
@@ -1619,7 +1628,7 @@ To be able to speed-up math environments and templates in org-mode.
 
 #+begin_src emacs-lisp
 
-  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+  ;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
 #+end_src
 
