@@ -518,7 +518,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (setq org-todo-keywords
           '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-            (sequence "WAIT(w)" "|" ))
+            (sequence "WAIT(w)" "READ(r)" "VIEW(v)" "|" ))
           )
 
     (setq org-refile-targets
@@ -527,9 +527,11 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (setq org-todo-keyword-faces
           '(("TODO" . (:foreground "hot pink" :weight bold))
-            ("DONE" . (:foreground "spring green" :weight bold))
+            ("DONE" . (:foreground "#00e6ab" :weight bold))
             ("NEXT" . (:foreground "dark orange" :weight bold))
-            ("WAIT" . (:foreground "light cyan" :weight bold))
+            ("WAIT" . (:foreground "#aeffff" :weight bold))
+            ("READ" . (:foreground "#ffcc66" :weight bold))
+            ("VIEW" . (:foreground "#8787ff" :weight bold))
             ))
 
     (setq org-tag-alist
@@ -556,7 +558,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
               (tags-todo "-research-teaching-maestria/!-NEXT"
                          ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                           ;; (org-agenda-files "~/Google Drive/orgfiles/agenda/tasks.org")
-                          ;; (org-agenda-text-search-extra-files nil)
+                          (org-agenda-text-search-extra-files nil)
                           ))
               ))
 
@@ -727,19 +729,19 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
         ("t" "talks" entry
          #'org-roam-capture--get-point
-         "* %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
+         "\n* %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
          :file-name "Journal/%<%Y-%m-%d>"
          :olp ("Log")
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
         ("l" "log entry" entry
          #'org-roam-capture--get-point
-         "* %<%I:%M %p> - %?"
+         "\n* %<%I:%M %p> - %?"
          :file-name "Journal/%<%Y-%m-%d>"
          :olp ("Log")
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
         ("m" "meeting" entry
          #'org-roam-capture--get-point
-         "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
+         "\n* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
          :file-name "Journal/%<%Y-%m-%d>"
          :olp ("Log")
          :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
