@@ -780,14 +780,31 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 
 #+begin_src emacs-lisp
 
-  (use-package deft
-    :commands (deft)
-    :bind
-    ("C-c n d" . deft)
-    :config
-    (setq deft-directory "~/Google Drive/orgfiles/notes/"
-          deft-recursive t
-          deft-extensions '("md" "org")))
+    (use-package deft
+      :commands (deft)
+      :bind (("C-c n d" . deft)
+             ("C-c n u" . agarbuno/pick-deft-dir))
+      :config
+      (setq  deft-directory "~/Google Drive/orgfiles/notes/"
+             deft-extensions '("md" "org"))
+
+      ;; Setup my list of deft directories
+      (defvar agarbuno/deft-dir-list '()
+        "A list of deft directories to pick")
+
+      (setq agarbuno/deft-dir-list '("/Users/agarbuno/Google Drive/orgfiles/notes"
+                                     "/Users/agarbuno/Google Drive/orgfiles/notes/Journal"
+                                       "/Users/agarbuno/Google Drive/orgfiles/notes/References"
+                                     ))
+
+      (defun agarbuno/pick-deft-dir ()
+        "Select directories from a list"
+        (interactive)
+        (setq deft-directory 
+              (ido-completing-read "Select directory: " agarbuno/deft-dir-list))
+        (deft-refresh))
+
+      )
 
 #+end_src
 ** Bibliography
