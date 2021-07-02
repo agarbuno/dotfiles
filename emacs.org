@@ -541,6 +541,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("research" . ?r)
             ("maestria" . ?m)
             ("teaching" . ?t)
+            ("paper"    . ?p)
+            ("book"     . ?b)
             ("idea" . ?i)))
 
     ;; Save Org buffers after refiling!
@@ -576,6 +578,12 @@ This section contains the basic configuration for =org-mode= plus the configurat
              "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
             ("tr" "Research Tasks" entry
              (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
+             "* TODO %?  \nLink: %a")
+            ("tp" "Reading Reminder" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
+             "* TODO %?  \nLink: %a")
+            ("tv" "Talk or Video" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
              "* TODO %?  \nLink: %a")
             ("j" "Journal" entry
              (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
