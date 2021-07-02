@@ -813,6 +813,8 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
   (use-package org-roam-bibtex
     :after org-roam
     :hook (org-roam-mode . org-roam-bibtex-mode)
+    :bind (("C-c b d" . doi-add-bibtex-entry)
+           ("C-c b a" . arxiv-get-pdf-add-bibtex-entry))
     :config
     (require 'org-ref)
     (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
@@ -1577,17 +1579,19 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 *** Reference management
 
 #+begin_src emacs-lisp
-  (use-package ivy-bibtex
-    :config
-    (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                           "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
-    (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs"
-           bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes")
+    (use-package ivy-bibtex
+      :bind (("C-c b f" . ivy-bibtex)
+             ("C-c b n" . ivy-bibtex-with-notes))
+      :config
+      (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                             "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+      (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs"
+             bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes")
 
-    (setq bibtex-completion-pdf-symbol "⌘")
-    (setq bibtex-completion-notes-symbol "✎")
-    (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
-    )
+      (setq bibtex-completion-pdf-symbol "⌘")
+      (setq bibtex-completion-notes-symbol "✎")
+      (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+      )
 #+end_src
 
 
