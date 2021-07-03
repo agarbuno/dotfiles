@@ -514,7 +514,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (setq org-log-into-drawer t)
 
     (setq org-agenda-files
-        '("~/Google Drive/orgfiles/agenda/tasks.org"))
+        '("~/Google Drive/orgfiles/agenda/tasks.org"
+          "~/Google Drive/orgfiles/agenda/habits.org"))
 
     (setq org-todo-keywords
           '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -536,7 +537,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (setq org-tag-alist
           '((:startgroup)
-                                          ; Put mutually exclusive tags here
+            ;; Put mutually exclusive tags here
             (:endgroup)
             ("research" . ?r)
             ("maestria" . ?m)
@@ -599,6 +600,12 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (agarbuno/org-font-setup))
 
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'org-habit)
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60)
 #+end_src
 
 *** Nicer Heading Bullets
@@ -815,7 +822,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
         :hook (org-roam-mode . org-roam-bibtex-mode)
         :bind (("C-c b d" . doi-add-bibtex-entry)
                ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
-               ("C-c b k" . org-ref-clean-bibtex-entry))
+               ("C-c b k" . org-ref-clean-bibtex-entry))              
         :config
         (require 'org-ref)
         (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
@@ -840,8 +847,8 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
         )
     #+end_src
 ** Noter
-Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nalhasan]]'s configuration
-'
+Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nalhasan]]'s configuration.
+
 #+begin_src emacs-lisp
   (pdf-loader-install)
   (use-package pdf-tools
