@@ -582,13 +582,16 @@ This section contains the basic configuration for =org-mode= plus the configurat
              "* TODO %?  \nLink: %a")
             ("tp" "Reading Reminder" entry
              (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
-             "* TODO %?  \nLink: %a")
+             "* READ %?  \nLink: %a")
             ("tv" "Talk or Video" entry
              (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
-             "* TODO %?  \nLink: %a")
+             "* VIEW %?  \nLink: %a")
             ("j" "Journal" entry
              (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
              "* %?\nEntered on %U\n  %i\n  %a")
+            ("h" "Habit" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/habits.org" "Work")
+             "* TODO %?")
             )
           )
 
