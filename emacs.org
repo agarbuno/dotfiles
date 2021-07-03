@@ -810,33 +810,34 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 ** Bibliography
 
 #+begin_src emacs-lisp
-  (use-package org-roam-bibtex
-    :after org-roam
-    :hook (org-roam-mode . org-roam-bibtex-mode)
-    :bind (("C-c b d" . doi-add-bibtex-entry)
-           ("C-c b a" . arxiv-get-pdf-add-bibtex-entry))
-    :config
-    (require 'org-ref)
-    (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                        "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+      (use-package org-roam-bibtex
+        :after org-roam
+        :hook (org-roam-mode . org-roam-bibtex-mode)
+        :bind (("C-c b d" . doi-add-bibtex-entry)
+               ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
+               ("C-c b k" . org-ref-clean-bibtex-entry))
+        :config
+        (require 'org-ref)
+        (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                            "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
 
-    (setq org-ref-completion-library 'org-ref-ivy-cite)
-    (require 'org-ref-ivy-cite)
+        (setq org-ref-completion-library 'org-ref-ivy-cite)
+        (require 'org-ref-ivy-cite)
 
-    ;; see org-ref for use of these variables
-    (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-          org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                         "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
-          org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-          org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
-          org-ref-show-broken-links t)
+        ;; see org-ref for use of these variables
+        (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
+              org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                             "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
+              org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
+              org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
+              org-ref-show-broken-links t)
 
-    (setq orb-templates
-          '(("r" "ref" plain (function org-roam-capture--get-point) "%?"
-             :file-name "References/${citekey}"
-             :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n"
-             :unnarrowed t)))
-    )
+        (setq orb-templates
+              '(("r" "ref" plain (function org-roam-capture--get-point) "%?"
+                 :file-name "References/${citekey}"
+                 :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n"
+                 :unnarrowed t)))
+        )
     #+end_src
 ** Noter
 Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nalhasan]]'s configuration
@@ -1544,6 +1545,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 #+begin_src emacs-lisp
   (use-package bibtex
     :defer t ; built-in with Emacs
+    :bind (("C-c b s" . bibtex-sort-buffer))
     :custom
     (bibtex-autokey-titleword-length 0)
     (bibtex-autokey-titleword-separator "")
