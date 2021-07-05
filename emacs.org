@@ -579,7 +579,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
              "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
             ("tr" "Research Tasks" entry
              (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
-             "* TODO %?  \nLink: %a")
+             "* TODO %?  :research:\nLink: %a")
             ("tp" "Reading Reminder" entry
              (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
              "* READ %?  \nLink: %a")
