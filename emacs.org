@@ -4,6 +4,98 @@
 
 Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwil][David Wilson]].
 
+* Table of Contents
+:PROPERTIES:
+:TOC:      :include all  :ignore this :depth 3
+:END:
+
+:CONTENTS:
+- [[#welcome][Welcome!]]
+- [[#tips-for-use][Tips for Use]]
+- [[#startup-benchmarking][Startup Benchmarking]]
+  - [[#boot-time][Boot time]]
+    - [[#the-most-important-tip-dont-load-any-packages][The most important tip: don't load any packages!]]
+- [[#package-system-setup][Package System Setup]]
+  - [[#basic-package-setup][Basic package setup]]
+  - [[#no-litering][No Litering]]
+  - [[#automatic-package-updates][Automatic Package Updates]]
+  - [[#inmortal-buffers][Inmortal buffers]]
+- [[#basic-ui-configuration][Basic UI Configuration]]
+  - [[#font-configuration][Font Configuration]]
+  - [[#solaire-mode][Solaire Mode]]
+- [[#keybinding-configuration][Keybinding Configuration]]
+- [[#ui-configuration][UI Configuration]]
+  - [[#command-log-mode][Command Log Mode]]
+  - [[#color-theme][Color Theme]]
+  - [[#better-modeline][Better Modeline]]
+  - [[#which-key][Which Key]]
+  - [[#ivy-and-counsel][Ivy and Counsel]]
+  - [[#helpful-help-commands][Helpful Help Commands]]
+  - [[#text-scaling][Text Scaling]]
+  - [[#completions-with-ivy-and-prescient][Completions with ivy and prescient]]
+- [[#org-mode][Org Mode]]
+  - [[#better-font-faces][Better Font Faces]]
+  - [[#basic-config][Basic Config]]
+    - [[#nicer-heading-bullets][Nicer Heading Bullets]]
+    - [[#center-org-buffers][Center Org Buffers]]
+  - [[#agenda][Agenda]]
+  - [[#configure-babel-languages][Configure Babel Languages]]
+  - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
+  - [[#auto-markup-symbols][Auto-markup symbols]]
+  - [[#org-roam][Org Roam]]
+  - [[#deft][Deft]]
+  - [[#bibliography][Bibliography]]
+  - [[#noter][Noter]]
+  - [[#header][Header]]
+  - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
+- [[#links-y-contenido-web][Links y contenido web]]
+- [[#development][Development]]
+  - [[#languages][Languages]]
+    - [[#language-servers][Language Servers]]
+    - [[#completions-with-company-mode][Completions with company-mode]]
+    - [[#python-environment][Python Environment]]
+  - [[#debugging][Debugging]]
+  - [[#commenting][Commenting]]
+  - [[#projectile][Projectile]]
+  - [[#magit][Magit]]
+  - [[#rainbow-delimiters][Rainbow Delimiters]]
+- [[#terminal][Terminal]]
+  - [[#term-mode][term-mode]]
+    - [[#better-term-mode-colors][Better term-mode colors]]
+  - [[#vterm][vterm]]
+  - [[#shell-mode][shell-mode]]
+- [[#navigation][Navigation]]
+  - [[#dired][Dired]]
+  - [[#navigation][Navigation]]
+  - [[#configuration][Configuration]]
+  - [[#file-operations][File Operations]]
+    - [[#marking-files][Marking files]]
+    - [[#copying-and-renaming-files][Copying and Renaming files]]
+    - [[#deleting-files][Deleting files]]
+    - [[#creating-and-extracting-archives][Creating and extracting archives]]
+    - [[#other-common-operations][Other common operations]]
+  - [[#file-icons-in-dired][File Icons in Dired]]
+  - [[#open-external-files][Open external files]]
+  - [[#hide--show-dotfiles][Hide / show dotfiles]]
+  - [[#window-navigation][Window navigation]]
+    - [[#navigation-commands][navigation commands]]
+    - [[#evil-mode-alternatives][evil-mode alternatives]]
+    - [[#evil-mode-alternatives][evil-mode alternatives]]
+    - [[#moving-buffers-between-windows][moving buffers between windows]]
+    - [[#go-back-to-window-configuration][go back to window configuration]]
+    - [[#winum-mode][winum-mode]]
+- [[#productivity][Productivity]]
+  - [[#latex-editing][Latex editing]]
+    - [[#parenthesis][Parenthesis]]
+    - [[#pdf-viewer][PDF Viewer]]
+    - [[#bibtex][BibTex]]
+    - [[#reference-management][Reference management]]
+    - [[#autocompletion-with-lsp][Autocompletion with lsp]]
+  - [[#latex-in-org-mode][Latex in org mode]]
+  - [[#cdlatex][CDLaTeX]]
+  - [[#screenshots][Screenshots]]
+:END:
+
 * Welcome!
 
 This is the configuration we've been building in the *Emacs From Scratch* series, now written as an Org Mode document.  This file generates [[file:init.el][init.el]] which can be loaded by Emacs at startup.
@@ -893,6 +985,16 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
     ;; Use > instead of / as separator
     (setq org-sticky-header-outline-path-separator " > ")
     )
+#+end_src
+**  Update Table of Contents on Save
+
+Use =org-make-toc= to automatically update the ToC in any header with a property named =TOC=.
+
+#+begin_src emacs-lisp
+
+  (use-package org-make-toc
+    :hook (org-mode . org-make-toc-mode))
+
 #+end_src
 * Links y contenido web
 #+begin_src emacs-lisp
