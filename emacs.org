@@ -425,7 +425,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
       :config
       (setq doom-modeline-height 25)
       (setq display-battery-mode t)
-      (setq display-time-mode 1)
+      (setq display-time-mode nil)
       (setq display-time-24hr-format 1)
       (setq display-time-day-and-date 1)
       )
@@ -558,7 +558,9 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 #+begin_src emacs-lisp
   (use-package beacon
     :config
-    (setq beacon-mode 1))
+    (setq beacon-mode 1)
+    (setq beacon-blink-when-focused 1)
+    )
 #+end_src
 * Org Mode
 
