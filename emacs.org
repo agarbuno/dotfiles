@@ -33,6 +33,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#helpful-help-commands][Helpful Help Commands]]
   - [[#text-scaling][Text Scaling]]
   - [[#completions-with-ivy-and-prescient][Completions with ivy and prescient]]
+  - [[#beacon-mode][beacon-mode]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -94,6 +95,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#latex-in-org-mode][Latex in org mode]]
   - [[#cdlatex][CDLaTeX]]
   - [[#screenshots][Screenshots]]
+  - [[#spell-checking][Spell checking]]
 :END:
 
 * Welcome!
@@ -420,10 +422,16 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
   (use-package doom-modeline
       :init (doom-modeline-mode 1)
-      :custom ((doom-modeline-height 15)))
+      :config
+      (setq doom-modeline-height 25)
+      (setq display-battery-mode t)
+      (setq display-time-mode 1)
+      (setq display-time-24hr-format 1)
+      (setq display-time-day-and-date 1)
+      )
 
   (use-package minions
-    :config
+    :config 
     (setq doom-modeline-minor-modes t)
     (minions-mode 1)
     )
@@ -532,6 +540,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 ** Completions with ivy and prescient
 
+
 #+begin_src emacs-lisp
 
   (use-package ivy-prescient
@@ -545,6 +554,12 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 #+end_src
 
+** =beacon-mode=
+#+begin_src emacs-lisp
+  (use-package beacon
+    :config
+    (setq beacon-mode 1))
+#+end_src
 * Org Mode
 
 [[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
@@ -693,16 +708,16 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (global-set-key (kbd "C-c a") 'org-agenda)
     (global-set-key (kbd "C-c t c") 'org-capture)
 
+    (require 'org-habit)
+    (setq org-habit-show-all-today t) 
+    (setq org-habit-graph-column 60)
+
     (agarbuno/org-font-setup))
 
 #+end_src
 
 #+begin_src emacs-lisp
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-show-all-today t) 
-  (setq org-habit-graph-column 40)
-  (setq org-habit-show-habits-only-for-today t)
+
 #+end_src
 
 *** Nicer Heading Bullets
@@ -1803,3 +1818,17 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 #+end_src
 
 
+
+** Spell checking
+
+#+begin_src emacs-lisp
+  (use-package flyspell-correct
+      :after flyspell
+      :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
+
+  (use-package flyspell-correct-ivy
+    :after flyspell-correct)
+
+  (add-hook 'text-mode-hook 'flyspell-mode)
+
+#+end_src 
