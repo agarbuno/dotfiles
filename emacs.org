@@ -560,6 +560,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     :config
     (setq beacon-mode 1)
     (setq beacon-blink-when-focused 1)
+    (setq beacon-size 70)
     )
 #+end_src
 * Org Mode
@@ -1599,44 +1600,48 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
  - [[https://tex.stackexchange.com/questions/364361/how-to-set-syntax-highlighting-for-citep-as-same-as-cite-in-auctex][macros - How to set syntax highlighting for \citep as same as \cite in AUCTeX? - TeX - LaTeX Stack Exchange]]
 
 #+begin_src emacs-lisp
-    (use-package latex
-      :ensure auctex
-      :custom
-      (reftex-plug-into-AUCTeX t)
-      (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                     "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
-      (LaTeX-indent-level 4
-                          LaTeX-item-indent 0
-                          TeX-brace-indent-level 4
-                          TeX-newline-function 'newline-and-indent)
-      :config
-      (setq font-latex-match-reference-keywords
-            '(
-              ("cite" "[{")
-              ("citep" "[{")
-              ("cite*" "[{")
-              )
+  (defun agarbuno/latex-mode-visual-fill ()
+    (setq fill-column 80)
+    (display-fill-column-indicator-mode 1)
+    )
+
+  (use-package latex
+    :ensure auctex
+    :hook (LaTeX-mode . agarbuno/latex-mode-visual-fill)
+    :custom
+    (reftex-plug-into-AUCTeX t)
+    (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                   "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+    (LaTeX-indent-level 4
+                        LaTeX-item-indent 0
+                        TeX-brace-indent-level 4
+                        TeX-newline-function 'newline-and-indent)
+    :config
+    (setq font-latex-match-reference-keywords
+          '(
+            ("cite" "[{")
+            ("citep" "[{")
+            ("cite*" "[{")
             )
-      (setq TeX-parse-self t)
-      ;; Use pdf-tools to open PDF files
-      (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-            TeX-source-correlate-start-server t)
-      ;; Prevent superscripts and subscripts from being displayed in a
-      ;; different font size.
-      (setq font-latex-fontify-script nil)
-      ;; Prevent section headers from being displayed in different font
-      ;; sizes.
-      (setq font-latex-fontify-sectioning 1)
-      ;; Don't be afraid to break inline math between lines.
-      (setq LaTeX-fill-break-at-separators nil)
-      (setq TeX-source-correlate-method 'synctex)
-      (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-      ;; Update PDF buffers after successful LaTeX runs
-      (add-hook 'TeX-after-compilation-finished-functions
-                #'TeX-revert-document-buffer)
-      ;; (add-hook 'LaTeX-mode-hook #'visual-line-mode)
-      ;; (add-hook 'LaTeX-mode-hook #'visual-fill-column-mode)
-      )
+          )
+    (setq TeX-parse-self t)
+    ;; Use pdf-tools to open PDF files
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+          TeX-source-correlate-start-server t)
+    ;; Prevent superscripts and subscripts from being displayed in a
+    ;; different font size.
+    (setq font-latex-fontify-script nil)
+    ;; Prevent section headers from being displayed in different font
+    ;; sizes.
+    (setq font-latex-fontify-sectioning 1)
+    ;; Don't be afraid to break inline math between lines.
+    (setq LaTeX-fill-break-at-separators nil)
+    (setq TeX-source-correlate-method 'synctex)
+    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+    ;; Update PDF buffers after successful LaTeX runs
+    (add-hook 'TeX-after-compilation-finished-functions
+              #'TeX-revert-document-buffer)
+    )
 
 #+end_src
 
@@ -1820,13 +1825,13 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 #+end_src
 
 
-
 ** Spell checking
 
 #+begin_src emacs-lisp
   (use-package flyspell-correct
-      :after flyspell
-      :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper)))
+    :after flyspell
+    :bind (:map flyspell-mode-map ("C-;" . flyspell-correct-wrapper))
+    )
 
   (use-package flyspell-correct-ivy
     :after flyspell-correct)
