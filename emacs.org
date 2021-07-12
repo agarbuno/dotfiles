@@ -1625,9 +1625,6 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
             )
           )
     (setq TeX-parse-self t)
-    ;; Use pdf-tools to open PDF files
-    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-          TeX-source-correlate-start-server t)
     ;; Prevent superscripts and subscripts from being displayed in a
     ;; different font size.
     (setq font-latex-fontify-script nil)
@@ -1638,6 +1635,10 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
     (setq LaTeX-fill-break-at-separators nil)
     (setq TeX-source-correlate-method 'synctex)
     (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+    ;; Use pdf-tools to open PDF files
+    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
+          TeX-source-correlate-start-server t)
+
     ;; Update PDF buffers after successful LaTeX runs
     (add-hook 'TeX-after-compilation-finished-functions
               #'TeX-revert-document-buffer)
