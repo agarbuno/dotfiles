@@ -96,6 +96,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#cdlatex][CDLaTeX]]
   - [[#screenshots][Screenshots]]
   - [[#spell-checking][Spell checking]]
+  - [[#pdf-viewing][PDF viewing]]
 :END:
 
 * Welcome!
@@ -224,14 +225,14 @@ You can also use =M-x auto-package-update-now= to update right now!
 
 #+begin_src emacs-lisp
 
-  ;; (use-package auto-package-update
-  ;;   :custom
-  ;;   (auto-package-update-interval 7)
-  ;;   (auto-package-update-prompt-before-update t)
-  ;;   (auto-package-update-hide-results t)
-  ;;   :config
-  ;;   (auto-package-update-maybe)
-  ;;   (auto-package-update-at-time "09:00"))
+  (use-package auto-package-update
+    :custom
+    (auto-package-update-interval 7)
+    (auto-package-update-prompt-before-update t)
+    (auto-package-update-hide-results t)
+    :config
+    (auto-package-update-maybe)
+    (auto-package-update-at-time "09:00"))
 
 #+end_src
 
@@ -1825,7 +1826,6 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 
 #+end_src
 
-
 ** Spell checking
 
 #+begin_src emacs-lisp
@@ -1839,4 +1839,11 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 
   (add-hook 'text-mode-hook 'flyspell-mode)
 
-#+end_src 
+#+end_src
+
+** PDF viewing
+
+#+begin_src emacs-lisp
+ (setq pdf-view-use-scaling t
+        pdf-view-use-imagemagick nil)
+#+end_src

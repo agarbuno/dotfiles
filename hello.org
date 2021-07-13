@@ -37,6 +37,8 @@
 
   #+end_src
 
-* NOTES Codigo
+* NOTES LaTeX
 
+$\alpha$
 
+$$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
