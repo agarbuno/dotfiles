@@ -584,8 +584,9 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 ** =beacon-mode=
 #+begin_src emacs-lisp
   (use-package beacon
+    :ensure t 
     :config
-    (setq beacon-mode 1)
+    (beacon-mode 1)
     (setq beacon-blink-when-focused 1)
     (setq beacon-size 70)
     )
