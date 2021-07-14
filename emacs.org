@@ -21,6 +21,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#automatic-package-updates][Automatic Package Updates]]
   - [[#inmortal-buffers][Inmortal buffers]]
 - [[#basic-ui-configuration][Basic UI Configuration]]
+  - [[#dashboard][Dashboard]]
   - [[#font-configuration][Font Configuration]]
   - [[#solaire-mode][Solaire Mode]]
 - [[#keybinding-configuration][Keybinding Configuration]]
@@ -293,6 +294,31 @@ This section configures basic UI settings that remove unneeded elements to make 
     (add-hook mode (lambda () (display-line-numbers-mode 0)))
     )
 
+#+end_src
+** Dashboard
+
+#+begin_src emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook)
+    ;; (setq dashboard-page-separator "\n\f\n")
+    (setq dashboard-startup-banner 'logo)  
+    (setq dashboard-center-content t)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (dashboard-modify-heading-icons '((projects . "rocket")
+                                      (agenda . "milestone")
+                                      (recents . "history")
+                                      (bookmarks . "bookmark")))
+    (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+    (setq dashboard-items '(
+                            (recents  . 5)
+                            (projects . 5)
+                            (agenda . 5)
+                            (bookmarks . 5)
+                            ))
+    )
 #+end_src
 
 ** Font Configuration
