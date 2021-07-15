@@ -1068,15 +1068,31 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
   (defun agarbuno/lsp-mode-setup ()
     (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
+    (setq lsp-pyls-disable-warning t)
+    (lsp-headerline-breadcrumb-mode)
+    )
 
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
     :hook (lsp-mode . agarbuno/lsp-mode-setup)
+    :custom
+    (lsp-auto-guess-root nil)
+    (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+    (lsp-file-watch-threshold nil)
+    (read-process-output-max (* 1024 1024))
+    (lsp-eldoc-hook nil)
+    (flycheck-mode nil)
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
     :config
-    (lsp-enable-which-key-integration t))
+    (lsp-enable-which-key-integration t)
+    )
+
+  (defun agarbuno/disable-flycheck-mode ()
+    (interactive)
+    (flycheck-mode -1))
+
+  (add-hook 'prog-mode-hook 'agarbuno/disable-flycheck-mode)
 
 #+end_src
 
@@ -1089,7 +1105,9 @@ The =which-key= integration adds helpful descriptions of the various keys so you
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
     :custom
-    (lsp-ui-doc-position 'bottom))
+    (lsp-ui-doc-position 'bottom)
+    (lsp-ui-doc-delay .1)
+    )
 
 #+end_src
 
@@ -1135,21 +1153,20 @@ Try these commands with =M-x=:
 We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
 
 #+begin_src emacs-lisp
-  (use-package company
-    :after lsp-mode
-    :hook ((lsp-mode . company-mode)
-           (LaTeX-mode . company-mode))
-    :bind (:map company-active-map
-                ("<tab>" . company-complete-selection))
-    (:map lsp-mode-map
-          ("<tab>" . company-indent-or-complete-common))
-    :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0))
+   (use-package company
+     :after lsp-mode
+     :hook ((lsp-mode . company-mode)
+            (LaTeX-mode . company-mode))
+     :bind (:map company-active-map
+                 ("<tab>" . company-complete-selection))
+     (:map lsp-mode-map
+           ("<tab>" . company-indent-or-complete-common))
+     :custom
+     (company-minimum-prefix-length 1)
+     (company-idle-delay 0.0))
 
-  (use-package company-box
-    :hook (company-mode . company-box-mode))
-
+   (use-package company-box
+     :hook (company-mode . company-box-mode))
 #+end_src
 
 *** Python Environment
