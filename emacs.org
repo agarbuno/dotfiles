@@ -313,10 +313,10 @@ This section configures basic UI settings that remove unneeded elements to make 
                                       (bookmarks . "bookmark")))
     (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
     (setq dashboard-items '(
-                            (recents  . 5)
+                            (recents  . 10)
                             (projects . 5)
-                            (agenda . 5)
                             (bookmarks . 5)
+                            (agenda . 10)
                             ))
     )
 #+end_src
@@ -1074,18 +1074,20 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
-    :hook (lsp-mode . agarbuno/lsp-mode-setup)
-    :custom
-    (lsp-auto-guess-root nil)
-    (lsp-prefer-flymake nil) ; Use flycheck instead of flymake
-    (lsp-file-watch-threshold nil)
-    (read-process-output-max (* 1024 1024))
-    (lsp-eldoc-hook nil)
-    (flycheck-mode nil)
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+    :hook (lsp-mode . agarbuno/lsp-mode-setup)
     :config
-    (lsp-enable-which-key-integration t)
+    (setq lsp-enable-which-key-integration t)
+    (setq lsp-auto-guess-root nil)
+    (setq lsp-prefer-flymake nil) ; Use flycheck instead of flymake
+    (setq lsp-file-watch-threshold nil)
+    (setq read-process-output-max (* 1024 1024))
+    (setq lsp-diagnostics-provider :none)
+    (setq lsp-eldoc-hook nil)
+    (setq flycheck-mode nil)
+    (setq lsp-signature-auto-activate nil)
+    (setq lsp-signature-render-documentation nil)
     )
 
 #+end_src
@@ -1099,6 +1101,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
     :custom
+    (lsp-ui-doc-enable nil)
     (lsp-ui-doc-position 'bottom)
     (lsp-ui-doc-delay .1)
     )
@@ -1205,8 +1208,8 @@ There are a number of other language servers for Python so if you find that =pyl
     (python-shell-interpreter "python3")
     (dap-python-executable "python3")
     (dap-python-debugger 'debugpy)
-      :config
-      (require 'dap-python))
+    :config
+    (require 'dap-python))
 
 #+end_src
 
