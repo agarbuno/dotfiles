@@ -1088,12 +1088,6 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     (lsp-enable-which-key-integration t)
     )
 
-  (defun agarbuno/disable-flycheck-mode ()
-    (interactive)
-    (flycheck-mode -1))
-
-  (add-hook 'prog-mode-hook 'agarbuno/disable-flycheck-mode)
-
 #+end_src
 
 **** lsp-ui
