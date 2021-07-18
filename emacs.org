@@ -35,6 +35,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#text-scaling][Text Scaling]]
   - [[#completions-with-ivy-and-prescient][Completions with ivy and prescient]]
   - [[#beacon-mode][beacon-mode]]
+  - [[#indentation][Indentation]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -598,6 +599,20 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     (setq beacon-size 70)
     )
 #+end_src
+** Indentation
+
+Let's make indentation with 4 spaces and no tab 
+
+#+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (setq-default indent-tabs-mode nil)
+    (setq tab-width 4)
+    (setq-default tab-always-indent 'complete)
+  )
+#+end_src
+
+
 * Org Mode
 
 [[https://orgmode.org/][Org Mode]] is one of the hallmark features of Emacs.  It is a rich document editor, project planner, task and time tracker, blogging engine, and literate coding utility all wrapped up in one package.
