@@ -62,7 +62,7 @@ $\alpha$
 $$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
 
 #+name: hello-world
-#+begin_src latex :export results :file test.png
+#+begin_src latex
   \begin{align}
     y &= X\beta + \epsilon\,,\\
     \epsilon &\sim \mathsf{N}(0, \sigma^2)\,.
@@ -71,6 +71,10 @@ $$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
 
 #+RESULTS: hello-world
 #+begin_export latex
+\begin{align}
+  y &= X\beta + \epsilon\,,\\
+  \epsilon &\sim \mathsf{N}(0, \sigma^2)\,.
+\end{align}
 #+end_export
 
 

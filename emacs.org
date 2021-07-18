@@ -812,10 +812,10 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 #+begin_src emacs-lisp
 
   (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((emacs-lisp . t)
-        (latex . t)
-        (python . t)))
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (latex . t)
+     (python . t)))
 
   (with-eval-after-load 'org
     ;; This is needed as of Org 9.2
@@ -827,7 +827,8 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
     (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
-
+  (setq org-confirm-babel-evaluate nil)
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
 #+end_src
 
 ** Auto-tangle Configuration Files
@@ -1056,7 +1057,7 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
     (setq org-sticky-header-outline-path-separator " > ")
     )
 #+end_src
-**  Update Table of Contents on Save
+** Update Table of Contents on Save
 
 Use =org-make-toc= to automatically update the ToC in any header with a property named =TOC=.
 
@@ -1635,8 +1636,6 @@ Use =buffer-move= for a more general solution:
   (global-set-key (kbd "<C-s-left>")   'buf-move-left)
   (global-set-key (kbd "<C-s-right>")  'buf-move-right)
 
-
-
 #+end_src
 
 *** go back to window configuration
@@ -1862,6 +1861,10 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 #+end_src
 
 ** Latex in org mode
+
+You can produce whole Latex documents within Org Mode alone. There are a bit of configurations that needs to be put in place. For starters you can use inline Latex or source blocks.
+
+A very nice guide for writing this type of documents can be found in: [[http://www.wouterspekkink.org/academia/writing/tool/doom-emacs/2021/02/27/writing-academic-papers-with-org-mode.html][Latex within OrgMode]] . A snippet of the template for org-latex documents can be found there and in the repo. 
 
 $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
