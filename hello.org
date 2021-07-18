@@ -28,17 +28,78 @@
 
    **More** _content_! /italics/
    
-* TODO Second heading
+* Second heading
 
-  #+begin_src emacs-lisp
+#+begin_src emacs-lisp
 
-    (defun my-elisp-func ()
-      (message "Hello!"))
+  (defun my-elisp-func ()
+    (message "Hello!"))
 
-  #+end_src
+#+end_src
 
-* NOTES LaTeX
+  #+RESULTS:
+  : my-elisp-func
+
+#+begin_src python
+
+  x = []
+  x.append(1)
+
+  def greetings(string):
+    print(string)
+  
+  greetings("Hello")
+
+#+end_src
+
+#+RESULTS:
+: None
+
+* Using LaTeX within Org-Mode
 
 $\alpha$
 
 $$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
+
+#+name: hello-world
+#+begin_src latex :export results :file test.png
+  \begin{align}
+    y &= X\beta + \epsilon\,,\\
+    \epsilon &\sim \mathsf{N}(0, \sigma^2)\,.
+  \end{align}
+#+end_src
+
+#+RESULTS: hello-world
+#+begin_export latex
+#+end_export
+
+
+* Python and babel
+
+See more here: [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][Python Source Code Blocks in Org Mode]]
+
+#+begin_src python :results value
+  import numpy as np
+  x = np.random.normal(0,1,size=[10,])
+  return "The mean is: %s"%(x.mean().round(2))
+#+end_src
+
+#+RESULTS:
+: The mean is: -0.13
+
+
+#+begin_src python :session
+  x = 0.0
+  x + 3
+#+end_src
+
+#+RESULTS:
+: 3.0
+
+#+begin_src python :session 
+  import numpy as np
+  np.random.normal()
+#+end_src
+
+#+RESULTS:
+: -1.2658027801593708
