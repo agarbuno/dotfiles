@@ -119,11 +119,11 @@ The following variables are used to tweak some of the configuration pieces for u
   ;;       in Emacs and init.el will be generated automatically!
 
   ;; You will most likely need to adjust this font size for your system!
-  (defvar agarbuno/default-font-size 150)
-  (defvar agarbuno/default-variable-font-size 150)
+  (defvar ag/default-font-size 150)
+  (defvar ag/default-variable-font-size 150)
 
   ;; Make frame transparency overridable
-  (defvar agarbuno/frame-transparency '(95 . 95))
+  (defvar ag/frame-transparency '(95 . 95))
 
 #+end_src
 
@@ -140,14 +140,14 @@ Add a function to =emacs-startup-hook= to print out the duration of Emacs startu
 
   (setq gc-cons-threshold (* 2 1000 1000))
 
-  (defun agarbuno/display-startup-time ()
+  (defun ag/display-startup-time ()
     (message "Emacs loaded in %s with %d garbage collections."
              (format "%.2f seconds"
                      (float-time
                       (time-subtract after-init-time before-init-time)))
              gcs-done))
 
-  (add-hook 'emacs-startup-hook #'agarbuno/display-startup-time)
+  (add-hook 'emacs-startup-hook #'ag/display-startup-time)
 
 #+end_src
 All startup behavior is happening in the =normal-top-level= function!
@@ -245,14 +245,14 @@ You can also use =M-x auto-package-update-now= to update right now!
 ** Inmortal buffers
 #+begin_src emacs-lisp
 
-  (defun agarbuno/immortal-buffers ()
+  (defun ag/immortal-buffers ()
     (if (or (eq (current-buffer) (get-buffer "*scratch*"))
             (eq (current-buffer) (get-buffer "*Messages*")))
         (progn (bury-buffer)
                nil)
       t))
 
-  (add-hook 'kill-buffer-query-functions 'agarbuno/immortal-buffers)
+  (add-hook 'kill-buffer-query-functions 'ag/immortal-buffers)
 
 #+end_src
 * Basic UI Configuration
@@ -281,8 +281,8 @@ This section configures basic UI settings that remove unneeded elements to make 
   (global-display-line-numbers-mode t)
 
   ;; Set frame transparency
-  (set-frame-parameter (selected-frame) 'alpha agarbuno/frame-transparency)
-  (add-to-list 'default-frame-alist `(alpha . ,agarbuno/frame-transparency))
+  (set-frame-parameter (selected-frame) 'alpha ag/frame-transparency)
+  (add-to-list 'default-frame-alist `(alpha . ,ag/frame-transparency))
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -332,13 +332,13 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
 #+begin_src emacs-lisp
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height agarbuno/default-font-size)
+(set-face-attribute 'default nil :font "Fira Code Retina" :height ag/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height agarbuno/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height ag/default-font-size)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height agarbuno/default-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height ag/default-font-size :weight 'regular)
 
 #+end_src
 
@@ -382,12 +382,12 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (use-package general
     :after evil
     :config
-    (general-create-definer agarbuno/leader-keys
+    (general-create-definer ag/leader-keys
       :keymaps '(normal insert visual emacs)
       :prefix "SPC"
       :global-prefix "C-SPC")
 
-    (agarbuno/leader-keys
+    (ag/leader-keys
       "t"  '(:ignore t :which-key "toggles")
       "tt" '(counsel-load-theme :which-key "choose theme")
       "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/Emacs.org")))
@@ -572,7 +572,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
       ("k" text-scale-decrease "out")
       ("f" nil "finished" :exit t))
 
-    (agarbuno/leader-keys
+    (ag/leader-keys
       "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 #+end_src
@@ -622,11 +622,11 @@ Let's make indentation with 4 spaces and no tab
 
 ** Better Font Faces
 
-The =agarbuno/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.
+The =ag/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.
 
 #+begin_src emacs-lisp
 
-  (defun agarbuno/org-font-setup ()
+  (defun ag/org-font-setup ()
     ;; Replace list hyphen with dot
     (font-lock-add-keywords 'org-mode
                             '(("^ *\\([-]\\) "
@@ -660,14 +660,14 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+Begin_src emacs-lisp
 
-  (defun agarbuno/org-mode-setup ()
+  (defun ag/org-mode-setup ()
     (org-indent-mode)
     (variable-pitch-mode 1)
     (visual-line-mode 1))
 
   (use-package org
     :commands (org-capture org-agenda)
-    :hook (org-mode . agarbuno/org-mode-setup)
+    :hook (org-mode . ag/org-mode-setup)
     :config
     (setq org-ellipsis " ▾")
     (setq org-support-shift-select t)
@@ -768,7 +768,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (setq org-habit-show-all-today t) 
     (setq org-habit-graph-column 60)
 
-    (agarbuno/org-font-setup))
+    (ag/org-font-setup))
 
 #+end_src
 
@@ -796,13 +796,13 @@ We use [[https://github.com/joostkremers/visual-fill-column][visual-fill-column]
 
 #+begin_src emacs-lisp
 
-  (defun agarbuno/org-mode-visual-fill ()
+  (defun ag/org-mode-visual-fill ()
     (setq visual-fill-column-width 110
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
-    :hook (org-mode . agarbuno/org-mode-visual-fill))
+    :hook (org-mode . ag/org-mode-visual-fill))
 
 #+end_src
 
@@ -836,19 +836,19 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 
 ** Auto-tangle Configuration Files
 
-This snippet adds a hook to =org-mode= buffers so that =agarbuno/org-babel-tangle-config= gets executed each time such a buffer gets saved.  This function checks to see if the file being saved is the Emacs.org file you're looking at right now, and if so, automatically exports the configuration here to the associated output files.
+This snippet adds a hook to =org-mode= buffers so that =ag/org-babel-tangle-config= gets executed each time such a buffer gets saved.  This function checks to see if the file being saved is the Emacs.org file you're looking at right now, and if so, automatically exports the configuration here to the associated output files.
 
 #+begin_src emacs-lisp
 
   ;; Automatically tangle our Emacs.org config file when we save it
-  (defun agarbuno/org-babel-tangle-config ()
+  (defun ag/org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
                         (expand-file-name "~/github-repos/dotfiles/emacs.org"))
       ;; Dynamic scoping to the rescue
       (let ((org-confirm-babel-evaluate nil))
         (org-babel-tangle))))
 
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'agarbuno/org-babel-tangle-config)))
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'ag/org-babel-tangle-config)))
 
 #+end_src
 
@@ -961,25 +961,25 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
     (use-package deft
       :commands (deft)
       :bind (("C-c n d" . deft)
-             ("C-c n u" . agarbuno/pick-deft-dir))
+             ("C-c n u" . ag/pick-deft-dir))
       :config
       (setq  deft-directory "~/Google Drive/orgfiles/notes/"
              deft-extensions '("md" "org"))
 
       ;; Setup my list of deft directories
-      (defvar agarbuno/deft-dir-list '()
+      (defvar ag/deft-dir-list '()
         "A list of deft directories to pick")
 
-      (setq agarbuno/deft-dir-list '("/Users/agarbuno/Google Drive/orgfiles/notes"
-                                     "/Users/agarbuno/Google Drive/orgfiles/notes/Journal"
-                                       "/Users/agarbuno/Google Drive/orgfiles/notes/References"
+      (setq ag/deft-dir-list '("/Users/ag/Google Drive/orgfiles/notes"
+                                     "/Users/ag/Google Drive/orgfiles/notes/Journal"
+                                       "/Users/ag/Google Drive/orgfiles/notes/References"
                                      ))
 
-      (defun agarbuno/pick-deft-dir ()
+      (defun ag/pick-deft-dir ()
         "Select directories from a list"
         (interactive)
         (setq deft-directory 
-              (ido-completing-read "Select directory: " agarbuno/deft-dir-list))
+              (ido-completing-read "Select directory: " ag/deft-dir-list))
         (deft-refresh))
 
       )
@@ -1094,7 +1094,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
 
 #+begin_src emacs-lisp
 
-  (defun agarbuno/lsp-mode-setup ()
+  (defun ag/lsp-mode-setup ()
     (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
     (setq lsp-pyls-disable-warning t)
     (lsp-headerline-breadcrumb-mode)
@@ -1104,7 +1104,7 @@ The =which-key= integration adds helpful descriptions of the various keys so you
     :commands (lsp lsp-deferred)
     :init
     (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
-    :hook (lsp-mode . agarbuno/lsp-mode-setup)
+    :hook (lsp-mode . ag/lsp-mode-setup)
     :config
     (setq lsp-enable-which-key-integration t)
     (setq lsp-auto-guess-root nil)
@@ -1678,14 +1678,14 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
  - [[https://tex.stackexchange.com/questions/364361/how-to-set-syntax-highlighting-for-citep-as-same-as-cite-in-auctex][macros - How to set syntax highlighting for \citep as same as \cite in AUCTeX? - TeX - LaTeX Stack Exchange]]
 
 #+begin_src emacs-lisp
-  (defun agarbuno/latex-mode-visual-fill ()
+  (defun ag/latex-mode-visual-fill ()
     (setq fill-column 80)
     (display-fill-column-indicator-mode 1)
     )
 
   (use-package latex
     :ensure auctex
-    :hook (LaTeX-mode . agarbuno/latex-mode-visual-fill)
+    :hook (LaTeX-mode . ag/latex-mode-visual-fill)
     :custom
     (reftex-plug-into-AUCTeX t)
     (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
@@ -1769,7 +1769,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     (bibtex-align-at-equal-sign t)
     (bibtex-autokey-name-case-convert-function 'capitalize)
     :config
-    (defun agarbuno/bibtex-generate-autokey ()
+    (defun ag/bibtex-generate-autokey ()
       (interactive)
       ;; first we delete the existing key
       (bibtex-beginning-of-entry)
@@ -1788,7 +1788,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
                    while (assoc ret existing-keys)
                    do (setq ret (format "%s%c" key c)))
           ret)))
-    (advice-add #'bibtex-generate-autokey :override #'agarbuno/bibtex-generate-autokey)
+    (advice-add #'bibtex-generate-autokey :override #'ag/bibtex-generate-autokey)
     )
 
 #+end_src
@@ -1934,12 +1934,12 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 An alternative to =org-tree-slide= seems to be easier to customize. 
 
 #+begin_src emacs-lisp
-  (defun agarbuno/org-present-prepare-slide ()
+  (defun ag/org-present-prepare-slide ()
     (org-overview)
     (org-show-entry)
     (org-show-children))
 
-  (defun agarbuno/org-present-hook ()
+  (defun ag/org-present-hook ()
     (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                        (header-line (:height 4.5) variable-pitch)
                                        (org-document-title (:height 1.75) org-document-title)
@@ -1951,9 +1951,9 @@ An alternative to =org-tree-slide= seems to be easier to customize.
     (setq header-line-format " ")
     (org-appear-mode -1)
     (org-display-inline-images)
-    (agarbuno/org-present-prepare-slide))
+    (ag/org-present-prepare-slide))
 
-  (defun agarbuno/org-present-quit-hook ()
+  (defun ag/org-present-quit-hook ()
     (setq-local face-remapping-alist '((default variable-pitch default)))
     (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
     (setq header-line-format nil)
@@ -1962,36 +1962,36 @@ An alternative to =org-tree-slide= seems to be easier to customize.
     (org-sticky-header-mode 1)
     (org-appear-mode 1))
 
-  (defun agarbuno/org-present-prev ()
+  (defun ag/org-present-prev ()
     (interactive)
     (org-present-prev)
-    (agarbuno/org-present-prepare-slide))
+    (ag/org-present-prepare-slide))
 
-  (defun agarbuno/org-present-next ()
+  (defun ag/org-present-next ()
     (interactive)
     (org-present-next)
-    (agarbuno/org-present-prepare-slide))
+    (ag/org-present-prepare-slide))
 
   (use-package org-present
     :bind (:map org-present-mode-keymap
-           ("C->" . agarbuno/org-present-next)
-           ("C-<" . agarbuno/org-present-prev))
-    :hook ((org-present-mode . agarbuno/org-present-hook)
-           (org-present-mode-quit . agarbuno/org-present-quit-hook)))
+           ("C->" . ag/org-present-next)
+           ("C-<" . ag/org-present-prev))
+    :hook ((org-present-mode . ag/org-present-hook)
+           (org-present-mode-quit . ag/org-present-quit-hook)))
 #+end_src
 ** Org-tree-slide
 
 is a simple tool to treat a tree of an org buffer as a single slide. Since each slide is displayed by simple narrowing, an editable presentation is easily achieved without restricting the functionality of Org Mode. And usage of org-tree-slide is not limited to a presentation. Three profiles are predefined for different use cases.
 
 #+begin_src emacs-lisp
-  (defun agarbuno/org-start-presentation ()
+  (defun ag/org-start-presentation ()
     (interactive)
     (org-tree-slide-mode 1)
     (org-sticky-header-mode 0)
     (setq text-scale-mode-amount 3)
     (text-scale-mode 1))
 
-  (defun agarbuno/org-end-presentation ()
+  (defun ag/org-end-presentation ()
     (interactive)
     (text-scale-mode 0)
     (org-sticky-header-mode 1)
@@ -2003,7 +2003,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
     :commands org-tree-slide-mode
     :config
     (evil-define-key 'normal org-tree-slide-mode-map
-      (kbd "q") 'agarbuno/org-end-presentation
+      (kbd "q") 'ag/org-end-presentation
       (kbd "C-j") 'org-tree-slide-move-next-tree
       (kbd "C-k") 'org-tree-slide-move-previous-tree)
     (setq org-tree-slide-slide-in-effect nil
