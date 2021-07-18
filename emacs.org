@@ -100,6 +100,8 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#screenshots][Screenshots]]
   - [[#spell-checking][Spell checking]]
   - [[#pdf-viewing][PDF viewing]]
+- [[#presentations][Presentations]]
+  - [[#org-tree-slide][Org-tree-slide]]
 :END:
 
 * Welcome!
@@ -1923,4 +1925,43 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 #+begin_src emacs-lisp
  (setq pdf-view-use-scaling t
         pdf-view-use-imagemagick nil)
+#+end_src
+
+* Presentations
+** Org-tree-slide
+
+is a simple tool to treat a tree of an org buffer as a single slide. Since each slide is displayed by simple narrowing, an editable presentation is easily achieved without restricting the functionality of Org Mode. And usage of org-tree-slide is not limited to a presentation. Three profiles are predefined for different use cases.
+
+#+begin_src emacs-lisp
+  (defun agarbuno/org-start-presentation ()
+    (interactive)
+    (org-tree-slide-mode 1)
+    (org-sticky-header-mode 0)
+    (setq text-scale-mode-amount 3)
+    (text-scale-mode 1))
+
+  (defun agarbuno/org-end-presentation ()
+    (interactive)
+    (text-scale-mode 0)
+    (org-sticky-header-mode 1)
+    (org-tree-slide-mode 0))
+
+  (use-package org-tree-slide
+    :defer t
+    :after org
+    :commands org-tree-slide-mode
+    :config
+    (evil-define-key 'normal org-tree-slide-mode-map
+      (kbd "q") 'agarbuno/org-end-presentation
+      (kbd "C-j") 'org-tree-slide-move-next-tree
+      (kbd "C-k") 'org-tree-slide-move-previous-tree)
+    (setq org-tree-slide-slide-in-effect nil
+          org-tree-slide-activate-message "Presentation started."
+          org-tree-slide-deactivate-message "Presentation ended."
+          org-tree-slide-header t)
+    :custom
+    (org-tree-slide-breadcrumbs " > ")
+    (org-image-actual-width nil)
+    )
+
 #+end_src
