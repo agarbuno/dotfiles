@@ -56,7 +56,8 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#languages][Languages]]
     - [[#language-servers][Language Servers]]
     - [[#completions-with-company-mode][Completions with company-mode]]
-    - [[#python-environment][Python Environment]]
+  - [[#python][Python]]
+    - [[#jedi-autocompletion][Jedi autocompletion]]
   - [[#debugging][Debugging]]
   - [[#commenting][Commenting]]
   - [[#projectile][Projectile]]
@@ -1188,7 +1189,7 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
      :hook (company-mode . company-box-mode))
 #+end_src
 
-*** Python Environment
+** Python
 
 We use =lsp-mode= and =dap-mode= to provide a more complete development environment for Python in Emacs.  Check out [[https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/][the =pyls= configuration]] in the =lsp-mode= documentation for more details.
 
@@ -1202,11 +1203,21 @@ pip install --user "python-language-server[all]"
 
 There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
 
-*Note* I am using lsp-jedi as =pyls= seems to be deprecated. The instructions to install it are as follows:
+*** Jedi autocompletion
+
+*Note* I am using lsp-jedi as =pyls= seems to be deprecated. The instructions to install it are as follows
+
+First install 
+#+begin_src shell :tangle no
+  pip install jedi json-rpc service_factory virtualenv
+#+end_src
 
 #+begin_src emacs-lisp :tangle no
   M-x package-install lsp-jedi
+  M-x jedi:install-server
 #+end_src
+
+and enable =jedi:setup= or =jedi:ac_setup= in the buffer. 
 
 #+begin_src emacs-lisp :tangle no
 
@@ -1224,7 +1235,7 @@ There are a number of other language servers for Python so if you find that =pyl
 
   (use-package python-mode
     :ensure t
-    :hook (python-mode . lsp-deferred)
+    :hook (python-mode . lsp)
     :custom
     ;; NOTE: Set these if Python 3 is called "python3" on your system!
     (python-shell-interpreter "python3")
