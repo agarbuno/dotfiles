@@ -871,62 +871,62 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 
 #+begin_src emacs-lisp
 
-  (use-package org-roam
-    :custom
-    (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
-    (org-roam-completion-everywhere t)
-    ;; (org-roam-completion-system 'default)
-    ;; Capture templates
-    (org-roam-capture-templates
-     '(("d" "default" plain "%?"
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                           "#+title: ${title}\n")
-        :unnarrowed t))
-     )
-    ;; Dailies templates
-    (org-roam-dailies-directory "Journal/")
-    (org-roam-dailies-capture-templates
-     '(("d" "default" entry
-        "\n*  %?"
-        :if-new (file+head
-                 "%<%Y-%m-%d>.org"
-                 "#+title: %<%Y-%m-%d %a>\n"))
-       ("t" "talks" entry
-        "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
-        :if-new (file+head+olp
-                 "%<%Y-%m-%d>.org"
-                 "#+title: %<%Y-%m-%d %a>\n"
-                 ("Talks")))
-       ("m" "meeting" entry
-        "\n*  %<%I:%M %p> - %^{Meeting Title} :meeting:\n\n%?\n\n"
-        :if-new (file+head+olp
-                 "%<%Y-%m-%d>.org"
-                 "#+title: %<%Y-%m-%d %a>\n"
-                 ("Meetings")))
-       ))
+    (use-package org-roam
+      :custom
+      (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
+      (org-roam-completion-everywhere t)
+      ;; (org-roam-completion-system 'default)
+      ;; Capture templates
+      (org-roam-capture-templates
+       '(("d" "default" plain "%?"
+          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                             "#+title: ${title}\n")
+          :unnarrowed t))
+       )
+      ;; Dailies templates
+      (org-roam-dailies-directory "Journal/")
+      (org-roam-dailies-capture-templates
+       '(("d" "default" entry
+          "\n*  %?"
+          :if-new (file+head
+                   "%<%Y-%m-%d>.org"
+                   "#+title: %<%Y-%m-%d %a>\n"))
+         ("t" "talks" entry
+          "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
+          :if-new (file+head+olp
+                   "%<%Y-%m-%d>.org"
+                   "#+title: %<%Y-%m-%d %a>\n"
+                   ("Talks")))
+         ("m" "meeting" entry
+          "\n*  %<%I:%M %p> - %^{Meeting Title} :meeting:\n\n%?\n\n"
+          :if-new (file+head+olp
+                   "%<%Y-%m-%d>.org"
+                   "#+title: %<%Y-%m-%d %a>\n"
+                   ("Meetings")))
+         ))
 
-    :bind (("C-c n b" . org-roam-buffer)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
-           ("C-c n i" . org-roam-node-insert)
-           ("C-c n c" . org-roam-capture)
-           ("C-c n t"   . org-roam-tag-add)
-           ("C-c n r"   . org-roam-tag-remove)
-           ;; Dailies
-           ("C-c n m" . org-roam-dailies-capture-today)
-           )
+      :bind (("C-c n b" . org-roam-buffer)
+             ("C-c n f" . org-roam-node-find)
+             ("C-c n g" . org-roam-graph)
+             ("C-c n i" . org-roam-node-insert)
+             ("C-c n c" . org-roam-capture)
+             ("C-c n t"   . org-roam-tag-add)
+             ("C-c n r"   . org-roam-tag-remove)
+             ;; Dailies
+             ("C-c n m" . org-roam-dailies-capture-today)
+             )
 
-    :config
-    (org-roam-setup)
-    (setq org-roam-node-display-template "${title:100} ${tags:*}")
-    (add-to-list 'display-buffer-alist
-               '("\\*org-roam\\*"
-                 (display-buffer-in-direction)
-                 (direction . right)
-                 (window-width . 0.33)
-                 (window-height . fit-window-to-buffer)))
-
-    )
+      :config
+      (org-roam-setup)
+      (setq org-roam-node-display-template "${title:100} ${tags:*}")
+      (add-to-list 'display-buffer-alist
+                 '("\\*org-roam\\*"
+                   (display-buffer-in-direction)
+                   (direction . right)
+                   (window-width . 0.33)
+                   (window-height . fit-window-to-buffer)))
+      (setq org-roam-v2-ack t)
+      )
 #+end_src
 
 ** Deft
@@ -956,6 +956,8 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
       (setq deft-directory 
             (ido-completing-read "Select directory: " ag/deft-dir-list))
       (deft-refresh))
+
+    (setq deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:")
 
     )
 
