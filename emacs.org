@@ -1995,8 +1995,8 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
           ;; (setq-local org-src-block-faces
                 ;; '(("emacs-lisp" (:background "cornsilk"))))
           (hide-lines-matching "#\\+BEGIN_\\(SRC\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
-          (hide-lines-matching "#\\+END_\\(SRC\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
-          ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)"))
+          (hide-lines-matching "#\\+END_\\(SRC\\|EXAMPLE\\|VERSE\\|QUOTE\\)"))
+          ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
         (add-hook 'org-tree-slide-play-hook 'my:hide-headers)
         (add-hook 'org-tree-slide-stop-hook 'my:show-headers)
 
