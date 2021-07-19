@@ -1934,35 +1934,84 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 is a simple tool to treat a tree of an org buffer as a single slide. Since each slide is displayed by simple narrowing, an editable presentation is easily achieved without restricting the functionality of Org Mode. And usage of org-tree-slide is not limited to a presentation. Three profiles are predefined for different use cases.
 
 #+begin_src emacs-lisp
-  (defun ag/org-start-presentation ()
-    (interactive)
-    (org-tree-slide-mode 1)
-    (org-sticky-header-mode 0)
-    (setq text-scale-mode-amount 3)
-    (text-scale-mode 1))
+    (defun ag/org-start-presentation ()
+      (interactive)
+      (org-tree-slide-mode 1)
+      (org-sticky-header-mode 0)
+      (setq text-scale-mode-amount 3)
+      (text-scale-mode 1)
+      (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                         (header-line (:height 4.5) variable-pitch)
+                                         (org-document-title (:height 1.75) org-document-title)
+                                         (org-code (:height 1.55) org-code)
+                                         (org-verbatim (:height 1.55) org-verbatim)
+                                         (org-block (:height 1.25) org-block)
+                                         (org-block-begin-line (:height 0.7) org-block)))
+      (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+      (setq-local visual-fill-column-width 60
+            visual-fill-column-center-text t)
+      (visual-fill-column-mode 1)
+      )
 
   (defun ag/org-end-presentation ()
     (interactive)
     (text-scale-mode 0)
     (org-sticky-header-mode 1)
-    (org-tree-slide-mode 0))
+    (org-tree-slide-mode 0)
+    (setq-local face-remapping-alist '((default variable-pitch default)))
+    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+    (visual-fill-column-mode 1)
+    )
+#+end_src
+
+I almost give up on =org-tree-slides= but the comments and solution on [[https://github.com/takaxp/org-tree-slide/issues/13][Issue #13]] using the =hide-lines= package set me back on track. 
+
+#+begin_src emacs-lisp
+  (use-package hide-lines
+    :after org
+    )
 
   (use-package org-tree-slide
     :defer t
     :after org
     :commands org-tree-slide-mode
     :config
-    (evil-define-key 'normal org-tree-slide-mode-map
-      (kbd "q") 'ag/org-end-presentation
-      (kbd "C-j") 'org-tree-slide-move-next-tree
-      (kbd "C-k") 'org-tree-slide-move-previous-tree)
-    (setq org-tree-slide-slide-in-effect nil
-          org-tree-slide-activate-message "Presentation started."
-          org-tree-slide-deactivate-message "Presentation ended."
-          org-tree-slide-header t)
-    :custom
-    (org-tree-slide-breadcrumbs " > ")
-    (org-image-actual-width nil)
-    )
+      (evil-define-key 'normal org-tree-slide-mode-map
+        (kbd "q") 'ag/org-end-presentation
+        (kbd "C-j") 'org-tree-slide-move-next-tree
+        (kbd "C-k") 'org-tree-slide-move-previous-tree)
+      (setq org-tree-slide-slide-in-effect nil
+            org-tree-slide-activate-message "Presentation started."
+            org-tree-slide-deactivate-message "Presentation ended."
+            org-tree-slide-header t)
+
+      (when (require 'hide-lines nil t)
+        (defvar my:org-src-block-faces nil)
+        (defun my:show-headers ()
+          (setq-local org-src-block-faces 'my:org-src-block-faces)
+          (hide-lines-show-all))
+        (defun my:hide-headers ()
+          (setq-local my:org-src-block-faces 'org-src-block-faces)
+          ;; (setq-local org-src-block-faces
+                ;; '(("emacs-lisp" (:background "cornsilk"))))
+          (hide-lines-matching "#\\+BEGIN_\\(SRC\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
+          (hide-lines-matching "#\\+END_\\(SRC\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
+          ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)"))
+        (add-hook 'org-tree-slide-play-hook 'my:hide-headers)
+        (add-hook 'org-tree-slide-stop-hook 'my:show-headers)
+
+        (defun advice:org-edit-src-code (&optional code edit-buffer-name)
+          (interactive)
+          (my:show-headers))
+        (advice-add 'org-edit-src-code :before #'advice:org-edit-src-code)
+        (defun advice:org-edit-src-exit ()
+          (interactive)
+          (my:hide-headers))
+        (advice-add 'org-edit-src-exit :after #'advice:org-edit-src-exit))
+
+      :custom
+      (org-tree-slide-breadcrumbs " > ")
+      (org-image-actual-width nil)
+      )
 
 #+end_src
