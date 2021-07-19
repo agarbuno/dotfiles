@@ -875,7 +875,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
     :custom
     (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
     (org-roam-completion-everywhere t)
-    (org-roam-completion-system 'default)
+    ;; (org-roam-completion-system 'default)
     ;; Capture templates
     (org-roam-capture-templates
      '(("d" "default" plain "%?"
@@ -883,9 +883,9 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
                            "#+title: ${title}\n")
         :unnarrowed t))
      )
-    ;; Dailies
+    ;; Dailies templates
     (org-roam-dailies-directory "Journal/")
-    (setq org-roam-dailies-capture-templates
+    (org-roam-dailies-capture-templates
      '(("d" "default" entry
         "\n*  %?"
         :if-new (file+head
@@ -905,15 +905,13 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
                  ("Meetings")))
        ))
 
-    :bind (("C-c n b" . org-roam-buffer-toggle)
+    :bind (("C-c n b" . org-roam-buffer)
            ("C-c n f" . org-roam-node-find)
            ("C-c n g" . org-roam-graph)
            ("C-c n i" . org-roam-node-insert)
            ("C-c n c" . org-roam-capture)
-           ;; ("C-c n ?" . org-roam-dailies-find-date)
-           ;; ("C-c n j" . org-roam-dailies-find-today)
            ("C-c n t"   . org-roam-tag-add)
-           ("C-c n d"   . org-roam-tag-remove)
+           ("C-c n r"   . org-roam-tag-remove)
            ;; Dailies
            ("C-c n m" . org-roam-dailies-capture-today)
            )
@@ -921,16 +919,12 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
     :config
     (org-roam-setup)
     (setq org-roam-node-display-template "${title:100} ${tags:*}")
-
     (add-to-list 'display-buffer-alist
-                 '("\\*org-roam\\*"
-                   (display-buffer-in-side-window)
-                   (side . right)
-                   (slot . 0)
-                   (window-width . 0.33)
-                   (window-parameters . ((no-other-window . t)
-                                         (no-delete-other-windows . t)))
-                   )) 
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
 
     )
 #+end_src
