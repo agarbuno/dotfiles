@@ -101,7 +101,6 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#spell-checking][Spell checking]]
   - [[#pdf-viewing][PDF viewing]]
 - [[#presentations][Presentations]]
-  - [[#org-present][Org-present]]
   - [[#org-tree-slide][Org-tree-slide]]
 :END:
 
@@ -1930,56 +1929,6 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 #+end_src
 
 * Presentations
-** Org-present
-
-An alternative to =org-tree-slide= seems to be easier to customize. 
-
-#+begin_src emacs-lisp
-  (defun ag/org-present-prepare-slide ()
-    (org-overview)
-    (org-show-entry)
-    (org-show-children))
-
-  (defun ag/org-present-hook ()
-    (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                       (header-line (:height 4.5) variable-pitch)
-                                       (org-document-title (:height 1.75) org-document-title)
-                                       (org-code (:height 1.55) org-code)
-                                       (org-verbatim (:height 1.55) org-verbatim)
-                                       (org-block (:height 1.25) org-block)
-                                       (org-block-begin-line (:height 0.7) org-block)))
-    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
-    (setq header-line-format " ")
-    (org-appear-mode -1)
-    (org-display-inline-images)
-    (ag/org-present-prepare-slide))
-
-  (defun ag/org-present-quit-hook ()
-    (setq-local face-remapping-alist '((default variable-pitch default)))
-    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
-    (setq header-line-format nil)
-    (org-present-small)
-    (org-remove-inline-images)
-    (org-sticky-header-mode 1)
-    (org-appear-mode 1))
-
-  (defun ag/org-present-prev ()
-    (interactive)
-    (org-present-prev)
-    (ag/org-present-prepare-slide))
-
-  (defun ag/org-present-next ()
-    (interactive)
-    (org-present-next)
-    (ag/org-present-prepare-slide))
-
-  (use-package org-present
-    :bind (:map org-present-mode-keymap
-           ("C->" . ag/org-present-next)
-           ("C-<" . ag/org-present-prev))
-    :hook ((org-present-mode . ag/org-present-hook)
-           (org-present-mode-quit . ag/org-present-quit-hook)))
-#+end_src
 ** Org-tree-slide
 
 is a simple tool to treat a tree of an org buffer as a single slide. Since each slide is displayed by simple narrowing, an editable presentation is easily achieved without restricting the functionality of Org Mode. And usage of org-tree-slide is not limited to a presentation. Three profiles are predefined for different use cases.
