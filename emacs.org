@@ -946,9 +946,20 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
            ("C-c n m" . org-roam-dailies-capture-today)
            )
 
-    :config
-    (org-roam-setup)
-    )
+      :config
+      (org-roam-setup)
+      (setq org-roam-node-display-template "${title:100} ${tags:*}")
+
+      (add-to-list 'display-buffer-alist
+                   '("\\*org-roam\\*"
+                     (display-buffer-in-side-window)
+                     (side . right)
+                     (slot . 0)
+                     (window-width . 0.33)
+                     (window-parameters . ((no-other-window . t)
+                                           (no-delete-other-windows . t))))) 
+
+      )
 #+end_src
 
 ** Deft
