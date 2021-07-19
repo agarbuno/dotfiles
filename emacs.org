@@ -58,6 +58,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#completions-with-company-mode][Completions with company-mode]]
   - [[#python][Python]]
     - [[#jedi-autocompletion][Jedi autocompletion]]
+  - [[#r][R]]
   - [[#debugging][Debugging]]
   - [[#commenting][Commenting]]
   - [[#projectile][Projectile]]
@@ -817,6 +818,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
    'org-babel-load-languages
    '((emacs-lisp . t)
      (latex . t)
+     (R . t)
      (python . t)))
 
   (with-eval-after-load 'org
@@ -826,6 +828,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
     (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("la" . "src latex"))
+    (add-to-list 'org-structure-template-alist '("r" . "src R"))
     (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
@@ -1171,6 +1174,14 @@ Try these commands with =M-x=:
 
 #+end_src
 
+**** lsp-r
+
+#+begin_src R :tangle no
+
+  install.packages("languageserver")
+
+#+end_src
+
 *** Completions with company-mode
 
 [[http://company-mode.github.io/][Company Mode]] provides a nicer in-buffer completion interface than =completion-at-point= which is more reminiscent of what you would expect from an IDE.  We add a simple configuration to make the keybindings a little more useful (=TAB= now completes the selection and initiates completion at the current location if needed).
@@ -1251,6 +1262,30 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 
 #+end_src
 
+** R
+#+begin_src emacs-lisp
+  (defun ag/insert-r-pipe ()
+    "R - %>% operator or 'then' pipe operator"
+    (interactive)
+    (just-one-space 1)
+    (insert "%>%")
+    (reindent-then-newline-and-indent))
+
+  (use-package ess
+    :defer t
+    :commands R
+    :bind (
+           :map ess-mode-map
+                ("C-<" . ess-insert-assign)
+                ("C->" . ag/insert-r-pipe)
+                :map inferior-ess-mode-map
+                ("C-<" . ess-insert-assign)
+                ("C->" . ag/insert-r-pipe)
+                )
+    :init
+    (load "ess-site")
+    )
+#+end_src
 ** Debugging
 
 I recommend watching "Emacs IDE - How to Debug Your Code with dap-mode" to learn more about the features!
