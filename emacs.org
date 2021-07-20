@@ -47,7 +47,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#auto-markup-symbols][Auto-markup symbols]]
   - [[#org-roam][Org Roam]]
   - [[#deft][Deft]]
-  - [[#bibliography][Bibliography]]
+  - [[#org-roam-bibtex][Org Roam Bibtex]]
   - [[#noter][Noter]]
   - [[#header][Header]]
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
@@ -871,62 +871,73 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 
 #+begin_src emacs-lisp
 
-    (use-package org-roam
-      :custom
-      (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
-      (org-roam-completion-everywhere t)
-      ;; (org-roam-completion-system 'default)
-      ;; Capture templates
-      (org-roam-capture-templates
-       '(("d" "default" plain "%?"
-          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                             "#+title: ${title}\n")
-          :unnarrowed t))
+  (use-package org-roam
+    :custom
+    (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
+    (org-roam-completion-everywhere t)
+    ;; (org-roam-completion-system 'default)
+    ;; Capture templates
+    (org-roam-capture-templates
+     '(("d" "default" plain "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                           "#+title: ${title}\n")
+        :unnarrowed t)
+       ("r" "reference" plain
+        "%? %^{author} - %^{year}:"
+        :if-new
+        (file+head
+         "References/${citekey}.org"
+         "#+title: ${title}\n")
+        :unnarrowed t)
        )
-      ;; Dailies templates
-      (org-roam-dailies-directory "Journal/")
-      (org-roam-dailies-capture-templates
-       '(("d" "default" entry
-          "\n*  %?"
-          :if-new (file+head
-                   "%<%Y-%m-%d>.org"
-                   "#+title: %<%Y-%m-%d %a>\n"))
-         ("t" "talks" entry
-          "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
-          :if-new (file+head+olp
-                   "%<%Y-%m-%d>.org"
-                   "#+title: %<%Y-%m-%d %a>\n"
-                   ("Talks")))
-         ("m" "meeting" entry
-          "\n*  %<%I:%M %p> - %^{Meeting Title} :meeting:\n\n%?\n\n"
-          :if-new (file+head+olp
-                   "%<%Y-%m-%d>.org"
-                   "#+title: %<%Y-%m-%d %a>\n"
-                   ("Meetings")))
-         ))
+     )
+    ;; Dailies templates
+    (org-roam-dailies-directory "Journal/")
+    (org-roam-dailies-capture-templates
+     '(("d" "default" entry
+        "\n*  %?"
+        :if-new (file+head
+                 "%<%Y-%m-%d>.org"
+                 "#+title: %<%Y-%m-%d %a>\n"))
+       ("t" "talks" entry
+        "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
+        :if-new (file+head+olp
+                 "%<%Y-%m-%d>.org"
+                 "#+title: %<%Y-%m-%d %a>\n"
+                 ("Talks")))
+       ("m" "meeting" entry
+        "\n*  %<%I:%M %p> - %^{Meeting Title} :meeting:\n\n%?\n\n"
+        :if-new (file+head+olp
+                 "%<%Y-%m-%d>.org"
+                 "#+title: %<%Y-%m-%d %a>\n"
+                 ("Meetings")))
+       ))
 
-      :bind (("C-c n b" . org-roam-buffer)
-             ("C-c n f" . org-roam-node-find)
-             ("C-c n g" . org-roam-graph)
-             ("C-c n i" . org-roam-node-insert)
-             ("C-c n c" . org-roam-capture)
-             ("C-c n t"   . org-roam-tag-add)
-             ("C-c n r"   . org-roam-tag-remove)
-             ;; Dailies
-             ("C-c n m" . org-roam-dailies-capture-today)
-             )
+    :bind (("C-c n b" . org-roam-buffer)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n t"   . org-roam-tag-add)
+           ("C-c n r"   . org-roam-tag-remove)
+           ;; Dailies
+           ("C-c n m" . org-roam-dailies-capture-today)
+           )
 
-      :config
-      (org-roam-setup)
-      (setq org-roam-node-display-template "${title:100} ${tags:*}")
-      (add-to-list 'display-buffer-alist
-                 '("\\*org-roam\\*"
-                   (display-buffer-in-direction)
-                   (direction . right)
-                   (window-width . 0.33)
-                   (window-height . fit-window-to-buffer)))
-      (setq org-roam-v2-ack t)
-      )
+    :config
+    (org-roam-setup)
+    (setq org-roam-node-display-template "${title:100} ${tags:*}")
+    (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
+    )
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq org-roam-v2-ack t)
 #+end_src
 
 ** Deft
@@ -962,37 +973,33 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
     )
 
 #+end_src
-** Bibliography
+** Org Roam Bibtex
 
 #+begin_src emacs-lisp
-      (use-package org-roam-bibtex
-        :after org-roam
-        :hook (org-roam-mode . org-roam-bibtex-mode)
-        :bind (("C-c b d" . doi-add-bibtex-entry)
-               ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
-               ("C-c b k" . org-ref-clean-bibtex-entry))              
-        :config
-        (require 'org-ref)
-        (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                            "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+  (use-package org-roam-bibtex
+    :bind (("C-c b d" . doi-add-bibtex-entry)
+           ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
+           ("C-c b k" . org-ref-clean-bibtex-entry))
+    :custom
+    (org-roam-bibtex-mode 1)
+    :config
+    (require 'org-ref)
+    (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                        "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
 
-        (setq org-ref-completion-library 'org-ref-ivy-cite)
-        (require 'org-ref-ivy-cite)
+    (setq org-ref-completion-library 'org-ref-ivy-cite)
+    (require 'org-ref-ivy-cite)
 
-        ;; see org-ref for use of these variables
-        (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-              org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                             "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
-              org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-              org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
-              org-ref-show-broken-links t)
+    ;; see org-ref for use of these variables
+    (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
+          org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                         "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
+          org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
+          org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
+          org-ref-show-broken-links t)
 
-        (setq orb-templates
-              '(("r" "ref" plain (function org-roam-capture--get-point) "%?"
-                 :file-name "References/${citekey}"
-                 :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n"
-                 :unnarrowed t)))
-        )
+    (setq orb-preformat-keywords '("citekey" "author" "year"))
+    )
     #+end_src
 ** Noter
 Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nalhasan]]'s configuration.
