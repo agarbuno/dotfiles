@@ -860,8 +860,9 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 
 #+begin_src emacs-lisp
 
-  ;; (use-package org-appear
-      ;; :hook (org-mode . org-appear-mode))
+  (setq org-hide-emphasis-markers t)
+  (use-package org-appear
+        :hook (org-mode . org-appear-mode))
 
 #+end_src
 
