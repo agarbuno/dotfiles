@@ -1258,30 +1258,35 @@ Try these commands with =M-x=:
 We also use [[https://github.com/sebastiencs/company-box][company-box]] to further enhance the look of the completions with icons and better overall presentation.
 
 #+begin_src emacs-lisp
-   (use-package company
-     :after lsp-mode
-     :hook ((lsp-mode . company-mode)
-            (LaTeX-mode . company-mode))
-     :bind (:map company-active-map
-                 ("<tab>" . company-complete-selection))
-     (:map lsp-mode-map
-           ("<tab>" . company-indent-or-complete-common))
-     :custom
-     (company-minimum-prefix-length 1)
-     (company-idle-delay 0.0))
+  (use-package company
+    :after lsp-mode
+    :hook ((lsp-mode . company-mode)
+           (LaTeX-mode . company-mode))
+    :bind
+    (:map company-active-map
+          ("<tab>" . company-complete-selection))
+    (:map lsp-mode-map
+          ("<tab>" . company-indent-or-complete-common))
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0))
 
-   (use-package company-box
-     :hook (company-mode . company-box-mode))
+  (use-package company-box
+    :hook (company-mode . company-box-mode))
 #+end_src
 
 *** Completions with yasnippets
 
+As of today, =yasnippets= is not bundled with snippets directly. You need to install =yasnippets-snippets=.
+
 #+begin_src emacs-lisp
 
   (use-package yasnippet
-    :hook (prog-mode . yas-minor-mode)
     :config
-    (yas-reload-all))
+    (yas-reload-all)
+    :init
+    (yas-global-mode 1)
+    )
 
 #+end_src
 ** Python
@@ -1334,8 +1339,8 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
     :hook (python-mode . lsp)
     :custom
     ;; NOTE: Set these if Python 3 is called "python3" on your system!
-    (python-shell-interpreter "python3")
-    (dap-python-executable "python3")
+    ;; (python-shell-interpreter "python3")
+    ;; (dap-python-executable "python3")
     (dap-python-debugger 'debugpy)
     :config
     (require 'dap-python))
@@ -1344,6 +1349,7 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 
 ** R
 #+begin_src emacs-lisp
+
   (defun ag/insert-r-pipe ()
     "R - %>% operator or 'then' pipe operator"
     (interactive)
@@ -2140,3 +2146,4 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
       )
 
 #+end_src
+
