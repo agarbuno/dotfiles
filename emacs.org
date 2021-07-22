@@ -103,6 +103,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#pdf-viewing][PDF viewing]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
+  - [[#final-touches][Final touches]]
 :END:
 
 * Welcome!
@@ -446,12 +447,10 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 #+begin_src emacs-lisp
 
   (use-package doom-themes
-    :init (load-theme 'doom-monokai-pro t)
-    ;; :config (load-theme 'doom-nord t))
-    )
+    :init (load-theme 'doom-monokai-pro t))
+  ;; :config (load-theme 'doom-nord t))
 
   (use-package color
-    :after org 
     :config
     (set-face-attribute 'org-block nil :background
                         (color-darken-name
@@ -605,9 +604,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 #+end_src
 
 ** =beacon-mode=
-
 #+begin_src emacs-lisp
-
   (use-package beacon
     :ensure t 
     :config
@@ -615,7 +612,6 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     (setq beacon-blink-when-focused 1)
     (setq beacon-size 70)
     )
-
 #+end_src
 ** Indentation
 
@@ -1323,7 +1319,7 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 
   (use-package python-mode
     :ensure t
-    :hook (python-mode . lsp-deferred)
+    :hook (python-mode . lsp)
     :custom
     ;; NOTE: Set these if Python 3 is called "python3" on your system!
     (python-shell-interpreter "python3")
@@ -2013,7 +2009,7 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (org-download-image-dir "images")
       (org-download-heading-lvl nil)
       (org-download-timestamp "%Y%m%d-%H%M%S_")
-      (org-download-image-attr-list '("#+attr_html: :width 700 :align center"))
+      ;; (org-image-actual-width 450)
       (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
       :bind
       ("C-c n s" . org-download-screenshot)
@@ -2084,7 +2080,6 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
 I almost give up on =org-tree-slides= but the comments and solution on [[https://github.com/takaxp/org-tree-slide/issues/13][Issue #13]] using the =hide-lines= package set me back on track. 
 
 #+begin_src emacs-lisp
-
   (use-package hide-lines
     :after org
     )
@@ -2111,13 +2106,13 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
         (defun ag/hide-headers ()
           (setq ag/org-src-block-faces 'org-src-block-faces)
           ;; (setq-local org-src-block-faces
-          ;; '(("emacs-lisp" (:background "cornsilk"))))
+                ;; '(("emacs-lisp" (:background "cornsilk"))))
           (hide-lines-matching "#\\+BEGIN_SRC")
           (hide-lines-matching "#\\+END_SRC"))
           ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
         (add-hook 'org-tree-slide-play-hook 'ag/hide-headers)
         (add-hook 'org-tree-slide-stop-hook 'ag/show-headers)
-
+      
         (defun advice:org-edit-src-code (&optional code edit-buffer-name)
           (interactive)
           (ag/show-headers))
@@ -2133,4 +2128,9 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
       )
 
 #+end_src
+** Final touches
+#+begin_src emacs-lisp
 
+  (setq org-image-actual-width 450)
+
+#+end_src
