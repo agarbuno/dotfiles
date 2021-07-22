@@ -57,7 +57,7 @@
 
 * Using LaTeX within Org-Mode
 
-$\alpha$
+$\alpha^2$
 
 $$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
 
