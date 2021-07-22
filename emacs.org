@@ -103,6 +103,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#pdf-viewing][PDF viewing]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
+  - [[#final-touches][Final touches]]
 :END:
 
 * Welcome!
@@ -243,6 +244,7 @@ You can also use =M-x auto-package-update-now= to update right now!
 #+end_src
 
 ** Inmortal buffers
+
 #+begin_src emacs-lisp
 
   (defun ag/immortal-buffers ()
@@ -446,7 +448,15 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
   (use-package doom-themes
     :init (load-theme 'doom-monokai-pro t))
-    ;; :config (load-theme 'doom-nord t))
+  ;; :config (load-theme 'doom-nord t))
+
+  (use-package color
+    :config
+    (set-face-attribute 'org-block nil :background
+                        (color-darken-name
+                         (face-attribute 'default :background) 5))
+    ) 
+
 #+end_src
 
 ** Better Modeline
@@ -1999,12 +2009,13 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (org-download-image-dir "images")
       (org-download-heading-lvl nil)
       (org-download-timestamp "%Y%m%d-%H%M%S_")
-      (org-image-actual-width 450)
+      ;; (org-image-actual-width 450)
       (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
       :bind
       ("C-c n s" . org-download-screenshot)
       :config
       (require 'org-download))
+
 
 #+end_src
 
@@ -2101,7 +2112,7 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
           ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
         (add-hook 'org-tree-slide-play-hook 'ag/hide-headers)
         (add-hook 'org-tree-slide-stop-hook 'ag/show-headers)
-
+      
         (defun advice:org-edit-src-code (&optional code edit-buffer-name)
           (interactive)
           (ag/show-headers))
@@ -2115,5 +2126,11 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
       (org-tree-slide-breadcrumbs " > ")
       (org-image-actual-width nil)
       )
+
+#+end_src
+** Final touches
+#+begin_src emacs-lisp
+
+  (setq org-image-actual-width 450)
 
 #+end_src
