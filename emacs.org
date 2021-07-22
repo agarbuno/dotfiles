@@ -1314,13 +1314,13 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp 
 
   (use-package dap-mode)
 
   (use-package python-mode
     :ensure t
-    :hook (python-mode . lsp-deferred)
+    :hook (python-mode . lsp)
     :custom
     ;; NOTE: Set these if Python 3 is called "python3" on your system!
     (python-shell-interpreter "python3")
