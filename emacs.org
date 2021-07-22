@@ -980,7 +980,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
            (propertize "=@=" 'display "")
          (propertize "= =" 'display "")
          )
-       (propertize (string-join othertags ", ") 'face 'all-the-icons-dgreen))
+       (propertize (string-join othertags ", ") 'face 'all-the-icons-lorange))
       ))
 
   (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
@@ -1014,12 +1014,8 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
   (setq kb/lit-categories
             '("video" "book" "podcast" "article" "website" "journal" "quote" "structure")
             )
-  (setq org-roam-node-display-template (concat "${backlinkscount:16}" "${functiontag:16}" "${othertags:13}" "${hierarchy:183}"))
-
-  #+end_src
-
-
-
+  (setq org-roam-node-display-template (concat "${backlinkscount:16}" "${othertags:40}" "${hierarchy:*}"))
+#+end_src
 
 ** Deft
 
