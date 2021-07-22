@@ -1965,8 +1965,12 @@ A very nice guide for writing this type of documents can be found in: [[http://w
 $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 #+begin_src emacs-lisp
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.8))
+
+  (use-package org-fragtog
+    :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 #+end_src
+
 ** CDLaTeX
 
 To be able to speed-up math environments and templates in org-mode.
