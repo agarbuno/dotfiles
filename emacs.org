@@ -1973,7 +1973,11 @@ To be able to speed-up math environments and templates in org-mode.
 
 #+begin_src emacs-lisp
 
-  ;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+  (use-package cdlatex
+    :after (tex)
+    :config
+    (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex))
+    ;; (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
 
 #+end_src
 
