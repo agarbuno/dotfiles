@@ -60,6 +60,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#python][Python]]
     - [[#jedi-autocompletion][Jedi autocompletion]]
   - [[#r][R]]
+    - [[#polymode-for-rmarkdown][Polymode for Rmarkdown]]
   - [[#debugging][Debugging]]
   - [[#commenting][Commenting]]
   - [[#projectile][Projectile]]
@@ -1379,6 +1380,25 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
     )
 
 #+end_src
+
+*** Polymode for Rmarkdown
+
+#+begin_src emacs-lisp
+
+  (use-package poly-R
+    :config
+    (defun ag/insert-rmd-chunk (language)
+      "Insert an r-chunk in markdown mode. Necessary due to interactions between polymode and yasnippet"
+      (interactive "sLanguage: ")
+      (insert (concat "```{" language "}\n\n```"))
+      (forward-line -1))
+    (define-key poly-markdown+r-mode-map (kbd "M-n M-i") #'ag/insert-rmd-chunk)
+    )
+
+#+end_src
+
+
+
 ** Debugging
 
 I recommend watching "Emacs IDE - How to Debug Your Code with dap-mode" to learn more about the features!
