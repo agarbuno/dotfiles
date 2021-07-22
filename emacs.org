@@ -103,7 +103,6 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#pdf-viewing][PDF viewing]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
-  - [[#final-touches][Final touches]]
 :END:
 
 * Welcome!
@@ -451,6 +450,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   ;; :config (load-theme 'doom-nord t))
 
   (use-package color
+    :after org
     :config
     (set-face-attribute 'org-block nil :background
                         (color-darken-name
@@ -1315,11 +1315,12 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
+
   (use-package dap-mode)
 
   (use-package python-mode
     :ensure t
-    :hook (python-mode . lsp)
+    :hook (python-mode . lsp-deferred)
     :custom
     ;; NOTE: Set these if Python 3 is called "python3" on your system!
     (python-shell-interpreter "python3")
@@ -2001,6 +2002,7 @@ To be able to speed-up math environments and templates in org-mode.
 Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/][zzamboni.org | How to insert screenshots in Org documents on macOS]]
 
 #+begin_src emacs-lisp
+
   (use-package org-download
       :after org
       :defer nil
@@ -2009,13 +2011,12 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (org-download-image-dir "images")
       (org-download-heading-lvl nil)
       (org-download-timestamp "%Y%m%d-%H%M%S_")
-      ;; (org-image-actual-width 450)
+      (org-download-image-attr-list '("#+attr_html: :width 700 :align center"))
       (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
       :bind
       ("C-c n s" . org-download-screenshot)
       :config
       (require 'org-download))
-
 
 #+end_src
 
@@ -2126,11 +2127,5 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
       (org-tree-slide-breadcrumbs " > ")
       (org-image-actual-width nil)
       )
-
-#+end_src
-** Final touches
-#+begin_src emacs-lisp
-
-  (setq org-image-actual-width 450)
 
 #+end_src
