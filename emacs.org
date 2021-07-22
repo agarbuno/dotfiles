@@ -56,6 +56,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#languages][Languages]]
     - [[#language-servers][Language Servers]]
     - [[#completions-with-company-mode][Completions with company-mode]]
+    - [[#completions-with-yasnippets][Completions with yasnippets]]
   - [[#python][Python]]
     - [[#jedi-autocompletion][Jedi autocompletion]]
   - [[#r][R]]
@@ -1273,6 +1274,16 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
      :hook (company-mode . company-box-mode))
 #+end_src
 
+*** Completions with yasnippets
+
+#+begin_src emacs-lisp
+
+  (use-package yasnippet
+    :hook (prog-mode . yas-minor-mode)
+    :config
+    (yas-reload-all))
+
+#+end_src
 ** Python
 
 We use =lsp-mode= and =dap-mode= to provide a more complete development environment for Python in Emacs.  Check out [[https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/][the =pyls= configuration]] in the =lsp-mode= documentation for more details.
