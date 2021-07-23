@@ -1101,7 +1101,19 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
           org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
           org-ref-show-broken-links t)
 
-    (setq orb-preformat-keywords '("citekey" "author" "year"))
+    (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
+          orb-process-file-keyword t
+          orb-file-field-extensions '("pdf"))
+
+    (add-to-list 'org-roam-capture-templates
+                 '("r" "reference" plain
+                   "%? %^{author} - %^{year}:"
+                   :if-new
+                   (file+head
+                    "References/${citekey}.org"
+                    "#+title: ${title}\n")
+                   :unnarrowed t)
+                 )
     )
     #+end_src
 
@@ -1124,29 +1136,40 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
 #+end_src
 
 #+begin_src emacs-lisp
+
   (use-package org-noter
-    :config
-    (setq org-noter-always-create-frame t
-          org-noter-separate-notes-from-heading t
-          org-noter-default-heading-title "Page $p$"
-          org-noter-auto-save-last-location t
-          org-noter-separate-notes-from-heading t
-          org-noter-doc-property-in-notes t
-          ))
-  ;; I'm disabling this as I don't come from interleave
-  ;; (setq org-noter-property-doc-file "INTERLEAVE_PDF"
-  ;;       org-noter-property-note-location "INTERLEAVE_PAGE_NOTE")
+      :config
+      (setq org-noter-always-create-frame t
+            org-noter-separate-notes-from-heading t
+            org-noter-default-heading-title "Page $p$"
+            org-noter-auto-save-last-location t
+            org-noter-separate-notes-from-heading t
+            org-noter-doc-property-in-notes t
+            org-noter-notes-search-path '("~/Google Drive/orgfiles/references/bibtex-notes/")
+            )
+      )
+    ;; I'm disabling this as I don't come from interleave
+    ;; (setq org-noter-property-doc-file "INTERLEAVE_PDF"
+    ;;       org-noter-property-note-location "INTERLEAVE_PAGE_NOTE")
+
 #+end_src
 
 
 #+begin_src emacs-lisp
 
-
-
+  (add-to-list 'org-roam-capture-templates
+               '("n" "references notes"  plain
+                 (file "~/.emacs.d/templates/org-capture/reference-noter")
+                 :if-new
+                 (file+head
+                  "References/${citekey}.org"
+                  "#+title: ${title}\n")
+                 :unnarrowed t)
+               )
 
 #+end_src
 
-** Header
+** Header for org-mode
 
 #+begin_src emacs-lisp
   (use-package org-sticky-header
@@ -1426,8 +1449,6 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
     )
 
 #+end_src
-
-
 
 ** Debugging
 
