@@ -402,6 +402,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 #+end_src
 
 #+begin_src emacs-lisp
+
   (use-package evil
     :init
     (setq evil-want-integration t)
@@ -418,7 +419,9 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
     (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
+    (evil-set-initial-state 'dashboard-mode 'normal)
+    (evil-set-initial-state 'text-mode 'emacs)
+    )
 
 #+end_src
   
