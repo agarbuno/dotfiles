@@ -17,9 +17,9 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#the-most-important-tip-dont-load-any-packages][The most important tip: don't load any packages!]]
 - [[#package-system-setup][Package System Setup]]
   - [[#basic-package-setup][Basic package setup]]
-  - [[#no-litering][No Litering]]
+  - [[#no-littering][No Littering]]
   - [[#automatic-package-updates][Automatic Package Updates]]
-  - [[#inmortal-buffers][Inmortal buffers]]
+  - [[#immortal-buffers][Immortal buffers]]
 - [[#basic-ui-configuration][Basic UI Configuration]]
   - [[#dashboard][Dashboard]]
   - [[#font-configuration][Font Configuration]]
@@ -49,7 +49,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#deft][Deft]]
   - [[#org-roam-bibtex][Org Roam Bibtex]]
   - [[#noter][Noter]]
-  - [[#header][Header]]
+  - [[#header-for-org-mode][Header for org-mode]]
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
 - [[#links-y-contenido-web][Links y contenido web]]
 - [[#development][Development]]
@@ -209,7 +209,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
 
 #+end_src
 
-** No Litering
+** No Littering
 
 #+begin_src emacs-lisp
 
@@ -245,7 +245,7 @@ You can also use =M-x auto-package-update-now= to update right now!
 
 #+end_src
 
-** Inmortal buffers
+** Immortal buffers
 
 #+begin_src emacs-lisp
 
