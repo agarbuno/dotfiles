@@ -793,10 +793,6 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+end_src
 
-#+begin_src emacs-lisp
-
-#+end_src
-
 *** Nicer Heading Bullets
 
 [[https://github.com/sabof/org-bullets][org-bullets]] replaces the heading stars in =org-mode= buffers with nicer looking characters that you can control.  Another option for this is [[https://github.com/integral-dw/org-superstar-mode][org-superstar-mode]] which we may cover in a later video.
