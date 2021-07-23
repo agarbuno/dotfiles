@@ -225,6 +225,7 @@ Emacs has a built in package manager but it doesn't make it easy to automaticall
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 #+end_src
+
 ** Automatic Package Updates
 
 The auto-package-update package helps us keep our Emacs packages up to date!  It will prompt you after a certain number of days either at startup or at a specific time of day to remind you to update your packages.
@@ -258,6 +259,7 @@ You can also use =M-x auto-package-update-now= to update right now!
   (add-hook 'kill-buffer-query-functions 'ag/immortal-buffers)
 
 #+end_src
+
 * Basic UI Configuration
 
 This section configures basic UI settings that remove unneeded elements to make Emacs look a lot more minimal and modern.  If you're just getting started in Emacs, the menu bar might be helpful so you can remove the =(menu-bar-mode -1)= line if you'd like to still see that.
@@ -303,6 +305,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     )
 
 #+end_src
+
 ** Dashboard
 
 #+begin_src emacs-lisp
@@ -457,6 +460,9 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
     (set-face-attribute 'org-block nil :background
                         (color-darken-name
                          (face-attribute 'default :background) 5))
+    (set-face-attribute 'org-block-begin-line nil :background
+                        (color-darken-name
+                         (face-attribute 'default :background) -10))
     ) 
 
 #+end_src
@@ -550,6 +556,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
       (ivy-rich-mode 1))
 
 #+end_src
+
 ** Helpful Help Commands
 
 [[https://github.com/Wilfred/helpful][Helpful]] adds a lot of very helpful (get it?) information to Emacs' =describe-= command buffers.  For example, if you use =describe-function=, you will not only get the documentation about the function, you will also see the source code of the function and where it gets used in other places in the Emacs configuration.  It is very useful for figuring out how things work in Emacs.
@@ -606,6 +613,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 #+end_src
 
 ** =beacon-mode=
+
 #+begin_src emacs-lisp
   (use-package beacon
     :ensure t 
@@ -615,6 +623,7 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
     (setq beacon-size 70)
     )
 #+end_src
+
 ** Indentation
 
 Let's make indentation with 4 spaces and no tab 
@@ -969,12 +978,12 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 
   (cl-defmethod org-roam-node-functiontag ((node org-roam-node))
     "The first tag of notes are used to denote note type"
-    (let* ((specialtags kb/lit-categories)
+    (let* ((specialtags ag/lit-categories)
            (tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
            (functiontag (seq-intersection specialtags tags 'string=)))
       (concat
        (if functiontag
-           (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache yesheight 0.7))
+           (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
          (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
          )
        " "
@@ -984,7 +993,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
   (cl-defmethod org-roam-node-othertags ((node org-roam-node))
     "Return the file TITLE for the node."
     (let* ((tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
-           (specialtags kb/lit-categories)
+           (specialtags ag/lit-categories)
            (othertags (seq-difference tags specialtags 'string=))
            )
       (concat
@@ -1023,45 +1032,50 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 #+end_src
 
 #+begin_src emacs-lisp
-  (setq kb/lit-categories
+  (setq ag/lit-categories
             '("video" "book" "podcast" "article" "website" "journal" "quote" "structure")
             )
-  (setq org-roam-node-display-template (concat "${backlinkscount:16}" "${othertags:40}" "${hierarchy:*}"))
+  (setq org-roam-node-display-template (concat "${backlinkscount:16}" "${functiontag:13}" "${othertags:40}" "${hierarchy:*}"))
 #+end_src
 
 ** Deft
 
 #+begin_src emacs-lisp
 
-  (use-package deft
-    :commands (deft)
-    :bind (("C-c n d" . deft)
-           ("C-c n u" . ag/pick-deft-dir))
-    :config
-    (setq  deft-directory "~/Google Drive/orgfiles/notes/"
-           deft-extensions '("md" "org"))
+    (use-package deft
+      :commands (deft)
+      :bind (("C-c n d" . deft)
+             ("C-c n u" . ag/pick-deft-dir))
+      :config
+      (setq  deft-directory "~/Google Drive/orgfiles/notes/"
+             deft-extensions '("md" "org"))
 
-    ;; Setup my list of deft directories
-    (defvar ag/deft-dir-list '()
-      "A list of deft directories to pick")
+      ;; Setup my list of deft directories
+      (defvar ag/deft-dir-list '()
+        "A list of deft directories to pick")
 
-    (setq ag/deft-dir-list '("/Users/agarbuno/Google Drive/orgfiles/notes"
-                             "/Users/agarbuno/Google Drive/orgfiles/notes/Journal"
-                             "/Users/agarbuno/Google Drive/orgfiles/notes/References"
-                             ))
+      (setq ag/deft-dir-list '("/Users/agarbuno/Google Drive/orgfiles/notes"
+                               "/Users/agarbuno/Google Drive/orgfiles/notes/Journal"
+                               "/Users/agarbuno/Google Drive/orgfiles/notes/References"
+                               ))
 
-    (defun ag/pick-deft-dir ()
-      "Select directories from a list"
-      (interactive)
-      (setq deft-directory 
-            (ido-completing-read "Select directory: " ag/deft-dir-list))
-      (deft-refresh))
+      (defun ag/pick-deft-dir ()
+        "Select directories from a list"
+        (interactive)
+        (setq deft-directory 
+              (ido-completing-read "Select directory: " ag/deft-dir-list))
+        (deft-refresh))
 
-    (setq deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:")
+      (setq deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+\\#\\+title: ")
+      (setq deft-strip-title-regexp
+            (concat
+             "\\(?:^%+\\|^#\\+TITLE: *\\|^[#* ]+\\|-\\*-[[:alpha:]]+-\\*-\\|^Title:[	 ]*\\|#+$\\)"
+             ))
 
-    )
+      )
 
 #+end_src
+
 ** Org Roam Bibtex
 
 #+begin_src emacs-lisp
@@ -1090,6 +1104,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
     (setq orb-preformat-keywords '("citekey" "author" "year"))
     )
     #+end_src
+
 ** Noter
 Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nalhasan]]'s configuration.
 
@@ -1118,11 +1133,21 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
           org-noter-separate-notes-from-heading t
           org-noter-doc-property-in-notes t
           ))
-
-  (setq org-noter-property-doc-file "INTERLEAVE_PDF"
-        org-noter-property-note-location "INTERLEAVE_PAGE_NOTE")
+  ;; I'm disabling this as I don't come from interleave
+  ;; (setq org-noter-property-doc-file "INTERLEAVE_PDF"
+  ;;       org-noter-property-note-location "INTERLEAVE_PAGE_NOTE")
 #+end_src
+
+
+#+begin_src emacs-lisp
+
+
+
+
+#+end_src
+
 ** Header
+
 #+begin_src emacs-lisp
   (use-package org-sticky-header
     :hook (org-mode . org-sticky-header-mode)
@@ -1133,6 +1158,7 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
     (setq org-sticky-header-outline-path-separator " > ")
     )
 #+end_src
+
 ** Update Table of Contents on Save
 
 Use =org-make-toc= to automatically update the ToC in any header with a property named =TOC=.
@@ -1143,7 +1169,9 @@ Use =org-make-toc= to automatically update the ToC in any header with a property
     :hook (org-mode . org-make-toc-mode))
 
 #+end_src
+
 * Links y contenido web
+
 #+begin_src emacs-lisp
 
   (use-package org-web-tools
@@ -1153,6 +1181,7 @@ Use =org-make-toc= to automatically update the ToC in any header with a property
     )
 
 #+end_src
+
 * Development
 ** Languages
 *** Language Servers
@@ -1294,6 +1323,7 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
     )
 
 #+end_src
+
 ** Python
 
 We use =lsp-mode= and =dap-mode= to provide a more complete development environment for Python in Emacs.  Check out [[https://emacs-lsp.github.io/lsp-mode/page/lsp-pyls/][the =pyls= configuration]] in the =lsp-mode= documentation for more details.
@@ -1713,15 +1743,15 @@ Each item lists the default Emacs binding followed by the evil-mode binding.  No
 
 *** navigation commands
 
-| Command                               | Key     | Description                            |
-|---------------------------------------+---------+----------------------------------------|
-| =delete-window=                       | ~C-x 0~ | Close the current window               |
+| Command                             | Key   | Description                            |
+|-------------------------------------+-------+----------------------------------------|
+| =delete-window=                     | ~C-x 0~ | Close the current window               |
 | =delete-other-windows=                | ~C-x 1~ | Close all other windows                |
 | =split-window-below=                  | ~C-x 2~ | Split the current window horizonally   |
 | =split-window-right=                  | ~C-x 3~ | Split the current window vertically    |
 | =shrink-window-horizontally=          | ~C-x {~ | Make the window smaller horizontally   |
 | =enlarge-window-horizontally=         | ~C-x }~ | Make the window bigger horizontally    |
-| =shrink-window=                       | None!   | Shrink the window vertically           |
+| =shrink-window=                       | None! | Shrink the window vertically           |
 | =shrink-window-if-larger-than-buffer= | ~C-x -~ | Shrink the window vertically to buffer |
 | =balance-windows=                     | ~C-x +~ | Balance the sizes of all windows       |
 
@@ -1889,6 +1919,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 *** Parenthesis
 
 #+begin_src emacs-lisp
+
   (use-package smartparens
     :custom
     (smartparens-global-strict-mode nil)
@@ -1899,11 +1930,14 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 *** PDF Viewer
 
 #+begin_src emacs-lisp
+
   (use-package pdf-tools
-    :after latex)
+      :after latex)
+
 #+end_src
 
 *** BibTex
+
 #+begin_src emacs-lisp
   (use-package bibtex
     :defer t ; built-in with Emacs
@@ -1940,6 +1974,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     )
 
 #+end_src
+
 *** Reference management
 
 #+begin_src emacs-lisp
