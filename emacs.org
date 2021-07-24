@@ -1114,8 +1114,10 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nalhasan]]'s configuration.
 
 #+begin_src emacs-lisp
-  (pdf-loader-install)
+
   (use-package pdf-tools
+    :init
+    (pdf-loader-install)
     :config
     (setq-default pdf-view-display-size 'fit-page)
     (setq pdf-annot-activate-created-annotations t)
@@ -1125,7 +1127,10 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
     (define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
     (define-key pdf-view-mode-map (kbd "t") 'pdf-annot-add-text-annotation)
     (define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete)
+    (setq pdf-view-use-scaling t
+          pdf-view-use-imagemagick nil)
     )
+
 #+end_src
 
 #+begin_src emacs-lisp
