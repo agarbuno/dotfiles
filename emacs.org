@@ -1026,7 +1026,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 
 #+begin_src emacs-lisp
   (setq ag/lit-categories
-            '("video" "book" "podcast" "article" "website" "journal" "quote" "structure")
+            '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
             )
   (setq org-roam-node-display-template (concat "${backlinkscount:16}" "${functiontag:13}" "${othertags:40}" "${hierarchy:*}"))
 #+end_src
@@ -1138,7 +1138,8 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
             org-noter-auto-save-last-location t
             org-noter-separate-notes-from-heading t
             org-noter-doc-property-in-notes t
-            org-noter-notes-search-path '("~/Google Drive/orgfiles/references/bibtex-notes/")
+            org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/References/"
+                                          "~/Google Drive/orgfiles/references/bibtex-notes/")
             )
       )
     ;; I'm disabling this as I don't come from interleave
