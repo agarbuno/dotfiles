@@ -1,0 +1,12 @@
+
+- keywords :: %^{keywords}
+
+* Notes :noter:
+:PROPERTIES:
+:URL: %^{url}
+:AUTHOR: %^{author}
+:NOTER_DOCUMENT: %^{file} 
+:NOTER_PAGE:              
+:END:
+
+
