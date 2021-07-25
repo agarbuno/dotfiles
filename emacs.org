@@ -36,6 +36,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#completions-with-ivy-and-prescient][Completions with ivy and prescient]]
   - [[#beacon-mode][beacon-mode]]
   - [[#indentation][Indentation]]
+  - [[#decluttering-buffers][Decluttering buffers]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -596,7 +597,6 @@ This is an example of using [[https://github.com/abo-abo/hydra][Hydra]] to desig
 
 ** Completions with ivy and prescient
 
-
 #+begin_src emacs-lisp
 
   (use-package ivy-prescient
@@ -634,6 +634,34 @@ Let's make indentation with 4 spaces and no tab
     (setq-default tab-always-indent 'complete)
   )
 #+end_src
+
+** Decluttering buffers
+
+You can use =persepective= to keep the buffers somewhat organized. Since I am using =ivy= as a completion framework I will keep using the appropriate configuration for it. Let's use =persp-ivy-switch-buffer= or =persp-counsel-switch-buffer= for better integration. 
+
+#+begin_src emacs-lisp
+
+    (use-package perspective
+      :ensure t  
+      :bind
+      (("C-x k" . persp-kill-buffer*)
+       ("C-x b" . persp-ivy-switch-buffer))
+      :init
+      (persp-mode))
+
+#+end_src
+
+Visit [[https://systemcrafters.cc/effective-emacs-workflow/declutter-your-buffers-perspective-el/][Declutter Your Emacs Buffers with Perspective.el]] to learn more about useful keybindings under =perspective= mode.
+
+| binding | action                                     |
+|---------+--------------------------------------------|
+| ~C-x x s~ | switch perspective (create if need)        |
+| ~C-x x b~ | lists all buffers, switches to perspective |
+| ~C-x x n~ | cycle through available perspectives       |
+| ~C-x x p~ | /idem/                                       |
+| ~C-x x a~ | add buffer to perspective                  |
+| ~C-x x k~ | perspective kill command for buffers       |
+| ~C-x x c~ | kills perspective                          |         
 
 * Org Mode
 
