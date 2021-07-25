@@ -887,6 +887,8 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
 #+begin_src emacs-lisp
 
   (use-package org-roam
+    :init
+     (setq org-roam-v2-ack t)
     :custom
     (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
     (org-roam-completion-everywhere t)
@@ -976,7 +978,14 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
            (functiontag (seq-intersection specialtags tags 'string=)))
       (concat
        (if functiontag
-           (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
+           (cond ((member "paper" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                 ((member "thesis" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                 ((member "book" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+             )
+         (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
          (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
          )
        " "
@@ -991,7 +1000,7 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
            )
       (concat
        (if othertags
-           (propertize "=@=" 'display "")
+         (propertize "=@=" 'display "")
          (propertize "= =" 'display "")
          )
        (propertize (string-join othertags ", ") 'face 'all-the-icons-lorange))
@@ -1018,10 +1027,6 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
        )
       ))  
     )
-#+end_src
-
-#+begin_src emacs-lisp
-  (setq org-roam-v2-ack t)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1107,7 +1112,17 @@ For more option for customization see: [[https://www.reddit.com/r/orgmode/commen
                     "#+title: ${title}\n")
                    :unnarrowed t)
                  )
+    (add-to-list 'org-roam-capture-templates
+                 '("n" "references notes"  plain
+                   (file "~/.emacs.d/templates/org-capture/reference-noter")
+                   :if-new
+                   (file+head
+                    "References/${citekey}.org"
+                    "#+title: ${title}\n")
+                   :unnarrowed t)
+                 )
     )
+
     #+end_src
 
 ** Noter
