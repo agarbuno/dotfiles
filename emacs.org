@@ -61,6 +61,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#jedi-autocompletion][Jedi autocompletion]]
   - [[#r][R]]
     - [[#polymode-for-rmarkdown][Polymode for Rmarkdown]]
+  - [[#yaml][YAML]]
   - [[#debugging][Debugging]]
   - [[#commenting][Commenting]]
   - [[#projectile][Projectile]]
@@ -1466,6 +1467,17 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
       (insert (concat "```{" language "}\n\n```"))
       (forward-line -1))
     (define-key poly-markdown+r-mode-map (kbd "M-n M-i") #'ag/insert-rmd-chunk)
+    )
+
+#+end_src
+
+** YAML
+
+#+begin_src emacs-lisp
+
+  (use-package yaml-mode
+    :custom
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
     )
 
 #+end_src
