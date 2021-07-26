@@ -967,6 +967,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
            ("C-c n c" . org-roam-capture)
            ("C-c n t" . org-roam-tag-add)
            ("C-c n r" . org-roam-tag-remove)
+           ("C-c n k" . org-id-get-create)
            ;; Dailies
            ("C-c n m" . org-roam-dailies-capture-today)
            )
