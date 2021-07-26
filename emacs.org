@@ -1371,6 +1371,9 @@ We also use [[https://github.com/sebastiencs/company-box][company-box]] to furth
     (company-idle-delay 0.0)
     (company-tooltip-align-annotations t)
     (company-selection-wrap-around t)
+    ;; This might control my problems with R
+    (company-tooltip-maximum-width 60)
+    (company-tooltip-minimum-width 60)
     )
 
   (use-package company-box
