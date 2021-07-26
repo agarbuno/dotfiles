@@ -72,7 +72,10 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#debugging][Debugging]]
   - [[#commenting][Commenting]]
   - [[#projectile][Projectile]]
-  - [[#magit][Magit]]
+  - [[#versioning][Versioning]]
+    - [[#magit][Magit]]
+    - [[#forge][Forge]]
+    - [[#git-timemachine][Git Timemachine]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
 - [[#terminal][Terminal]]
   - [[#term-mode][term-mode]]
@@ -1099,7 +1102,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
   (setq ag/lit-categories
             '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
             )
-  (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${title:*} "))
+  (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
 #+end_src
 
 ** Deft
@@ -1637,11 +1640,6 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     :after (treemacs projectile)
     )
 
-  (use-package treemacs-magit
-    :after (treemacs magit)
-    :ensure t
-    )
-
   (use-package treemacs-perspective
     :after (treemacs perspective) 
     :ensure t
@@ -1649,7 +1647,9 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+end_src
 
-** Magit
+** Versioning
+
+*** Magit 
 
 [[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
 
@@ -1662,13 +1662,35 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     (add-hook 'text-mode-hook 'disable-evil-mode)
     )
 
-  ;; This disables evil mode in text windows
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :ensure t
+    )
+
+#+end_src
+
+*** Forge 
+
+#+begin_src emacs-lisp
 
   ;; NOTE: Make sure to configure a GitHub token before using this package!
   ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
   ;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
   (use-package forge
     :after magit)
+
+
+#+end_src
+
+*** Git Timemachine
+
+#+begin_src emacs-lisp
+
+  (use-package git-timemachine
+    :after magit
+    :config
+    (setq git-timemachine-abbreviation-length 4)
+    )
 
 #+end_src
 
