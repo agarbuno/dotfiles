@@ -47,6 +47,12 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
   - [[#auto-markup-symbols][Auto-markup symbols]]
   - [[#org-roam][Org Roam]]
+    - [[#org-roam-custom][org-roam custom]]
+    - [[#org-roam-binds][org-roam binds]]
+    - [[#org-roam-config][org-roam config]]
+    - [[#org-roam-display-buffer-config][org-roam display buffer config]]
+    - [[#org-roam-end][org-roam end]]
+    - [[#org-roam-display-buffer][org-roam display buffer]]
   - [[#deft][Deft]]
   - [[#org-roam-bibtex][Org Roam Bibtex]]
   - [[#noter][Noter]]
@@ -915,6 +921,8 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 For more option for customization see: [[https://www.reddit.com/r/orgmode/comments/lmlsdr/simple_question_re_orgroam_how_to_access_capture/][Simple question re org-roam - how to access capture templates? : orgmode]].
 This should be updated accordingly with respect to =org-roam-v2=. 
 
+*** org-roam custom
+
 #+begin_src emacs-lisp
 
   (use-package org-roam
@@ -960,30 +968,47 @@ This should be updated accordingly with respect to =org-roam-v2=.
                  "#+title: %<%Y-%m-%d %a>\n"
                  ("Meetings")))
        ))
+  
+#+end_src
 
-    :bind (("C-c n b" . org-roam-buffer)
-           ("C-c n f" . org-roam-node-find)
-           ("C-c n g" . org-roam-graph)
-           ("C-c n i" . org-roam-node-insert)
-           ("C-c n c" . org-roam-capture)
-           ("C-c n t" . org-roam-tag-add)
-           ("C-c n r" . org-roam-tag-remove)
-           ("C-c n k" . org-id-get-create)
-           ;; Dailies
-           ("C-c n m" . org-roam-dailies-capture-today)
-           )
+*** org-roam binds
 
-    :config
-    (org-roam-setup)
-    (add-to-list 'display-buffer-alist
-                 '("\\*org-roam\\*"
-                   (display-buffer-in-side-window)
-                   (side . right)
-                   (slot . 0)
-                   (window-width . 0.33)
-                   (preserve-size . (t nil))
-                   (window-parameters . ((no-other-window . t)
-                                         (no-delete-other-windows . t)))))
+#+begin_src emacs-lisp  
+
+  :bind (("C-c n b" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ("C-c n t" . org-roam-tag-add)
+         ("C-c n r" . org-roam-tag-remove)
+         ("C-c n k" . org-id-get-create)
+         ;; Dailies
+         ("C-c n m" . org-roam-dailies-capture-today)
+         :map org-mode-map
+         ("C-M-i"   . completion-at-point)
+         )
+
+#+end_src
+
+*** org-roam config
+
+#+begin_src emacs-lisp  
+
+  :config
+  (org-roam-setup)
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . right)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer)))
+
+#+end_src
+
+*** org-roam display buffer config
+
+#+begin_src emacs-lisp  
 
   (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
     "Return the file TITLE for the node."
@@ -1057,15 +1082,24 @@ This should be updated accordingly with respect to =org-roam-v2=.
                   " "
                   title))
        )
-      ))  
-    )
+      ))
+
 #+end_src
+
+*** org-roam end
+
+#+begin_src emacs-lisp  
+  ;; This closes the org-roam config
+  )
+#+end_src
+
+*** org-roam display buffer
 
 #+begin_src emacs-lisp
   (setq ag/lit-categories
             '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
             )
-  (setq org-roam-node-display-template (concat "${backlinkscount:16}" "${functiontag:13}" "${othertags:40}" "${hierarchy:*}"))
+  (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${title:*} "))
 #+end_src
 
 ** Deft
