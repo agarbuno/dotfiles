@@ -1581,6 +1581,35 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+end_src
 
+#+begin_src emacs-lisp
+
+  (use-package treemacs
+    :ensure t
+    :defer t
+    :config
+    (treemacs-git-mode 'simple)
+    )
+
+  (use-package treemacs-evil
+    :after (treemacs evil)
+    :ensure t)
+
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    )
+
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :ensure t
+    )
+
+  (use-package treemacs-perspective
+    :after (treemacs perspective) 
+    :ensure t
+    :config (treemacs-set-scope-type 'Perspectives))
+
+#+end_src
+
 ** Magit
 
 [[https://magit.vc/][Magit]] is the best Git interface I've ever used.  Common Git operations are easy to execute quickly using Magit's command panel system.
