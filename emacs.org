@@ -911,7 +911,8 @@ This package makes it much easier to edit =Org= documents when =org-hide-emphasi
 
 ** Org Roam
 
-For more option for customization see: [[https://www.reddit.com/r/orgmode/comments/lmlsdr/simple_question_re_orgroam_how_to_access_capture/][Simple question re org-roam - how to access capture templates? : orgmode]]
+For more option for customization see: [[https://www.reddit.com/r/orgmode/comments/lmlsdr/simple_question_re_orgroam_how_to_access_capture/][Simple question re org-roam - how to access capture templates? : orgmode]].
+This should be updated accordingly with respect to =org-roam-v2=. 
 
 #+begin_src emacs-lisp
 
@@ -2273,7 +2274,7 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
           ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
         (add-hook 'org-tree-slide-play-hook 'ag/hide-headers)
         (add-hook 'org-tree-slide-stop-hook 'ag/show-headers)
-      
+
         (defun advice:org-edit-src-code (&optional code edit-buffer-name)
           (interactive)
           (ag/show-headers))
@@ -2289,4 +2290,5 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
       )
 
 #+end_src
+
 
