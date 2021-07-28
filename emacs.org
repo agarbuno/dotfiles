@@ -1234,7 +1234,7 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
 
   (use-package org-noter
       :config
-      (setq org-noter-always-create-frame t
+      (setq org-noter-always-create-frame nil
             org-noter-separate-notes-from-heading t
             org-noter-default-heading-title "Page $p$"
             org-noter-auto-save-last-location t
@@ -1633,7 +1633,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp 
 
   (use-package treemacs
     :ensure t
