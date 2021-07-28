@@ -1244,9 +1244,6 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
                                           "~/Google Drive/orgfiles/references/bibtex-notes/")
             )
       )
-    ;; I'm disabling this as I don't come from interleave
-    ;; (setq org-noter-property-doc-file "INTERLEAVE_PDF"
-    ;;       org-noter-property-note-location "INTERLEAVE_PAGE_NOTE")
 
 #+end_src
 
