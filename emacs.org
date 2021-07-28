@@ -293,8 +293,8 @@ This section configures basic UI settings that remove unneeded elements to make 
   ;; Set frame transparency
   (set-frame-parameter (selected-frame) 'alpha ag/frame-transparency)
   (add-to-list 'default-frame-alist `(alpha . ,ag/frame-transparency))
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  ;; (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
+  ;; (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
   ;; Disable line numbers for some modes
   (dolist (mode '(org-mode-hook
@@ -381,10 +381,10 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (global-set-key (kbd "M-y") '(lambda () (interactive) (insert "ü")))
   (global-set-key (kbd "M-n") '(lambda () (interactive) (insert "ñ")))
   ;; For macOS type of keybindings
-  (global-set-key (kbd "<s-up>")    'beginning-of-buffer)
-  (global-set-key (kbd "<s-down>")  'end-of-buffer)
-  (global-set-key (kbd "<s-left>")  'beginning-of-line)
-  (global-set-key (kbd "<s-right>") 'end-of-line)
+  (global-set-key (kbd "<A-up>")    'beginning-of-buffer)
+  (global-set-key (kbd "<A-down>")  'end-of-buffer)
+  (global-set-key (kbd "<A-left>")  'beginning-of-line)
+  (global-set-key (kbd "<A-right>") 'end-of-line)
 
 #+end_src
 
@@ -1099,10 +1099,14 @@ This should be updated accordingly with respect to =org-roam-v2=.
 *** org-roam display buffer
 
 #+begin_src emacs-lisp
+
   (setq ag/lit-categories
-            '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
-            )
+        '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
+        )
+
   (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
+
+;;  (define-key org-roam-mode-map [mouse-1] #'org-roam-visit-thing)
 #+end_src
 
 ** Deft
@@ -1961,10 +1965,10 @@ Commands to switch focus on windows
 
   #+begin_src emacs-lisp
     ;; For macOS type of keybindings
-    (global-set-key (kbd "<M-s-up>")    'evil-window-up)
-    (global-set-key (kbd "<M-s-down>")  'evil-window-down)
-    (global-set-key (kbd "<M-s-left>")  'evil-window-left)
-    (global-set-key (kbd "<M-s-right>") 'evil-window-right)
+    (global-set-key (kbd "<M-A-up>")    'evil-window-up)
+    (global-set-key (kbd "<M-A-down>")  'evil-window-down)
+    (global-set-key (kbd "<M-A-left>")  'evil-window-left)
+    (global-set-key (kbd "<M-A-right>") 'evil-window-right)
   #+end_src
 
 *** moving buffers between windows
@@ -1984,10 +1988,10 @@ Use =buffer-move= for a more general solution:
     (buffer-move-stay-after-swap t)
     )
 
-  (global-set-key (kbd "<C-s-up>")     'buf-move-up)
-  (global-set-key (kbd "<C-s-down>")   'buf-move-down)
-  (global-set-key (kbd "<C-s-left>")   'buf-move-left)
-  (global-set-key (kbd "<C-s-right>")  'buf-move-right)
+  (global-set-key (kbd "<C-M-up>")     'buf-move-up)
+  (global-set-key (kbd "<C-M-down>")   'buf-move-down)
+  (global-set-key (kbd "<C-M-left>")   'buf-move-left)
+  (global-set-key (kbd "<C-M-right>")  'buf-move-right)
 
 #+end_src
 
