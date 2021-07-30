@@ -396,6 +396,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (global-set-key (kbd "M-u") '(lambda () (interactive) (insert "ú")))
   (global-set-key (kbd "M-y") '(lambda () (interactive) (insert "ü")))
   (global-set-key (kbd "M-n") '(lambda () (interactive) (insert "ñ")))
+  (global-set-key (kbd "s-/") '(lambda () (interactive) (insert "¿")))
   ;; For macOS type of keybindings
   (global-set-key (kbd "<s-up>")    'beginning-of-buffer)
   (global-set-key (kbd "<s-down>")  'end-of-buffer)
@@ -410,6 +411,8 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (global-set-key (kbd "s-a") 'mark-whole-buffer)
   (global-set-key (kbd "s-l") 'goto-line)
   (global-set-key (kbd "s-s") 'save-buffer)
+
+
 
 #+end_src
 
