@@ -326,6 +326,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
+    (setq dashboard-set-navigator t)
     (dashboard-modify-heading-icons '((projects . "rocket")
                                       (agenda . "milestone")
                                       (recents . "history")
@@ -337,6 +338,18 @@ This section configures basic UI settings that remove unneeded elements to make 
                             (bookmarks . 5)
                             (agenda . 10)
                             ))
+    (setq dashboard-navigator-buttons
+        `((;; Github
+           (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+            "Github"
+            "Go to Github"
+            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+           ;; Perspectives
+           (,(all-the-icons-octicon "history" :height 1.1 :v-adjust 0.0)
+            "Restore"
+            "Restore window configuration"
+            (lambda (&rest _) (persp-state-load persp-state-default-file)))
+           )))
     )
 #+end_src
 

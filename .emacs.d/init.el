@@ -117,6 +117,7 @@
   (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
   (dashboard-modify-heading-icons '((projects . "rocket")
                                     (agenda . "milestone")
                                     (recents . "history")
@@ -128,6 +129,18 @@
                           (bookmarks . 5)
                           (agenda . 10)
                           ))
+  (setq dashboard-navigator-buttons
+      `((;; Github
+         (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
+          "Github"
+          "Go to Github"
+          (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+         ;; Perspectives
+         (,(all-the-icons-octicon "history" :height 1.1 :v-adjust 0.0)
+          "Restore"
+          "Restore window configuration"
+          (lambda (&rest _) (persp-state-load persp-state-default-file)))
+         )))
   )
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height ag/default-font-size)
@@ -153,6 +166,7 @@
 (global-set-key (kbd "M-u") '(lambda () (interactive) (insert "ú")))
 (global-set-key (kbd "M-y") '(lambda () (interactive) (insert "ü")))
 (global-set-key (kbd "M-n") '(lambda () (interactive) (insert "ñ")))
+(global-set-key (kbd "s-/") '(lambda () (interactive) (insert "¿")))
 ;; For macOS type of keybindings
 (global-set-key (kbd "<s-up>")    'beginning-of-buffer)
 (global-set-key (kbd "<s-down>")  'end-of-buffer)
