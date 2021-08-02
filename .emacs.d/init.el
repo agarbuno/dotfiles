@@ -67,6 +67,8 @@
 
 (add-hook 'kill-buffer-query-functions 'ag/immortal-buffers)
 
+(setq save-interprogram-paste-before-kill t)
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -641,6 +643,8 @@
                 (propertize "=@=" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+               ((member "online" functiontag)
+                (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
            )
        (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
        (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
@@ -688,7 +692,7 @@
 )
 
 (setq ag/lit-categories
-          '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
+          '("video" "book" "podcast" "paper" "online" "journal" "quote" "structure" "thesis")
           )
 (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
 
@@ -1112,6 +1116,16 @@
   (display-fill-column-indicator-mode 1)
   )
 
+(use-package auctex-latexmk
+  :ensure t
+  :config
+  (auctex-latexmk-setup)
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+
+(use-package company-auctex
+  :ensure t
+  :init (company-auctex-init))
+
 (use-package latex
   :ensure auctex
   :hook (LaTeX-mode . ag/latex-mode-visual-fill)
@@ -1131,7 +1145,8 @@
           ("cite*" "[{")
           )
         )
-  (setq TeX-parse-self t)
+  (setq TeX-parse-self t
+        TeX-auto-save t)
   ;; Prevent superscripts and subscripts from being displayed in a
   ;; different font size.
   (setq font-latex-fontify-script nil)
