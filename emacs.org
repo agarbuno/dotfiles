@@ -20,6 +20,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#no-littering][No Littering]]
   - [[#automatic-package-updates][Automatic Package Updates]]
   - [[#immortal-buffers][Immortal buffers]]
+  - [[#kill-ring-and-cliboard][Kill ring and cliboard]]
 - [[#basic-ui-configuration][Basic UI Configuration]]
   - [[#dashboard][Dashboard]]
   - [[#font-configuration][Font Configuration]]
@@ -264,6 +265,15 @@ You can also use =M-x auto-package-update-now= to update right now!
   (add-hook 'kill-buffer-query-functions 'ag/immortal-buffers)
 
 #+end_src
+
+** Kill ring and cliboard
+
+#+begin_src emacs-lisp
+
+(setq save-interprogram-paste-before-kill t)
+
+#+end_src
+
 
 * Basic UI Configuration
 
@@ -1072,6 +1082,8 @@ This should be updated accordingly with respect to =org-roam-v2=.
                   (propertize "=@=" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                  ((member "book" functiontag)
                   (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                 ((member "online" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
              )
          (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
          (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
@@ -1128,7 +1140,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
 
 #+begin_src emacs-lisp
   (setq ag/lit-categories
-            '("video" "book" "podcast" "paper" "website" "journal" "quote" "structure" "thesis")
+            '("video" "book" "podcast" "paper" "online" "journal" "quote" "structure" "thesis")
             )
   (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
 #+end_src
