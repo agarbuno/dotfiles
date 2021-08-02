@@ -814,6 +814,16 @@
                :unnarrowed t)
              )
 
+(add-to-list 'org-roam-capture-templates
+             '("r" "thesis revision"  plain
+               (file "~/.emacs.d/templates/org-capture/thesis-rev")
+               :if-new
+               (file+head
+                "References/${citekey}.org"
+                "#+title: ${title}\n")
+               :unnarrowed t)
+             )
+
 (use-package org-sticky-header
   :hook (org-mode . org-sticky-header-mode)
   :config

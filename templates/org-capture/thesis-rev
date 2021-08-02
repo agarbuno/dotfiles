@@ -1,0 +1,26 @@
+#+OPTIONS: toc:nil date:nil author:nil tasks:nil
+
+*Revisión de la tesis de:* %^{author} - %^{year}.
+
+* TODO
+
+* TODO Notes             :noter:
+:PROPERTIES:
+:URL: %^{url}
+:AUTHOR: %^{author}
+:NOTER_DOCUMENT: %^{file} 
+:NOTER_PAGE:              
+:END:
+
+
+* Comentarios
+- [ ]
+
+* Preguntas
+- [ ]
+
+* TODO Preguntas Examen
+- [ ]
+
+* Observaciones
+- [ ] 
