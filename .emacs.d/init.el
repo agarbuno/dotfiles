@@ -68,6 +68,7 @@
 (add-hook 'kill-buffer-query-functions 'ag/immortal-buffers)
 
 (setq save-interprogram-paste-before-kill t)
+(setq delete-selection-mode 1)
 
 (setq inhibit-startup-message t)
 
