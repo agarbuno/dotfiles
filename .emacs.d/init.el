@@ -650,6 +650,8 @@
                 (propertize "=@=" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "courses" functiontag)
                 (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+               ((member "projects" functiontag)
+                (propertize "=@=" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
            )
        (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
        (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
@@ -697,7 +699,7 @@
 )
 
 (setq ag/lit-categories
-          '("book" "paper" "online" "journal" "thesis" "meetings" "courses")
+          '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects")
           )
 (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
 
