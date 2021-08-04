@@ -580,13 +580,13 @@
       "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :talks:\n"
                ("Talks")))
      ("m" "meeting" entry
-      "\n*  %<%I:%M %p> - %^{Meeting Title} :meeting:\n\n%?\n\n"
+      "\n*  %<%I:%M %p> - %^{Meeting Title}\n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
                ("Meetings")))
      ))
 
@@ -646,6 +646,10 @@
                 (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "online" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+               ((member "meetings" functiontag)
+                (propertize "=@=" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+               ((member "courses" functiontag)
+                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
            )
        (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
        (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
@@ -693,7 +697,7 @@
 )
 
 (setq ag/lit-categories
-          '("video" "book" "podcast" "paper" "online" "journal" "quote" "structure" "thesis")
+          '("book" "paper" "online" "journal" "thesis" "meetings" "courses")
           )
 (setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
 
@@ -800,6 +804,8 @@
           org-noter-auto-save-last-location t
           org-noter-separate-notes-from-heading t
           org-noter-doc-property-in-notes t
+          org-noter-hide-other t
+          org-noter-doc-split-fraction '(.67 . .5)
           org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/References/"
                                         "~/Google Drive/orgfiles/references/bibtex-notes/")
           )
