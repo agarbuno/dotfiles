@@ -997,10 +997,10 @@ This should be updated accordingly with respect to =org-roam-v2=.
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n"))
        ("t" "talks" entry
-        "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
+        "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} \n\n%?\n\n"
         :if-new (file+head+olp
                  "%<%Y-%m-%d>.org"
-                 "#+title: %<%Y-%m-%d %a>\n#+filetags: :talks:\n"
+                 "#+title: %<%Y-%m-%d %a>\n\n"
                  ("Talks")))
        ("m" "meeting" entry
         "\n*  %<%I:%M %p> - %^{Meeting Title}\n\n%?\n\n"
