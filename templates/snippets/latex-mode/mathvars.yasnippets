@@ -1,0 +1,81 @@
+# -*- mode: snippet -*-
+# name: math-variables
+# key: load-math-variables
+# --
+\startlocaldefs
+\numberwithin{equation}{section}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumptions}
+
+\newcommand{\N}{\mathsf{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\bCt}{\boldsymbol C}
+\newcommand{\bD}{\boldsymbol D}
+\newcommand{\CC}{\mathcal{C}}
+\newcommand{\bTheta}{\boldsymbol u}
+\newcommand{\rd}{\mathrm{d}}
+\DeclareMathOperator{\Tr}{Tr}
+%\endlocaldefs
+\newcommand{\bC}{\mathsf{C}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Sphere}{\mathbb{S}}
+\newcommand{\Bl}{\Big\langle}
+\newcommand{\Br}{\Big\rangle}
+\newcommand{\AC}{\mathrm{ac}}
+\newcommand{\id}{\mathcal{I}}
+\newcommand{\bW}{{\bf W}}
+\newcommand{\supp}{{\rm supp\ }}
+\newcommand{\KL}{{\rm KL}}
+\newcommand{\mm}{\mathfrak{m}}
+\newcommand{\mC}{\mathfrak{C}}
+\newcommand{\HH}{\dot{H}^{s}\left(\RR^N\right)}
+\newcommand{\msigma}{{\mathcal \sigma}}
+\newcommand{\mU}{{\mathcal U}}
+\newcommand{\mP}{{\mathcal P}}
+\newcommand{\mK}{{\mathcal K}}
+%\newcommand{\mC}{{\mathcal C}}
+\newcommand{\mW}{{\mathcal W}}
+\newcommand{\mV}{{\mathcal V}}
+\newcommand{\mE}{{\mathcal E}}
+\newcommand{\mF}{{\mathcal F}}
+\newcommand{\mFr}{{\mathcal F_{\resc}}}
+\newcommand{\mG}{{\mathcal G}}
+\newcommand{\mH}{{\mathcal H}}
+\newcommand{\mI}{{\mathcal I}}
+\newcommand{\mJ}{{\mathcal J}}
+\newcommand{\mM}{{\mathcal M}}
+\newcommand{\mN}{{\mathcal N}}
+\newcommand{\mY}{{\mathcal Y}}
+\newcommand{\mT}{{\mathcal T}}
+\newcommand{\mTr}{{\mathcal{T}_{k, \resc}}}
+\newcommand{\mL}{{\mathcal L}}
+\newcommand{\mX}{{\mathcal X}}
+\newcommand{\mS}{{\mathcal S}}
+\newcommand{\la}{\left\langle}
+\newcommand{\ra}{\right\rangle}
+\newcommand{\LN}{\left\vert\left\vert}
+\newcommand{\RN}{\right\vert\right\vert}
+\newcommand{\resc}{{\bf resc}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Sp}{\mathrm{Sp}}
+\newcommand{\bla}{\big\langle}
+\newcommand{\bra}{\big\rangle}
+
+\newcommand{\Tp}{T_\rho\mP_+}
+\newcommand{\cTp}{T_\rho^*\mP_+}
+\newcommand{\Ons}{V_{\rho,\CC}}
+\newcommand{\Onsop}{\Delta_{\rho,\CC}}
+\newcommand{\etgp}{\eta_{\scriptscriptstyle \textsf{GP}}}
+\newcommand{\red}{\color{red}}
+\newcommand{\blue}{\color{blue}}
+\newcommand{\nc}{\normalcolor}

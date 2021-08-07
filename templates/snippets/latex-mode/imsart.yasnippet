@@ -1,0 +1,64 @@
+# -*- mode: snippet -*-
+# name: template-imsart
+# key: template-imsart
+# group: skeleton
+# --
+\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+
+
+\usepackage{soul}
+\usepackage{graphicx}
+\usepackage{amsthm, amssymb, amsmath}
+\usepackage{epstopdf}
+\usepackage{subfigure}
+\usepackage{algcompatible}
+\usepackage{comment}
+\usepackage{tikz}
+\usepackage{graphicx}
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
+\geometry{left=30mm,right=30mm}
+
+\usepackage{mathtools}
+
+\usepackage[pagebackref=true, colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
+\usepackage[sort,numbers]{natbib}
+\usepackage[capitalize]{cleveref}
+
+\usepackage[notref,notcite,color]{showkeys}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+% Space to declare variables and other commands -------------------------------------
+
+% -----------------------------------------------------------------------------------
+
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\graphicspath{{${1:./images}}}
+
+\begin{document}
+
+\begin{frontmatter}
+  \title{${2:title}}
+  \runtitle{}
+  \begin{aug}
+    \author{\fnms{Alfredo} \snm{Garbuno-Inigo}\ead[label=me]{alfredo.garbuno@itam.mx}},
+    \runauthor{Garbuno-Inigo}
+    \address[itam]{Instituto Tecnológico Autónomo de México
+      \printead{me}
+    }
+
+  \end{aug}
+  \maketitle
+  % 
+  \begin{abstract}
+
+  \end{abstract}
+  %
+\end{frontmatter}
+\noindent\textbf{Keywords:}~{kw1; kw2}
+
+\bibliography{${3:literature}}
+\bibliographystyle{${4:abbrvnat}}
+
+\end{document}
