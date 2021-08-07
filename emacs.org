@@ -2316,7 +2316,7 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 *** Exporting org files to LaTeX
 
-First, add the style in the home of the tex configuration. In my case, in MacOS this is =/usr/local/texlive/2018/texmf-dist/tex/latex/base/=. For example I am using ~imsart~ article style. So my custom class is
+First, add the style in the home of the tex configuration. In my case, in MacOS this is =/usr/local/texlive/2018/texmf-dist/tex/latex/base/=. For example I really like using ~imsart~ article style. Which means I fisrt have to copy the =.cls= and =.sty= files into the LaTeX home.  So my custom class is
 
 #+begin_src emacs-lisp
 
@@ -2349,7 +2349,7 @@ First, add the style in the home of the tex configuration. In my case, in MacOS 
 
 #+end_src
 
-which I need to define as the default class.
+which I need to define as the default class:
 
 #+begin_src emacs-lisp
 
@@ -2369,6 +2369,14 @@ In the end, I haven't been able to set this properly as I have duplicated titles
       \\author{%a}
    \\end{frontmatter} 
   ")
+
+#+end_src
+
+Let's define the processing for the export through latexmk: 
+
+#+begin_src emacs-lisp
+
+  (setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
 
 #+end_src
 

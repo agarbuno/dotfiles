@@ -1299,7 +1299,7 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
@@ -1331,6 +1331,8 @@
 ))
 
 (setq org-latex-default-class "custom")
+
+(setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
 
 (use-package cdlatex
   :after (tex)
@@ -1391,7 +1393,7 @@
   (org-sticky-header-mode 1)
   (org-tree-slide-mode 0)
   (setq-local face-remapping-alist '((default variable-pitch default)))
-  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
+  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
   (visual-fill-column-mode 1)
   )
 
