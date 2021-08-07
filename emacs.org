@@ -2308,7 +2308,7 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 #+begin_src emacs-lisp
 
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
   (use-package org-fragtog
     :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
@@ -2462,7 +2462,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
     (org-sticky-header-mode 1)
     (org-tree-slide-mode 0)
     (setq-local face-remapping-alist '((default variable-pitch default)))
-    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
+    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
     (visual-fill-column-mode 1)
     )
 #+end_src
