@@ -111,6 +111,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#reference-management][Reference management]]
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
   - [[#latex-in-org-mode][Latex in org mode]]
+    - [[#exporting-org-files-to-latex][Exporting org files to LaTeX]]
   - [[#cdlatex][CDLaTeX]]
   - [[#screenshots][Screenshots]]
   - [[#spell-checking][Spell checking]]
@@ -2307,9 +2308,67 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 #+begin_src emacs-lisp
 
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.8))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
   (use-package org-fragtog
     :config (add-hook 'org-mode-hook 'org-fragtog-mode))
+
+#+end_src
+
+*** Exporting org files to LaTeX
+
+First, add the style in the home of the tex configuration. In my case, in MacOS this is =/usr/local/texlive/2018/texmf-dist/tex/latex/base/=. For example I am using ~imsart~ article style. So my custom class is
+
+#+begin_src emacs-lisp
+
+  (add-to-list 'org-latex-classes
+               '("custom"
+                 "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+  \\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
+  \\geometry{left=30mm,right=30mm}
+  \\usepackage[utf8]{inputenc}
+  \\usepackage{amsthm, amssymb, amsmath}
+  \\usepackage{graphicx}
+  \\usepackage{grffile}
+  \\usepackage{longtable}
+  \\usepackage{wrapfig}
+  \\usepackage{rotating}
+  \\usepackage[normalem]{ulem}
+  \\usepackage{amsmath}
+  \\usepackage{textcomp}
+  \\usepackage{amssymb}
+  \\usepackage{capt-of}
+  \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+        [NO-DEFAULT-PACKAGES]
+        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\n\\section{%s}")
+                 ("\\subsection{%s}" . "\n\\subsection{%s}")
+                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+  ))
+
+#+end_src
+
+which I need to define as the default class.
+
+#+begin_src emacs-lisp
+
+  (setq org-latex-default-class "custom")
+
+#+end_src
+
+In the end, I haven't been able to set this properly as I have duplicated titles and author names. But if sorted out, I believe it should be something along these lines:
+
+#+begin_src emacs-lisp :tangle no
+
+  (setq org-latex-title-command "\n
+   %% Front matter
+   %% 
+   \\begin{frontmatter}
+      \\title{%t}
+      \\author{%a}
+   \\end{frontmatter} 
+  ")
 
 #+end_src
 
@@ -2391,7 +2450,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
                                          (org-verbatim (:height 1.55) org-verbatim)
                                          (org-block (:height 1.25) org-block)
                                          (org-block-begin-line (:height 0.7) org-block)))
-      (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+      (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
       (setq-local visual-fill-column-width 60
             visual-fill-column-center-text t)
       (visual-fill-column-mode 1)
@@ -2403,7 +2462,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
     (org-sticky-header-mode 1)
     (org-tree-slide-mode 0)
     (setq-local face-remapping-alist '((default variable-pitch default)))
-    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
     (visual-fill-column-mode 1)
     )
 #+end_src

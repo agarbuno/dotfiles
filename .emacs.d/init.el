@@ -577,10 +577,10 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n"))
      ("t" "talks" entry
-      "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} :talks:\n\n%?\n\n"
+      "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} \n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n#+filetags: :talks:\n"
+               "#+title: %<%Y-%m-%d %a>\n\n"
                ("Talks")))
      ("m" "meeting" entry
       "\n*  %<%I:%M %p> - %^{Meeting Title}\n\n%?\n\n"
@@ -1299,9 +1299,38 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.8))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
+
+(add-to-list 'org-latex-classes
+             '("custom"
+               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+\\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
+\\geometry{left=30mm,right=30mm}
+\\usepackage[utf8]{inputenc}
+\\usepackage{amsthm, amssymb, amsmath}
+\\usepackage{graphicx}
+\\usepackage{grffile}
+\\usepackage{longtable}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{amssymb}
+\\usepackage{capt-of}
+\\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+      [NO-DEFAULT-PACKAGES]
+      [NO-PACKAGES]"
+               ("\\section{%s}" . "\n\\section{%s}")
+               ("\\subsection{%s}" . "\n\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+))
+
+(setq org-latex-default-class "custom")
 
 (use-package cdlatex
   :after (tex)
@@ -1350,7 +1379,7 @@
                                        (org-verbatim (:height 1.55) org-verbatim)
                                        (org-block (:height 1.25) org-block)
                                        (org-block-begin-line (:height 0.7) org-block)))
-    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
+    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
     (setq-local visual-fill-column-width 60
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1)
@@ -1362,7 +1391,7 @@
   (org-sticky-header-mode 1)
   (org-tree-slide-mode 0)
   (setq-local face-remapping-alist '((default variable-pitch default)))
-  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.0))
   (visual-fill-column-mode 1)
   )
 
