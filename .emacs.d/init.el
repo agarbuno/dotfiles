@@ -925,6 +925,9 @@
   (yasnippet-snippets-initialize)
   )
 
+(setq yas-snippet-dirs (append yas-snippet-dirs
+                               '("/Users/agarbuno/.emacs.d/template/snippets/")))
+
 (use-package dap-mode)
 
 (use-package python-mode
