@@ -83,14 +83,14 @@ $$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
 
 See more here: [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][Python Source Code Blocks in Org Mode]]
 
-#+begin_src python :results value
+#+begin_src python
   import numpy as np
   x = np.random.normal(0,1,size=[10,])
   return "The mean is: %s"%(x.mean().round(2))
 #+end_src
 
 #+RESULTS:
-: The mean is: -0.13
+: The mean is: -0.3
 
 
 #+begin_src python :session
@@ -103,8 +103,8 @@ See more here: [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-pyt
 
 #+begin_src python :session 
   import numpy as np
-  np.random.normal()
+  np.raxndom.normal()
 #+end_src
 
 #+RESULTS:
-: -1.2658027801593708
+: 0.195686990724
