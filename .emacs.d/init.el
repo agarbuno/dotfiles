@@ -824,7 +824,7 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("r" "thesis revision"  plain
+             '("t" "thesis revision"  plain
                (file "~/.emacs.d/templates/org-capture/thesis-rev")
                :if-new
                (file+head
@@ -1201,6 +1201,7 @@
 (use-package smartparens
   :custom
   (smartparens-global-strict-mode nil)
+  (smartparens-gobael-mode t)
  )
 
 (use-package pdf-tools

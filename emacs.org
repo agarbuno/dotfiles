@@ -1305,7 +1305,7 @@ This is a particular use case in my worflow.
 #+begin_src emacs-lisp
 
   (add-to-list 'org-roam-capture-templates
-               '("r" "thesis revision"  plain
+               '("t" "thesis revision"  plain
                  (file "~/.emacs.d/templates/org-capture/thesis-rev")
                  :if-new
                  (file+head
@@ -2178,6 +2178,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
   (use-package smartparens
     :custom
     (smartparens-global-strict-mode nil)
+    (smartparens-gobael-mode t)
    )
 
 #+end_src
