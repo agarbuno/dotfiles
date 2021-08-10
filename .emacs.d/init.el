@@ -605,7 +605,7 @@
        )
 
 :config
-(org-roam-setup)
+(org-roam-db-autosync-mode)
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
                (display-buffer-in-direction)
@@ -615,7 +615,7 @@
 
 (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
   "Return the file TITLE for the node."
-  (org-roam-get-keyword "TITLE" (org-roam-node-file node))
+  (org-collect-kewords "TITLE" (org-roam-node-file node))
   )
 
 (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
@@ -626,8 +626,8 @@
                                 :and (= type "id")]
                        (org-roam-node-id node)))))
     (if (> count 0)
-        (concat (propertize "=has:backlinks=" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%d" count))
-      (concat (propertize "=not-backlinks=" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  " ")
+        (concat (propertize "" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "(%d)" count))
+      (concat (propertize "" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "( )")
       ))
   )
 
@@ -639,25 +639,26 @@
     (concat
      (if functiontag
          (cond ((member "paper" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "online" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "meetings" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "courses" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "projects" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
            )
-       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
-       (propertize "= =" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
+       (propertize "" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
+       (propertize "" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
        )
      " "
-     (string-join functiontag ", ")))
+     (propertize (string-join functiontag ", ") 'face 'all-the-icons-lblue)
+     ))
   )
 
 (cl-defmethod org-roam-node-othertags ((node org-roam-node))
@@ -667,10 +668,10 @@
          (othertags (seq-difference tags specialtags 'string=))
          )
     (concat
-     (if othertags
-       (propertize "=@=" 'display "")
-       (propertize "= =" 'display "")
-       )
+     ;; (if othertags
+     ;;   (propertize "=@=" 'display "")
+     ;;   (propertize "= =" 'display "")
+     ;;   )
      (propertize (string-join othertags ", ") 'face 'all-the-icons-lorange))
     ))
 
@@ -684,12 +685,12 @@
          (separator (concat " " (all-the-icons-material "chevron_right") " "))
          )
     (cond
-     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "list" :face 'all-the-icons-blue))
+     ((>= level 1) (concat (propertize (format "" level) 'display (all-the-icons-material "list" :face 'all-the-icons-blue))
                            " "
                            (propertize shortentitle 'face 'org-roam-dim)
                            (propertize separator 'face 'org-roam-dim)
                            title))
-     (t (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "insert_drive_file" :face 'all-the-icons-yellow))
+     (t (concat (propertize (format "" level) 'display (all-the-icons-material "insert_drive_file" :face 'all-the-icons-yellow))
                 " "
                 title))
      )
@@ -701,7 +702,7 @@
 (setq ag/lit-categories
           '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects")
           )
-(setq org-roam-node-display-template (concat " ${backlinkscount:16} " " ${functiontag:13} " " ${othertags:25} " " ${hierarchy:*} "))
+(setq org-roam-node-display-template (concat " ${backlinkscount:5} " " ${functiontag:8} " " ${othertags:25} " " ${hierarchy:*} "))
 
 (use-package deft
   :commands (deft)
