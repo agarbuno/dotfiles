@@ -1065,8 +1065,8 @@ This should be updated accordingly with respect to =org-roam-v2=.
                                     :and (= type "id")]
                            (org-roam-node-id node)))))
         (if (> count 0)
-            (concat (propertize "" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "(%d)" count))
-          (concat (propertize "" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "( )")
+            (concat (propertize "" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
+          (concat (propertize "" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
           ))
       )
 
