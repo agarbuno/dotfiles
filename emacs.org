@@ -1038,7 +1038,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
 #+begin_src emacs-lisp  
 
   :config
-  (org-roam-setup)
+  (org-roam-db-autosync-mode)
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                  (display-buffer-in-direction)
