@@ -2,7 +2,7 @@
 #+STARTUP: content
 #+filetags: :thesis:
 
-*Revisión de la tesis de:* %^{author} - %^{year}.
+*Revisión de tesis de:* %^{author} - %^{year}.
 
 * TODO [[id:EFCF3EEC-3D1D-4BBC-A412-35D428A4DD4A][Examenes Profesionales]]
 
