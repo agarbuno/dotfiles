@@ -935,6 +935,8 @@
   (yas-minor-mode)
   (yas-activate-extra-mode 'latex-mode))
 
+(add-hook 'org-mode-hook #'ag/org-latex-yas)
+
 (use-package dap-mode)
 
 (use-package python-mode

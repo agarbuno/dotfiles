@@ -1519,6 +1519,8 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
     (yas-minor-mode)
     (yas-activate-extra-mode 'latex-mode))
 
+  (add-hook 'org-mode-hook #'ag/org-latex-yas)
+
 #+end_src
 
 ** Python
