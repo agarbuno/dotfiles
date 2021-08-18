@@ -529,7 +529,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
       :init (doom-modeline-mode 1)
       :config
       (setq doom-modeline-height 25)
-      (setq display-battery-mode t)
+      ;; (setq display-battery-mode t)
       (setq display-time-mode nil)
       (setq display-time-24hr-format 1)
       (setq display-time-day-and-date 1)
@@ -759,7 +759,8 @@ This section contains the basic configuration for =org-mode= plus the configurat
   (defun ag/org-mode-setup ()
     (org-indent-mode)
     (variable-pitch-mode 1)
-    (visual-line-mode 1))
+    (visual-line-mode 1)
+    (setq fill-column 80))
 
   (use-package org
     :commands (org-capture org-agenda)
