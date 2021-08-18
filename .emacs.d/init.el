@@ -249,7 +249,7 @@
     :init (doom-modeline-mode 1)
     :config
     (setq doom-modeline-height 25)
-    (setq display-battery-mode t)
+    ;; (setq display-battery-mode t)
     (setq display-time-mode nil)
     (setq display-time-24hr-format 1)
     (setq display-time-day-and-date 1)
@@ -389,7 +389,8 @@
 (defun ag/org-mode-setup ()
   (org-indent-mode)
   (variable-pitch-mode 1)
-  (visual-line-mode 1))
+  (visual-line-mode 1)
+  (setq fill-column 80))
 
 (use-package org
   :commands (org-capture org-agenda)
@@ -928,6 +929,11 @@
 
 (setq yas-snippet-dirs (append yas-snippet-dirs
                                '("/Users/agarbuno/.emacs.d/template/snippets/")))
+
+(defun ag/org-latex-yas ()
+  "Activate org and LaTeX yas expansion in org-mode buffers."
+  (yas-minor-mode)
+  (yas-activate-extra-mode 'latex-mode))
 
 (use-package dap-mode)
 

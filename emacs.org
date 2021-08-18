@@ -1512,6 +1512,14 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
 
 #+end_src
 
+#+begin_src emacs-lisp
+
+  (defun ag/org-latex-yas ()
+    "Activate org and LaTeX yas expansion in org-mode buffers."
+    (yas-minor-mode)
+    (yas-activate-extra-mode 'latex-mode))
+
+#+end_src
 
 ** Python
 
