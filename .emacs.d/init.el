@@ -358,7 +358,9 @@
   (("C-x k" . persp-kill-buffer*)
    ("C-x b" . persp-ivy-switch-buffer))
   :init
-  (persp-mode))
+  (persp-mode)
+  (setq persp-save-dir "/Users/agarbuno/.emacs.d/perspective/")
+  )
 
 (defun ag/org-font-setup ()
   ;; Replace list hyphen with dot
@@ -927,9 +929,8 @@
   (yasnippet-snippets-initialize)
   )
 
-(setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/template/snippets/"
-                         "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"
-                         yasnippet-snippet-dir))
+(setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/templates/snippets/"
+                         "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"))
 
 (defun ag/org-latex-yas ()
   "Activate org and LaTeX yas expansion in org-mode buffers."

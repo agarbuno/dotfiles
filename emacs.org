@@ -690,13 +690,15 @@ You can use =persepective= to keep the buffers somewhat organized. Since I am us
 
 #+begin_src emacs-lisp
 
-    (use-package perspective
-      :ensure t  
-      :bind
-      (("C-x k" . persp-kill-buffer*)
-       ("C-x b" . persp-ivy-switch-buffer))
-      :init
-      (persp-mode))
+  (use-package perspective
+    :ensure t  
+    :bind
+    (("C-x k" . persp-kill-buffer*)
+     ("C-x b" . persp-ivy-switch-buffer))
+    :init
+    (persp-mode)
+    (setq persp-save-dir "/Users/agarbuno/.emacs.d/perspective/")
+    )
 
 #+end_src
 
@@ -1507,9 +1509,8 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
 
 #+begin_src emacs-lisp
 
-  (setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/template/snippets/"
-                           "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"
-                           yasnippet-snippet-dir))
+  (setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/templates/snippets/"
+                           "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"))
 
 #+end_src
 
