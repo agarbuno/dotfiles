@@ -1314,7 +1314,7 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.8))
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
