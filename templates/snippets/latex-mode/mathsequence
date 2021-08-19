@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mathsequence 
+# key: seq
+# --
+\\{${1:x}_{${2:n}}\\}_{$2 = 1}^{\infty}

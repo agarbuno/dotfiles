@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mathnorm
+# key: norm
+# --
+\|${1:\cdot}\|

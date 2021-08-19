@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mathconverge 
+# key: conv
+# --
+${1:x}_{${2:n}} \rightarrow ${3:$1}
