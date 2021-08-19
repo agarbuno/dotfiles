@@ -1213,7 +1213,11 @@
   :custom
   (smartparens-global-strict-mode nil)
   (smartparens-gobael-mode t)
+  :config
+  (sp-local-pair 'org-mode "$" "$")
  )
+
+(add-hook 'org-mode-hook 'smartparens-mode)
 
 (use-package pdf-tools
     :after latex)
@@ -1314,7 +1318,7 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.8))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
