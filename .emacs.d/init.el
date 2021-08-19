@@ -927,8 +927,9 @@
   (yasnippet-snippets-initialize)
   )
 
-(setq yas-snippet-dirs (append yas-snippet-dirs
-                               '("/Users/agarbuno/.emacs.d/template/snippets/")))
+(setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/template/snippets/"
+                         "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"
+                         yasnippet-snippet-dir))
 
 (defun ag/org-latex-yas ()
   "Activate org and LaTeX yas expansion in org-mode buffers."

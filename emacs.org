@@ -1507,8 +1507,9 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
 
 #+begin_src emacs-lisp
 
-  (setq yas-snippet-dirs (append yas-snippet-dirs
-                                 '("/Users/agarbuno/.emacs.d/template/snippets/")))
+  (setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/template/snippets/"
+                           "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"
+                           yasnippet-snippet-dir))
 
 #+end_src
 
