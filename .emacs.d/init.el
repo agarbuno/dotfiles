@@ -918,6 +918,8 @@
 
 (use-package yasnippet
   :config
+  (setq yas-snippet-dirs (append yas-snippet-dirs
+                                 '("~/.emacs.d/templates/snippets/")))
   (yas-reload-all)
   :init
   (yas-global-mode 1)
@@ -928,9 +930,6 @@
   :config
   (yasnippet-snippets-initialize)
   )
-
-(setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/templates/snippets/"
-                         "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"))
 
 (defun ag/org-latex-yas ()
   "Activate org and LaTeX yas expansion in org-mode buffers."
@@ -1215,6 +1214,7 @@
   (smartparens-gobael-mode t)
   :config
   (sp-local-pair 'org-mode "$" "$")
+  (sp-local-pair 'org-mode "~" "~")
  )
 
 (add-hook 'org-mode-hook 'smartparens-mode)
@@ -1318,7 +1318,7 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 

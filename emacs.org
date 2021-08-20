@@ -1494,6 +1494,8 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
 
   (use-package yasnippet
     :config
+    (setq yas-snippet-dirs (append yas-snippet-dirs
+                                   '("~/.emacs.d/templates/snippets/")))
     (yas-reload-all)
     :init
     (yas-global-mode 1)
@@ -1507,12 +1509,6 @@ As of today, =yasnippets= is not bundled with snippets directly. You need to ins
 
 #+end_src
 
-#+begin_src emacs-lisp
-
-  (setq yas-snippet-dirs '("/Users/agarbuno/.emacs.d/templates/snippets/"
-                           "/Users/agarbuno/.emacs.d/etc/yasnippet/snippets/"))
-
-#+end_src
 
 #+begin_src emacs-lisp
 
@@ -2195,6 +2191,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     (smartparens-gobael-mode t)
     :config
     (sp-local-pair 'org-mode "$" "$")
+    (sp-local-pair 'org-mode "~" "~")
    )
 
   (add-hook 'org-mode-hook 'smartparens-mode)
