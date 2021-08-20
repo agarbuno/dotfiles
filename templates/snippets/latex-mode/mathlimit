@@ -2,4 +2,4 @@
 # name: mathlimit    
 # key: lim           
 # --
-\lim_{${1:n} \rightarrow \infty} ${2:x}_{$1} = $2
+\lim_{${1:n} \rightarrow ${2:\infty}} ${3:x}_{$1}

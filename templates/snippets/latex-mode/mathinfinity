@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mathinfinity
+# key: inf
+# --
+\infty$0
