@@ -712,8 +712,9 @@
   :bind (("C-c n d" . deft)
          ("C-c n u" . ag/pick-deft-dir))
   :config
-  (setq  deft-directory "~/Google Drive/orgfiles/notes/"
-         deft-extensions '("md" "org"))
+  (setq  deft-directory org-roam-directory
+         deft-extensions '("md" "org")
+         deft-use-filename-as-title t)
 
   ;; Setup my list of deft directories
   (defvar ag/deft-dir-list '()
