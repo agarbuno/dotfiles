@@ -1,7 +1,8 @@
 #+startup: content
+- %^{author} - %^{year}:
 - keywords :: %^{keywords}
 
-* Notes             :noter:
+* %^{citekey}                                  :noter:
 :PROPERTIES:
 :URL: %^{url}
 :AUTHOR: %^{author}
