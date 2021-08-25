@@ -6,7 +6,7 @@
 (defvar ag/default-variable-font-size 150)
 
 ;; Make frame transparency overridable
-(defvar ag/frame-transparency '(95 . 95))
+(defvar ag/frame-transparency '(85 . 85))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 
@@ -1392,7 +1392,7 @@
     (interactive)
     (org-tree-slide-mode 1)
     (org-sticky-header-mode 0)
-    (setq text-scale-mode-amount 3)
+    (setq text-scale-mode-amount 4.5)
     (text-scale-mode 1)
     (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                        (header-line (:height 4.5) variable-pitch)
@@ -1445,6 +1445,7 @@
         ;; (setq-local org-src-block-faces
               ;; '(("emacs-lisp" (:background "cornsilk"))))
         (hide-lines-matching "#\\+BEGIN_SRC")
+        ;; (hide-lines-matching "#\\+ATTR_HTML")
         (hide-lines-matching "#\\+END_SRC"))
         ;; (hide-lines-matching "#\\+ATTR_\\(HTML\\|EXAMPLE\\|VERSE\\|QUOTE\\)")
       (add-hook 'org-tree-slide-play-hook 'ag/hide-headers)
