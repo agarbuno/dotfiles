@@ -138,7 +138,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar ag/default-variable-font-size 150)
 
   ;; Make frame transparency overridable
-  (defvar ag/frame-transparency '(85 . 85))
+  (defvar ag/frame-transparency '(90 . 90))
 
 #+end_src
 
@@ -422,8 +422,6 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (global-set-key (kbd "s-a") 'mark-whole-buffer)
   (global-set-key (kbd "s-l") 'goto-line)
   (global-set-key (kbd "s-s") 'save-buffer)
-
-
 
 #+end_src
 
