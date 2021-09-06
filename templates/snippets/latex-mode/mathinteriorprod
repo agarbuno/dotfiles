@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:interior product 
+# key: intp
+# --
+\langle ${1:\cdot}, ${2:\cdot} \rangle$0
