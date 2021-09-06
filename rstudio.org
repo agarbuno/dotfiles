@@ -1,0 +1,13 @@
+#+Author:: Alfredo Garbuno
+#+title: Rstudio Configuration
+#+PROPERTY: header-args:conf :tangle .rstudio/.Renviron :mkdirp yes
+#+STARTUP: content
+
+This allows to have a default behavior on =renv= cache directory. This removes default directories with spaces, which seem to be a problem. 
+
+#+begin_src conf :tangle .rstudio/.Renviron :mkdirp yes
+
+  RENV_PATHS_ROOT=~/.renv
+
+#+end_src
+
