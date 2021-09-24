@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: org-latex export
+# key: latex-export
+# --
+#+OPTIONS: toc:nil date:nil author:nil tasks:nil
+#+LATEX_CLASS: custom
