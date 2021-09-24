@@ -1,13 +1,20 @@
 #+Author:: Alfredo Garbuno
 #+title: Rstudio Configuration
-#+PROPERTY: header-args:conf :tangle .rstudio/.Renviron :mkdirp yes
+#+PROPERTY: header-args:conf :tangle ~/.Renviron :mkdirp yes
 #+STARTUP: content
 
-This allows to have a default behavior on =renv= cache directory. This removes default directories with spaces, which seem to be a problem. 
+This allows to have a default behavior on =renv= cache directory. This removes default directories with spaces, which seem to be a problem in MacOS configurations. See more [[https://support.rstudio.com/hc/en-us/articles/360047157094-Managing-R-with-Rprofile-Renviron-Rprofile-site-Renviron-site-rsession-conf-and-repos-conf][here]]. 
 
-#+begin_src conf :tangle .rstudio/.Renviron :mkdirp yes
+#+begin_src conf :tangle ~/.Renviron :mkdirp yes
 
   RENV_PATHS_ROOT=~/.renv
 
 #+end_src
 
+Let's change =R= installation for =Rstudio=. See [[https://support.rstudio.com/hc/en-us/articles/200486138-Changing-R-versions-for-the-RStudio-Desktop-IDE][Changing R versions for the RStudio Desktop IDE – RStudio Support]].
+
+#+begin_src conf :tangle no
+
+
+
+#+end_src
