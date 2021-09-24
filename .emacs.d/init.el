@@ -591,6 +591,12 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
                ("Meetings")))
+     ("s" "students" entry
+      "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name}\n\n%?\n\n"
+      :if-new (file+head+olp
+               "%<%Y-%m-%d>.org"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
+               ("Students")))
      ))
 
 :bind (("C-c n b" . org-roam-buffer-toggle)
@@ -803,6 +809,11 @@
         pdf-annot-activate-created-annotations t)
   )
 
+(evil-set-initial-state 'pdf-view-mode 'emacs)
+(add-hook 'pdf-view-mode-hook
+  (lambda ()
+    (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
+
 (use-package org-noter
     :config
     (setq org-noter-always-create-frame nil
@@ -939,19 +950,6 @@
 
 (add-hook 'org-mode-hook #'ag/org-latex-yas)
 
-(use-package dap-mode)
-
-(use-package python-mode
-  :ensure t
-  :hook (python-mode . lsp)
-  :custom
-  ;; NOTE: Set these if Python 3 is called "python3" on your system!
-  ;; (python-shell-interpreter "python3")
-  ;; (dap-python-executable "python3")
-  (dap-python-debugger 'debugpy)
-  :config
-  (require 'dap-python))
-
 (defun ag/insert-r-pipe ()
   "R - %>% operator or 'then' pipe operator"
   (interactive)
@@ -1068,13 +1066,6 @@
 
 (use-package eterm-256color
   :hook (term-mode . eterm-256color-mode))
-
-(use-package vterm
-  :commands vterm
-  :config
-  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-  ;;(setq vterm-shell "zsh")                       ;; Set this to customize the shell to launch
-  (setq vterm-max-scrollback 10000))
 
 (when (eq system-type 'windows-nt)
   (setq explicit-shell-file-name "powershell.exe")
@@ -1219,9 +1210,6 @@
  )
 
 (add-hook 'org-mode-hook 'smartparens-mode)
-
-(use-package pdf-tools
-    :after latex)
 
 (use-package bibtex
   :defer t ; built-in with Emacs
