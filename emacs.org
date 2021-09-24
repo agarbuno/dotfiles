@@ -1010,8 +1010,14 @@ This should be updated accordingly with respect to =org-roam-v2=.
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
                  ("Meetings")))
+       ("s" "students" entry
+        "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name}\n\n%?\n\n"
+        :if-new (file+head+olp
+                 "%<%Y-%m-%d>.org"
+                 "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
+                 ("Students")))
        ))
-  
+
 #+end_src
 
 *** org-roam binds
