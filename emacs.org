@@ -106,7 +106,6 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
 - [[#productivity][Productivity]]
   - [[#latex-editing][Latex editing]]
     - [[#parenthesis][Parenthesis]]
-    - [[#pdf-viewer][PDF Viewer]]
     - [[#bibtex][BibTex]]
     - [[#reference-management][Reference management]]
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
@@ -1273,6 +1272,18 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
     )
 
 #+end_src
+
+This gets rid of the annoying flickering cursor in pdf view mode.
+
+#+begin_src emacs-lisp
+
+  (evil-set-initial-state 'pdf-view-mode 'emacs)
+  (add-hook 'pdf-view-mode-hook
+    (lambda ()
+      (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
+
+#+end_src
+
 
 #+begin_src emacs-lisp
 
