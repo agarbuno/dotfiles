@@ -1275,7 +1275,7 @@ Based on [[https://github.com/nalhasan/emacsconf2020/blob/master/config.org][nal
 
 This gets rid of the annoying flickering cursor in pdf view mode.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
   (evil-set-initial-state 'pdf-view-mode 'emacs)
   (add-hook 'pdf-view-mode-hook
