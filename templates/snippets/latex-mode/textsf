@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
-# name: textsf 
-# key: ts
+# name: mathsf 
+# key: ms
 # --
-
-\textsf{$1}
+\mathsf{$1}

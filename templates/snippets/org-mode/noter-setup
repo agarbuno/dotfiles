@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: noter-setup
+# key: noterblock
+# --
+:PROPERTIES:
+:URL: 
+:NOTER_DOCUMENT:
+:NOTER_PAGE: 
+:END:

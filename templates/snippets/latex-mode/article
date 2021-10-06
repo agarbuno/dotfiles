@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name: template-article
 # key: loadarticle
+# group: skeleton
 # --
 
 \documentclass[11pt]{article}
