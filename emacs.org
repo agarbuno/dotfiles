@@ -1640,6 +1640,18 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 
 #+end_src
 
+#+begin_src emacs-lisp
+
+  (defun ag/markdown-latex-yas ()
+    "Activate org and LaTeX yas expansion in org-mode buffers."
+    (yas-minor-mode)
+    (yas-activate-extra-mode 'latex-mode))
+
+  (add-hook 'markdown-mode-hook #'ag/markdown-latex-yas)
+
+
+#+end_src
+
 ** YAML
 
 #+begin_src emacs-lisp
