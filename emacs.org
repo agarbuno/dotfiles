@@ -2220,10 +2220,12 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     (smartparens-gobael-mode t)
     :config
     (sp-local-pair 'org-mode "$" "$")
+    (sp-local-pair 'markdown-mode "$" "$")
     (sp-local-pair 'org-mode "~" "~")
    )
 
   (add-hook 'org-mode-hook 'smartparens-mode)
+  (add-hook 'markdown-mode-hook 'smartparens-mode)
 
 
 #+end_src
@@ -2423,8 +2425,7 @@ Let's define the processing for the export through latexmk:
 
   (setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
 
-#+end_src
-
+#+end_sr
 ** CDLaTeX
 
 To be able to speed-up math environments and templates in org-mode.
