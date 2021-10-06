@@ -984,6 +984,13 @@
   (define-key poly-markdown+r-mode-map (kbd "M-n M-i") #'ag/insert-rmd-chunk)
   )
 
+(defun ag/markdown-latex-yas ()
+  "Activate org and LaTeX yas expansion in org-mode buffers."
+  (yas-minor-mode)
+  (yas-activate-extra-mode 'latex-mode))
+
+(add-hook 'markdown-mode-hook #'ag/markdown-latex-yas)
+
 (use-package yaml-mode
   :custom
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -1206,10 +1213,12 @@
   (smartparens-gobael-mode t)
   :config
   (sp-local-pair 'org-mode "$" "$")
+  (sp-local-pair 'markdown-mode "$" "$")
   (sp-local-pair 'org-mode "~" "~")
  )
 
 (add-hook 'org-mode-hook 'smartparens-mode)
+(add-hook 'markdown-mode-hook 'smartparens-mode)
 
 (use-package bibtex
   :defer t ; built-in with Emacs
