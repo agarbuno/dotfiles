@@ -694,12 +694,12 @@
          (separator (concat " " (all-the-icons-material "chevron_right") " "))
          )
     (cond
-     ((>= level 1) (concat (propertize (format "" level) 'display (all-the-icons-material "list" :face 'all-the-icons-blue))
+     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "list" :face 'all-the-icons-blue))
                            " "
                            (propertize shortentitle 'face 'org-roam-dim)
                            (propertize separator 'face 'org-roam-dim)
                            title))
-     (t (concat (propertize (format "" level) 'display (all-the-icons-material "insert_drive_file" :face 'all-the-icons-yellow))
+     (t (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "insert_drive_file" :face 'all-the-icons-yellow))
                 " "
                 title))
      )
@@ -711,7 +711,7 @@
 (setq ag/lit-categories
           '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects")
           )
-(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:10} " " ${othertags:25} " " ${hierarchy:*} "))
+(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:*} "))
 
 (use-package deft
   :commands (deft)
