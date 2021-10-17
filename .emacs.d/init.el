@@ -635,8 +635,8 @@
                                 :and (= type "id")]
                        (org-roam-node-id node)))))
     (if (> count 0)
-        (concat (propertize "" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
-      (concat (propertize "" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
+        (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
+      (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
       ))
   )
 
@@ -648,22 +648,22 @@
     (concat
      (if functiontag
          (cond ((member "paper" functiontag)
-                (propertize "" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
-                (propertize "" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
-                (propertize "" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "online" functiontag)
-                (propertize "" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "meetings" functiontag)
-                (propertize "" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "courses" functiontag)
-                (propertize "" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "projects" functiontag)
-                (propertize "" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
            )
-       (propertize "" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
-       (propertize "" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
+       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
+       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
        )
      " "
      (propertize (string-join functiontag ", ") 'face 'all-the-icons-lblue)
@@ -677,10 +677,10 @@
          (othertags (seq-difference tags specialtags 'string=))
          )
     (concat
-     ;; (if othertags
-     ;;   (propertize "=@=" 'display "")
-     ;;   (propertize "= =" 'display "")
-     ;;   )
+     (if othertags
+       (propertize "=@=" 'display "")
+       (propertize "= =" 'display "")
+       )
      (propertize (string-join othertags ", ") 'face 'all-the-icons-lorange))
     ))
 
@@ -711,7 +711,7 @@
 (setq ag/lit-categories
           '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects")
           )
-(setq org-roam-node-display-template (concat " ${backlinkscount:5} " " ${functiontag:8} " " ${othertags:25} " " ${hierarchy:*} "))
+(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:10} " " ${othertags:25} " " ${hierarchy:*} "))
 
 (use-package deft
   :commands (deft)
