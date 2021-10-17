@@ -2425,7 +2425,7 @@ Let's define the processing for the export through latexmk:
 
   (setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
 
-#+end_sr
+#+end_src
 ** CDLaTeX
 
 To be able to speed-up math environments and templates in org-mode.

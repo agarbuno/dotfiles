@@ -580,7 +580,7 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n"))
      ("t" "talks" entry
-      "\n*  %<%I:%M %p> - %^{Talk Title} by %^{Speaker} \n\n%?\n\n"
+      "\n* %^{Talk Title} by %^{Speaker} :talks: \n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n\n"
@@ -808,11 +808,6 @@
         pdf-view-resize-factor 1.1
         pdf-annot-activate-created-annotations t)
   )
-
-(evil-set-initial-state 'pdf-view-mode 'emacs)
-(add-hook 'pdf-view-mode-hook
-  (lambda ()
-    (set (make-local-variable 'evil-emacs-state-cursor) (list nil))))
 
 (use-package org-noter
     :config
