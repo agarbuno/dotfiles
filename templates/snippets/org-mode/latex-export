@@ -3,4 +3,10 @@
 # key: latex-export
 # --
 #+OPTIONS: toc:nil date:nil author:nil tasks:nil
+#+LANGUAGE: sp
 #+LATEX_CLASS: custom
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+LATEX_HEADER: \usepackage[sort,numbers]{natbib}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc} 
+#+LATEX_HEADER: \usepackage[capitalize]{cleveref}
+#+LATEX_HEADER: \decimalpoint
