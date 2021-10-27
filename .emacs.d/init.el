@@ -757,8 +757,8 @@
   (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
                                       "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
 
-  (setq org-ref-completion-library 'org-ref-ivy-cite)
-  (require 'org-ref-ivy-cite)
+  ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
+  (require 'org-ref-ivy)
 
   ;; see org-ref for use of these variables
   (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
