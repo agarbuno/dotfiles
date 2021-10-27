@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: load-bib
+# key:  latex-bib
+# --
+bibliographystyle:abbrvnat
+bibliography:../references/bibliographypdfs.bib
