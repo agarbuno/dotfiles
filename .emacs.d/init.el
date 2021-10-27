@@ -749,7 +749,8 @@
 (use-package org-roam-bibtex
   :bind (("C-c b d" . doi-add-bibtex-entry)
          ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
-         ("C-c b k" . org-ref-clean-bibtex-entry))
+         ("C-c b k" . org-ref-clean-bibtex-entry)
+         ("C-c b i" . org-ref-cite-insert-ivy))
   :custom
   (org-roam-bibtex-mode 1)
   :config
@@ -1255,8 +1256,8 @@
   :config
   (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
                                          "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
-  (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs"
-         bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes")
+  (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
+         bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes/")
 
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
@@ -1265,6 +1266,18 @@
   (setq bibtex-completion-display-formats
       '((t . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
     )
+
+  (defun bibtex-completion-format-citation-org-cite-original (keys)
+    "Format org-links using Org mode's own cite syntax."
+    (format "citep:%s"
+            (s-join ";"
+                    (--map (format "%s" it) keys))))
+
+  (setq bibtex-completion-format-citation-functions
+        '((org-mode      . bibtex-completion-format-citation-org-cite-original)
+          (latex-mode    . bibtex-completion-format-citation-cite)
+          (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+          (default       . bibtex-completion-format-citation-default)))
 
   )
 
