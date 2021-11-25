@@ -3,7 +3,7 @@
 - %^{author} - %^{year}:
 - keywords :: %^{keywords}
 
-* %^{citekey}                                  :noter:
+* %^{citekey} - %^{title}                                  :noter:
 :PROPERTIES:
 :URL: %^{url}
 :AUTHOR: %^{author}
