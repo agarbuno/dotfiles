@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:right-left brace 
+# key: lrb
+# --
+\left\lbrace ${1:\cdot} \right\rbrace
