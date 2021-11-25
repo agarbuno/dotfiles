@@ -650,7 +650,9 @@
          (cond ((member "paper" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+             ((member "conferences" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "online" functiontag)
@@ -709,7 +711,7 @@
 )
 
 (setq ag/lit-categories
-          '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects")
+          '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects" "conferences")
           )
 (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:*} "))
 
@@ -929,6 +931,7 @@
   (setq yas-snippet-dirs (append yas-snippet-dirs
                                  '("~/.emacs.d/templates/snippets/")))
   (yas-reload-all)
+  (setq yas-triggers-in-field t)
   :init
   (yas-global-mode 1)
   )
