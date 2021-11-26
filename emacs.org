@@ -496,7 +496,8 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 #+begin_src emacs-lisp
 
   (use-package doom-themes
-    :init (load-theme 'doom-monokai-pro t))
+    ;; :init (load-theme 'doom-monokai-pro t))
+    :init (load-theme 'doom-spacegray t))
   ;; :config (load-theme 'doom-nord t))
 
   (use-package color
