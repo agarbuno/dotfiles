@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:supremum     
+# key: sup          
+# --
+\sup_{$1}
