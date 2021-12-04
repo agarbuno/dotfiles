@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: mathbf 
 # key: bf
+# group: mathfonts
 # --
 \mathbf{${1:\cdot}}

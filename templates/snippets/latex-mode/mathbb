@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: mathbb 
-# key: bb      
+# key: bb
+# group: mathfonts
 # --
 \mathbb{${1:R}}

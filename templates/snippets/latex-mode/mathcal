@@ -1,5 +1,6 @@
 # -*- mode: snippet -*-
 # name: mathcal     
 # key: cal
+# group: mathfonts
 # --
 \mathcal{${1:G}}$0
