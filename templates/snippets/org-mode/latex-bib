@@ -3,4 +3,4 @@
 # key:  latex-bib
 # --
 bibliographystyle:abbrvnat
-bibliography:../references/bibliographypdfs.bib
+bibliography:/Users/agarbuno/orgfiles/references/bibliographypdfs.bib,/Users/agarbuno/orgfiles/references/bibliography.bib
