@@ -230,7 +230,7 @@
 
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
-  :init (load-theme 'doom-spacegray t))
+  :init (load-theme 'doom-snazzy t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
