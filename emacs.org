@@ -66,7 +66,12 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#completions-with-company-mode][Completions with company-mode]]
     - [[#completions-with-yasnippets][Completions with yasnippets]]
   - [[#python][Python]]
-    - [[#jedi-autocompletion][Jedi autocompletion]]
+    - [[#formatting-using-black][Formatting using black]]
+    - [[#env-management][Env management]]
+    - [[#elpy-environment-and-autocompletion][Elpy environment and autocompletion]]
+    - [[#addons-found][Addons found]]
+    - [[#python-mode][python mode]]
+    - [[#jedi-autocompletion-graveyard][Jedi autocompletion (graveyard)]]
   - [[#r][R]]
     - [[#polymode-for-rmarkdown][Polymode for Rmarkdown]]
   - [[#yaml][YAML]]
@@ -1556,13 +1561,97 @@ Make sure you have the =pyls= language server installed before trying =lsp-mode=
 
 #+begin_src sh :tangle no
 
-pip install --user "python-language-server[all]"
+  # pip install --user "python-language-server[all]"
+  pip install python-lsp-server
 
 #+end_src
 
 There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
 
-*** Jedi autocompletion
+
+*** Formatting using black
+
+#+begin_src emacs-lisp
+
+  (use-package python-black
+    :demand t
+    :after python-mode
+    :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
+#+end_src
+
+*** Env management
+
+#+begin_src emacs-lisp
+
+  (setenv "WORKON_HOME" "~/anaconda3/envs")
+
+  (use-package pyvenv
+    :after python-mode
+    :config
+    (pyvenv-mode 1)
+    (pyvenv-activate "~/anaconda3"))
+
+#+end_src
+
+*** Elpy environment and autocompletion
+
+I found [[https://realpython.com/emacs-the-best-python-editor/#emacs-for-python-development-with-elpy][this]] quite useful for understanding emacs as a python IDE. 
+
+#+begin_src emacs-lisp
+
+  (use-package elpy
+    :after python-mode
+    :ensure t
+    :config
+    ;; (setq elpy-shell-starting-directory 'current-directory
+    ;;       python-shell-interpreter "~/.pyenv/shims/python"
+    ;;       python-shell-interpreter-args "-i"
+    ;;       elpy-rpc-virtualenv-path 'current)
+    (setq elpy-shell-starting-directory 'current-directory
+          python-shell-interpreter "python3"
+          python-shell-interpreter-args "-i"
+          elpy-rpc-virtualenv-path 'current)
+    ;;       python-shell-interpreter "/Users/miguel.escalante/.pyenv/shims/jupyter-console"
+    ;;       python-shell-interpreter-args "--simple-prompt"
+    ;;       python-shell-prompt-detect-failure-warning nil)
+     (add-to-list 'python-shell-completion-native-disabled-interpreters
+                  "python")
+
+    :init
+    (elpy-enable))
+
+#+end_src 
+
+*** Addons found
+
+Shamelessly porting config from [[https://gitlab.com/skalas/dotfiles/-/blob/master/Emacs.org][skalas]] (he knows). 
+
+#+begin_src emacs-lisp
+
+  (use-package python-django
+    :after python-mode)
+
+  (use-package poetry
+    :after python-mode)
+
+  (use-package sphinx-doc
+    :after python-mode
+    :config (sphinx-doc-mode t))
+
+#+end_src
+
+*** python mode
+
+#+begin_src emacs-lisp
+
+  (use-package python-mode
+    :ensure t)
+
+#+end_src
+
+
+*** Jedi autocompletion (graveyard)
 
 *Note* I am using lsp-jedi as =pyls= seems to be deprecated. The instructions to install it are as follows
 
