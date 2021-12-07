@@ -533,7 +533,9 @@
   (add-to-list 'org-structure-template-alist '("la" . "src latex"))
   (add-to-list 'org-structure-template-alist '("r" . "src R"))
   (add-to-list 'org-structure-template-alist '("co" . "src conf"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python")))
+  (add-to-list 'org-structure-template-alist '("p" . "src python"))
+  (add-to-list 'org-structure-template-alist '("pf" . "src python :session :results file :exports both"))
+  )
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 (setq org-confirm-babel-evaluate nil)

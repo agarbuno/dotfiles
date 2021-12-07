@@ -187,9 +187,3 @@ See more here: [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-pyt
 
 #+RESULTS:
 [[file:myfig.png]]
-
-#+begin_src R
-
-
-
-#+end_src
