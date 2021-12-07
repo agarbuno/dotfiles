@@ -972,17 +972,10 @@
   :after python-mode
   :ensure t
   :config
-  ;; (setq elpy-shell-starting-directory 'current-directory
-  ;;       python-shell-interpreter "~/.pyenv/shims/python"
-  ;;       python-shell-interpreter-args "-i"
-  ;;       elpy-rpc-virtualenv-path 'current)
   (setq elpy-shell-starting-directory 'current-directory
         python-shell-interpreter "python3"
         python-shell-interpreter-args "-i"
         elpy-rpc-virtualenv-path 'current)
-  ;;       python-shell-interpreter "/Users/miguel.escalante/.pyenv/shims/jupyter-console"
-  ;;       python-shell-interpreter-args "--simple-prompt"
-  ;;       python-shell-prompt-detect-failure-warning nil)
    (add-to-list 'python-shell-completion-native-disabled-interpreters
                 "python")
 
