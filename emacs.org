@@ -1719,7 +1719,8 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
     :init
     (load "ess-site")
     :custom
-    (setq ess-eval-visibly 'nowait) 
+    (setq ess-eval-visibly 'nowait)
+    (setq ess-use-flymake nil)
     )
 
 #+end_src

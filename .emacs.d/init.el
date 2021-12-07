@@ -519,7 +519,10 @@
  '((emacs-lisp . t)
    (latex . t)
    (R . t)
-   (python . t)))
+   (python . t)
+   (sql . t)
+   (shell . t)
+   ))
 
 (with-eval-after-load 'org
   ;; This is needed as of Org 9.2
@@ -529,12 +532,14 @@
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist '("la" . "src latex"))
   (add-to-list 'org-structure-template-alist '("r" . "src R"))
+  (add-to-list 'org-structure-template-alist '("co" . "src conf"))
   (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-window-setup 'split-window-right)
 (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
+(setq org-src-tab-acts-natively t)
 
 ;; Automatically tangle our Emacs.org config file when we save it
 (defun ag/org-babel-tangle-config ()
@@ -950,6 +955,53 @@
 
 (add-hook 'org-mode-hook #'ag/org-latex-yas)
 
+(use-package python-black
+  :demand t
+  :after python-mode
+  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
+(setenv "WORKON_HOME" "~/anaconda3/envs")
+
+(use-package pyvenv
+  :after python-mode
+  :config
+  (pyvenv-mode 1)
+  (pyvenv-activate "~/anaconda3"))
+
+(use-package elpy
+  :after python-mode
+  :ensure t
+  :config
+  ;; (setq elpy-shell-starting-directory 'current-directory
+  ;;       python-shell-interpreter "~/.pyenv/shims/python"
+  ;;       python-shell-interpreter-args "-i"
+  ;;       elpy-rpc-virtualenv-path 'current)
+  (setq elpy-shell-starting-directory 'current-directory
+        python-shell-interpreter "python3"
+        python-shell-interpreter-args "-i"
+        elpy-rpc-virtualenv-path 'current)
+  ;;       python-shell-interpreter "/Users/miguel.escalante/.pyenv/shims/jupyter-console"
+  ;;       python-shell-interpreter-args "--simple-prompt"
+  ;;       python-shell-prompt-detect-failure-warning nil)
+   (add-to-list 'python-shell-completion-native-disabled-interpreters
+                "python")
+
+  :init
+  (elpy-enable))
+
+(use-package python-django
+  :after python-mode)
+
+(use-package poetry
+  :after python-mode)
+
+(use-package sphinx-doc
+  :after python-mode
+  :config (sphinx-doc-mode t))
+
+(use-package python-mode
+  :ensure t)
+
 (defun ag/insert-r-pipe ()
   "R - %>% operator or 'then' pipe operator"
   (interactive)
@@ -971,7 +1023,8 @@
   :init
   (load "ess-site")
   :custom
-  (setq ess-eval-visibly 'nowait) 
+  (setq ess-eval-visibly 'nowait)
+  (setq ess-use-flymake nil)
   )
 
 (use-package poly-R
