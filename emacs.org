@@ -912,7 +912,10 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
    '((emacs-lisp . t)
      (latex . t)
      (R . t)
-     (python . t)))
+     (python . t)
+     (sql . t)
+     (shell . t)
+     ))
 
   (with-eval-after-load 'org
     ;; This is needed as of Org 9.2
@@ -922,12 +925,15 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
     (add-to-list 'org-structure-template-alist '("la" . "src latex"))
     (add-to-list 'org-structure-template-alist '("r" . "src R"))
+    (add-to-list 'org-structure-template-alist '("co" . "src conf"))
     (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
   (setq org-confirm-babel-evaluate nil)
   (setq org-src-window-setup 'split-window-right)
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
+  (setq org-src-tab-acts-natively t)
+
 #+end_src
 
 ** Auto-tangle Configuration Files
