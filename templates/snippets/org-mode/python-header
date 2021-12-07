@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:python-header
+# key: py-config
+# --
+#+PROPERTY: header-args:python :session :results output

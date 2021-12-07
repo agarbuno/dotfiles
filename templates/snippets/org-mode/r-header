@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name:r-header
+# key: r-config
+# --
+#+PROPERTY: header-args:R :session :results output        
