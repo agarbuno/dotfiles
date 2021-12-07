@@ -1,4 +1,6 @@
 #+title: Test of org file to export
+#+PROPERTY: header-args:python :session :results output
+
 * First Heading
 
   *More* content! More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!More =content!= More content!More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!More content! More content!
@@ -79,32 +81,109 @@ $$y = \int_0^\infty \frac{1 + x}{1- x^2} \,dx$$
 #+end_export
 
 
-* Python and babel
+* COMMENT Python and babel
 
 See more here: [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-python.html][Python Source Code Blocks in Org Mode]]
 
-#+begin_src python
+#+begin_src python :session :results output
+
   import numpy as np
   x = np.random.normal(0,1,size=[10,])
-  return "The mean is: %s"%(x.mean().round(2))
+  print("The mean is: %s"%(x.mean().round(2)))
+
 #+end_src
 
 #+RESULTS:
-: The mean is: -0.3
+: The mean is: -0.24
 
-
-#+begin_src python :session
-  x = 0.0
-  x + 3
-#+end_src
-
-#+RESULTS:
-: 3.0
 
 #+begin_src python :session 
-  import numpy as np
-  np.raxndom.normal()
+  # x = 0.0
+  x + 3
+
 #+end_src
 
 #+RESULTS:
-: 0.195686990724
+| 3.43722647 | 3.16728997 | 1.02388341 | 3.17709708 | 2.31960921 | 3.54141401 | 0.98284739 | 4.17675063 | 2.63817884 | 3.11703375 |
+
+#+begin_src python :session 
+
+  np.random.normal()
+
+#+end_src
+
+#+RESULTS:
+: 0.8789092194552659
+
+#+begin_src python :session :results output
+
+  import sys
+  print(sys.version)
+
+#+end_src
+
+#+RESULTS:
+: 3.8.5 (default, Sep  4 2020, 02:22:02) 
+: [Clang 10.0.0 ]
+
+#+begin_src python
+
+  MAX_PRIME = 100
+
+  sieve = [True] * MAX_PRIME
+
+  for i in range(2, MAX_PRIME):
+      if sieve[i]:
+          print(i)
+          for j in range(i * i, MAX_PRIME, i):
+              sieve[j] = False
+
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+53
+59
+61
+67
+71
+73
+79
+83
+89
+97
+#+end_example
+
+
+#+begin_src python :session :results file :exports both
+
+  import matplotlib
+  import matplotlib.pyplot as plt
+  fig=plt.figure(figsize=(5,2))
+  plt.plot([1,3,2])
+  fig.tight_layout()
+
+  fname = 'myfig.png'
+  plt.savefig(fname)
+  print(fname) # return this to org-mode
+
+#+end_src
+
+#+RESULTS:
+[[file:myfig.png]]
