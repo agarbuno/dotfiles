@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name:pyfig
+# key: pyfig
+# --
+#+begin_src python :results file :exports both
+
+fname = '${1:fig-name}.png'
+plt.savefig(fname)
+print(fname) 
+
+#+end_src

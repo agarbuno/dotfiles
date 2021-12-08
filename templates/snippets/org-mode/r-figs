@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name:rfig
+# key: rfig
+# --
+#+begin_src R :file ${1:fig-name}.png :results graphics
+$0
+#+end_src
