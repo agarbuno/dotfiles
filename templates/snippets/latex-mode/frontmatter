@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: frontmatter
+# key: frontmatter
+# --
+\begin{frontmatter}
+
+\title{${1:Title}}
+\subtitle{${2:Subtitle}}
+
+\end{frontmatter}
