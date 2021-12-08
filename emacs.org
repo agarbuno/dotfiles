@@ -932,7 +932,6 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
     (add-to-list 'org-structure-template-alist '("r" . "src R"))
     (add-to-list 'org-structure-template-alist '("co" . "src conf"))
     (add-to-list 'org-structure-template-alist '("p" . "src python"))
-    (add-to-list 'org-structure-template-alist '("pf" . "src python :session :results file :exports both"))
     )
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
