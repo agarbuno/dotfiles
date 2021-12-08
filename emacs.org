@@ -2473,7 +2473,10 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 *** Exporting org files to LaTeX
 
-First, add the style in the home of the tex configuration. In my case, in MacOS this is =/usr/local/texlive/2018/texmf-dist/tex/latex/base/=. For example I really like using ~imsart~ article style. Which means I fisrt have to copy the =.cls= and =.sty= files into the LaTeX home.  So my custom class is
+First, add the style in the home of the tex configuration. In my case, in MacOS
+this is =/usr/local/texlive/2018/texmf-dist/tex/latex/base/=. For example I really
+like using the ~imsart~ article style. Which means I fisrt have to copy the =.cls=
+and =.sty= files into the LaTeX home.  So my custom class is
 
 #+begin_src emacs-lisp
 
@@ -2501,8 +2504,39 @@ First, add the style in the home of the tex configuration. In my case, in MacOS 
                  ("\\subsection{%s}" . "\n\\subsection{%s}")
                  ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
                  ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-  ))
+                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}"))
+               '("header"
+                 "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
+  \\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
+  \\geometry{left=30mm,right=30mm}
+  \\usepackage[utf8]{inputenc}
+  \\usepackage{amsthm, amssymb, amsmath}
+  \\usepackage{graphicx}
+  \\usepackage{grffile}
+  \\usepackage{longtable}
+  \\usepackage{wrapfig}
+  \\usepackage{rotating}
+  \\usepackage[normalem]{ulem}
+  \\usepackage{amsmath}
+  \\usepackage{textcomp}
+  \\usepackage{amssymb}
+  \\usepackage{capt-of}
+  \\definecolor{myGreen}{HTML}{006953}
+  \\usepackage[pagebackref=true,colorlinks=true,urlcolor=myGreen,pdfborder={0 0 0}]{hyperref}
+  \\usepackage{fancyhdr} \fancyhead{}
+  \\fancyhead[L]{\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/ mcd-long.png} \vspace{-.7cm}}
+  \\fancyhead[R]{{\parbox[b][10mm][t]{0.5\textwidth}{\raggedleft{Departamento
+        Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
+        México.}}}\vspace{.3cm}}
+  \\renewcommand{\headrulewidth}{.5pt}
+  \\pagestyle{fancy}
+        [NO-DEFAULT-PACKAGES]
+        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\n\\section{%s}")
+                 ("\\subsection{%s}" . "\n\\subsection{%s}")
+                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")))
 
 #+end_src
 
