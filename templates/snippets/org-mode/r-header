@@ -2,4 +2,5 @@
 # name:r-header
 # key: r-config
 # --
-#+PROPERTY: header-args:R :session :results output        
+#+PROPERTY: header-args:R :session ${1:session-name} :results output
+$0

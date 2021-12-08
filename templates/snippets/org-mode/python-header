@@ -2,4 +2,5 @@
 # name:python-header
 # key: py-config
 # --
-#+PROPERTY: header-args:python :session :results output
+#+PROPERTY: header-args:python :session ${1:session-name} :results output
+$0
