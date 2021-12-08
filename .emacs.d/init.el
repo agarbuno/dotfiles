@@ -534,7 +534,6 @@
   (add-to-list 'org-structure-template-alist '("r" . "src R"))
   (add-to-list 'org-structure-template-alist '("co" . "src conf"))
   (add-to-list 'org-structure-template-alist '("p" . "src python"))
-  (add-to-list 'org-structure-template-alist '("pf" . "src python :session :results file :exports both"))
   )
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
@@ -1404,8 +1403,39 @@
                ("\\subsection{%s}" . "\n\\subsection{%s}")
                ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
                ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-))
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}"))
+             '("header"
+               "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
+\\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
+\\geometry{left=30mm,right=30mm}
+\\usepackage[utf8]{inputenc}
+\\usepackage{amsthm, amssymb, amsmath}
+\\usepackage{graphicx}
+\\usepackage{grffile}
+\\usepackage{longtable}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{amssymb}
+\\usepackage{capt-of}
+\\definecolor{myGreen}{HTML}{006953}
+\\usepackage[pagebackref=true,colorlinks=true,urlcolor=myGreen,pdfborder={0 0 0}]{hyperref}
+\\usepackage{fancyhdr} \fancyhead{}
+\\fancyhead[L]{\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/ mcd-long.png} \vspace{-.7cm}}
+\\fancyhead[R]{{\parbox[b][10mm][t]{0.5\textwidth}{\raggedleft{Departamento
+      Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
+      México.}}}\vspace{.3cm}}
+\\renewcommand{\headrulewidth}{.5pt}
+\\pagestyle{fancy}
+      [NO-DEFAULT-PACKAGES]
+      [NO-PACKAGES]"
+               ("\\section{%s}" . "\n\\section{%s}")
+               ("\\subsection{%s}" . "\n\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")))
 
 (setq org-latex-default-class "custom")
 
