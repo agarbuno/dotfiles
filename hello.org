@@ -1,5 +1,5 @@
 #+title: Test of org file to export
-#+PROPERTY: header-args:python :session :results output
+
 
 * First Heading
 
@@ -187,3 +187,11 @@ See more here: [[https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-pyt
 
 #+RESULTS:
 [[file:myfig.png]]
+
+#+begin_src python :results file :exports both
+
+  fname = 'names.png'
+  plt.savefig(fname)
+  print(fname) 
+
+#+end_src
