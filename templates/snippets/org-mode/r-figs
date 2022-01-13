@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name:rfig
 # key: rfig
+# group: R
 # --
 #+begin_src R :file ${1:fig-name}.png :results graphics
 $0
