@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: student-project
+# key: student-header
+# --
+---
+layout: page
+title: ${1:title}.
+description: ${2:Ba} in ${3:program}. 
+importance: 1
+category: ${4:under}graduates
+---
