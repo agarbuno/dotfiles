@@ -122,6 +122,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#pdf-viewing][PDF viewing]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
+  - [[#org-reveal][Org-reveal]]
 :END:
 
 * Welcome!
@@ -761,116 +762,117 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+Begin_src emacs-lisp
 
-  (defun ag/org-mode-setup ()
-    (org-indent-mode)
-    (variable-pitch-mode 1)
-    (visual-line-mode 1)
-    (setq fill-column 80))
+    (defun ag/org-mode-setup ()
+      (org-indent-mode)
+      (variable-pitch-mode 1)
+      (visual-line-mode 1)
+      (setq fill-column 80))
 
-  (use-package org
-    :commands (org-capture org-agenda)
-    :hook (org-mode . ag/org-mode-setup)
-    :config
-    (setq org-ellipsis " ▾")
-    (setq org-support-shift-select t)
+    (use-package org
+      :commands (org-capture org-agenda)
+      :hook ((org-mode . ag/org-mode-setup)
+             (org-mode . ag/org-reveal))
+      :config
+      (setq org-ellipsis " ▾")
+      (setq org-support-shift-select t)
 
-    (setq org-agenda-start-with-log-mode t)
-    (setq org-log-done 'time)
-    (setq org-log-into-drawer t)
+      (setq org-agenda-start-with-log-mode t)
+      (setq org-log-done 'time)
+      (setq org-log-into-drawer t)
 
-    (setq org-agenda-files
-        '("~/Google Drive/orgfiles/agenda/tasks.org"
-          "~/Google Drive/orgfiles/agenda/habits.org"))
+      (setq org-agenda-files
+          '("~/Google Drive/orgfiles/agenda/tasks.org"
+            "~/Google Drive/orgfiles/agenda/habits.org"))
 
-    (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-            (sequence "WAIT(w)" "READ(r)" "VIEW(v)" "|" ))
-          )
+      (setq org-todo-keywords
+            '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+              (sequence "WAIT(w)" "READ(r)" "VIEW(v)" "|" ))
+            )
 
-    (setq org-refile-targets
-          '(("archive.org" :maxlevel . 1)
-            ("tasks.org" :maxlevel . 1)))
+      (setq org-refile-targets
+            '(("archive.org" :maxlevel . 1)
+              ("tasks.org" :maxlevel . 1)))
 
-    (setq org-todo-keyword-faces
-          '(("TODO" . (:foreground "hot pink" :weight bold))
-            ("DONE" . (:foreground "#00e6ab" :weight bold))
-            ("NEXT" . (:foreground "dark orange" :weight bold))
-            ("WAIT" . (:foreground "#aeffff" :weight bold))
-            ("READ" . (:foreground "#ffcc66" :weight bold))
-            ("VIEW" . (:foreground "#8787ff" :weight bold))
-            ))
-
-    (setq org-tag-alist
-          '((:startgroup)
-            ;; Put mutually exclusive tags here
-            (:endgroup)
-            ("research" . ?r)
-            ("maestria" . ?m)
-            ("teaching" . ?t)
-            ("paper"    . ?p)
-            ("book"     . ?b)
-            ("idea" . ?i)))
-
-    ;; Save Org buffers after refiling!
-    (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-    (setq org-agenda-custom-commands
-          '(("d" "Dashboard"
-             ((agenda "" ((org-deadline-warning-days 7)))
-              (todo "NEXT"
-                    ((org-agenda-overriding-header "Ongoing Tasks")))
-              (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
-              (tags-todo "+teaching/!-NEXT" ((org-agenda-overriding-header "Teaching Tasks")))
-              (tags-todo "+maestria/!-NEXT" ((org-agenda-overriding-header "McDatos Tasks")))
-
-              (tags-todo "-research-teaching-maestria/!-NEXT"
-                         ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
-                          ;; (org-agenda-files "~/Google Drive/orgfiles/agenda/tasks.org")
-                          (org-agenda-text-search-extra-files nil)
-                          ))
+      (setq org-todo-keyword-faces
+            '(("TODO" . (:foreground "hot pink" :weight bold))
+              ("DONE" . (:foreground "#00e6ab" :weight bold))
+              ("NEXT" . (:foreground "dark orange" :weight bold))
+              ("WAIT" . (:foreground "#aeffff" :weight bold))
+              ("READ" . (:foreground "#ffcc66" :weight bold))
+              ("VIEW" . (:foreground "#8787ff" :weight bold))
               ))
 
-            ("n" "Next Tasks"
-             ((todo "NEXT"
-                    ((org-agenda-overriding-header "Next Tasks")))))
+      (setq org-tag-alist
+            '((:startgroup)
+              ;; Put mutually exclusive tags here
+              (:endgroup)
+              ("research" . ?r)
+              ("maestria" . ?m)
+              ("teaching" . ?t)
+              ("paper"    . ?p)
+              ("book"     . ?b)
+              ("idea" . ?i)))
 
-            ("W" "Work Tasks" tags-todo "+work-email")
-            ))
+      ;; Save Org buffers after refiling!
+      (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-    (setq org-capture-templates
-          `(("t" "Tasks/Projects ")
-            ("tt" "Task" entry
-             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Active")
-             "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-            ("tr" "Research Tasks" entry
-             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
-             "* TODO %?  :research:\nLink: %a")
-            ("tp" "Reading Reminder" entry
-             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
-             "* READ %?  \nLink: %a")
-            ("tv" "Talk or Video" entry
-             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
-             "* VIEW %?  \nLink: %a")
-            ("j" "Journal" entry
-             (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
-             "* %?\nEntered on %U\n  %i\n  %a")
-            ("h" "Habit" entry
-             (file+olp "~/Google Drive/orgfiles/agenda/habits.org" "Work")
-             "* TODO %?")
+      (setq org-agenda-custom-commands
+            '(("d" "Dashboard"
+               ((agenda "" ((org-deadline-warning-days 7)))
+                (todo "NEXT"
+                      ((org-agenda-overriding-header "Ongoing Tasks")))
+                (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
+                (tags-todo "+teaching/!-NEXT" ((org-agenda-overriding-header "Teaching Tasks")))
+                (tags-todo "+maestria/!-NEXT" ((org-agenda-overriding-header "McDatos Tasks")))
+
+                (tags-todo "-research-teaching-maestria/!-NEXT"
+                           ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
+                            ;; (org-agenda-files "~/Google Drive/orgfiles/agenda/tasks.org")
+                            (org-agenda-text-search-extra-files nil)
+                            ))
+                ))
+
+              ("n" "Next Tasks"
+               ((todo "NEXT"
+                      ((org-agenda-overriding-header "Next Tasks")))))
+
+              ("W" "Work Tasks" tags-todo "+work-email")
+              ))
+
+      (setq org-capture-templates
+            `(("t" "Tasks/Projects ")
+              ("tt" "Task" entry
+               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Active")
+               "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+              ("tr" "Research Tasks" entry
+               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
+               "* TODO %?  :research:\nLink: %a")
+              ("tp" "Reading Reminder" entry
+               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
+               "* READ %?  \nLink: %a")
+              ("tv" "Talk or Video" entry
+               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
+               "* VIEW %?  \nLink: %a")
+              ("j" "Journal" entry
+               (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
+               "* %?\nEntered on %U\n  %i\n  %a")
+              ("h" "Habit" entry
+               (file+olp "~/Google Drive/orgfiles/agenda/habits.org" "Work")
+               "* TODO %?")
+              )
             )
-          )
 
-    (define-key global-map (kbd "C-c t t")
-      (lambda () (interactive) (org-capture nil "tt")))
+      (define-key global-map (kbd "C-c t t")
+        (lambda () (interactive) (org-capture nil "tt")))
 
-    (global-set-key (kbd "C-c a") 'org-agenda)
-    (global-set-key (kbd "C-c t c") 'org-capture)
+      (global-set-key (kbd "C-c a") 'org-agenda)
+      (global-set-key (kbd "C-c t c") 'org-capture)
 
-    (require 'org-habit)
-    (setq org-habit-show-all-today t) 
-    (setq org-habit-graph-column 60)
+      (require 'org-habit)
+      (setq org-habit-show-all-today t) 
+      (setq org-habit-graph-column 60)
 
-    (ag/org-font-setup))
+      (ag/org-font-setup))
 
 #+end_src
 
@@ -2717,5 +2719,22 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
       )
 
 #+end_src
+** Org-reveal
 
+More [[https://opensource.com/article/18/2/how-create-slides-emacs-org-mode-and-revealjs][here]]. 
+
+#+begin_src emacs-lisp
+
+  (defun ag/org-reveal ()
+    (use-package ox-reveal
+      :custom
+      (org-reveal-note-key-char nil)
+      (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+      (setq org-reveal-mathjax t)
+      )
+    (use-package htmlize)
+    (require 'ox-reveal)
+    )
+
+#+end_src
 

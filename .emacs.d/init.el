@@ -397,7 +397,8 @@
 
 (use-package org
   :commands (org-capture org-agenda)
-  :hook (org-mode . ag/org-mode-setup)
+  :hook ((org-mode . ag/org-mode-setup)
+         (org-mode . ag/org-reveal))
   :config
   (setq org-ellipsis " ▾")
   (setq org-support-shift-select t)
@@ -1551,3 +1552,14 @@
     (org-tree-slide-breadcrumbs " > ")
     (org-image-actual-width nil)
     )
+
+(defun ag/org-reveal ()
+  (use-package ox-reveal
+    :custom
+    (org-reveal-note-key-char nil)
+    (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+    (setq org-reveal-mathjax t)
+    )
+  (use-package htmlize)
+  (require 'ox-reveal)
+  )
