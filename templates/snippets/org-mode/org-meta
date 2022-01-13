@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: org-meta 
+# key: meta
+# --
+#+TITLE: ${1:Titulo}
+#+AUTHOR: ${2:Alfredo Garbuno Iñigo}
+#+EMAIL:  ${3:agarbuno@itam.mx}
+#+DATE: ${4:fecha}
+$0
