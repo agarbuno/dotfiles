@@ -1557,7 +1557,7 @@
   (use-package ox-reveal
     :custom
     (org-reveal-note-key-char nil)
-    (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
+    (org-reveal-root "/Users/agarbuno/software/reveal.js")
     (setq org-reveal-mathjax t)
     )
   (use-package htmlize)
