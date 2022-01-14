@@ -1,7 +1,9 @@
 # -*- mode: snippet -*-
 # name: org-latex export
 # key: latex-export
+# group: latex
 # --
+:LATEX_PROPERTIES:
 #+OPTIONS: toc:nil date:nil author:nil tasks:nil
 #+LANGUAGE: sp
 #+LATEX_CLASS: custom
@@ -10,3 +12,4 @@
 #+LATEX_HEADER: \usepackage[utf8]{inputenc} 
 #+LATEX_HEADER: \usepackage[capitalize]{cleveref}
 #+LATEX_HEADER: \decimalpoint
+:END:
