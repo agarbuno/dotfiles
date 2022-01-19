@@ -6,4 +6,5 @@
 #+AUTHOR: ${2:Alfredo Garbuno Iñigo}
 #+EMAIL:  ${3:agarbuno@itam.mx}
 #+DATE: ${4:fecha}
-$0
+#+STARTUP: showall
+
