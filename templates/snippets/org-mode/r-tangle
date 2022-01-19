@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: r-tangle
+# key: r-tangle
+# group: R
+# --
+#+PROPERTY: header-args:R :tangle ../rscripts/${1:filename}.R :mkdirp yes
