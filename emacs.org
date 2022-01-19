@@ -2721,7 +2721,7 @@ I almost give up on =org-tree-slides= but the comments and solution on [[https:/
 #+end_src
 ** Org-reveal
 
-More [[https://opensource.com/article/18/2/how-create-slides-emacs-org-mode-and-revealjs][here]]. 
+This allows to export into reveal.js slides. More [[https://opensource.com/article/18/2/how-create-slides-emacs-org-mode-and-revealjs][here]]. Problems with bibliography though...
 
 #+begin_src emacs-lisp
 
