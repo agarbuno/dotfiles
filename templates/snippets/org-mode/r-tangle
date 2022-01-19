@@ -3,4 +3,4 @@
 # key: r-tangle
 # group: R
 # --
-#+PROPERTY: header-args:R :tangle ../rscripts/${1:filename}.R :mkdirp yes
+#+PROPERTY: header-args:R :tangle {$1:dirname}/${2:filename}.R :mkdirp yes
