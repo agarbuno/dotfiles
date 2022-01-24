@@ -1698,7 +1698,7 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
     "R - %>% operator or 'then' pipe operator"
     (interactive)
     (just-one-space 1)
-    (insert "%>%")
+    (insert "|>")
     (reindent-then-newline-and-indent))
 
   (use-package ess
@@ -2729,7 +2729,8 @@ This allows to export into reveal.js slides. More [[https://opensource.com/artic
     (use-package ox-reveal
       :custom
       (org-reveal-note-key-char nil)
-      (org-reveal-root "/Users/agarbuno/software/reveal.js")
+      ;; (org-reveal-root "/Users/agarbuno/software/reveal.js")
+      (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
       (setq org-reveal-mathjax t)
       )
     (use-package htmlize)
