@@ -1001,7 +1001,7 @@
   "R - %>% operator or 'then' pipe operator"
   (interactive)
   (just-one-space 1)
-  (insert "%>%")
+  (insert "|>")
   (reindent-then-newline-and-indent))
 
 (use-package ess
@@ -1404,7 +1404,8 @@
                ("\\subsection{%s}" . "\n\\subsection{%s}")
                ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
                ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}"))
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+               )           
              '("header"
                "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
 \\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
@@ -1436,7 +1437,55 @@
                ("\\subsection{%s}" . "\n\\subsection{%s}")
                ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
                ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")))
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+               )
+             )
+
+(add-to-list 'org-latex-classes
+               '("handout"
+                 "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+  \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt]{geometry}
+  \\geometry{left=30mm,right=30mm,bottom=20mm}
+  \\usepackage[utf8]{inputenc}
+  \\usepackage{amsthm, amssymb, amsmath}
+  \\usepackage{graphicx}
+  \\usepackage{grffile}
+  \\usepackage{longtable}
+  \\usepackage{wrapfig}
+  \\usepackage{rotating}
+  \\usepackage[normalem]{ulem}
+  \\usepackage{amsmath}
+  \\usepackage{textcomp}
+  \\usepackage{amssymb}
+  \\usepackage{capt-of}
+  \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+  \\usepackage{fancyhdr}
+
+  \\renewcommand{\\textfraction}{0.05}
+  \\renewcommand{\\topfraction}{0.8}
+  \\renewcommand{\\bottomfraction}{0.8}
+  \\renewcommand{\\floatpagefraction}{0.75}
+  \\fancyfoot{}
+  \\fancyfoot[C]{\\includegraphics[height=1cm]{~/OneDrive/mcd/pagina/logo-ITAM-verde.png}\\vspace{-1cm}}
+  \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
+  \\pagestyle{fancy}
+  \\fancypagestyle{plain}{%
+  \\fancyhead{}%
+  \\renewcommand{\\headrulewidth}{0pt}%
+  \\pagestyle{fancy}}
+  \\fancypagestyle{toc}{%
+  \\fancyhf{}%
+  \\fancyfoot[C]{\\thepage}}
+  \\renewcommand{\\chaptermark}[1]{%
+  \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
+        [NO-DEFAULT-PACKAGES]
+        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\n\\section{%s}")
+                 ("\\subsection{%s}" . "\n\\subsection{%s}")
+                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+                 ))
 
 (setq org-latex-default-class "custom")
 
@@ -1553,11 +1602,12 @@
     (org-image-actual-width nil)
     )
 
-(defun ag/org-reveal ()
+(defun ag/org-reveal ()  
   (use-package ox-reveal
     :custom
     (org-reveal-note-key-char nil)
-    (org-reveal-root "/Users/agarbuno/software/reveal.js")
+    ;; (org-reveal-root "/Users/agarbuno/software/reveal.js")
+    (org-reveal-root "https://cdn.jsdelivr.net/npm/reveal.js")
     (setq org-reveal-mathjax t)
     )
   (use-package htmlize)
