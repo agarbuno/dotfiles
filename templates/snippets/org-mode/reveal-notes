@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: reveal notes 
+# key: <n
+# group : reveal
+# --
+#+BEGIN_NOTES
+  $1
+#+END_NOTES

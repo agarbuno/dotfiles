@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: table of contents
+# key: toc
+# --
+#+EXCLUDE_TAGS: ${1:toc}
+
+* ${2:Table of Contents}                                                             :$1:
+:PROPERTIES:
+:TOC:      :include all  :ignore this :depth 3
+:END:
+:CONTENTS:
+
+:END:
+

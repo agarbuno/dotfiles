@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: latex notes 
+# key: latex-notes
+# group : latex
+# --
+#+LATEX_HEADER:\usepackage{framed}
+#+LATEX_HEADER:\usepackage{xcolor}
+#+LATEX_HEADER_EXTRA: \definecolor{shadecolor}{gray}{.95}
+#+LATEX_HEADER_EXTRA: \newenvironment{NOTES}{\begin{lrbox}{\mybox}\begin{minipage}{0.9\textwidth}\begin{shaded}}{\end{shaded}\end{minipage}\end{lrbox}\fbox{\usebox{\mybox}}}

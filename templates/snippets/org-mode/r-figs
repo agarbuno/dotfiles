@@ -3,7 +3,8 @@
 # key: rfig
 # group: R
 # --
-#+HEADER: :width 7 :height 3.5 :R-dev-args bg="transparent"
-#+begin_src R :file ${1:fig-name}.png :results graphics
+#+HEADER: :width 10 :height 5.5 :R-dev-args bg="transparent"
+#+begin_src R :file ${1:fig-name}.svg :exports results :results output graphics file
+
 $0
 #+end_src

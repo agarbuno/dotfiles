@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: silent block 
+# key: rsil
+# group: R 
+# --
+#+begin_src R :exports none :results none
+  $0
+#+end_src
