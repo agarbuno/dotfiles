@@ -3,8 +3,7 @@
 # key: rfig
 # group: R
 # --
-#+HEADER: :width 10 :height 5.5 :R-dev-args bg="transparent"
-#+begin_src R :file ${1:fig-name}.svg :exports results :results output graphics file
-
+#+HEADER: :width ${1:$$(yas-choose-value '("900" "10"))} :height ${2:$$(yas-choose-value '("500" "5.5"))} :R-dev-args bg="transparent"
+#+begin_src R :file ${3:fig-name}.${4:$$(yas-choose-value '("jpeg" "svg")) } :exports results :results output graphics file
 $0
 #+end_src
