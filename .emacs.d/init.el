@@ -1444,7 +1444,7 @@
 (add-to-list 'org-latex-classes
                '("handout"
                  "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-  \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt]{geometry}
+  \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
   \\geometry{left=30mm,right=30mm,bottom=20mm}
   \\usepackage[utf8]{inputenc}
   \\usepackage{amsthm, amssymb, amsmath}
@@ -1459,14 +1459,14 @@
   \\usepackage{amssymb}
   \\usepackage{capt-of}
   \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+  \\usepackage{listings}
   \\usepackage{fancyhdr}
-
   \\renewcommand{\\textfraction}{0.05}
   \\renewcommand{\\topfraction}{0.8}
   \\renewcommand{\\bottomfraction}{0.8}
   \\renewcommand{\\floatpagefraction}{0.75}
   \\fancyfoot{}
-  \\fancyfoot[C]{\\includegraphics[height=1cm]{~/OneDrive/mcd/pagina/logo-ITAM-verde.png}\\vspace{-1cm}}
+  \\renewcommand{\\footrulewidth}{0.4pt}             \\fancyfoot[C]{\\includegraphics[height=1cm]{~/OneDrive/mcd/pagina/logo-ITAM-verde.png}\\vspace{-1cm}}
   \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
   \\pagestyle{fancy}
   \\fancypagestyle{plain}{%
@@ -1490,6 +1490,26 @@
 (setq org-latex-default-class "custom")
 
 (setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
+
+(setq org-latex-listings 'listings)
+(setq org-latex-custom-lang-environments
+      '((r "R")))
+(setq org-latex-listings-options
+      '(("frame" "single")
+        ("backgroundcolor" "\\color{backcolour}")
+        ("basicstyle" "\\ttfamily\\footnotesize")
+        ("numbers" "left")
+        ("numberstyle" "\\tiny\\color{codegray}")
+        ("rulecolor" "\\color{white}")
+        ("commentsyle" "\\color{codegreen}")))
+(org-add-link-type
+ "latex" nil
+ (lambda (path desc format)
+   (cond
+    ((eq format 'html)
+     (format "<span class=\"%s\">%s</span>" path desc))
+    ((eq format 'latex)
+     (format "\\%s{%s}" path desc)))))
 
 (use-package cdlatex
   :after (tex)
