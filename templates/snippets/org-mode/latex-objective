@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name:class-objective 
+# key: <o
+# group : latex
+# --
+#+BEGIN_NOTES
+*Profesor*: Alfredo Garbuno Iñigo | ${1:Primavera, 2022}.\\\
+*Objetivo*. ${2:Que veremos}.\\\
+*Lectura recomendada*: ${3:Referencia}.
+#+END_NOTES
