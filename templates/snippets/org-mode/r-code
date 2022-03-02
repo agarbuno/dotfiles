@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: r code block      
+# key: <r
+# group : R
+# --
+#+begin_src R :exports code :results none
+  $1
+#+end_src
+$0

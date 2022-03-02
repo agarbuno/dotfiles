@@ -4,7 +4,8 @@
 # group : latex
 # --
 #+BEGIN_NOTES
-*Profesor*: Alfredo Garbuno Iñigo | ${1:Primavera, 2022}.\\\
-*Objetivo*. ${2:Que veremos}.\\\
-*Lectura recomendada*: ${3:Referencia}.
+*Profesor*: Alfredo Garbuno Iñigo | ${1:Primavera, 2022} | ${2:Tema}.\\\
+*Objetivo*. ${3:Que veremos}.\\\
+*Lectura recomendada*: ${4:Referencia}.
 #+END_NOTES
+$0

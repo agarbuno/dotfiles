@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: iid  
+# key: iid   
+# --
+\overset{\mathsf{iid}}{\sim}$0

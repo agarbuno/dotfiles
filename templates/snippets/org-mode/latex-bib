@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: load-bib
-# key:  latex-bib
+# key:  bib-load
 # --
 bibliographystyle:abbrvnat
-bibliography:/Users/agarbuno/orgfiles/references/bibliographypdfs.bib,/Users/agarbuno/orgfiles/references/bibliography.bib
+bibliography:references.bib
