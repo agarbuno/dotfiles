@@ -74,6 +74,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#jedi-autocompletion-graveyard][Jedi autocompletion (graveyard)]]
   - [[#r][R]]
     - [[#polymode-for-rmarkdown][Polymode for Rmarkdown]]
+  - [[#stan][Stan]]
   - [[#yaml][YAML]]
   - [[#debugging][Debugging]]
   - [[#commenting][Commenting]]
@@ -503,8 +504,9 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
   (use-package doom-themes
     ;; :init (load-theme 'doom-monokai-pro t))
-    :init (load-theme 'doom-snazzy t))
-  ;; :config (load-theme 'doom-nord t))
+    :init (load-theme 'doom-solarized-light t))
+    ;; :init (load-theme 'doom-snazzy t))
+    ;; :config (load-theme 'doom-nord t))
 
   (use-package color
     :after org
@@ -938,7 +940,7 @@ To execute or export code in =org-mode= code blocks, you'll need to set up =org-
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
   (setq org-confirm-babel-evaluate nil)
-  (setq org-src-window-setup 'split-window-right)
+  (setq org-src-window-setup 'split-window-below)
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
   (setq org-src-tab-acts-natively t)
 
@@ -1746,6 +1748,57 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
 
   (add-hook 'markdown-mode-hook #'ag/markdown-latex-yas)
 
+
+#+end_src
+
+** Stan 
+
+#+begin_src emacs-lisp
+
+  (use-package stan-mode
+    :mode ("\\.stan\\'" . stan-mode)
+    :hook (stan-mode . stan-mode-setup)
+    ;;
+    :config
+    ;; The officially recommended offset is 2.
+    (setq stan-indentation-offset 2))
+
+  ;;; company-stan.el
+  (use-package company-stan
+    :hook (stan-mode . company-stan-setup)
+    ;;
+    :config
+    ;; Whether to use fuzzy matching in `company-stan'
+    (setq company-stan-fuzzy nil))
+
+  ;;; eldoc-stan.el
+  (use-package eldoc-stan
+    :hook (stan-mode . eldoc-stan-setup)
+    ;;
+    :config
+    ;; No configuration options as of now.
+    )
+
+  ;;; flycheck-stan.el
+  (use-package flycheck-stan
+    ;; Add a hook to setup `flycheck-stan' upon `stan-mode' entry
+    :hook ((stan-mode . flycheck-stan-stanc2-setup)
+           (stan-mode . flycheck-stan-stanc3-setup))
+    :config
+    ;; A string containing the name or the path of the stanc2 executable
+    ;; If nil, defaults to `stanc2'
+    (setq flycheck-stanc-executable nil)
+    ;; A string containing the name or the path of the stanc2 executable
+    ;; If nil, defaults to `stanc3'
+    (setq flycheck-stanc3-executable nil))
+
+  ;;; stan-snippets.el
+  (use-package stan-snippets
+    :hook (stan-mode . stan-snippets-initialize)
+    ;;
+    :config
+    ;; No configuration options as of now.
+    )
 
 #+end_src
 
@@ -2566,7 +2619,6 @@ and =.sty= files into the LaTeX home.  So my custom class is
     \\usepackage{amssymb}
     \\usepackage{capt-of}
     \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
-    \\usepackage{listings}
     \\usepackage{fancyhdr}
     \\renewcommand{\\textfraction}{0.05}
     \\renewcommand{\\topfraction}{0.8}
@@ -2626,29 +2678,50 @@ Let's define the processing for the export through latexmk:
 
 #+end_src
 
-The next chunk is added for my listings configuration. 
+#+begin_src emacs-lisp :tangle no
+
+(setq org-latex-to-pdf-process
+           '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+#+end_src
+
+The next chunk is added for my listings configuration. Listing config can be found in [[https://stat.ethz.ch/pipermail/r-help/2012-November/327858.html][here]] and [[https://tex.stackexchange.com/questions/110722/trying-to-include-r-code-with-listings-package][here]]. 
+
+#+begin_src emacs-lisp :tangle no
+
+  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options
+        '(("frame" "lines")
+          ("fontsize" "\\scriptsize")
+          ("linenos" "")))
+#+end_src
 
 #+begin_src emacs-lisp
 
-    (setq org-latex-listings 'listings)
-    (setq org-latex-custom-lang-environments
-          '((r "R")))
-    (setq org-latex-listings-options
-          '(("frame" "single")
-            ("backgroundcolor" "\\color{backcolour}")
-            ("basicstyle" "\\ttfamily\\footnotesize")
-            ("numbers" "left")
-            ("numberstyle" "\\tiny\\color{codegray}")
-            ("rulecolor" "\\color{white}")
-            ("commentsyle" "\\color{codegreen}")))
-    (org-add-link-type
-     "latex" nil
-     (lambda (path desc format)
-       (cond
-        ((eq format 'html)
-         (format "<span class=\"%s\">%s</span>" path desc))
-        ((eq format 'latex)
-         (format "\\%s{%s}" path desc)))))
+  (setq org-latex-listings 'listings)
+  (setq org-latex-custom-lang-environments
+        '((r "r")))
+  (setq org-latex-listings-options
+        '(("frame" "single")
+          ("backgroundcolor" "\\color{backcolour}")
+          ("basicstyle" "\\ttfamily\\footnotesize")
+          ("stringstyle" "\\ttfamily")
+          ("numbers" "left")
+          ("numberstyle" "\\tiny\\color{codegray}")
+          ("rulecolor" "\\color{white}")
+          ("commentsyle" "\\color{codegreen}")
+          ))
+  (org-add-link-type
+   "latex" nil
+   (lambda (path desc format)
+     (cond
+      ((eq format 'html)
+       (format "<span class=\"%s\">%s</span>" path desc))
+      ((eq format 'latex)
+       (format "\\%s{%s}" path desc)))))
 
 #+end_src
 
@@ -2721,17 +2794,17 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
       (interactive)
       (org-tree-slide-mode 1)
       (org-sticky-header-mode 0)
-      (setq text-scale-mode-amount 4.5)
+      (setq text-scale-mode-amount 6.5)
       (text-scale-mode 1)
       (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                          (header-line (:height 4.5) variable-pitch)
                                          (org-document-title (:height 1.75) org-document-title)
-                                         (org-code (:height 1.55) org-code)
-                                         (org-verbatim (:height 1.55) org-verbatim)
+                                         (org-code (:height 1.20) org-code)
+                                         (org-verbatim (:height 1.20) org-verbatim)
                                          (org-block (:height 1.25) org-block)
                                          (org-block-begin-line (:height 0.7) org-block)))
       (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
-      (setq-local visual-fill-column-width 60
+      (setq-local visual-fill-column-width 50
             visual-fill-column-center-text t)
       (visual-fill-column-mode 1)
       )

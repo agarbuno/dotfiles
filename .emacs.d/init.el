@@ -230,8 +230,9 @@
 
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
-  :init (load-theme 'doom-snazzy t))
-;; :config (load-theme 'doom-nord t))
+  :init (load-theme 'doom-solarized-light t))
+  ;; :init (load-theme 'doom-snazzy t))
+  ;; :config (load-theme 'doom-nord t))
 
 (use-package color
   :after org
@@ -539,7 +540,7 @@
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 (setq org-confirm-babel-evaluate nil)
-(setq org-src-window-setup 'split-window-right)
+(setq org-src-window-setup 'split-window-below)
 (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs))
 (setq org-src-tab-acts-natively t)
 
@@ -1039,6 +1040,51 @@
 
 (add-hook 'markdown-mode-hook #'ag/markdown-latex-yas)
 
+(use-package stan-mode
+  :mode ("\\.stan\\'" . stan-mode)
+  :hook (stan-mode . stan-mode-setup)
+  ;;
+  :config
+  ;; The officially recommended offset is 2.
+  (setq stan-indentation-offset 2))
+
+;;; company-stan.el
+(use-package company-stan
+  :hook (stan-mode . company-stan-setup)
+  ;;
+  :config
+  ;; Whether to use fuzzy matching in `company-stan'
+  (setq company-stan-fuzzy nil))
+
+;;; eldoc-stan.el
+(use-package eldoc-stan
+  :hook (stan-mode . eldoc-stan-setup)
+  ;;
+  :config
+  ;; No configuration options as of now.
+  )
+
+;;; flycheck-stan.el
+(use-package flycheck-stan
+  ;; Add a hook to setup `flycheck-stan' upon `stan-mode' entry
+  :hook ((stan-mode . flycheck-stan-stanc2-setup)
+         (stan-mode . flycheck-stan-stanc3-setup))
+  :config
+  ;; A string containing the name or the path of the stanc2 executable
+  ;; If nil, defaults to `stanc2'
+  (setq flycheck-stanc-executable nil)
+  ;; A string containing the name or the path of the stanc2 executable
+  ;; If nil, defaults to `stanc3'
+  (setq flycheck-stanc3-executable nil))
+
+;;; stan-snippets.el
+(use-package stan-snippets
+  :hook (stan-mode . stan-snippets-initialize)
+  ;;
+  :config
+  ;; No configuration options as of now.
+  )
+
 (use-package yaml-mode
   :custom
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
@@ -1459,7 +1505,6 @@
   \\usepackage{amssymb}
   \\usepackage{capt-of}
   \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
-  \\usepackage{listings}
   \\usepackage{fancyhdr}
   \\renewcommand{\\textfraction}{0.05}
   \\renewcommand{\\topfraction}{0.8}
@@ -1493,15 +1538,17 @@
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
-      '((r "R")))
+      '((r "r")))
 (setq org-latex-listings-options
       '(("frame" "single")
         ("backgroundcolor" "\\color{backcolour}")
         ("basicstyle" "\\ttfamily\\footnotesize")
+        ("stringstyle" "\\ttfamily")
         ("numbers" "left")
         ("numberstyle" "\\tiny\\color{codegray}")
         ("rulecolor" "\\color{white}")
-        ("commentsyle" "\\color{codegreen}")))
+        ("commentsyle" "\\color{codegreen}")
+        ))
 (org-add-link-type
  "latex" nil
  (lambda (path desc format)
@@ -1549,17 +1596,17 @@
     (interactive)
     (org-tree-slide-mode 1)
     (org-sticky-header-mode 0)
-    (setq text-scale-mode-amount 4.5)
+    (setq text-scale-mode-amount 6.5)
     (text-scale-mode 1)
     (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                        (header-line (:height 4.5) variable-pitch)
                                        (org-document-title (:height 1.75) org-document-title)
-                                       (org-code (:height 1.55) org-code)
-                                       (org-verbatim (:height 1.55) org-verbatim)
+                                       (org-code (:height 1.20) org-code)
+                                       (org-verbatim (:height 1.20) org-verbatim)
                                        (org-block (:height 1.25) org-block)
                                        (org-block-begin-line (:height 0.7) org-block)))
     (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
-    (setq-local visual-fill-column-width 60
+    (setq-local visual-fill-column-width 50
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1)
     )
