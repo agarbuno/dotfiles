@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: load-bib
-# key:  bib-load
+# key:  <bib
 # --
 bibliographystyle:abbrvnat
 bibliography:references.bib

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: r table  
+# key: <rtable
+# group : R
+# --
+#+begin_src R :exports results :results org
+  $1
+#+end_src
+$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: variable sequence
+# key: vseq
+# --
+${1:X}_1, \ldots, $1_${2:n}

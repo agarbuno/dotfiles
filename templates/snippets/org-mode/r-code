@@ -3,7 +3,7 @@
 # key: <r
 # group : R
 # --
-#+begin_src R :exports code :results none
-  $1
+#+begin_src R :exports ${1:both} :results ${2:org} 
+  $3
 #+end_src
 $0

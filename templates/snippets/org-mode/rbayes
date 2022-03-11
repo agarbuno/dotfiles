@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: bayes setup  
+# key: rbayes
+# group: R
+# --
+#+begin_src R :exports none :results none
+  ## Librerias para modelacion bayesiana
+  library(cmdstanr)
+  library(posterior)
+  library(bayesplot)
+#+end_src
+$0

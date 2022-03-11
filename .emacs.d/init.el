@@ -722,7 +722,7 @@
 (setq ag/lit-categories
           '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects" "conferences")
           )
-(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:*} "))
+(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
 
 (use-package deft
   :commands (deft)
@@ -1558,6 +1558,14 @@
     ((eq format 'latex)
      (format "\\%s{%s}" path desc)))))
 
+(defun org-latex-ref-to-cref (text backend info)
+  "Use \\cref instead of \\ref in latex export."
+  (when (org-export-derived-backend-p backend 'latex)
+    (replace-regexp-in-string "\\\\ref{" "\\\\cref{" text)))
+
+(add-to-list 'org-export-filter-final-output-functions
+             'org-latex-ref-to-cref)
+
 (use-package cdlatex
   :after (tex)
   :config
@@ -1609,6 +1617,7 @@
     (setq-local visual-fill-column-width 50
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1)
+    (setq org-src-window-setup 'current-window)
     )
 
 (defun ag/org-end-presentation ()
@@ -1619,6 +1628,7 @@
   (setq-local face-remapping-alist '((default variable-pitch default)))
   (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
   (visual-fill-column-mode 1)
+  (setq org-src-window-setup 'split-window-below)
   )
 
 (use-package hide-lines

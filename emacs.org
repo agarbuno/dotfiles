@@ -117,6 +117,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
   - [[#latex-in-org-mode][Latex in org mode]]
     - [[#exporting-org-files-to-latex][Exporting org files to LaTeX]]
+    - [[#use-of-cref-in-the-latex-export][Use of cref in the latex-export]]
   - [[#cdlatex][CDLaTeX]]
   - [[#screenshots][Screenshots]]
   - [[#spell-checking][Spell checking]]
@@ -1175,7 +1176,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
   (setq ag/lit-categories
             '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects" "conferences")
             )
-  (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:*} "))
+  (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
 #+end_src
 
 ** Deft
@@ -2725,6 +2726,20 @@ The next chunk is added for my listings configuration. Listing config can be fou
 
 #+end_src
 
+*** Use of ~cref~ in the latex-export
+
+The following enables the exporter to use ~cref~ for clever cross-referencing commands. 
+
+#+begin_src emacs-lisp
+  (defun org-latex-ref-to-cref (text backend info)
+    "Use \\cref instead of \\ref in latex export."
+    (when (org-export-derived-backend-p backend 'latex)
+      (replace-regexp-in-string "\\\\ref{" "\\\\cref{" text)))
+
+  (add-to-list 'org-export-filter-final-output-functions
+               'org-latex-ref-to-cref)
+#+end_src
+
 ** CDLaTeX
 
 To be able to speed-up math environments and templates in org-mode.
@@ -2807,6 +2822,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
       (setq-local visual-fill-column-width 50
             visual-fill-column-center-text t)
       (visual-fill-column-mode 1)
+      (setq org-src-window-setup 'current-window)
       )
 
   (defun ag/org-end-presentation ()
@@ -2817,6 +2833,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
     (setq-local face-remapping-alist '((default variable-pitch default)))
     (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
     (visual-fill-column-mode 1)
+    (setq org-src-window-setup 'split-window-below)
     )
 #+end_src
 

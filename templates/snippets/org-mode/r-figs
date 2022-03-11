@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name:rfig
-# key: rfig
+# key: <rfig
 # group: R
 # --
 #+HEADER: :width ${1:$$(yas-choose-value '("900" "1200" "10"))} :height ${2:$$(yas-choose-value '("500" "400" "5.5"))} :R-dev-args bg="transparent"
