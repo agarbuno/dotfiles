@@ -229,22 +229,20 @@
   :commands command-log-mode)
 
 (use-package doom-themes
-  :init (load-theme 'doom-snazzy t))
+  ;; :init (load-theme 'doom-monokai-pro t))
+  :init (load-theme 'doom-solarized-light t))
+  ;; :init (load-theme 'doom-snazzy t))
+  ;; :config (load-theme 'doom-nord t))
 
-(defun ag/org-color-setup ()
-  (interactive)
+(use-package color
+  :after org
+  :config
   (set-face-attribute 'org-block nil :background
                       (color-darken-name
                        (face-attribute 'default :background) 5))
   (set-face-attribute 'org-block-begin-line nil :background
                       (color-darken-name
                        (face-attribute 'default :background) -10))
-  )
-
-(use-package color
-  :after org
-  :config
-  (ag/org-color-setup)
   )
 
 (use-package all-the-icons)
@@ -367,7 +365,6 @@
   )
 
 (defun ag/org-font-setup ()
-  (interactive)
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
@@ -394,7 +391,6 @@
   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
 
 (defun ag/org-mode-setup ()
-  (interactive)
   (org-indent-mode)
   (variable-pitch-mode 1)
   (visual-line-mode 1)
@@ -871,31 +867,6 @@
 
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
-
-(defun ag/org-light-theme()
-  (interactive)
-  (load-theme 'doom-solarized-light t)
-  (ag/org-mode-setup)
-  (ag/org-font-setup)
-  (ag/org-color-setup)
-  )
-
-(defun ag/org-dark-theme()
-  (interactive)
-  (load-theme 'doom-snazzy t)
-  (ag/org-mode-setup)
-  (ag/org-font-setup)
-  (ag/org-color-setup)
-  )
-
-(defhydra hydra-choose-setup (:timeout 2)
-  "choose setup"
-  ("d" ag/org-dark-theme "dark theme")
-  ("l" ag/org-light-theme "light theme")
-  ("f" nil "finished" :exit t)
-
-(ag/leader-keys
-  "s" '(hydra-choose-setup/body :which-key "color setup"))
 
 (use-package org-web-tools
   :after org
