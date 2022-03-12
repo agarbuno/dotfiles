@@ -502,12 +502,20 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 [[https://github.com/hlissner/emacs-doom-themes][doom-themes]] is a great set of themes with a lot of variety and support for many different Emacs modes.  Taking a look at the [[https://github.com/hlissner/emacs-doom-themes/tree/screenshots][screenshots]] might help you decide which one you like best.  You can also run =M-x counsel-load-theme= to choose between them easily.
 
 #+begin_src emacs-lisp
+  (defun ag/org-color-setup()
+    (set-face-attribute 'org-block nil :background
+                        (color-darken-name
+                         (face-attribute 'default :background) 5))
+    (set-face-attribute 'org-block-begin-line nil :background
+                          (color-darken-name
+                           (face-attribute 'default :background) -10))
+    )
+
 
   (use-package doom-themes
     ;; :init (load-theme 'doom-monokai-pro t))
-    :init (load-theme 'doom-solarized-light t))
-    ;; :init (load-theme 'doom-snazzy t))
-    ;; :config (load-theme 'doom-nord t))
+    :init (load-theme 'doom-snazzy t))
+  ;; :config (load-theme 'doom-nord t))
 
   (use-package color
     :after org
@@ -765,117 +773,119 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+Begin_src emacs-lisp
 
-    (defun ag/org-mode-setup ()
-      (org-indent-mode)
-      (variable-pitch-mode 1)
-      (visual-line-mode 1)
-      (setq fill-column 80))
+  (defun ag/org-mode-setup ()
+    (org-indent-mode)
+    (variable-pitch-mode 1)
+    (visual-line-mode 1)
+    (ag/org-font-setup)
+    (ag/org-color-setup)
+    (setq fill-column 80))
 
-    (use-package org
-      :commands (org-capture org-agenda)
-      :hook ((org-mode . ag/org-mode-setup)
-             (org-mode . ag/org-reveal))
-      :config
-      (setq org-ellipsis " ▾")
-      (setq org-support-shift-select t)
+  (use-package org
+    :commands (org-capture org-agenda)
+    :hook ((org-mode . ag/org-mode-setup)
+           (org-mode . ag/org-reveal))
+    :config
+    (setq org-ellipsis " ▾")
+    (setq org-support-shift-select t)
 
-      (setq org-agenda-start-with-log-mode t)
-      (setq org-log-done 'time)
-      (setq org-log-into-drawer t)
+    (setq org-agenda-start-with-log-mode t)
+    (setq org-log-done 'time)
+    (setq org-log-into-drawer t)
 
-      (setq org-agenda-files
-          '("~/Google Drive/orgfiles/agenda/tasks.org"
-            "~/Google Drive/orgfiles/agenda/habits.org"))
+    (setq org-agenda-files
+        '("~/Google Drive/orgfiles/agenda/tasks.org"
+          "~/Google Drive/orgfiles/agenda/habits.org"))
 
-      (setq org-todo-keywords
-            '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "WAIT(w)" "READ(r)" "VIEW(v)" "|" ))
-            )
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+            (sequence "WAIT(w)" "READ(r)" "VIEW(v)" "|" ))
+          )
 
-      (setq org-refile-targets
-            '(("archive.org" :maxlevel . 1)
-              ("tasks.org" :maxlevel . 1)))
+    (setq org-refile-targets
+          '(("archive.org" :maxlevel . 1)
+            ("tasks.org" :maxlevel . 1)))
 
-      (setq org-todo-keyword-faces
-            '(("TODO" . (:foreground "hot pink" :weight bold))
-              ("DONE" . (:foreground "#00e6ab" :weight bold))
-              ("NEXT" . (:foreground "dark orange" :weight bold))
-              ("WAIT" . (:foreground "#aeffff" :weight bold))
-              ("READ" . (:foreground "#ffcc66" :weight bold))
-              ("VIEW" . (:foreground "#8787ff" :weight bold))
+    (setq org-todo-keyword-faces
+          '(("TODO" . (:foreground "hot pink" :weight bold))
+            ("DONE" . (:foreground "#00e6ab" :weight bold))
+            ("NEXT" . (:foreground "dark orange" :weight bold))
+            ("WAIT" . (:foreground "#aeffff" :weight bold))
+            ("READ" . (:foreground "#ffcc66" :weight bold))
+            ("VIEW" . (:foreground "#8787ff" :weight bold))
+            ))
+
+    (setq org-tag-alist
+          '((:startgroup)
+            ;; Put mutually exclusive tags here
+            (:endgroup)
+            ("research" . ?r)
+            ("maestria" . ?m)
+            ("teaching" . ?t)
+            ("paper"    . ?p)
+            ("book"     . ?b)
+            ("idea" . ?i)))
+
+    ;; Save Org buffers after refiling!
+    (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+    (setq org-agenda-custom-commands
+          '(("d" "Dashboard"
+             ((agenda "" ((org-deadline-warning-days 7)))
+              (todo "NEXT"
+                    ((org-agenda-overriding-header "Ongoing Tasks")))
+              (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
+              (tags-todo "+teaching/!-NEXT" ((org-agenda-overriding-header "Teaching Tasks")))
+              (tags-todo "+maestria/!-NEXT" ((org-agenda-overriding-header "McDatos Tasks")))
+
+              (tags-todo "-research-teaching-maestria/!-NEXT"
+                         ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
+                          ;; (org-agenda-files "~/Google Drive/orgfiles/agenda/tasks.org")
+                          (org-agenda-text-search-extra-files nil)
+                          ))
               ))
 
-      (setq org-tag-alist
-            '((:startgroup)
-              ;; Put mutually exclusive tags here
-              (:endgroup)
-              ("research" . ?r)
-              ("maestria" . ?m)
-              ("teaching" . ?t)
-              ("paper"    . ?p)
-              ("book"     . ?b)
-              ("idea" . ?i)))
+            ("n" "Next Tasks"
+             ((todo "NEXT"
+                    ((org-agenda-overriding-header "Next Tasks")))))
 
-      ;; Save Org buffers after refiling!
-      (advice-add 'org-refile :after 'org-save-all-org-buffers)
+            ("W" "Work Tasks" tags-todo "+work-email")
+            ))
 
-      (setq org-agenda-custom-commands
-            '(("d" "Dashboard"
-               ((agenda "" ((org-deadline-warning-days 7)))
-                (todo "NEXT"
-                      ((org-agenda-overriding-header "Ongoing Tasks")))
-                (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
-                (tags-todo "+teaching/!-NEXT" ((org-agenda-overriding-header "Teaching Tasks")))
-                (tags-todo "+maestria/!-NEXT" ((org-agenda-overriding-header "McDatos Tasks")))
-
-                (tags-todo "-research-teaching-maestria/!-NEXT"
-                           ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
-                            ;; (org-agenda-files "~/Google Drive/orgfiles/agenda/tasks.org")
-                            (org-agenda-text-search-extra-files nil)
-                            ))
-                ))
-
-              ("n" "Next Tasks"
-               ((todo "NEXT"
-                      ((org-agenda-overriding-header "Next Tasks")))))
-
-              ("W" "Work Tasks" tags-todo "+work-email")
-              ))
-
-      (setq org-capture-templates
-            `(("t" "Tasks/Projects ")
-              ("tt" "Task" entry
-               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Active")
-               "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
-              ("tr" "Research Tasks" entry
-               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
-               "* TODO %?  :research:\nLink: %a")
-              ("tp" "Reading Reminder" entry
-               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
-               "* READ %?  \nLink: %a")
-              ("tv" "Talk or Video" entry
-               (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
-               "* VIEW %?  \nLink: %a")
-              ("j" "Journal" entry
-               (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
-               "* %?\nEntered on %U\n  %i\n  %a")
-              ("h" "Habit" entry
-               (file+olp "~/Google Drive/orgfiles/agenda/habits.org" "Work")
-               "* TODO %?")
-              )
+    (setq org-capture-templates
+          `(("t" "Tasks/Projects ")
+            ("tt" "Task" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Active")
+             "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+            ("tr" "Research Tasks" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
+             "* TODO %?  :research:\nLink: %a")
+            ("tp" "Reading Reminder" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
+             "* READ %?  \nLink: %a")
+            ("tv" "Talk or Video" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
+             "* VIEW %?  \nLink: %a")
+            ("j" "Journal" entry
+             (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
+             "* %?\nEntered on %U\n  %i\n  %a")
+            ("h" "Habit" entry
+             (file+olp "~/Google Drive/orgfiles/agenda/habits.org" "Work")
+             "* TODO %?")
             )
+          )
 
-      (define-key global-map (kbd "C-c t t")
-        (lambda () (interactive) (org-capture nil "tt")))
+    (define-key global-map (kbd "C-c t t")
+      (lambda () (interactive) (org-capture nil "tt")))
 
-      (global-set-key (kbd "C-c a") 'org-agenda)
-      (global-set-key (kbd "C-c t c") 'org-capture)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c t c") 'org-capture)
 
-      (require 'org-habit)
-      (setq org-habit-show-all-today t) 
-      (setq org-habit-graph-column 60)
+    (require 'org-habit)
+    (setq org-habit-show-all-today t) 
+    (setq org-habit-graph-column 60)
 
-      (ag/org-font-setup))
+    )
 
 #+end_src
 
@@ -2805,26 +2815,28 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 is a simple tool to treat a tree of an org buffer as a single slide. Since each slide is displayed by simple narrowing, an editable presentation is easily achieved without restricting the functionality of Org Mode. And usage of org-tree-slide is not limited to a presentation. Three profiles are predefined for different use cases.
 
 #+begin_src emacs-lisp
-    (defun ag/org-start-presentation ()
-      (interactive)
-      (org-tree-slide-mode 1)
-      (org-sticky-header-mode 0)
-      (setq text-scale-mode-amount 6.5)
-      (text-scale-mode 1)
-      (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                         (header-line (:height 4.5) variable-pitch)
-                                         (org-document-title (:height 1.75) org-document-title)
-                                         (org-code (:height 1.20) org-code)
-                                         (org-verbatim (:height 1.20) org-verbatim)
-                                         (org-block (:height 1.25) org-block)
-                                         (org-block-begin-line (:height 0.7) org-block)))
-      (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
-      (setq-local visual-fill-column-width 50
-            visual-fill-column-center-text t)
-      (visual-fill-column-mode 1)
-      (setq org-src-window-setup 'current-window)
-      )
+  (defun ag/org-start-presentation ()
+    (interactive)
+    (org-tree-slide-mode 1)
+    (org-sticky-header-mode 0)
+    (setq text-scale-mode-amount 6.5)
+    (text-scale-mode 1)
+    (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                       (header-line (:height 4.5) variable-pitch)
+                                       (org-document-title (:height 1.75) org-document-title)
+                                       (org-code (:height 1.20) org-code)
+                                       (org-verbatim (:height 1.20) org-verbatim)
+                                       (org-block (:height 1.25) org-block)
+                                       (org-block-begin-line (:height 0.7) org-block)))
+    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
+    (setq-local visual-fill-column-width 50
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1)
+    (setq org-src-window-setup 'current-window)
+    )
+#+end_src
 
+#+begin_src emacs-lisp
   (defun ag/org-end-presentation ()
     (interactive)
     (text-scale-mode 0)
@@ -2834,9 +2846,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
     (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
     (visual-fill-column-mode 1)
     (setq org-src-window-setup 'split-window-below)
-    (ag/org-mode-setup)
-    (ag/org-font-setup)
-    (ag/org-color-setup)
+    (org-mode-restart)
     )
 #+end_src
 

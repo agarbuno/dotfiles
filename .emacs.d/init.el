@@ -228,11 +228,20 @@
 (use-package command-log-mode
   :commands command-log-mode)
 
+(defun ag/org-color-setup()
+  (set-face-attribute 'org-block nil :background
+                      (color-darken-name
+                       (face-attribute 'default :background) 5))
+  (set-face-attribute 'org-block-begin-line nil :background
+                        (color-darken-name
+                         (face-attribute 'default :background) -10))
+  )
+
+
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
-  :init (load-theme 'doom-solarized-light t))
-  ;; :init (load-theme 'doom-snazzy t))
-  ;; :config (load-theme 'doom-nord t))
+  :init (load-theme 'doom-snazzy t))
+;; :config (load-theme 'doom-nord t))
 
 (use-package color
   :after org
@@ -394,6 +403,8 @@
   (org-indent-mode)
   (variable-pitch-mode 1)
   (visual-line-mode 1)
+  (ag/org-font-setup)
+  (ag/org-color-setup)
   (setq fill-column 80))
 
 (use-package org
@@ -500,7 +511,7 @@
   (setq org-habit-show-all-today t) 
   (setq org-habit-graph-column 60)
 
-  (ag/org-font-setup))
+  )
 
 (use-package org-bullets
   :after org
@@ -1601,24 +1612,24 @@
        pdf-view-use-imagemagick nil)
 
 (defun ag/org-start-presentation ()
-    (interactive)
-    (org-tree-slide-mode 1)
-    (org-sticky-header-mode 0)
-    (setq text-scale-mode-amount 6.5)
-    (text-scale-mode 1)
-    (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                       (header-line (:height 4.5) variable-pitch)
-                                       (org-document-title (:height 1.75) org-document-title)
-                                       (org-code (:height 1.20) org-code)
-                                       (org-verbatim (:height 1.20) org-verbatim)
-                                       (org-block (:height 1.25) org-block)
-                                       (org-block-begin-line (:height 0.7) org-block)))
-    (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
-    (setq-local visual-fill-column-width 50
-          visual-fill-column-center-text t)
-    (visual-fill-column-mode 1)
-    (setq org-src-window-setup 'current-window)
-    )
+  (interactive)
+  (org-tree-slide-mode 1)
+  (org-sticky-header-mode 0)
+  (setq text-scale-mode-amount 6.5)
+  (text-scale-mode 1)
+  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                     (header-line (:height 4.5) variable-pitch)
+                                     (org-document-title (:height 1.75) org-document-title)
+                                     (org-code (:height 1.20) org-code)
+                                     (org-verbatim (:height 1.20) org-verbatim)
+                                     (org-block (:height 1.25) org-block)
+                                     (org-block-begin-line (:height 0.7) org-block)))
+  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.7))
+  (setq-local visual-fill-column-width 50
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1)
+  (setq org-src-window-setup 'current-window)
+  )
 
 (defun ag/org-end-presentation ()
   (interactive)
@@ -1629,9 +1640,7 @@
   (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
   (visual-fill-column-mode 1)
   (setq org-src-window-setup 'split-window-below)
-  (ag/org-mode-setup)
-  (ag/org-font-setup)
-  (ag/org-color-setup)
+  (org-mode-restart)
   )
 
 (use-package hide-lines
