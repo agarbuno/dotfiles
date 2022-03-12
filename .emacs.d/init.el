@@ -1658,6 +1658,9 @@
   (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
   (visual-fill-column-mode 1)
   (setq org-src-window-setup 'split-window-below)
+  (ag/org-mode-setup)
+  (ag/org-font-setup)
+  (ag/org-color-setup)
   )
 
 (use-package hide-lines
