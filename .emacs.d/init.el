@@ -196,7 +196,7 @@
   (ag/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/github-repos/dotfiles/emacs.org")))
+    "fde" '(lambda () (interactive) (find-file (expand-file-name "~/.dotfiles/emacs.org")))
     "fds" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/init.el")))
     ))
 
@@ -560,7 +560,7 @@
 ;; Automatically tangle our Emacs.org config file when we save it
 (defun ag/org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/github-repos/dotfiles/emacs.org"))
+                      (expand-file-name "~/.dotfiles/emacs.org"))
     ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
