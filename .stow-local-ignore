@@ -4,6 +4,8 @@
 \.rstudio
 \.zshrc
 # By any reason this should be included in the stow syncing ---- 
+assets
+orgfiles
 ^/.*\.md
 ^/.*\.org
 LICENSE
