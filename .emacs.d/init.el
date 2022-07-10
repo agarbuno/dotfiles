@@ -364,7 +364,9 @@
 )
 
 (use-package perspective
-  :ensure t  
+  :ensure t
+  :custom
+  (persp-mode-prefix-key (kbd "C-x x"))
   :bind
   (("C-x k" . persp-kill-buffer*)
    ("C-x b" . persp-ivy-switch-buffer))
@@ -1252,11 +1254,11 @@
   (display-fill-column-indicator-mode 1)
   )
 
-(use-package auctex-latexmk
-  :ensure t
-  :config
-  (auctex-latexmk-setup)
-  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+;; (use-package auctex-latexmk
+;;   :ensure t
+;;   :config
+;;   (auctex-latexmk-setup)
+  ;; (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
 (use-package company-auctex
   :ensure t
@@ -1463,39 +1465,6 @@
                ("\\paragraph{%s}" . "\n\\paragraph{%s}")
                ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
                )           
-             '("header"
-               "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
-\\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
-\\geometry{left=30mm,right=30mm}
-\\usepackage[utf8]{inputenc}
-\\usepackage{amsthm, amssymb, amsmath}
-\\usepackage{graphicx}
-\\usepackage{grffile}
-\\usepackage{longtable}
-\\usepackage{wrapfig}
-\\usepackage{rotating}
-\\usepackage[normalem]{ulem}
-\\usepackage{amsmath}
-\\usepackage{textcomp}
-\\usepackage{amssymb}
-\\usepackage{capt-of}
-\\definecolor{myGreen}{HTML}{006953}
-\\usepackage[pagebackref=true,colorlinks=true,urlcolor=myGreen,pdfborder={0 0 0}]{hyperref}
-\\usepackage{fancyhdr} \fancyhead{}
-\\fancyhead[L]{\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/ mcd-long.png} \vspace{-.7cm}}
-\\fancyhead[R]{{\parbox[b][10mm][t]{0.5\textwidth}{\raggedleft{Departamento
-      Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
-      México.}}}\vspace{.3cm}}
-\\renewcommand{\headrulewidth}{.5pt}
-\\pagestyle{fancy}
-      [NO-DEFAULT-PACKAGES]
-      [NO-PACKAGES]"
-               ("\\section{%s}" . "\n\\section{%s}")
-               ("\\subsection{%s}" . "\n\\subsection{%s}")
-               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-               )
              )
 
 (add-to-list 'org-latex-classes
@@ -1515,14 +1484,20 @@
   \\usepackage{textcomp}
   \\usepackage{amssymb}
   \\usepackage{capt-of}
-  \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+  \\usepackage[pagebackref=true,%
+               colorlinks=true,%
+               urlcolor=blue,%
+               pdfborder={0 0 0}]{hyperref}
   \\usepackage{fancyhdr}
   \\renewcommand{\\textfraction}{0.05}
   \\renewcommand{\\topfraction}{0.8}
   \\renewcommand{\\bottomfraction}{0.8}
   \\renewcommand{\\floatpagefraction}{0.75}
-  \\fancyfoot{}
-  \\renewcommand{\\footrulewidth}{0.4pt}             \\fancyfoot[C]{\\includegraphics[height=1cm]{~/OneDrive/mcd/pagina/logo-ITAM-verde.png}\\vspace{-1cm}}
+  \\fancyfoot{}%
+  \\renewcommand{\\footrulewidth}{0.4pt}%
+  \\fancyfoot[C]{\\includegraphics[height=1cm]{%
+                 ~/OneDrive/mcd/pagina/logo-ITAM-verde.png}%
+                 \\vspace{-1cm}}%
   \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
   \\pagestyle{fancy}
   \\fancypagestyle{plain}{%
@@ -1531,8 +1506,10 @@
   \\pagestyle{fancy}}
   \\fancypagestyle{toc}{%
   \\fancyhf{}%
+  \\fancyhead[L]{\\nouppercase{\\rightmark}}
+  \\fancyhead[R]{\\nouppercase{\\leftmark}}
   \\fancyfoot[C]{\\thepage}}
-  \\renewcommand{\\chaptermark}[1]{%
+  \\newcommand{\\chaptermark}[1]{%
   \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
         [NO-DEFAULT-PACKAGES]
         [NO-PACKAGES]"
@@ -1543,9 +1520,43 @@
                  ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
                  ))
 
-(setq org-latex-default-class "custom")
+(add-to-list 'org-latex-classes        
+             '("header"
+               "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
+\\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
+\\geometry{left=30mm,right=30mm}
+\\usepackage[utf8]{inputenc}
+\\usepackage{amsthm, amssymb, amsmath}
+\\usepackage{graphicx}
+\\usepackage{grffile}
+\\usepackage{longtable}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{amssymb}
+\\usepackage{capt-of}
+\\definecolor{myGreen}{HTML}{006953}
+\\usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
+\\usepackage{fancyhdr} \\fancyhead{}
+\\fancyhead[L]{\\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/mcd-long.png} \\vspace{-.7cm}}
+\\fancyhead[R]{{\\parbox[b][10mm][t]{0.5\\textwidth}{\\raggedleft{Departamento
+      Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
+      México.}}}\\vspace{.3cm}}
+\\renewcommand{\\headrulewidth}{.5pt}
+\\pagestyle{fancy}
+      [NO-DEFAULT-PACKAGES]
+      [NO-PACKAGES]"
+               ("\\section{%s}" . "\n\\section{%s}")
+               ("\\subsection{%s}" . "\n\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+               )
+             )
 
-(setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
+(setq org-latex-default-class "custom")
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
@@ -1615,7 +1626,7 @@
   (interactive)
   (org-tree-slide-mode 1)
   (org-sticky-header-mode 0)
-  (setq text-scale-mode-amount 6.5)
+  (setq text-scale-mode-amount 10.5)
   (text-scale-mode 1)
   (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                      (header-line (:height 4.5) variable-pitch)
@@ -1702,3 +1713,15 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-noter-notes-window-location 'horizontal-split))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

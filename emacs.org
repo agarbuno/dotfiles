@@ -1,4 +1,5 @@
-#+Author:: Alfredo Garbuno
+#'pdflatex': The following rules & subrules became out-of-date:
+ftredo Garbuno
 #+title: Emacs From Scratch Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle .emacs.d/init.el :mkdirp yes
 #+STARTUP: content
@@ -706,7 +707,9 @@ You can use =persepective= to keep the buffers somewhat organized. Since I am us
 #+begin_src emacs-lisp
 
   (use-package perspective
-    :ensure t  
+    :ensure t
+    :custom
+    (persp-mode-prefix-key (kbd "C-x x"))
     :bind
     (("C-x k" . persp-kill-buffer*)
      ("C-x b" . persp-ivy-switch-buffer))
@@ -2190,14 +2193,14 @@ Each item lists the default Emacs binding followed by the evil-mode binding.  No
 | Command                             | Key   | Description                            |
 |-------------------------------------+-------+----------------------------------------|
 | =delete-window=                     | ~C-x 0~ | Close the current window               |
-| =delete-other-windows=                | ~C-x 1~ | Close all other windows                |
-| =split-window-below=                  | ~C-x 2~ | Split the current window horizonally   |
-| =split-window-right=                  | ~C-x 3~ | Split the current window vertically    |
-| =shrink-window-horizontally=          | ~C-x {~ | Make the window smaller horizontally   |
-| =enlarge-window-horizontally=         | ~C-x }~ | Make the window bigger horizontally    |
-| =shrink-window=                       | None! | Shrink the window vertically           |
+| =delete-other-windows=              | ~C-x 1~ | Close all other windows                |
+| =split-window-below=                | ~C-x 2~ | Split the current window horizonally   |
+| =split-window-right=                | ~C-x 3~ | Split the current window vertically    |
+| =shrink-window-horizontally=        | ~C-x {~ | Make the window smaller horizontally   |
+| =enlarge-window-horizontally=       | ~C-x }~ | Make the window bigger horizontally    |
+| =shrink-window=                     | None! | Shrink the window vertically           |
 | =shrink-window-if-larger-than-buffer= | ~C-x -~ | Shrink the window vertically to buffer |
-| =balance-windows=                     | ~C-x +~ | Balance the sizes of all windows       |
+| =balance-windows=                   | ~C-x +~ | Balance the sizes of all windows       |
 
 
 *TIP*: You can use ~C-u~ (=universal-argument=) and a numeric prefix before running the =shrink= and =enlarge= commands to dictate the mount by which the window is resized.
@@ -2305,11 +2308,11 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
       (display-fill-column-indicator-mode 1)
       )
 
-    (use-package auctex-latexmk
-      :ensure t
-      :config
-      (auctex-latexmk-setup)
-      (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+    ;; (use-package auctex-latexmk
+    ;;   :ensure t
+    ;;   :config
+    ;;   (auctex-latexmk-setup)
+      ;; (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
     (use-package company-auctex
       :ensure t
@@ -2355,6 +2358,14 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
                 #'TeX-revert-document-buffer)
       )
 
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  (add-hook 'LaTeX-mode-hook (lambda ()
+    (push 
+      '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t 
+        :help "Run Latexmk on file")
+      TeX-command-list)))
 #+end_src
 
 Use =mic-paren= to highlight parehthesis for math environments in latex.
@@ -2545,7 +2556,6 @@ like using the ~imsart~ article style. Which means I fisrt have to copy the =.cl
 and =.sty= files into the LaTeX home.  So my custom class is
 
 #+begin_src emacs-lisp
-
   (add-to-list 'org-latex-classes
                '("custom"
                  "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
@@ -2572,46 +2582,11 @@ and =.sty= files into the LaTeX home.  So my custom class is
                  ("\\paragraph{%s}" . "\n\\paragraph{%s}")
                  ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
                  )           
-               '("header"
-                 "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
-  \\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
-  \\geometry{left=30mm,right=30mm}
-  \\usepackage[utf8]{inputenc}
-  \\usepackage{amsthm, amssymb, amsmath}
-  \\usepackage{graphicx}
-  \\usepackage{grffile}
-  \\usepackage{longtable}
-  \\usepackage{wrapfig}
-  \\usepackage{rotating}
-  \\usepackage[normalem]{ulem}
-  \\usepackage{amsmath}
-  \\usepackage{textcomp}
-  \\usepackage{amssymb}
-  \\usepackage{capt-of}
-  \\definecolor{myGreen}{HTML}{006953}
-  \\usepackage[pagebackref=true,colorlinks=true,urlcolor=myGreen,pdfborder={0 0 0}]{hyperref}
-  \\usepackage{fancyhdr} \fancyhead{}
-  \\fancyhead[L]{\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/ mcd-long.png} \vspace{-.7cm}}
-  \\fancyhead[R]{{\parbox[b][10mm][t]{0.5\textwidth}{\raggedleft{Departamento
-        Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
-        México.}}}\vspace{.3cm}}
-  \\renewcommand{\headrulewidth}{.5pt}
-  \\pagestyle{fancy}
-        [NO-DEFAULT-PACKAGES]
-        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\n\\section{%s}")
-                 ("\\subsection{%s}" . "\n\\subsection{%s}")
-                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-                 )
                )
-
 #+end_src
 
 
 #+begin_src emacs-lisp
-
   (add-to-list 'org-latex-classes
                  '("handout"
                    "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
@@ -2629,14 +2604,20 @@ and =.sty= files into the LaTeX home.  So my custom class is
     \\usepackage{textcomp}
     \\usepackage{amssymb}
     \\usepackage{capt-of}
-    \\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
+    \\usepackage[pagebackref=true,%
+                 colorlinks=true,%
+                 urlcolor=blue,%
+                 pdfborder={0 0 0}]{hyperref}
     \\usepackage{fancyhdr}
     \\renewcommand{\\textfraction}{0.05}
     \\renewcommand{\\topfraction}{0.8}
     \\renewcommand{\\bottomfraction}{0.8}
     \\renewcommand{\\floatpagefraction}{0.75}
-    \\fancyfoot{}
-    \\renewcommand{\\footrulewidth}{0.4pt}             \\fancyfoot[C]{\\includegraphics[height=1cm]{~/OneDrive/mcd/pagina/logo-ITAM-verde.png}\\vspace{-1cm}}
+    \\fancyfoot{}%
+    \\renewcommand{\\footrulewidth}{0.4pt}%
+    \\fancyfoot[C]{\\includegraphics[height=1cm]{%
+                   ~/OneDrive/mcd/pagina/logo-ITAM-verde.png}%
+                   \\vspace{-1cm}}%
     \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
     \\pagestyle{fancy}
     \\fancypagestyle{plain}{%
@@ -2645,8 +2626,10 @@ and =.sty= files into the LaTeX home.  So my custom class is
     \\pagestyle{fancy}}
     \\fancypagestyle{toc}{%
     \\fancyhf{}%
+    \\fancyhead[L]{\\nouppercase{\\rightmark}}
+    \\fancyhead[R]{\\nouppercase{\\leftmark}}
     \\fancyfoot[C]{\\thepage}}
-    \\renewcommand{\\chaptermark}[1]{%
+    \\newcommand{\\chaptermark}[1]{%
     \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
           [NO-DEFAULT-PACKAGES]
           [NO-PACKAGES]"
@@ -2656,6 +2639,44 @@ and =.sty= files into the LaTeX home.  So my custom class is
                    ("\\paragraph{%s}" . "\n\\paragraph{%s}")
                    ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
                    ))
+#+end_src
+
+#+begin_src emacs-lisp
+  (add-to-list 'org-latex-classes        
+               '("header"
+                 "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
+  \\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
+  \\geometry{left=30mm,right=30mm}
+  \\usepackage[utf8]{inputenc}
+  \\usepackage{amsthm, amssymb, amsmath}
+  \\usepackage{graphicx}
+  \\usepackage{grffile}
+  \\usepackage{longtable}
+  \\usepackage{wrapfig}
+  \\usepackage{rotating}
+  \\usepackage[normalem]{ulem}
+  \\usepackage{amsmath}
+  \\usepackage{textcomp}
+  \\usepackage{amssymb}
+  \\usepackage{capt-of}
+  \\definecolor{myGreen}{HTML}{006953}
+  \\usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
+  \\usepackage{fancyhdr} \\fancyhead{}
+  \\fancyhead[L]{\\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/mcd-long.png} \\vspace{-.7cm}}
+  \\fancyhead[R]{{\\parbox[b][10mm][t]{0.5\\textwidth}{\\raggedleft{Departamento
+        Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
+        México.}}}\\vspace{.3cm}}
+  \\renewcommand{\\headrulewidth}{.5pt}
+  \\pagestyle{fancy}
+        [NO-DEFAULT-PACKAGES]
+        [NO-PACKAGES]"
+                 ("\\section{%s}" . "\n\\section{%s}")
+                 ("\\subsection{%s}" . "\n\\subsection{%s}")
+                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+                 )
+               )
 #+end_src
 
 which I need to define as the default class:
@@ -2683,9 +2704,9 @@ In the end, I haven't been able to set this properly as I have duplicated titles
 
 Let's define the processing for the export through latexmk: 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
 
-  (setq org-latex-pdf-process '("latexmk -f -pdf -shell-escape -interaction=nonstopmode -output-directory=%o %f"))
+  (setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
 
 #+end_src
 
@@ -2819,7 +2840,7 @@ is a simple tool to treat a tree of an org buffer as a single slide. Since each 
     (interactive)
     (org-tree-slide-mode 1)
     (org-sticky-header-mode 0)
-    (setq text-scale-mode-amount 6.5)
+    (setq text-scale-mode-amount 10.5)
     (text-scale-mode 1)
     (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
                                        (header-line (:height 4.5) variable-pitch)
