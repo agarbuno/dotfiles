@@ -1,0 +1,21 @@
+#+Author: Alfredo Garbuno
+#+title: Homebrew configuration
+#+STARTUP: content
+
+In order to create the ~Brewfile~ you need to run
+
+#+begin_src shell
+  brew bundle dump
+#+end_src
+
+and in the new machine run wherever the ~Brewfile~ resides: 
+
+#+begin_src shell
+  brew bundle 
+#+end_src
+
+for a nice cleanup make sure to run
+
+#+begin_src shell
+  brew bundle cleanup
+#+end_src
