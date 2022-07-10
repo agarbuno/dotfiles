@@ -1,5 +1,4 @@
-#'pdflatex': The following rules & subrules became out-of-date:
-ftredo Garbuno
+#+author: Alfredo Garbuno
 #+title: Emacs From Scratch Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle .emacs.d/init.el :mkdirp yes
 #+STARTUP: content
