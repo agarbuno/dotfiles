@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: regression model        
+# key: mreg
+# group : models        
+# --
+${1:y} = ${2:\beta}_0 + $2_1 ${3:x}_{1} + \cdots + $2_${4:p} $3_$4 + \epsilon_{} $0

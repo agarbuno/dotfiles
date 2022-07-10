@@ -5,7 +5,7 @@
 # --
 #+BEGIN_NOTES
 *Profesor*: Alfredo Garbuno Iñigo | ${1:Primavera, 2022} | ${2:Tema}.\\\
-*Objetivo*. ${3:Que veremos}.\\\
+*Objetivo*: ${3:Que veremos}.\\\
 *Lectura recomendada*: ${4:Referencia}.
 #+END_NOTES
 $0

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: reveal-head
-# key: reveal-config
+# key: <reveal
 # group: reveal
 # --
 :REVEAL_PROPERTIES:
