@@ -116,6 +116,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#reference-management][Reference management]]
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
   - [[#latex-in-org-mode][Latex in org mode]]
+    - [[#custom-document-types][Custom document types]]
     - [[#exporting-org-files-to-latex][Exporting org files to LaTeX]]
     - [[#use-of-cref-in-the-latex-export][Use of cref in the latex-export]]
   - [[#cdlatex][CDLaTeX]]
@@ -2547,6 +2548,14 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 #+end_src
 
+*** Custom document types
+
+~Stow~ is helping me to keep everything neat. I only need to configure the variable
+
+#+begin_src emacs-lisp
+  (setenv "TEXMFHOME" "~/.texmf") 
+#+end_src
+
 *** Exporting org files to LaTeX
 
 First, add the style in the home of the tex configuration. In my case, in MacOS
@@ -2703,10 +2712,8 @@ In the end, I haven't been able to set this properly as I have duplicated titles
 
 Let's define the processing for the export through latexmk: 
 
-#+begin_src emacs-lisp :tangle yes
-
+#+begin_src emacs-lisp 
   (setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
-
 #+end_src
 
 #+begin_src emacs-lisp :tangle no

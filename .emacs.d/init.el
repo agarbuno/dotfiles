@@ -1439,6 +1439,8 @@
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
+(setenv "TEXMFHOME" "~/.texmf")
+
 (add-to-list 'org-latex-classes
              '("custom"
                "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
@@ -1557,6 +1559,8 @@
              )
 
 (setq org-latex-default-class "custom")
+
+(setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
