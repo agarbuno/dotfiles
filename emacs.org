@@ -2552,7 +2552,8 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 First, add the style in the home of the tex configuration. In my case, in MacOS
 this is =/usr/local/texlive/2018/texmf-dist/tex/latex/base/=. For example I really
 like using the ~imsart~ article style. Which means I fisrt have to copy the =.cls=
-and =.sty= files into the LaTeX home.  So my custom class is
+and =.sty= files into the LaTeX home and use ~texhash~ in the terminal to include
+such styles. So my custom class is
 
 #+begin_src emacs-lisp
   (add-to-list 'org-latex-classes
