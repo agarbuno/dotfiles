@@ -6,6 +6,9 @@
 \.config
 # By any reason this should be included in the stow syncing ---- 
 \.DS_Store
+auto
+auto-save
+ltximg
 assets
 orgfiles
 ^/.*\.md
