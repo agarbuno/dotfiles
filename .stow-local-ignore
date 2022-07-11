@@ -5,6 +5,7 @@
 \.zshrc
 \.config
 # By any reason this should be included in the stow syncing ---- 
+\.DS_Store
 assets
 orgfiles
 ^/.*\.md
