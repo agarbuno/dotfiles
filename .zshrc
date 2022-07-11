@@ -212,3 +212,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/curl/lib/pkgconfig"
 # export PATH="/usr/local/opt/bzip2/bin:$PATH"
 # export LDFLAGS="-L/usr/local/opt/bzip2/lib"
 # export CPPFLAGS="-I/usr/local/opt/bzip2/include"
+
+if [ -d ~/.texmf ] ; then
+    export TEXMFHOME=~/.texmf
+fi
