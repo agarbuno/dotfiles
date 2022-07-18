@@ -1626,6 +1626,9 @@
 (setq pdf-view-use-scaling t
        pdf-view-use-imagemagick nil)
 
+(use-package arxiv-mode
+  :ensure t)
+
 (defun ag/org-start-presentation ()
   (interactive)
   (org-tree-slide-mode 1)

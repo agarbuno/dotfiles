@@ -123,6 +123,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#screenshots][Screenshots]]
   - [[#spell-checking][Spell checking]]
   - [[#pdf-viewing][PDF viewing]]
+  - [[#arxiv-within-emacs][Arxiv within Emacs]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
   - [[#org-reveal][Org-reveal]]
@@ -2834,6 +2835,22 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
 #+begin_src emacs-lisp
  (setq pdf-view-use-scaling t
         pdf-view-use-imagemagick nil)
+#+end_src
+
+** Arxiv within Emacs
+
+Just remember to toggle ~arxiv-mode~ to explore new or recent submissions to the
+=arxiv=. For this remember to use the following instructions (taken from the
+documentation):
+
+To browse the daily new submissions list in a category, run ~M-x arxiv-read-new~.
+To browse the recent (weekly) submissions, run ~M-x arxiv-read-recent~.
+Use ~M-x arxiv-read-author~ to search for specific author(s).
+Use ~M-x arxiv-search~ to perform a simple search on the arXiv database.
+
+#+begin_src emacs-lisp
+  (use-package arxiv-mode
+    :ensure t)
 #+end_src
 
 * Presentations
