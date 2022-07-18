@@ -1366,7 +1366,8 @@
          ("C-c b n" . ivy-bibtex-with-notes))
   :config
   (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                         "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+                                         "~/Google Drive/orgfiles/references/bibliographypdfs.bib"
+                                         "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
   (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
          bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes/")
 
@@ -1627,7 +1628,13 @@
        pdf-view-use-imagemagick nil)
 
 (use-package arxiv-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq arxiv-default-bibliography "/Users/agarbuno/Google Drive/orgfiles/references/bibliography-arxiv.bib"
+        arxiv-default-download-folder "/Users/agarbuno/Google Drive/orgfiles/references/arxiv-pdfs/"
+        arxiv-default-category "stat"
+        arxiv-startup-with-abstract-window t)     
+  )
 
 (defun ag/org-start-presentation ()
   (interactive)
