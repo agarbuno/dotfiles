@@ -1235,52 +1235,54 @@ This should be updated accordingly with respect to =org-roam-v2=.
 ** Org Roam Bibtex
 
 #+begin_src emacs-lisp
-    (use-package org-roam-bibtex
-      :bind (("C-c b d" . doi-add-bibtex-entry)
-             ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
-             ("C-c b k" . org-ref-clean-bibtex-entry)
-             ("C-c b i" . org-ref-cite-insert-ivy))
-      :custom
-      (org-roam-bibtex-mode 1)
-      :config
-      (require 'org-ref)
-      (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                          "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+  (use-package org-roam-bibtex
+    :bind (("C-c b d" . doi-add-bibtex-entry)
+           ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
+           ("C-c b k" . org-ref-clean-bibtex-entry)
+           ("C-c b i" . org-ref-cite-insert-ivy))
+    :custom
+    (org-roam-bibtex-mode 1)
+    :config
+    (require 'org-ref)
+    (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                        "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
+                                        "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
 
-      ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
-      (require 'org-ref-ivy)
+    ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
+    (require 'org-ref-ivy)
 
-      ;; see org-ref for use of these variables
-      (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-            org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                           "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
-            org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-            org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
-            org-ref-show-broken-links t)
+    ;; see org-ref for use of these variables
+    (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
+          org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
+                                         "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
+                                         "~/Google Drive/orgfiles/references/bibliography-arxiv.bib")
+          org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
+          org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
+          org-ref-show-broken-links t)
 
-      (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
-            orb-process-file-keyword t
-            orb-file-field-extensions '("pdf"))
+    (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
+          orb-process-file-keyword t
+          orb-file-field-extensions '("pdf"))
 
-      (add-to-list 'org-roam-capture-templates
-                   '("r" "reference" plain
-                     "%? %^{author} - %^{year}:"
-                     :if-new
-                     (file+head
-                      "References/${citekey}.org"
-                      "#+title: ${title}\n")
-                     :unnarrowed t)
-                   )
-      (add-to-list 'org-roam-capture-templates
-                   '("n" "references notes"  plain
-                     (file "~/.emacs.d/templates/org-capture/reference-noter")
-                     :if-new
-                     (file+head
-                      "References/${citekey}.org"
-                      "#+title: ${title}\n")
-                     :unnarrowed t)
-                   )
-      )
+    (add-to-list 'org-roam-capture-templates
+                 '("r" "reference" plain
+                   "%? %^{author} - %^{year}:"
+                   :if-new
+                   (file+head
+                    "References/${citekey}.org"
+                    "#+title: ${title}\n")
+                   :unnarrowed t)
+                 )
+    (add-to-list 'org-roam-capture-templates
+                 '("n" "references notes"  plain
+                   (file "~/.emacs.d/templates/org-capture/reference-noter")
+                   :if-new
+                   (file+head
+                    "References/${citekey}.org"
+                    "#+title: ${title}\n")
+                   :unnarrowed t)
+                 )
+    )
 
     #+end_src
 
@@ -2452,7 +2454,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
            ("C-c b n" . ivy-bibtex-with-notes))
     :config
     (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                           "~/Google Drive/orgfiles/references/bibliographypdfs.bib"
+                                           "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
                                            "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
     (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
            bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes/")

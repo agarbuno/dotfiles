@@ -780,7 +780,8 @@
   :config
   (require 'org-ref)
   (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                      "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+                                      "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
+                                      "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
 
   ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
   (require 'org-ref-ivy)
@@ -788,7 +789,8 @@
   ;; see org-ref for use of these variables
   (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
         org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                       "~/Google Drive/orgfiles/references/bibliographypdfs.bib")
+                                       "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
+                                       "~/Google Drive/orgfiles/references/bibliography-arxiv.bib")
         org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
         org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
         org-ref-show-broken-links t)
@@ -1366,7 +1368,7 @@
          ("C-c b n" . ivy-bibtex-with-notes))
   :config
   (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                         "~/Google Drive/orgfiles/references/bibliographypdfs.bib"
+                                         "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
                                          "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
   (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
          bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes/")
