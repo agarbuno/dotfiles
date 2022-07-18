@@ -124,6 +124,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#spell-checking][Spell checking]]
   - [[#pdf-viewing][PDF viewing]]
   - [[#arxiv-within-emacs][Arxiv within Emacs]]
+  - [[#rss-feeds][RSS Feeds]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
   - [[#org-reveal][Org-reveal]]
@@ -2859,6 +2860,25 @@ Use ~M-x arxiv-search~ to perform a simple search on the arXiv database.
           arxiv-default-download-folder "/Users/agarbuno/Google Drive/orgfiles/references/arxiv-pdfs/"
           arxiv-default-category "stat"
           arxiv-startup-with-abstract-window t)     
+    )
+#+end_src
+
+** RSS Feeds
+
+I need to sort out how to make use of this within org-mode by following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/][this]], [[https://cundy.me/post/elfeed/][this]] and [[https://pragmaticemacs.wordpress.com/2016/08/17/read-your-rss-feeds-in-emacs-with-elfeed/][this]]. 
+
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :ensure t
+    :config
+    (setq elfeed-feeds
+          '(
+            ("http://www.nature.com/nature/current_issue/rss" nature)
+            ("http://www.sciencemag.org/rss/current.xml" science)
+            ("http://www.nature.com/nmeth/current_issue/rss" methods)
+            ("http://understandinguncertainty.org/rss.xml" uq) ;; no longer maintained
+            ("http://xkcd.com/rss.xml" comics)
+            ))
     )
 #+end_src
 

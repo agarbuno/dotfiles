@@ -1638,6 +1638,19 @@
         arxiv-startup-with-abstract-window t)     
   )
 
+(use-package elfeed
+  :ensure t
+  :config
+  (setq elfeed-feeds
+        '(
+          ("http://www.nature.com/nature/current_issue/rss" nature)
+          ("http://www.sciencemag.org/rss/current.xml" science)
+          ("http://www.nature.com/nmeth/current_issue/rss" methods)
+          ("http://understandinguncertainty.org/rss.xml" uq) ;; no longer maintained
+          ("http://xkcd.com/rss.xml" comics)
+          ))
+  )
+
 (defun ag/org-start-presentation ()
   (interactive)
   (org-tree-slide-mode 1)
