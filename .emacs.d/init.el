@@ -585,13 +585,6 @@
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n")
       :unnarrowed t)
-     ("r" "reference" plain
-      "%? %^{author} - %^{year}:"
-      :if-new
-      (file+head
-       "bibtex/${citekey}.org"
-       "#+title: ${title}\n")
-      :unnarrowed t)
      )
    )
   ;; Dailies templates

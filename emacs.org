@@ -1014,13 +1014,6 @@ This should be updated accordingly with respect to =org-roam-v2=.
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                            "#+title: ${title}\n")
         :unnarrowed t)
-       ("r" "reference" plain
-        "%? %^{author} - %^{year}:"
-        :if-new
-        (file+head
-         "bibtex/${citekey}.org"
-         "#+title: ${title}\n")
-        :unnarrowed t)
        )
      )
     ;; Dailies templates
