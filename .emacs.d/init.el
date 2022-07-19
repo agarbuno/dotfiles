@@ -589,7 +589,7 @@
       "%? %^{author} - %^{year}:"
       :if-new
       (file+head
-       "References/${citekey}.org"
+       "bibtex/${citekey}.org"
        "#+title: ${title}\n")
       :unnarrowed t)
      )
@@ -825,8 +825,7 @@
           org-noter-doc-property-in-notes t
           org-noter-hide-other t
           org-noter-doc-split-fraction '(.67 . .5)
-          org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/References/"
-                                        "~/Google Drive/orgfiles/notes/bibtex/")
+          org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/bibtex/")
           )
     )
 
