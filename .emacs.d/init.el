@@ -423,8 +423,8 @@
   (setq org-log-into-drawer t)
 
   (setq org-agenda-files
-      '("~/Google Drive/orgfiles/agenda/tasks.org"
-        "~/Google Drive/orgfiles/agenda/habits.org"))
+      '("~/orgfiles/agenda/tasks.org"
+        "~/orgfiles/agenda/habits.org"))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -469,7 +469,7 @@
 
             (tags-todo "-research-teaching-maestria/!-NEXT"
                        ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
-                        ;; (org-agenda-files "~/Google Drive/orgfiles/agenda/tasks.org")
+                        ;; (org-agenda-files "~/orgfiles/agenda/tasks.org")
                         (org-agenda-text-search-extra-files nil)
                         ))
             ))
@@ -484,22 +484,22 @@
   (setq org-capture-templates
         `(("t" "Tasks/Projects ")
           ("tt" "Task" entry
-           (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Active")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Active")
            "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
           ("tr" "Research Tasks" entry
-           (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Research")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %?  :research:\nLink: %a")
           ("tp" "Reading Reminder" entry
-           (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Reading")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Reading")
            "* READ %?  \nLink: %a")
           ("tv" "Talk or Video" entry
-           (file+olp "~/Google Drive/orgfiles/agenda/tasks.org" "Tutorial")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Tutorial")
            "* VIEW %?  \nLink: %a")
           ("j" "Journal" entry
-           (file+datetree "~/Google Drive/orgfiles/agenda/journal.org")
+           (file+datetree "~/orgfiles/agenda/journal.org")
            "* %?\nEntered on %U\n  %i\n  %a")
           ("h" "Habit" entry
-           (file+olp "~/Google Drive/orgfiles/agenda/habits.org" "Work")
+           (file+olp "~/orgfiles/agenda/habits.org" "Work")
            "* TODO %?")
           )
         )
@@ -576,7 +576,7 @@
   :init
    (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory (file-truename "~/Google Drive/orgfiles/notes/"))
+  (org-roam-directory (file-truename "~/orgfiles/notes/"))
   (org-roam-completion-everywhere t)
   ;; (org-roam-completion-system 'default)
   ;; Capture templates
@@ -744,9 +744,9 @@
   (defvar ag/deft-dir-list '()
     "A list of deft directories to pick")
 
-  (setq ag/deft-dir-list '("/Users/agarbuno/Google Drive/orgfiles/notes"
-                           "/Users/agarbuno/Google Drive/orgfiles/notes/Journal"
-                           "/Users/agarbuno/Google Drive/orgfiles/notes/bibtex"
+  (setq ag/deft-dir-list '("~/orgfiles/notes"
+                           "~/orgfiles/notes/Journal"
+                           "~/orgfiles/notes/bibtex"
                            ))
 
   (defun ag/pick-deft-dir ()
@@ -780,9 +780,9 @@
   (require 'org-ref-ivy)
 
   ;; see org-ref for use of these variables
-  (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-        org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-        org-ref-notes-directory "~/Google Drive/orgfiles/notes/bibtex/"
+  (setq org-ref-bibliography-notes "~/orgfiles/references/notes.org"
+        org-ref-pdf-directory "~/orgfiles/references/bibtex-pdfs/"
+        org-ref-notes-directory "~/orgfiles/notes/bibtex/"
         org-ref-show-broken-links t)
 
   (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
@@ -818,7 +818,7 @@
           org-noter-doc-property-in-notes t
           org-noter-hide-other t
           org-noter-doc-split-fraction '(.67 . .5)
-          org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/bibtex/")
+          org-noter-notes-search-path '("~/orgfiles/notes/bibtex/")
           )
     )
 
@@ -1242,8 +1242,8 @@
   :hook (LaTeX-mode . ag/latex-mode-visual-fill)
   :custom
   (reftex-plug-into-AUCTeX t)
-  (reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                 "~/Google Drive/orgfiles/references/bibliographypdfs.bib"))
+  (reftex-default-bibliography '("~/orgfiles/references/bibliography.bib"
+                                 "~/orgfiles/references/bibliographypdfs.bib"))
   (LaTeX-indent-level 4
                       LaTeX-item-indent 0
                       TeX-brace-indent-level 4
@@ -1338,11 +1338,11 @@
   :bind (("C-c b f" . ivy-bibtex)
          ("C-c b n" . ivy-bibtex-with-notes))
   :config
-  (setq bibtex-completion-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                         "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
-                                         "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
-  (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-         bibtex-completion-notes-path   "~/Google Drive/orgfiles/notes/bibtex/")
+  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
+                                         "~/orgfiles/references/bibliography-wpdfs.bib"
+                                         "~/orgfiles/references/bibliography-arxiv.bib"))
+  (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
+         bibtex-completion-notes-path   "~/orgfiles/notes/bibtex/")
 
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
@@ -1603,8 +1603,8 @@
 (use-package arxiv-mode
   :ensure t
   :config
-  (setq arxiv-default-bibliography "/Users/agarbuno/Google Drive/orgfiles/references/bibliography-arxiv.bib"
-        arxiv-default-download-folder "/Users/agarbuno/Google Drive/orgfiles/references/arxiv-pdfs/"
+  (setq arxiv-default-bibliography "~/orgfiles/references/bibliography-arxiv.bib"
+        arxiv-default-download-folder "~/orgfiles/references/arxiv-pdfs/"
         arxiv-default-category "stat"
         arxiv-startup-with-abstract-window t)     
   )
