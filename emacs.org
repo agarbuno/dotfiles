@@ -1245,18 +1245,11 @@ This should be updated accordingly with respect to =org-roam-v2=.
     (org-roam-bibtex-mode 1)
     :config
     (require 'org-ref)
-    (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                        "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
-                                        "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
-
     ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
     (require 'org-ref-ivy)
 
     ;; see org-ref for use of these variables
     (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-          org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                         "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
-                                         "~/Google Drive/orgfiles/references/bibliography-arxiv.bib")
           org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
           org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
           org-ref-show-broken-links t)
@@ -2867,7 +2860,7 @@ Use ~M-x arxiv-search~ to perform a simple search on the arXiv database.
 
 I need to sort out how to make use of this within org-mode by following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/][this]], [[https://cundy.me/post/elfeed/][this]] and [[https://pragmaticemacs.wordpress.com/2016/08/17/read-your-rss-feeds-in-emacs-with-elfeed/][this]]. 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package elfeed
     :ensure t
     :config
@@ -2879,6 +2872,15 @@ I need to sort out how to make use of this within org-mode by following [[https:
             ("http://understandinguncertainty.org/rss.xml" uq) ;; no longer maintained
             ("http://xkcd.com/rss.xml" comics)
             ))
+    )
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package elfeed-org
+    :ensure t
+    :config
+    (elfeed-org)
+    (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
     )
 #+end_src
 

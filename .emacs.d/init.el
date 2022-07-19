@@ -779,18 +779,11 @@
   (org-roam-bibtex-mode 1)
   :config
   (require 'org-ref)
-  (setq reftex-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                      "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
-                                      "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
-
   ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
   (require 'org-ref-ivy)
 
   ;; see org-ref for use of these variables
   (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
-        org-ref-default-bibliography '("~/Google Drive/orgfiles/references/bibliography.bib"
-                                       "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
-                                       "~/Google Drive/orgfiles/references/bibliography-arxiv.bib")
         org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
         org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
         org-ref-show-broken-links t)
@@ -1638,17 +1631,11 @@
         arxiv-startup-with-abstract-window t)     
   )
 
-(use-package elfeed
+(use-package elfeed-org
   :ensure t
   :config
-  (setq elfeed-feeds
-        '(
-          ("http://www.nature.com/nature/current_issue/rss" nature)
-          ("http://www.sciencemag.org/rss/current.xml" science)
-          ("http://www.nature.com/nmeth/current_issue/rss" methods)
-          ("http://understandinguncertainty.org/rss.xml" uq) ;; no longer maintained
-          ("http://xkcd.com/rss.xml" comics)
-          ))
+  (elfeed-org)
+  (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
   )
 
 (defun ag/org-start-presentation ()
