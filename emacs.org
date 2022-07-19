@@ -793,6 +793,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
     :config
     (setq org-ellipsis " ▾")
     (setq org-support-shift-select t)
+    (setq org-latex-classes nil)
 
     (setq org-agenda-start-with-log-mode t)
     (setq org-log-done 'time)
@@ -1236,6 +1237,10 @@ This should be updated accordingly with respect to =org-roam-v2=.
 ** Org Roam Bibtex
 
 #+begin_src emacs-lisp
+  (use-package org-ref)
+#+end_src
+
+#+begin_src emacs-lisp
   (use-package org-roam-bibtex
     :bind (("C-c b d" . doi-add-bibtex-entry)
            ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
@@ -1243,6 +1248,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
            ("C-c b i" . org-ref-cite-insert-ivy))
     :custom
     (org-roam-bibtex-mode 1)
+
     :config
     (require 'org-ref)
     ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
@@ -1251,7 +1257,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
     ;; see org-ref for use of these variables
     (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
           org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-          org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
+          org-ref-notes-directory "~/Google Drive/orgfiles/notes/bibtex/"
           org-ref-show-broken-links t)
 
     (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
@@ -1263,7 +1269,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
                    "%? %^{author} - %^{year}:"
                    :if-new
                    (file+head
-                    "References/${citekey}.org"
+                    "bibtex/${citekey}.org"
                     "#+title: ${title}\n")
                    :unnarrowed t)
                  )
@@ -1272,7 +1278,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
                    (file "~/.emacs.d/templates/org-capture/reference-noter")
                    :if-new
                    (file+head
-                    "References/${citekey}.org"
+                    "bibtex/${citekey}.org"
                     "#+title: ${title}\n")
                    :unnarrowed t)
                  )
@@ -1329,7 +1335,7 @@ This gets rid of the annoying flickering cursor in pdf view mode.
             org-noter-hide-other t
             org-noter-doc-split-fraction '(.67 . .5)
             org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/References/"
-                                          "~/Google Drive/orgfiles/references/bibtex-notes/")
+                                          "~/Google Drive/orgfiles/notes/bibtex/")
             )
       )
 
@@ -2451,7 +2457,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
                                            "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
                                            "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
     (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-           bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes/")
+           bibtex-completion-notes-path   "~/Google Drive/orgfiles/notes/bibtex/")
 
     (setq bibtex-completion-pdf-symbol "⌘")
     (setq bibtex-completion-notes-symbol "✎")
@@ -2773,7 +2779,8 @@ The following enables the exporter to use ~cref~ for clever cross-referencing co
 
   (add-to-list 'org-export-filter-final-output-functions
                'org-latex-ref-to-cref)
-#+end_src
+
+  #+end_src
 
 ** CDLaTeX
 

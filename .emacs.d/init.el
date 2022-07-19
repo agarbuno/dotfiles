@@ -416,6 +416,7 @@
   :config
   (setq org-ellipsis " ▾")
   (setq org-support-shift-select t)
+  (setq org-latex-classes nil)
 
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -770,6 +771,8 @@
 
   )
 
+(use-package org-ref)
+
 (use-package org-roam-bibtex
   :bind (("C-c b d" . doi-add-bibtex-entry)
          ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
@@ -777,6 +780,7 @@
          ("C-c b i" . org-ref-cite-insert-ivy))
   :custom
   (org-roam-bibtex-mode 1)
+
   :config
   (require 'org-ref)
   ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
@@ -785,7 +789,7 @@
   ;; see org-ref for use of these variables
   (setq org-ref-bibliography-notes "~/Google Drive/orgfiles/references/notes.org"
         org-ref-pdf-directory "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-        org-ref-notes-directory "~/Google Drive/orgfiles/references/bibtex-notes/"
+        org-ref-notes-directory "~/Google Drive/orgfiles/notes/bibtex/"
         org-ref-show-broken-links t)
 
   (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
@@ -797,7 +801,7 @@
                  "%? %^{author} - %^{year}:"
                  :if-new
                  (file+head
-                  "References/${citekey}.org"
+                  "bibtex/${citekey}.org"
                   "#+title: ${title}\n")
                  :unnarrowed t)
                )
@@ -806,7 +810,7 @@
                  (file "~/.emacs.d/templates/org-capture/reference-noter")
                  :if-new
                  (file+head
-                  "References/${citekey}.org"
+                  "bibtex/${citekey}.org"
                   "#+title: ${title}\n")
                  :unnarrowed t)
                )
@@ -840,7 +844,7 @@
           org-noter-hide-other t
           org-noter-doc-split-fraction '(.67 . .5)
           org-noter-notes-search-path '("~/Google Drive/orgfiles/notes/References/"
-                                        "~/Google Drive/orgfiles/references/bibtex-notes/")
+                                        "~/Google Drive/orgfiles/notes/bibtex/")
           )
     )
 
@@ -1364,7 +1368,7 @@
                                          "~/Google Drive/orgfiles/references/bibliography-wpdfs.bib"
                                          "~/Google Drive/orgfiles/references/bibliography-arxiv.bib"))
   (setq  bibtex-completion-library-path "~/Google Drive/orgfiles/references/bibtex-pdfs/"
-         bibtex-completion-notes-path   "~/Google Drive/orgfiles/references/bibtex-notes/")
+         bibtex-completion-notes-path   "~/Google Drive/orgfiles/notes/bibtex/")
 
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
