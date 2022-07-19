@@ -753,7 +753,7 @@
 
   (setq ag/deft-dir-list '("/Users/agarbuno/Google Drive/orgfiles/notes"
                            "/Users/agarbuno/Google Drive/orgfiles/notes/Journal"
-                           "/Users/agarbuno/Google Drive/orgfiles/notes/References"
+                           "/Users/agarbuno/Google Drive/orgfiles/notes/bibtex"
                            ))
 
   (defun ag/pick-deft-dir ()
@@ -796,24 +796,6 @@
         orb-process-file-keyword t
         orb-file-field-extensions '("pdf"))
 
-  (add-to-list 'org-roam-capture-templates
-               '("r" "reference" plain
-                 "%? %^{author} - %^{year}:"
-                 :if-new
-                 (file+head
-                  "bibtex/${citekey}.org"
-                  "#+title: ${title}\n")
-                 :unnarrowed t)
-               )
-  (add-to-list 'org-roam-capture-templates
-               '("n" "references notes"  plain
-                 (file "~/.emacs.d/templates/org-capture/reference-noter")
-                 :if-new
-                 (file+head
-                  "bibtex/${citekey}.org"
-                  "#+title: ${title}\n")
-                 :unnarrowed t)
-               )
   )
 
 (use-package pdf-tools
@@ -853,7 +835,7 @@
                (file "~/.emacs.d/templates/org-capture/reference-noter")
                :if-new
                (file+head
-                "References/${citekey}.org"
+                "bibtex/${citekey}.org"
                 "#+title: ${title}\n")
                :unnarrowed t)
              )
@@ -863,7 +845,7 @@
                (file "~/.emacs.d/templates/org-capture/thesis-rev")
                :if-new
                (file+head
-                "References/${citekey}.org"
+                "bibtex/${citekey}.org"
                 "#+title: ${title}\n")
                :unnarrowed t)
              )
