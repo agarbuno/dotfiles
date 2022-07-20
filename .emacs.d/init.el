@@ -764,31 +764,33 @@
 
   )
 
-(use-package org-ref)
+(use-package org-ref
+  :init
+  (require 'bibtex)
+  (require 'org-ref-ivy)
+  ;; Following JKitchin config in scimax
+  (require 'org-ref-arxiv)
+  (require 'org-ref-scopus)
+  (require 'org-ref-wos)
+  (require 'doi-utils)
+  (require 'org-ref-isbn)
+  :config
+  (setq org-ref-show-broken-links t)
+  )
 
 (use-package org-roam-bibtex
   :bind (("C-c b d" . doi-add-bibtex-entry)
          ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
-         ("C-c b k" . org-ref-clean-bibtex-entry)
-         ("C-c b i" . org-ref-cite-insert-ivy))
+         ("C-c b k" . org-ref-clean-bibtex-entry))
   :custom
   (org-roam-bibtex-mode 1)
 
   :config
   (require 'org-ref)
-  ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
-  (require 'org-ref-ivy)
-
-  ;; see org-ref for use of these variables
-  (setq org-ref-bibliography-notes "~/orgfiles/references/notes.org"
-        org-ref-pdf-directory "~/orgfiles/references/bibtex-pdfs/"
-        org-ref-notes-directory "~/orgfiles/notes/bibtex/"
-        org-ref-show-broken-links t)
 
   (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
         orb-process-file-keyword t
         orb-file-field-extensions '("pdf"))
-
   )
 
 (use-package pdf-tools
@@ -1336,7 +1338,9 @@
 
 (use-package ivy-bibtex
   :bind (("C-c b f" . ivy-bibtex)
-         ("C-c b n" . ivy-bibtex-with-notes))
+         ("C-c b n" . ivy-bibtex-with-notes)
+         ("C-c b ]" . org-ref-insert-link)
+         ("C-c b i" . org-ref-cite-insert-ivy))
   :config
   (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
                                          "~/orgfiles/references/bibliography-wpdfs.bib"
@@ -1696,6 +1700,13 @@
     (org-image-actual-width nil)
     )
 
+(use-package org-re-reveal-citeproc
+  :config
+  (require 'org-re-reveal)
+  )
+(add-to-list 'org-export-filter-paragraph-functions
+             #'org-re-reveal-citeproc-filter-cite)
+
 (defun ag/org-reveal ()  
   (use-package ox-reveal
     :custom
@@ -1707,3 +1718,16 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(vterm yasnippet-snippets yaml-mode winum which-key visual-fill-column use-package treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poly-R poetry pdf-tools ox-reveal org-web-tools org-tree-slide org-sticky-header org-roam-bibtex org-re-reveal-ref org-re-reveal-citeproc org-noter org-make-toc org-fragtog org-download org-bullets org-appear no-littering minions mic-paren lsp-ui lsp-treemacs lsp-latex lsp-ivy ivy-prescient ivy-bibtex hide-lines helpful git-timemachine general forge flyspell-correct-ivy flycheck-stan evil-nerd-commenter evil-collection eterm-256color ess elpy elfeed-org eldoc-stan doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles deft dashboard counsel-projectile company-stan company-box company-auctex command-log-mode cdlatex buffer-move beacon auto-package-update arxiv-mode all-the-icons-ivy-rich all-the-icons-dired)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

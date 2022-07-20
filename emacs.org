@@ -1230,33 +1230,35 @@ This should be updated accordingly with respect to =org-roam-v2=.
 ** Org Roam Bibtex
 
 #+begin_src emacs-lisp
-  (use-package org-ref)
+  (use-package org-ref
+    :init
+    (require 'bibtex)
+    (require 'org-ref-ivy)
+    ;; Following JKitchin config in scimax
+    (require 'org-ref-arxiv)
+    (require 'org-ref-scopus)
+    (require 'org-ref-wos)
+    (require 'doi-utils)
+    (require 'org-ref-isbn)
+    :config
+    (setq org-ref-show-broken-links t)
+    )
 #+end_src
 
 #+begin_src emacs-lisp
   (use-package org-roam-bibtex
     :bind (("C-c b d" . doi-add-bibtex-entry)
            ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
-           ("C-c b k" . org-ref-clean-bibtex-entry)
-           ("C-c b i" . org-ref-cite-insert-ivy))
+           ("C-c b k" . org-ref-clean-bibtex-entry))
     :custom
     (org-roam-bibtex-mode 1)
 
     :config
     (require 'org-ref)
-    ;; (setq org-ref-completion-library 'org-ref-ivy-cite)
-    (require 'org-ref-ivy)
-
-    ;; see org-ref for use of these variables
-    (setq org-ref-bibliography-notes "~/orgfiles/references/notes.org"
-          org-ref-pdf-directory "~/orgfiles/references/bibtex-pdfs/"
-          org-ref-notes-directory "~/orgfiles/notes/bibtex/"
-          org-ref-show-broken-links t)
-
+    
     (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
           orb-process-file-keyword t
           orb-file-field-extensions '("pdf"))
-
     )
 
     #+end_src
@@ -2425,7 +2427,9 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 #+begin_src emacs-lisp
   (use-package ivy-bibtex
     :bind (("C-c b f" . ivy-bibtex)
-           ("C-c b n" . ivy-bibtex-with-notes))
+           ("C-c b n" . ivy-bibtex-with-notes)
+           ("C-c b ]" . org-ref-insert-link)
+           ("C-c b i" . org-ref-cite-insert-ivy))
     :config
     (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
                                            "~/orgfiles/references/bibliography-wpdfs.bib"
