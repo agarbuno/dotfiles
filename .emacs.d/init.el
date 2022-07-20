@@ -1156,6 +1156,14 @@
 (use-package eterm-256color
   :hook (term-mode . eterm-256color-mode))
 
+(use-package vterm
+  :after evil-collection
+  :commands vterm
+  :config
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
+  ;;(setq vterm-shell "zsh")                       ;; Set this to customize the shell to launch
+  (setq vterm-max-scrollback 10000))
+
 (when (eq system-type 'windows-nt)
   (setq explicit-shell-file-name "powershell.exe")
   (setq explicit-powershell.exe-args '()))
@@ -1718,16 +1726,3 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(vterm yasnippet-snippets yaml-mode winum which-key visual-fill-column use-package treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poly-R poetry pdf-tools ox-reveal org-web-tools org-tree-slide org-sticky-header org-roam-bibtex org-re-reveal-ref org-re-reveal-citeproc org-noter org-make-toc org-fragtog org-download org-bullets org-appear no-littering minions mic-paren lsp-ui lsp-treemacs lsp-latex lsp-ivy ivy-prescient ivy-bibtex hide-lines helpful git-timemachine general forge flyspell-correct-ivy flycheck-stan evil-nerd-commenter evil-collection eterm-256color ess elpy elfeed-org eldoc-stan doom-themes doom-modeline dired-single dired-open dired-hide-dotfiles deft dashboard counsel-projectile company-stan company-box company-auctex command-log-mode cdlatex buffer-move beacon auto-package-update arxiv-mode all-the-icons-ivy-rich all-the-icons-dired)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
