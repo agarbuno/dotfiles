@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: bib-citeproc
+# key:  <bib-citeproc
+# --
+* Referencias
+   :PROPERTIES:
+   :CUSTOM_ID: bibliography
+   :END:
+
+#+print_bibliography:
+$0

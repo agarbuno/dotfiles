@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: reveal-head-citeproc
+# key: <reveal-citeproc
+# group: reveal
+# --
+:REVEAL_PROPERTIES:
+#+LANGUAGE: es
+#+OPTIONS: num:nil toc:nil 
+#+OPTIONS: reveal_slide_number:nil 
+#+OPTIONS: reveal_history:t reveal_fragmentinurl:t
+#+OPTIONS: reveal_mousewheel:t reveal_inter_presentation_links:t
+#+OPTIONS: reveal_width:1600 reveal_height:900
+#+OPTIONS: timestamp:nil
+
+#+REVEAL_THEME: night
+#+REVEAL_MARGIN: .2
+#+REVEAL_TRANS: slide
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="${1:Titulo}">
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
+#+REVEAL_VERSION: 4
+
+#+REVEAL_SLIDE_NUMBER: t
+#+REVEAL_PLUGINS: (notes search)
+#+REVEAL_EXTRA_CSS: ${2:./mods.css}
+
+#+bibliography: references.bib
+#+cite_export: csl
+:END:
+$0

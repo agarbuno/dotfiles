@@ -2964,6 +2964,13 @@ This allows to export into reveal.js slides. More [[https://opensource.com/artic
 
 #+begin_src emacs-lisp
 
+  (use-package org-re-reveal-citeproc
+    :config
+    (require 'org-re-reveal)
+    )
+  (add-to-list 'org-export-filter-paragraph-functions
+               #'org-re-reveal-citeproc-filter-cite)
+
   (defun ag/org-reveal ()  
     (use-package ox-reveal
       :custom
