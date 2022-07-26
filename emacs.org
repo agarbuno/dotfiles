@@ -380,13 +380,23 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
 #+begin_src emacs-lisp
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height ag/default-font-size)
+  (set-face-attribute
+   'default nil
+   :font "Fira Code Retina"
+   :height ag/default-font-size)
 
-;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height ag/default-font-size)
+  ;; Set the fixed pitch face
+  (set-face-attribute
+   'fixed-pitch nil
+   :font "Fira Code Retina"
+   :height ag/default-font-size)
 
-;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height ag/default-font-size :weight 'regular)
+  ;; Set the variable pitch face
+  (set-face-attribute
+   'variable-pitch nil
+   :font "Cantarell"
+   :height ag/default-font-size
+   :weight 'regular)
 
 #+end_src
 
@@ -2428,8 +2438,9 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
   (use-package ivy-bibtex
     :bind (("C-c b f" . ivy-bibtex)
            ("C-c b n" . ivy-bibtex-with-notes)
-           ("C-c b ]" . org-ref-insert-link)
-           ("C-c b i" . org-ref-cite-insert-ivy))
+           ("C-c b ]" . org-ref-cite-insert-ivy)
+           ("C-c b h" . org-ref-bibtex-hydra/body)
+           )
     :config
     (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
                                            "~/orgfiles/references/bibliography-wpdfs.bib"
@@ -2456,11 +2467,21 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
             (latex-mode    . bibtex-completion-format-citation-cite)
             (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
             (default       . bibtex-completion-format-citation-default)))
-
     )
 #+end_src
 
+#+begin_src emacs-lisp
+  (defun ag/ivy-toggle-mark ()
+    "Toggle the mark"
+    (interactive)
+    (if (ivy--marked-p)
+        (ivy-unmark)
+      (ivy-mark))
+    (ivy-previous-line))
 
+  (define-key ivy-minibuffer-map (kbd "M-TAB")
+    #'ag/ivy-toggle-mark)
+#+end_src
 
 #+begin_src emacs-lisp
   (use-package reftex

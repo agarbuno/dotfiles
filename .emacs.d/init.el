@@ -146,13 +146,23 @@
          )))
   )
 
-(set-face-attribute 'default nil :font "Fira Code Retina" :height ag/default-font-size)
+(set-face-attribute
+ 'default nil
+ :font "Fira Code Retina"
+ :height ag/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Fira Code Retina" :height ag/default-font-size)
+(set-face-attribute
+ 'fixed-pitch nil
+ :font "Fira Code Retina"
+ :height ag/default-font-size)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height ag/default-font-size :weight 'regular)
+(set-face-attribute
+ 'variable-pitch nil
+ :font "Cantarell"
+ :height ag/default-font-size
+ :weight 'regular)
 
 (use-package solaire-mode
   :config
@@ -1347,8 +1357,9 @@
 (use-package ivy-bibtex
   :bind (("C-c b f" . ivy-bibtex)
          ("C-c b n" . ivy-bibtex-with-notes)
-         ("C-c b ]" . org-ref-insert-link)
-         ("C-c b i" . org-ref-cite-insert-ivy))
+         ("C-c b ]" . org-ref-cite-insert-ivy)
+         ("C-c b h" . org-ref-bibtex-hydra/body)
+         )
   :config
   (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
                                          "~/orgfiles/references/bibliography-wpdfs.bib"
@@ -1375,8 +1386,18 @@
           (latex-mode    . bibtex-completion-format-citation-cite)
           (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
           (default       . bibtex-completion-format-citation-default)))
-
   )
+
+(defun ag/ivy-toggle-mark ()
+  "Toggle the mark"
+  (interactive)
+  (if (ivy--marked-p)
+      (ivy-unmark)
+    (ivy-mark))
+  (ivy-previous-line))
+
+(define-key ivy-minibuffer-map (kbd "M-TAB")
+  #'ag/ivy-toggle-mark)
 
 (use-package reftex
   :after auctex
