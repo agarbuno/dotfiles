@@ -8,6 +8,7 @@ This allows to have a default behavior on =renv= cache directory. This removes d
 #+begin_src conf :tangle ~/.Renviron :mkdirp yes
 
   RENV_PATHS_ROOT=~/.renv
+  # RSTUDIO_WHICH_R=~/.asdf/shims/R
 
 #+end_src
 
