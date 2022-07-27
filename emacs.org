@@ -787,7 +787,11 @@ The =ag/org-font-setup= function configures various text faces to tweak the size
 
 This section contains the basic configuration for =org-mode= plus the configuration for Org agendas and capture templates.  There's a lot to unpack in here so I'd recommend watching the videos for [[https://youtu.be/VcgjTEa0kU4][Part 5]] and [[https://youtu.be/PNE-mgkZ6HM][Part 6]] for a full explanation.
 
-#+Begin_src emacs-lisp
+#+begin_src emacs-lisp
+
+  (use-package org-fancy-priorities ; priority icons
+    :hook (org-mode . org-fancy-priorities-mode)
+    :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
 
   (defun ag/org-mode-setup ()
     (org-indent-mode)
@@ -796,7 +800,10 @@ This section contains the basic configuration for =org-mode= plus the configurat
     (ag/org-font-setup)
     (ag/org-color-setup)
     (setq fill-column 80))
+#+end_src
 
+
+#+Begin_src emacs-lisp
   (use-package org
     :commands (org-capture org-agenda)
     :hook ((org-mode . ag/org-mode-setup)
@@ -942,11 +949,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-  (setq org-agenda-prefix-format "   %i %?-2 t%s")
-  (setq org-agenda-remove-tags nil)
-  (setq org-agenda-show-inherited-tags nil)
-  ;; (setq org-agenda-todo-keyword-format "")
-  (setq org-agenda-todo-keyword-format "%-1s")
+
   (setq org-agenda-category-icon-alist
           `(
             ("research" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
