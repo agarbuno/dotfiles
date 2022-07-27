@@ -887,43 +887,43 @@ This section contains the basic configuration for =org-mode= plus the configurat
         `(
           ("m" "mcdatos") ;; ====================================================
             ("ma" "admin" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "MCDATOS")
+             (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
              "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("ms" "students" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "MCDATOS")
+             (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
              "* TODO %? \t :students:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("mp" "prospects" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "MCDATOS")
+             (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
              "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("r" "research") ;; ===================================================
             ("ri" "ideas" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("rr" "read" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :read:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("rs" "study" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("rw" "write" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("t" "teaching") ;; ===================================================
             ("tc" "class" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Teaching")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
              "* TODO %? \t :class:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("tg" "grades" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Teaching")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
              "* TODO %? \t :grades:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("tt" "thesis" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Teaching")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
              "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("p" "projects") ;; ===================================================
             ("pi" "ideas" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Projects")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
              "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("pf" "followup" entry
-             (file+olp "~/orgfiles/agenda/tasknw.org" "Projects")
+             (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
              "* TODO %? \t :followup:\n  %U\n  %a\n  %i" :empty-lines 1)
             ))
 #+end_src
@@ -931,17 +931,23 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-    (define-key global-map (kbd "C-c t t")
-      (lambda () (interactive) (org-capture nil "tt")))
+  (define-key global-map (kbd "C-c t t")
+    (lambda () (interactive) (org-capture nil "tt")))
 
-    (global-set-key (kbd "C-c a") 'org-agenda)
-    (global-set-key (kbd "C-c t c") 'org-capture)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c t c") 'org-capture)
 
-    (require 'org-habit)
-    (setq org-habit-show-all-today t) 
-    (setq org-habit-graph-column 60)
-
-    )
+  (require 'org-habit)
+  (setq org-habit-show-all-today t)
+  (setq org-habit-today-glyph ?◌)
+  (setq org-habit-graph-column 40)
+  (setq org-habit-following-days 1)
+  (setq org-habit-show-habits t)
+  (setq org-habit-completed-glyph ?●)
+  (setq org-habit-preceding-days 10)
+  (setq org-habit-show-habits-only-for-today t)
+  
+  ) ;; Termina configuracion 
 
 #+end_src
 
@@ -951,12 +957,15 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 
   (setq org-agenda-category-icon-alist
-          `(
-            ("research" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
+          `(;; Main categories =================================================
+            ("research" ,(list (all-the-icons-faicon "rocket")) nil nil :ascent center)
             ("mcdatos" ,(list (all-the-icons-material "data_usage")) nil nil :ascent center)
             ("projects" ,(list (all-the-icons-material "group")) nil nil :ascent center)
             ("teaching" ,(list (all-the-icons-material "school")) nil nil :ascent center)
             ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
+            ;; Subcategories ===================================================
+            ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
+            ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
             )
           )
 
