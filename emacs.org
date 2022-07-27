@@ -602,6 +602,7 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
              ("TAB" . ivy-alt-done)
              ("C-l" . ivy-alt-done)
              ("C-j" . ivy-next-line)
+  
              ("C-k" . ivy-previous-line)
              :map ivy-switch-buffer-map
              ("C-k" . ivy-previous-line)
@@ -819,23 +820,24 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (setq org-agenda-files
         '("~/orgfiles/agenda/tasks.org"
-          "~/orgfiles/agenda/tasknw.org"
           "~/orgfiles/agenda/habits.org"))
 
     (setq org-todo-keywords
           '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-            (sequence "WAIT(w)" "|" ))
+            (sequence "WAIT(w)" "|" "BACKLOG(b)" "CANCEL(c)"))
           )
 
     (setq org-refile-targets
           '(("archive.org" :maxlevel . 1)
-            ("tasknw.org" :maxlevel . 1)))
+            ("tasks.org" :maxlevel . 1)))
 
     (setq org-todo-keyword-faces
           '(("TODO" . (:foreground "hot pink" :weight bold))
             ("DONE" . (:foreground "#00e6ab" :weight bold))
             ("NEXT" . (:foreground "dark orange" :weight bold))
             ("WAIT" . (:foreground "#aeffff" :weight bold))
+            ("CANCEL" . (:foreground "dark red" :weight bold :strike-through t))
+            ("BACKLOG" . (:foreground "dark gray" :weight bold :underline t))
             ))
 
     (setq org-tag-alist
@@ -852,33 +854,52 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("study"  . ?s)
             ("write"  . ?w)
             ))
+#+end_src
 
-    ;; Save Org buffers after refiling!
-    (advice-add 'org-refile :after 'org-save-all-org-buffers)
+#+begin_src emacs-lisp
+  ;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-    (setq org-agenda-custom-commands
-          '(("d" "Dashboard"
-             ((agenda "" ((org-deadline-warning-days 7)))
-              (todo "NEXT"
-                    ((org-agenda-overriding-header "Ongoing Tasks")))
-              (tags-todo "+mcdatos/!-NEXT"  ((org-agenda-overriding-header "MCDdatos Tasks")))
-              (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
-              (tags-todo "+projects/!-NEXT" ((org-agenda-overriding-header "Projects Tasks")))
-              (tags-todo "+teaching/!-NEXT" ((org-agenda-overriding-header "Teaching Tasks")))
-              
-              (tags-todo "-research-teaching-maestria/!-NEXT"
-                         ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
-                          ;; (org-agenda-files "~/orgfiles/agenda/tasks.org")
-                          (org-agenda-text-search-extra-files nil)
-                          ))
-              ))
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" (
+                        (org-agenda-prefix-format "   %-2i ")
+                        (org-deadline-warning-days 7)
+                        ))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Ongoing Tasks")
+                   (org-agenda-prefix-format "   %-2i ")))
+            (tags-todo "+mcdatos/!-NEXT"
+                       ((org-agenda-overriding-header "MCDdatos Tasks")
+                        (org-agenda-prefix-format "   %-2i ")))
+            (tags-todo "+research/!-NEXT"
+                       ((org-agenda-overriding-header "Research Tasks")
+                        (org-agenda-prefix-format "   %-2i ")))
+            (tags-todo "+projects/!-NEXT"
+                       ((org-agenda-overriding-header "Projects Tasks")
+                        (org-agenda-prefix-format "   %-2i ")))
+            (tags-todo "+teaching/!-NEXT"
+                       ((org-agenda-overriding-header "Teaching Tasks")
+                        (org-agenda-prefix-format "   %-2i ")))
 
-            ("n" "Next Tasks"
-             ((todo "NEXT"
-                    ((org-agenda-overriding-header "Next Tasks")))))
+            (todo "BACKLOG|BACK"
+                  ((org-agenda-overriding-header "Tasks on the backlog")
+                   (org-agenda-prefix-format "   %-2i ")))
 
-            ("W" "Work Tasks" tags-todo "+work-email")
+            (tags-todo "-research-teaching-maestria/!-NEXT"
+                       ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
+                        (org-agenda-prefix-format "   %-2i ")
+                        ;; (org-agenda-files "~/orgfiles/agenda/tasks.org")
+                        (org-agenda-text-search-extra-files nil)
+                        ))
             ))
+
+          ("n" "Next Tasks"
+           ((todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))))
+
+          ("W" "Work Tasks" tags-todo "+work-email")
+          ))
 #+end_src    
 
 

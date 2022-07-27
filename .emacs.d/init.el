@@ -296,6 +296,7 @@
          ("TAB" . ivy-alt-done)
          ("C-l" . ivy-alt-done)
          ("C-j" . ivy-next-line)
+
          ("C-k" . ivy-previous-line)
          :map ivy-switch-buffer-map
          ("C-k" . ivy-previous-line)
@@ -411,6 +412,10 @@
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
 
+(use-package org-fancy-priorities ; priority icons
+  :hook (org-mode . org-fancy-priorities-mode)
+  :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
+
 (defun ag/org-mode-setup ()
   (org-indent-mode)
   (variable-pitch-mode 1)
@@ -434,23 +439,24 @@
 
   (setq org-agenda-files
       '("~/orgfiles/agenda/tasks.org"
-        "~/orgfiles/agenda/tasknw.org"
         "~/orgfiles/agenda/habits.org"))
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-          (sequence "WAIT(w)" "|" ))
+          (sequence "WAIT(w)" "|" "BACKLOG(b)" "CANCEL(c)"))
         )
 
   (setq org-refile-targets
         '(("archive.org" :maxlevel . 1)
-          ("tasknw.org" :maxlevel . 1)))
+          ("tasks.org" :maxlevel . 1)))
 
   (setq org-todo-keyword-faces
         '(("TODO" . (:foreground "hot pink" :weight bold))
           ("DONE" . (:foreground "#00e6ab" :weight bold))
           ("NEXT" . (:foreground "dark orange" :weight bold))
           ("WAIT" . (:foreground "#aeffff" :weight bold))
+          ("CANCEL" . (:foreground "dark red" :weight bold :strike-through t))
+          ("BACKLOG" . (:foreground "dark gray" :weight bold :underline t))
           ))
 
   (setq org-tag-alist
@@ -468,74 +474,91 @@
           ("write"  . ?w)
           ))
 
-  ;; Save Org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+;; Save Org buffers after refiling!
+(advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-  (setq org-agenda-custom-commands
-        '(("d" "Dashboard"
-           ((agenda "" ((org-deadline-warning-days 7)))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Ongoing Tasks")))
-            (tags-todo "+mcdatos/!-NEXT"  ((org-agenda-overriding-header "MCDdatos Tasks")))
-            (tags-todo "+research/!-NEXT" ((org-agenda-overriding-header "Research Projects")))
-            (tags-todo "+projects/!-NEXT" ((org-agenda-overriding-header "Projects Tasks")))
-            (tags-todo "+teaching/!-NEXT" ((org-agenda-overriding-header "Teaching Tasks")))
+(setq org-agenda-custom-commands
+      '(("d" "Dashboard"
+         ((agenda "" (
+                      (org-agenda-prefix-format "   %-2i ")
+                      (org-deadline-warning-days 7)
+                      ))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Ongoing Tasks")
+                 (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+mcdatos/!-NEXT"
+                     ((org-agenda-overriding-header "MCDdatos Tasks")
+                      (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+research/!-NEXT"
+                     ((org-agenda-overriding-header "Research Tasks")
+                      (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+projects/!-NEXT"
+                     ((org-agenda-overriding-header "Projects Tasks")
+                      (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+teaching/!-NEXT"
+                     ((org-agenda-overriding-header "Teaching Tasks")
+                      (org-agenda-prefix-format "   %-2i ")))
 
-            (tags-todo "-research-teaching-maestria/!-NEXT"
-                       ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
-                        ;; (org-agenda-files "~/orgfiles/agenda/tasks.org")
-                        (org-agenda-text-search-extra-files nil)
-                        ))
-            ))
+          (todo "BACKLOG|BACK"
+                ((org-agenda-overriding-header "Tasks on the backlog")
+                 (org-agenda-prefix-format "   %-2i ")))
 
-          ("n" "Next Tasks"
-           ((todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks")))))
-
-          ("W" "Work Tasks" tags-todo "+work-email")
+          (tags-todo "-research-teaching-maestria/!-NEXT"
+                     ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
+                      (org-agenda-prefix-format "   %-2i ")
+                      ;; (org-agenda-files "~/orgfiles/agenda/tasks.org")
+                      (org-agenda-text-search-extra-files nil)
+                      ))
           ))
+
+        ("n" "Next Tasks"
+         ((todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks")))))
+
+        ("W" "Work Tasks" tags-todo "+work-email")
+        ))
 
 (setq org-capture-templates
       `(
         ("m" "mcdatos") ;; ====================================================
           ("ma" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "MCDATOS")
+           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
            "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("ms" "students" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "MCDATOS")
+           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
            "* TODO %? \t :students:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("mp" "prospects" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "MCDATOS")
+           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
            "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("r" "research") ;; ===================================================
           ("ri" "ideas" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("rr" "read" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :read:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("rs" "study" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("rw" "write" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Research")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("t" "teaching") ;; ===================================================
           ("tc" "class" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Teaching")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
            "* TODO %? \t :class:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("tg" "grades" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Teaching")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
            "* TODO %? \t :grades:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("tt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Teaching")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
            "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("p" "projects") ;; ===================================================
           ("pi" "ideas" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Projects")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
            "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("pf" "followup" entry
-           (file+olp "~/orgfiles/agenda/tasknw.org" "Projects")
+           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
            "* TODO %? \t :followup:\n  %U\n  %a\n  %i" :empty-lines 1)
           ))
 
@@ -546,23 +569,27 @@
 (global-set-key (kbd "C-c t c") 'org-capture)
 
 (require 'org-habit)
-(setq org-habit-show-all-today t) 
-(setq org-habit-graph-column 60)
+(setq org-habit-show-all-today t)
+(setq org-habit-today-glyph ?◌)
+(setq org-habit-graph-column 40)
+(setq org-habit-following-days 1)
+(setq org-habit-show-habits t)
+(setq org-habit-completed-glyph ?●)
+(setq org-habit-preceding-days 10)
+(setq org-habit-show-habits-only-for-today t)
 
-)
+) ;; Termina configuracion
 
-(setq org-agenda-prefix-format "   %i %?-2 t%s")
-(setq org-agenda-remove-tags nil)
-(setq org-agenda-show-inherited-tags nil)
-;; (setq org-agenda-todo-keyword-format "")
-(setq org-agenda-todo-keyword-format "%-1s")
 (setq org-agenda-category-icon-alist
-        `(
-          ("research" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
+        `(;; Main categories =================================================
+          ("research" ,(list (all-the-icons-faicon "rocket")) nil nil :ascent center)
           ("mcdatos" ,(list (all-the-icons-material "data_usage")) nil nil :ascent center)
           ("projects" ,(list (all-the-icons-material "group")) nil nil :ascent center)
           ("teaching" ,(list (all-the-icons-material "school")) nil nil :ascent center)
           ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
+          ;; Subcategories ===================================================
+          ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
+          ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
           )
         )
 
