@@ -863,31 +863,42 @@ This section contains the basic configuration for =org-mode= plus the configurat
   (setq org-agenda-custom-commands
         '(("d" "Dashboard"
            ((agenda "" (
+                        (org-agenda-start-on-weekday 1)
+                        (org-agenda-remove-tags t)
+                        (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")
                         (org-deadline-warning-days 7)
                         ))
             (todo "NEXT"
                   ((org-agenda-overriding-header "Ongoing Tasks")
+                   (org-agenda-sorting-strategy '(priority-down))
+                   (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+mcdatos/!-NEXT"
                        ((org-agenda-overriding-header "MCDdatos Tasks")
+                        (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+research/!-NEXT"
                        ((org-agenda-overriding-header "Research Tasks")
+                        (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+projects/!-NEXT"
                        ((org-agenda-overriding-header "Projects Tasks")
+                        (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+teaching/!-NEXT"
                        ((org-agenda-overriding-header "Teaching Tasks")
+                        (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
 
             (todo "BACKLOG|BACK"
                   ((org-agenda-overriding-header "Tasks on the backlog")
+                   (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
 
             (tags-todo "-research-teaching-maestria/!-NEXT"
                        ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
+                        (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")
                         ;; (org-agenda-files "~/orgfiles/agenda/tasks.org")
                         (org-agenda-text-search-extra-files nil)
