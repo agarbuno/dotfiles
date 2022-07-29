@@ -85,6 +85,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#forge][Forge]]
     - [[#git-timemachine][Git Timemachine]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
+  - [[#docker][Docker]]
 - [[#terminal][Terminal]]
   - [[#term-mode][term-mode]]
     - [[#better-term-mode-colors][Better term-mode colors]]
@@ -729,7 +730,8 @@ You can use =persepective= to keep the buffers somewhat organized. Since I am us
      ("C-x b" . persp-ivy-switch-buffer))
     :init
     (persp-mode)
-    (setq persp-save-dir "/Users/agarbuno/.emacs.d/perspective/")
+    (setq persp-save-dir "~/.emacs.d/perspective/")
+    (setq persp-state-default-file "~/.emacs.d/perspective/workflow.persp")
     )
 
 #+end_src
@@ -2064,6 +2066,14 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+#+end_src
+
+** Docker
+
+Let us have some syntax coloring.
+
+#+begin_src emacs-lisp
+  (use-package dockerfile-mode)
 #+end_src
 
 * Terminal

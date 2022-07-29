@@ -383,7 +383,8 @@
    ("C-x b" . persp-ivy-switch-buffer))
   :init
   (persp-mode)
-  (setq persp-save-dir "/Users/agarbuno/.emacs.d/perspective/")
+  (setq persp-save-dir "~/.emacs.d/perspective/")
+  (setq persp-state-default-file "~/.emacs.d/perspective/workflow.persp")
   )
 
 (defun ag/org-font-setup ()
@@ -1231,6 +1232,8 @@
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package dockerfile-mode)
 
 (use-package term
   :commands term
