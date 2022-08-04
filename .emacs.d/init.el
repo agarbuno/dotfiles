@@ -677,30 +677,30 @@
      )
    )
   ;; Dailies templates
-  (org-roam-dailies-directory "Journal/")
+  (org-roam-dailies-directory "journals/")
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
       "\n*  %?"
       :if-new (file+head
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n"))
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"))
      ("t" "talks" entry
-      "\n* %^{Talk Title} by %^{Speaker} :talks: \n\n%?\n\n"
+      "\n* %^{Talk Title} by %^{Speaker} \t:talks: \n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n\n"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Talks")))
      ("m" "meeting" entry
-      "\n*  %<%I:%M %p> - %^{Meeting Title}\n\n%?\n\n"
+      "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Meetings")))
      ("s" "students" entry
-      "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name}\n\n%?\n\n"
+      "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name} \t:students:\n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n#+filetags: :meetings:\n"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Students")))
      ))
 
@@ -754,6 +754,8 @@
      (if functiontag
          (cond ((member "paper" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+               ((member "journal" functiontag)
+                (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
                 (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
              ((member "conferences" functiontag)
@@ -834,7 +836,7 @@
     "A list of deft directories to pick")
 
   (setq ag/deft-dir-list '("~/orgfiles/notes"
-                           "~/orgfiles/notes/Journal"
+                           "~/orgfiles/notes/journals"
                            "~/orgfiles/notes/bibtex"
                            ))
 
