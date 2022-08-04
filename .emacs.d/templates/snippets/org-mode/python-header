@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name:python-header
 # key: py-config
+# group : python
 # --
 #+PROPERTY: header-args:python :session ${1:session-name} :results output
 $0

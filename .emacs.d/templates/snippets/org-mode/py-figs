@@ -1,6 +1,7 @@
 # -*- mode: snippet -*-
 # name:pyfig
 # key: pyfig
+# group : python
 # --
 #+begin_src python :results file :exports both
 
