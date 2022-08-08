@@ -1,12 +1,16 @@
 #+OPTIONS: toc:nil date:nil author:nil tasks:nil
 #+STARTUP: content
-#+filetags: :thesis:
+#+filetags: :thesis:revision:
 
-*Revisión de tesis de:* %^{author} - %^{year}.
+- author :: %^{author}
+- programme :: 
+- tags ::
 
-* TODO [[id:EFCF3EEC-3D1D-4BBC-A412-35D428A4DD4A][Examenes Profesionales]]
+* Revisión de tesis de:* %^{author} - %^{year}.
 
-* TODO Notes             :noter:
+* [[id:EFCF3EEC-3D1D-4BBC-A412-35D428A4DD4A][Examenes Profesionales]]      :noexport:
+
+* Notes                                                               :noexport:
 :PROPERTIES:
 :URL: %^{url}
 :NOTER_DOCUMENT: %^{file} 
@@ -20,8 +24,8 @@
 * Preguntas
 - [ ]
 
-* TODO Preguntas Examen
+* Preguntas Examen                                                    :noexport:
 - [ ]
 
 * Observaciones
-- [ ] 
+- [ ]

@@ -1,6 +1,8 @@
 #+startup: content
 #+filetags: :paper:
-- %^{author} - %^{year}:
+
+- authors :: %^{author}
+- year :: %^{year}
 - keywords :: %^{keywords}
 
 * %^{citekey} - %^{title}                                  :noter:
