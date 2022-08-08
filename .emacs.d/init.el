@@ -477,7 +477,6 @@
 
 ;; Save Org buffers after refiling!
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "/!-BACKLOG" (
@@ -492,25 +491,24 @@
                  (org-agenda-sorting-strategy '(priority-down))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+mcdatos/!-NEXT"
-                     ((org-agenda-overriding-header "MCDdatos")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+research/!-NEXT"
-                     ((org-agenda-overriding-header "Research")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+projects/!-NEXT"
-                     ((org-agenda-overriding-header "Projects")
+                     ((org-agenda-overriding-header "1. Research")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+teaching/!-NEXT"
-                     ((org-agenda-overriding-header "Teaching")
+                     ((org-agenda-overriding-header "2. Teaching")
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))            
+          (tags-todo "+mcdatos/!-NEXT"
+                     ((org-agenda-overriding-header "3. Maestria")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-
+          (tags-todo "+projects/!-NEXT"
+                     ((org-agenda-overriding-header "4. Projects")
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))
           (todo "BACKLOG|BACK"
-                ((org-agenda-overriding-header "Backlog")
+                ((org-agenda-overriding-header "5. Backlog")
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
 
@@ -674,13 +672,13 @@
   :init
    (setq org-roam-v2-ack t)
   :custom
-  (org-roam-directory (file-truename "~/orgfiles/notes/"))
+  (org-roam-directory (file-truename "~/orgfiles/"))
   (org-roam-completion-everywhere t)
   ;; (org-roam-completion-system 'default)
   ;; Capture templates
   (org-roam-capture-templates
    '(("d" "default" plain "%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+      :if-new (file+head "pages/%<%Y%m%d%H%M%S>-${slug}.org"
                          "#+title: ${title}\n")
       :unnarrowed t)
      )
@@ -844,9 +842,9 @@
   (defvar ag/deft-dir-list '()
     "A list of deft directories to pick")
 
-  (setq ag/deft-dir-list '("~/orgfiles/notes"
-                           "~/orgfiles/notes/journals"
-                           "~/orgfiles/notes/bibtex"
+  (setq ag/deft-dir-list '("~/orgfiles/pages"
+                           "~/orgfiles/journals"
+                           "~/orgfiles/bibtex"
                            ))
 
   (defun ag/pick-deft-dir ()
@@ -920,7 +918,7 @@
           org-noter-doc-property-in-notes t
           org-noter-hide-other t
           org-noter-doc-split-fraction '(.67 . .5)
-          org-noter-notes-search-path '("~/orgfiles/notes/bibtex/")
+          org-noter-notes-search-path '("~/orgfiles/bibtex/")
           )
     )
 
@@ -1457,7 +1455,7 @@
                                          "~/orgfiles/references/bibliography-wpdfs.bib"
                                          "~/orgfiles/references/bibliography-arxiv.bib"))
   (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
-         bibtex-completion-notes-path   "~/orgfiles/notes/bibtex/")
+         bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
