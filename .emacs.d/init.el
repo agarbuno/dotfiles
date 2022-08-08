@@ -493,28 +493,28 @@
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+mcdatos/!-NEXT"
-                     ((org-agenda-overriding-header "MCDdatos Tasks")
+                     ((org-agenda-overriding-header "MCDdatos")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+research/!-NEXT"
-                     ((org-agenda-overriding-header "Research Tasks")
+                     ((org-agenda-overriding-header "Research")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+projects/!-NEXT"
-                     ((org-agenda-overriding-header "Projects Tasks")
+                     ((org-agenda-overriding-header "Projects")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+teaching/!-NEXT"
-                     ((org-agenda-overriding-header "Teaching Tasks")
+                     ((org-agenda-overriding-header "Teaching")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
 
           (todo "BACKLOG|BACK"
-                ((org-agenda-overriding-header "Tasks on the backlog")
+                ((org-agenda-overriding-header "Backlog")
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
 
-          (tags-todo "-research-teaching-maestria/!-NEXT"
+          (tags-todo "-research-teaching-mcdatos-projects/!-NEXT"
                      ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")
@@ -543,7 +543,10 @@
            (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
            "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("r" "research") ;; ===================================================
-          ("ri" "ideas" entry
+          ("ra" "admin" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("ri" "ideas" entry 
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("rr" "read" entry
@@ -556,6 +559,9 @@
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("t" "teaching") ;; ===================================================
+          ("ta" "admin" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
+           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("tc" "class" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
            "* TODO %? \t :class:\n  %U\n  %a\n  %i" :empty-lines 1)
@@ -566,6 +572,9 @@
            (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
            "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("p" "projects") ;; ===================================================
+          ("pa" "admin" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
+           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("pi" "ideas" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
            "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
@@ -920,7 +929,7 @@
                (file "~/.emacs.d/templates/org-capture/reference-noter")
                :if-new
                (file+head
-                "bibtex/${citekey}.org"
+                "bibtex/%<%Y%m%d>-${citekey}.org"
                 "#+title: ${title}\n")
                :unnarrowed t)
              )
@@ -930,7 +939,7 @@
                (file "~/.emacs.d/templates/org-capture/thesis-rev")
                :if-new
                (file+head
-                "bibtex/${citekey}.org"
+                "bibtex/%<%Y%m%d>-${citekey}.org"
                 "#+title: ${title}\n")
                :unnarrowed t)
              )
