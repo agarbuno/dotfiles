@@ -4,6 +4,7 @@
 # group: reveal
 # --
 :REVEAL_PROPERTIES:
+# Template uses citeproc export with export option <v b>
 #+LANGUAGE: es
 #+OPTIONS: num:nil toc:nil 
 #+OPTIONS: reveal_slide_number:nil 

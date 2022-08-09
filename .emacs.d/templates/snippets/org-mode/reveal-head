@@ -4,6 +4,8 @@
 # group: reveal
 # --
 :REVEAL_PROPERTIES:
+# Template uses org export with export option <R B>
+# Alternatives: use with citeproc
 #+LANGUAGE: es
 #+OPTIONS: num:nil toc:nil timestamp:nil
 #+REVEAL_REVEAL_JS_VERSION: 4
