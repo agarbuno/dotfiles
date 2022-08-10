@@ -737,6 +737,7 @@ You can use =persepective= to keep the buffers somewhat organized. Since I am us
     (persp-mode)
     (setq persp-save-dir "~/.emacs.d/perspective/")
     (setq persp-state-default-file "~/.emacs.d/perspective/workflow.persp")
+    (setq persp-sort 'created)
     )
 
 #+end_src

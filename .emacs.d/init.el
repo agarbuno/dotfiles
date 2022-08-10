@@ -390,6 +390,7 @@
   (persp-mode)
   (setq persp-save-dir "~/.emacs.d/perspective/")
   (setq persp-state-default-file "~/.emacs.d/perspective/workflow.persp")
+  (setq persp-sort 'created)
   )
 
 (defun ag/org-font-setup ()
