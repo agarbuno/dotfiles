@@ -279,6 +279,9 @@
     (setq display-time-mode nil)
     (setq display-time-24hr-format 1)
     (setq display-time-day-and-date 1)
+    (setq find-file-visit-truename t)
+    (setq doom-modeline-project-detection 'project)
+    (setq doom-modeline-project-detection 'ffip)
     )
 
 (use-package minions

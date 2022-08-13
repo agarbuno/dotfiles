@@ -78,11 +78,11 @@ brew "hunspell"
 brew "shared-mime-info"
 brew "libheif"
 brew "tcl-tk"
-brew "python@3.8"
+brew "python@3.8", link: false
 brew "libomp"
 brew "imagemagick"
 brew "libgit2"
-brew "python@3.10"
+brew "python@3.10", link: false
 brew "libproxy"
 brew "libvterm"
 brew "libxt"
