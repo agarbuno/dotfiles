@@ -1,5 +1,5 @@
-# After brew install of powerlevel10k
-source $(brew --prefix powerlevel10k)/powerlevel10k.zsh-theme
+source /usr/local/share/antigen/antigen.zsh
+antigen init ~/.antigenrc
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -12,7 +12,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/agarbuno/.oh-my-zsh"
+# export ZSH="/Users/agarbuno/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -20,9 +20,8 @@ export ZSH="/Users/agarbuno/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="maran"
-# ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="awesome-patched"
-POWERLEVEL9K_INSTANT_PROMPT=off
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -82,9 +81,9 @@ POWERLEVEL9K_INSTANT_PROMPT=off
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+# plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -202,17 +201,19 @@ export LDFLAGS="-L/usr/local/opt/icu4c/lib${LDFLAGS:+ }${LDFLAGS}"
 export CPPFLAGS="-I/usr/local/opt/icu4c/include${CPPFLAGS:+ }${CPPFLAGS}"
 export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}${PKG_CONFIG_PATH}"
 
-# To install R 4.1.1
-export PATH="/usr/local/opt/curl/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/curl/lib"
-export CPPFLAGS="-I/usr/local/opt/curl/include"
-export PKG_CONFIG_PATH="/usr/local/opt/curl/lib/pkgconfig"
+# To install R 4.1.1 with asdf 
+# export PATH="/usr/local/opt/curl/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/curl/lib"
+# export CPPFLAGS="-I/usr/local/opt/curl/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/curl/lib/pkgconfig"
 
-# To install R 3.6.2
+# To install R 3.6.2 with asdf -------------------------------------------------
 # export PATH="/usr/local/opt/bzip2/bin:$PATH"
 # export LDFLAGS="-L/usr/local/opt/bzip2/lib"
 # export CPPFLAGS="-I/usr/local/opt/bzip2/include"
 
-if [ -d ~/.texmf ] ; then
-    export TEXMFHOME=~/.texmf
-fi
+
+# Aliases ----------------------------------------------------------------------
+alias cat=bat --paging=never
+alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user'
+alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
