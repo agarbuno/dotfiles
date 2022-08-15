@@ -643,6 +643,7 @@
    (python . t)
    (sql . t)
    (shell . t)
+   (octave . t)
    ))
 
 (with-eval-after-load 'org
@@ -655,6 +656,7 @@
   (add-to-list 'org-structure-template-alist '("r" . "src R"))
   (add-to-list 'org-structure-template-alist '("co" . "src conf"))
   (add-to-list 'org-structure-template-alist '("p" . "src python"))
+  (add-to-list 'org-structure-template-alist '("oct" . "src octave"))
   )
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name:r-header
-# key: rconfig
+# key: <rconfig
 # group: R
 # --
 #+PROPERTY: header-args:R :session ${1:session-name} :exports both :results output org :tangle ${2:dirname}/${3:filename}.R :mkdirp yes

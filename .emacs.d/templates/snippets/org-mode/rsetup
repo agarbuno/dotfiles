@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: r-setup 
-# key: r-setup
+# key: <rsetup
 # group : R
 # --
 #+begin_src R :exports none :results none
