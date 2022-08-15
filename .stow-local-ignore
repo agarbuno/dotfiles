@@ -1,10 +1,11 @@
 # Don't stow the git files -------------------------------------
 \.git
+\.gitignore
 # Let me try keeping something out -----------------------------
 \.rstudio
 \.zshrc
 \.config
-# By any reason this should be included in the stow syncing ---- 
+# By any reason this not should be included in the stow syncing 
 \.DS_Store
 auto
 auto-save
