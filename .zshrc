@@ -215,5 +215,5 @@ export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}$
 
 # Aliases ----------------------------------------------------------------------
 alias cat=bat --paging=never
-alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user'
+alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user -U'
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
