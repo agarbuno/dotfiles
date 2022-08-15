@@ -1606,7 +1606,7 @@
   \\fancyfoot{}%
   \\renewcommand{\\footrulewidth}{0.4pt}%
   \\fancyfoot[C]{\\includegraphics[height=1cm]{%
-                 ~/OneDrive/mcd/pagina/logo-ITAM-verde.png}%
+                 ~/.dotfiles/assets/itam-footer.png}%
                  \\vspace{-1cm}}%
   \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
   \\pagestyle{fancy}
@@ -1650,7 +1650,7 @@
 \\definecolor{myGreen}{HTML}{006953}
 \\usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
 \\usepackage{fancyhdr} \\fancyhead{}
-\\fancyhead[L]{\\includegraphics[height=3cm]{/Users/agarbuno/OneDrive/mcd/pagina/mcd-long.png} \\vspace{-.7cm}}
+\\fancyhead[L]{\\includegraphics[height=3cm]{~/.dotfiles/assets/mcd-header.png} \\vspace{-.7cm}}
 \\fancyhead[R]{{\\parbox[b][10mm][t]{0.5\\textwidth}{\\raggedleft{Departamento
       Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
       México.}}}\\vspace{.3cm}}
