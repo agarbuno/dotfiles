@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: tesis  
+# key: <tesis
+# --
+- author :: ${1:Estudiante}
+- tags :: [[id:7A9A63EB-3793-4ED5-BEBE-8AB06C1BD88A][Tesistas]]
+- nivel ::  ${2:$$(yas-choose-value '("licenciatura" "maestria"))} 
+- programa :: ${3:Programa} 
+- resultado :: ${4:=Por definir=}
+$0

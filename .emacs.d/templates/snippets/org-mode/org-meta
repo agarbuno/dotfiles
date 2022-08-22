@@ -7,4 +7,4 @@
 #+EMAIL:  ${3:agarbuno@itam.mx}
 #+DATE: ${4:fecha}
 #+STARTUP: showall
-
+$0

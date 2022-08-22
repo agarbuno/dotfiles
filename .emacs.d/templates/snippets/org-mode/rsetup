@@ -21,5 +21,4 @@
   sin_lineas <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   sin_leyenda <- theme(legend.position = "none")
   sin_ejes <- theme(axis.ticks = element_blank(), axis.text = element_blank())
-#+end_src
-$0
+#+end_src$0
