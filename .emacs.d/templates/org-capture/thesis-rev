@@ -1,11 +1,12 @@
 #+OPTIONS: toc:nil date:nil author:nil tasks:nil
 #+STARTUP: content
-#+filetags: %^g
+#+filetags: %^G
 
 #+BEGIN_NOTES
 - estudiante :: %^{nombre}
-- programa :: %^{matematicas|actuaria|datos}
-- documento :: %^{tesis|tesina|caso}
+- grado :: %^{grado|licenciatura|maestría}
+- programa :: %^{programa|matematicas aplicadas|actuaria|ciencia de datos}
+- documento :: %^{tipo|tesis|tesina|caso}
 - tags :: [[id:EFCF3EEC-3D1D-4BBC-A412-35D428A4DD4A][Examenes Profesionales]]
 #+END_NOTES
 
