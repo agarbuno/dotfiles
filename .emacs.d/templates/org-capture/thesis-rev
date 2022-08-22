@@ -1,18 +1,19 @@
 #+OPTIONS: toc:nil date:nil author:nil tasks:nil
 #+STARTUP: content
-#+filetags: :thesis:revision:
+#+filetags: %^g
 
-- author :: %^{author}
-- programme :: 
-- tags ::
+#+BEGIN_NOTES
+- estudiante :: %^{nombre}
+- programa :: %^{matematicas|actuaria|datos}
+- documento :: %^{tesis|tesina|caso}
+- tags :: [[id:EFCF3EEC-3D1D-4BBC-A412-35D428A4DD4A][Examenes Profesionales]]
+#+END_NOTES
 
-* Revisión de tesis de:* %^{author} - %^{year}.
+%?
 
-* [[id:EFCF3EEC-3D1D-4BBC-A412-35D428A4DD4A][Examenes Profesionales]]      :noexport:
-
-* Notes                                                               :noexport:
+* Revisión                                                               :noexport:
 :PROPERTIES:
-:URL: %^{url}
+:URL:
 :NOTER_DOCUMENT: %^{file} 
 :NOTER_PAGE:              
 :END:

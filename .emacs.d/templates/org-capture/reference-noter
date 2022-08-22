@@ -1,9 +1,13 @@
 #+startup: content
-#+filetags: :paper:
+#+filetags: %^g
 
+#+BEGIN_NOTES
 - authors :: %^{author}
 - year :: %^{year}
 - keywords :: %^{keywords}
+#+END_NOTES
+
+%?
 
 * %^{citekey} - %^{title}                                  :noter:
 :PROPERTIES:
