@@ -396,6 +396,8 @@
   (setq persp-sort 'created)
   )
 
+(fset 'yes-or-no-p 'y-or-n-p)
+
 (defun ag/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -726,6 +728,7 @@
        ("C-c n f" . org-roam-node-find)
        ("C-c n g" . org-roam-graph)
        ("C-c n i" . org-roam-node-insert)
+       ("C-c n ]" . org-roam-node-insert-immediate)
        ("C-c n c" . org-roam-capture)
        ("C-c n t" . org-roam-tag-add)
        ("C-c n r" . org-roam-tag-remove)
@@ -744,6 +747,13 @@
                (direction . right)
                (window-width . 0.33)
                (window-height . fit-window-to-buffer)))
+
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
 
 (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
   "Return the file TITLE for the node."
