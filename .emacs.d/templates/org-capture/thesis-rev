@@ -1,6 +1,6 @@
 #+OPTIONS: toc:nil date:nil author:nil tasks:nil
 #+STARTUP: content
-#+filetags: %^G
+#+filetags: :revision:
 
 #+BEGIN_NOTES
 - estudiante :: %^{nombre}

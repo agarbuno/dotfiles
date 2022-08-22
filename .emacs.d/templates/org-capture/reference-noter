@@ -1,5 +1,5 @@
 #+startup: content
-#+filetags: %^G
+#+filetags: :^{type|paper|book}:
 
 #+BEGIN_NOTES
 - authors :: %^{author}
