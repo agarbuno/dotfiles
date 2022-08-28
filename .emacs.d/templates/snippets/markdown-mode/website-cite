@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: distill cite
+# key: <wcite
+# group : website
+# --
+<d-cite key="${1:bibkey}"></d-cite>

@@ -1,11 +1,40 @@
 # -*- mode: snippet -*-
-# name: student-project
-# key: student-header
+# name: distill meta
+# key: <dmeta
+# group : website
 # --
 ---
-layout: page
+layout: distill
 title: ${1:title}.
 description: ${2:Ba} in ${3:program}. 
 importance: 1
-category: ${4:under}graduates
+category:
+    - ${4:under}graduates
+    
+authors: 
+    - name: ${5:student}
+      affiliations: 
+          name: $3
+
+date: ${6:date}
+
+toc: 
+    - name: Summary
+    - name: Contributions
+    
+    
+bibliography: projects.bib 
+
+img: /assets/img/${7:choose a number}.jpg
+
 ---
+
+> Outcome:
+${8:graduated, honors}
+
+## Summary
+
+## Contributions
+
+> Tags
+:   ${8:tags}
