@@ -6,7 +6,7 @@
 (defvar ag/default-variable-font-size 150)
 
 ;; Make frame transparency overridable
-(defvar ag/frame-transparency '(90 . 90))
+(defvar ag/frame-transparency '(96 . 96))
 
 (setq gc-cons-threshold (* 2 1000 1000))
 

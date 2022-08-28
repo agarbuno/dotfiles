@@ -152,7 +152,7 @@ The following variables are used to tweak some of the configuration pieces for u
   (defvar ag/default-variable-font-size 150)
 
   ;; Make frame transparency overridable
-  (defvar ag/frame-transparency '(90 . 90))
+  (defvar ag/frame-transparency '(96 . 96))
 
 #+end_src
 
