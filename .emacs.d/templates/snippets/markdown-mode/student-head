@@ -2,6 +2,7 @@
 # name: distill meta
 # key: <dmeta
 # group : website
+# expand-env: ((yas-indent-line 'fixed))
 # --
 ---
 layout: distill
@@ -10,23 +11,16 @@ description: ${2:Ba} in ${3:program}.
 importance: 1
 category:
     - ${4:under}graduates
-    
 authors: 
     - name: ${5:student}
       affiliations: 
           name: $3
-
 date: ${6:date}
-
 toc: 
     - name: Summary
-    - name: Contributions
-    
-    
+    - name: Contributions    
 bibliography: projects.bib 
-
 img: /assets/img/${7:choose a number}.jpg
-
 ---
 
 > Outcome:
@@ -37,4 +31,4 @@ ${8:graduated, honors}
 ## Contributions
 
 > Tags
-:   ${8:tags}
+:   ${9:tags}

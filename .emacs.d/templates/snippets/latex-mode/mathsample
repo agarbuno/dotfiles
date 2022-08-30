@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Sample of Random Vars
+# key: samp
+# --
+${1:X}_{${2:1}}, \ldots, $1_{${3:n}}

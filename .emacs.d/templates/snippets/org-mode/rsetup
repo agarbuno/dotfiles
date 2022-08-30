@@ -2,6 +2,7 @@
 # name: r-setup 
 # key: <rsetup
 # group : R
+# expand-env: ((yas-indent-line 'fixed))
 # --
 #+begin_src R :exports none :results none
   ## Setup --------------------------------------------
@@ -12,7 +13,10 @@
   theme_set(theme_linedraw(base_size = 25))
 
   ## Cambia el número de decimales para mostrar
-  options(digits = 2)
+  options(digits = 4)
+  ## Problemas con mi consola en Emacs
+  options(pillar.subtle = FALSE)
+  options(rlang_backtrace_on_error = "none")
 
   sin_lineas <- theme(panel.grid.major = element_blank(),
                       panel.grid.minor = element_blank())
@@ -21,4 +25,5 @@
   sin_lineas <- theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   sin_leyenda <- theme(legend.position = "none")
   sin_ejes <- theme(axis.ticks = element_blank(), axis.text = element_blank())
-#+end_src$0
+#+end_src
+$0
