@@ -76,6 +76,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#python-mode][python mode]]
     - [[#jedi-autocompletion-graveyard][Jedi autocompletion (graveyard)]]
   - [[#r][R]]
+    - [[#fix-for-the-r-console-in-inferior-mode][Fix for the R console in inferior mode]]
     - [[#polymode-for-rmarkdown][Polymode for Rmarkdown]]
   - [[#stan][Stan]]
   - [[#yaml][YAML]]
@@ -1863,6 +1864,15 @@ and enable =jedi:setup= or =jedi:ac_setup= in the buffer.
     (setq ess-use-flymake nil)
     )
 
+#+end_src
+
+*** Fix for the R console in inferior mode
+
+#+begin_src emacs-lisp
+  (defun my-inferior-ess-init ()
+        (setq-local ansi-color-for-comint-mode 'filter)
+        (smartparens-mode 1))
+  (add-hook 'inferior-ess-mode-hook 'my-inferior-ess-init)
 #+end_src
 
 *** Polymode for Rmarkdown

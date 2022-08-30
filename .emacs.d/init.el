@@ -1130,6 +1130,11 @@
   (setq ess-use-flymake nil)
   )
 
+(defun my-inferior-ess-init ()
+      (setq-local ansi-color-for-comint-mode 'filter)
+      (smartparens-mode 1))
+(add-hook 'inferior-ess-mode-hook 'my-inferior-ess-init)
+
 (use-package poly-R
   :config
   (defun ag/insert-rmd-chunk (language)
