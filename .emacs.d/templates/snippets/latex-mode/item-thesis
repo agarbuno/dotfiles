@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Item student
+# key: <student
+# expand-env: ((yas-indent-line 'fixed)
+# --
+\item {\bf 2022--present}: Supervising ${1:name} {\em ${2:title}}, ${3:Ba} in ${4:program}, Intituto Tecnológico Autónomo de México, MX. {\em Status: ${5:Under preparation}}.
