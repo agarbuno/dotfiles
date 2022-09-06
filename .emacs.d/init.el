@@ -939,7 +939,7 @@
           org-noter-doc-property-in-notes t
           org-noter-hide-other t
           org-noter-doc-split-fraction '(.67 . .5)
-          org-noter-notes-search-path '("~/orgfiles/bibtex/")
+          org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
           )
     )
 
@@ -962,6 +962,13 @@
                 "#+title: ${title}\n")
                :unnarrowed t)
              )
+
+(setq directory-abbrev-alist
+      '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
+        ("~/Google Drive" . "/Volumes/GoogleDrive/My Drive")
+        ("/Users/agarbuno/bibliography" . "/Volumes/GoogleDrive/My Drive/bibliography")
+        )
+      )
 
 (use-package org-sticky-header
   :hook (org-mode . org-sticky-header-mode)

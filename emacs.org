@@ -60,6 +60,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#deft][Deft]]
   - [[#org-roam-bibtex][Org Roam Bibtex]]
   - [[#noter][Noter]]
+    - [[#solving-problems-with-symlinks][Solving problems with symlinks]]
   - [[#header-for-org-mode][Header for org-mode]]
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
 - [[#links-y-contenido-web][Links y contenido web]]
@@ -1462,7 +1463,7 @@ This gets rid of the annoying flickering cursor in pdf view mode.
             org-noter-doc-property-in-notes t
             org-noter-hide-other t
             org-noter-doc-split-fraction '(.67 . .5)
-            org-noter-notes-search-path '("~/orgfiles/bibtex/")
+            org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
             )
       )
 
@@ -1498,6 +1499,17 @@ This is a particular use case in my worflow.
                  :unnarrowed t)
                )
 
+#+end_src
+
+*** Solving problems with symlinks
+
+#+begin_src emacs-lisp
+  (setq directory-abbrev-alist
+        '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
+          ("~/Google Drive" . "/Volumes/GoogleDrive/My Drive")
+          ("/Users/agarbuno/bibliography" . "/Volumes/GoogleDrive/My Drive/bibliography")
+          )
+        )
 #+end_src
 
 ** Header for org-mode
