@@ -1462,7 +1462,7 @@ This gets rid of the annoying flickering cursor in pdf view mode.
             org-noter-separate-notes-from-heading t
             org-noter-doc-property-in-notes t
             org-noter-hide-other t
-            org-noter-doc-split-fraction '(.67 . .5)
+            org-noter-doc-split-fraction '(.60 . .5)
             org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
             )
       )
