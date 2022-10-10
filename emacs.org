@@ -889,24 +889,24 @@ This section contains the basic configuration for =org-mode= plus the configurat
                         (org-agenda-prefix-format "   %-2i ")
                         (org-deadline-warning-days 7)
                         ))
-            (todo "NEXT"
+            (todo "NEXT|WAIT"
                   ((org-agenda-overriding-header "Ongoing Tasks")
-                   (org-agenda-sorting-strategy '(priority-down))
+                   (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+research/!-NEXT"
+            (tags-todo "+research/!-NEXT-WAIT"
                        ((org-agenda-overriding-header "1. Research")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+teaching/!-NEXT"
+            (tags-todo "+teaching/!-NEXT-WAIT"
                        ((org-agenda-overriding-header "2. Teaching")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))            
-            (tags-todo "+mcdatos/!-NEXT"
+            (tags-todo "+mcdatos/!-NEXT-WAIT"
                        ((org-agenda-overriding-header "3. Maestria")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+projects/!-NEXT"
+            (tags-todo "+projects/!-NEXT-WAIT"
                        ((org-agenda-overriding-header "4. Projects")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
@@ -1506,8 +1506,8 @@ This is a particular use case in my worflow.
 #+begin_src emacs-lisp
   (setq directory-abbrev-alist
         '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
-          ("~/Google Drive" . "/Volumes/GoogleDrive/My Drive")
-          ("/Users/agarbuno/bibliography" . "/Volumes/GoogleDrive/My Drive/bibliography")
+          ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
+          ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/bibliography")
           )
         )
 #+end_src
@@ -2901,12 +2901,18 @@ Let's define the processing for the export through latexmk:
 The next chunk is added for my listings configuration. Listing config can be found in [[https://stat.ethz.ch/pipermail/r-help/2012-November/327858.html][here]] and [[https://tex.stackexchange.com/questions/110722/trying-to-include-r-code-with-listings-package][here]]. 
 
 #+begin_src emacs-lisp :tangle no
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
+  (require 'ox-latex)
+  (setq org-latex-packages-alist '(("" "minted")))
   (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options '(("breaklines" "true")
+                                   ("breakanywhere" "true")))
+  (add-to-list 'org-latex-minted-langs '(R "r"))
+
   (setq org-latex-minted-options
         '(("frame" "lines")
           ("fontsize" "\\scriptsize")
           ("linenos" "")))
+
 #+end_src
 
 #+begin_src emacs-lisp

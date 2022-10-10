@@ -497,24 +497,24 @@
                       (org-agenda-prefix-format "   %-2i ")
                       (org-deadline-warning-days 7)
                       ))
-          (todo "NEXT"
+          (todo "NEXT|WAIT"
                 ((org-agenda-overriding-header "Ongoing Tasks")
-                 (org-agenda-sorting-strategy '(priority-down))
+                 (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+research/!-NEXT"
+          (tags-todo "+research/!-NEXT-WAIT"
                      ((org-agenda-overriding-header "1. Research")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+teaching/!-NEXT"
+          (tags-todo "+teaching/!-NEXT-WAIT"
                      ((org-agenda-overriding-header "2. Teaching")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))            
-          (tags-todo "+mcdatos/!-NEXT"
+          (tags-todo "+mcdatos/!-NEXT-WAIT"
                      ((org-agenda-overriding-header "3. Maestria")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+projects/!-NEXT"
+          (tags-todo "+projects/!-NEXT-WAIT"
                      ((org-agenda-overriding-header "4. Projects")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
@@ -965,8 +965,8 @@
 
 (setq directory-abbrev-alist
       '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
-        ("~/Google Drive" . "/Volumes/GoogleDrive/My Drive")
-        ("/Users/agarbuno/bibliography" . "/Volumes/GoogleDrive/My Drive/bibliography")
+        ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
+        ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/bibliography")
         )
       )
 
