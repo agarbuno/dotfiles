@@ -491,7 +491,7 @@
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "/!-BACKLOG" (
-                      (org-agenda-start-on-weekday 1)
+                      (org-agenda-start-on-weekday 0)
                       (org-agenda-remove-tags t)
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")

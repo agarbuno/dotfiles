@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: org-latex export
-# key: latex-export
+# key: <latex-export
 # group: latex
 # --
 :LATEX_PROPERTIES:
@@ -12,4 +12,10 @@
 #+LATEX_HEADER: \usepackage[utf8]{inputenc} 
 #+LATEX_HEADER: \usepackage[capitalize]{cleveref}
 #+LATEX_HEADER: \decimalpoint
+#+LATEX_HEADER: \usepackage{framed}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER_EXTRA: \definecolor{shadecolor}{gray}{.95}
+#+LATEX_HEADER_EXTRA: \newenvironment{NOTES}{\begin{lrbox}{\mybox}\begin{minipage}{0.95\textwidth}\begin{shaded}}{\end{shaded}\end{minipage}\end{lrbox}\fbox{\usebox{\mybox}}}
+#+EXPORT_FILE_NAME: ./${1:latex}/${2:filename}.pdf
 :END:
+$0
