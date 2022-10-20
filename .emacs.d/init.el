@@ -315,7 +315,9 @@
          ("C-d" . ivy-reverse-i-search-kill))
   :config
   ;; (message "Ivy got loaded!")
-  (ivy-mode 1))
+  (ivy-mode 1)
+  (setq ivy-use-selectable-prompt t)
+  )
 
 
 (use-package counsel
@@ -551,6 +553,9 @@
           ("mp" "prospects" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
            "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("mt" "thesis" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
+           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("r" "research") ;; ===================================================
           ("ra" "admin" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
@@ -564,6 +569,9 @@
           ("rs" "study" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("rt" "thesis" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("rw" "write" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
@@ -620,6 +628,7 @@
           ;; Subcategories ===================================================
           ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
           ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
+          ("thesis" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
           )
         )
 

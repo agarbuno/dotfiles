@@ -608,43 +608,45 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
 #+begin_src emacs-lisp
 
-    (use-package ivy
-      :diminish
-      :bind (("C-s" . swiper)
-             :map ivy-minibuffer-map
-             ("TAB" . ivy-alt-done)
-             ("C-l" . ivy-alt-done)
-             ("C-j" . ivy-next-line)
-  
-             ("C-k" . ivy-previous-line)
-             :map ivy-switch-buffer-map
-             ("C-k" . ivy-previous-line)
-             ("C-l" . ivy-done)
-             ("C-d" . ivy-switch-buffer-kill)
-             :map ivy-reverse-i-search-map
-             ("C-k" . ivy-previous-line)
-             ("C-d" . ivy-reverse-i-search-kill))
-      :config
-      ;; (message "Ivy got loaded!")
-      (ivy-mode 1))
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    ;; (message "Ivy got loaded!")
+    (ivy-mode 1)
+    (setq ivy-use-selectable-prompt t)
+    )
 
 
-    (use-package counsel
-      :bind (("C-M-j" . 'counsel-switch-buffer)
-             :map minibuffer-local-map
-             ("C-r" . 'counsel-minibuffer-history))
-      :config
-      (counsel-mode 1))
+  (use-package counsel
+    :bind (("C-M-j" . 'counsel-switch-buffer)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history))
+    :config
+    (counsel-mode 1))
 
-    (use-package all-the-icons-ivy-rich
-      :after ivy
-      :init
-      (all-the-icons-ivy-rich-mode 1))
+  (use-package all-the-icons-ivy-rich
+    :after ivy
+    :init
+    (all-the-icons-ivy-rich-mode 1))
 
-    (use-package ivy-rich
-      :after all-the-icons-ivy-rich
-      :init
-      (ivy-rich-mode 1))
+  (use-package ivy-rich
+    :after all-the-icons-ivy-rich
+    :init
+    (ivy-rich-mode 1))
 
 #+end_src
 
@@ -946,6 +948,9 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("mp" "prospects" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
              "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
+            ("mt" "thesis" entry
+             (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
+             "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("r" "research") ;; ===================================================
             ("ra" "admin" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "Research")
@@ -959,6 +964,9 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("rs" "study" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
+            ("rt" "thesis" entry
+             (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+             "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("rw" "write" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
@@ -1026,6 +1034,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ;; Subcategories ===================================================
             ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
             ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
+            ("thesis" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
             )
           )
 
