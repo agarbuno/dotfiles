@@ -1870,3 +1870,16 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(ox-reveal org-re-reveal-citeproc org-tree-slide hide-lines elfeed-org arxiv-mode flyspell-correct-ivy flyspell-correct org-download cdlatex org-fragtog lsp-latex ivy-bibtex smartparens mic-paren company-auctex winum buffer-move dired-hide-dotfiles dired-open all-the-icons-dired dired-single vterm eterm-256color dockerfile-mode rainbow-delimiters git-timemachine forge treemacs-magit magit treemacs-perspective treemacs-projectile treemacs-evil counsel-projectile projectile evil-nerd-commenter yaml-mode stan-snippets flycheck-stan eldoc-stan company-stan stan-mode poly-R ess python-mode sphinx-doc poetry python-django elpy pyvenv python-black yasnippet-snippets yasnippet company-box company lsp-ivy lsp-treemacs lsp-ui lsp-mode org-web-tools org-make-toc org-sticky-header org-noter pdf-tools org-roam-bibtex org-ref deft org-roam org-appear visual-fill-column org-bullets org-fancy-priorities perspective beacon ivy-prescient hydra helpful all-the-icons-ivy-rich counsel ivy which-key minions doom-modeline all-the-icons doom-themes command-log-mode evil-collection evil general solaire-mode dashboard auto-package-update no-littering use-package)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

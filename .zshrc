@@ -1,4 +1,4 @@
-source /usr/local/share/antigen/antigen.zsh
+source /opt/homebrew/share/antigen/antigen.zsh
 antigen init ~/.antigenrc
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
