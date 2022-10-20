@@ -15,4 +15,6 @@ Basic User info
         rebase = false
 [init]
         defaultBranch = main
+[log]
+	date = local
 #+end_src
