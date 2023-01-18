@@ -51,7 +51,7 @@
 
 (use-package auto-package-update
   :custom
-  (auto-package-update-interval 7)
+  (auto-package-update-interval 15)
   (auto-package-update-prompt-before-update t)
   (auto-package-update-hide-results t)
   :config
@@ -115,7 +115,6 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook)
-  ;; (setq dashboard-page-separator "\n\f\n")
   (setq dashboard-startup-banner 'logo)  
   (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
@@ -248,14 +247,15 @@
                       (color-darken-name
                        (face-attribute 'default :background) 5))
   (set-face-attribute 'org-block-begin-line nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) -10))
+                      (color-darken-name
+                       (face-attribute 'default :background) -10))
   )
 
 
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
-  :init (load-theme 'doom-snazzy t))
+  ;; :init (load-theme 'doom-snazzy t))
+  :init (load-theme 'doom-moonlight t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
@@ -1771,7 +1771,23 @@
   (setq arxiv-default-bibliography "~/orgfiles/references/bibliography-arxiv.bib"
         arxiv-default-download-folder "~/orgfiles/references/arxiv-pdfs/"
         arxiv-default-category "stat"
-        arxiv-startup-with-abstract-window t)     
+        arxiv-startup-with-abstract-window t)
+
+  (defun arxiv-read-load ()
+    "Read recent (past month) submissions of arXiv in a given category."
+    (interactive)
+    (let*
+        ((date-end (format-time-string "%Y%m%d" (current-time)))
+         (date-start (format-time-string "%Y%m%d" (time-subtract (current-time) (* 30 86400))))
+         (category (completing-read "Select category: "
+                                    arxiv-categories nil t nil nil arxiv-default-category)))
+      (setq arxiv-query-info (format " Showing recent submissions in %s in the past month (%s to %s)." category date-start date-end))
+      (setq date-start (concat date-start "0000"))
+      (setq date-end (concat date-end "0000"))
+      (setq arxiv-entry-list (arxiv-query category date-start date-end))
+      (setq arxiv-query-data-list `((date-start . ,date-start) (date-end . ,date-end) (category . ,category)))
+      (setq arxiv-mode-entry-function 'arxiv-read-recent)
+      (arxiv-populate-page)))
   )
 
 (use-package elfeed-org
