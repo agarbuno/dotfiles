@@ -88,6 +88,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#magit][Magit]]
     - [[#forge][Forge]]
     - [[#git-timemachine][Git Timemachine]]
+    - [[#merge-control][Merge control]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#docker][Docker]]
 - [[#terminal][Terminal]]
@@ -2104,7 +2105,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 *** Forge 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
   ;; NOTE: Make sure to configure a GitHub token before using this package!
   ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
@@ -2125,6 +2126,12 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     (setq git-timemachine-abbreviation-length 4)
     )
 
+#+end_src
+
+*** Merge control
+
+#+begin_src emacs-lisp
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+end_src
 
 ** Rainbow Delimiters
@@ -2894,13 +2901,13 @@ In the end, I haven't been able to set this properly as I have duplicated titles
 
 Let's define the processing for the export through latexmk: 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp 
 
-(setq org-latex-to-pdf-process
+(setq org-latex-pdf-process
            '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))

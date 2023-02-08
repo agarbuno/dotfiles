@@ -1269,17 +1269,13 @@
   :ensure t
   )
 
-;; NOTE: Make sure to configure a GitHub token before using this package!
-;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-(use-package forge
-  :after magit)
-
 (use-package git-timemachine
   :after magit
   :config
   (setq git-timemachine-abbreviation-length 4)
   )
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -1699,7 +1695,10 @@
 
 (setq org-latex-default-class "custom")
 
-(setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
+(setq org-latex-pdf-process
+           '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
