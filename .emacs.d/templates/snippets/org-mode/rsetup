@@ -5,7 +5,7 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 #+begin_src R :exports none :results none
-  ## Setup --------------------------------------------
+  ## Setup ---------------------------------------------------------------------
   library(tidyverse)
   library(patchwork)
   library(scales)

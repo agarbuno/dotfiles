@@ -1,10 +1,11 @@
 # -*- mode: snippet -*-
 # name: bayes setup  
-# key: rbayes
+# key: <rbayes
 # group: R
+# expand-env: ((yas-indent-line 'fixed))
 # --
 #+begin_src R :exports none :results none
-  ## Librerias para modelacion bayesiana
+  ## Librerias para modelacion bayesiana ---------------------------------------
   library(cmdstanr)
   library(posterior)
   library(bayesplot)
