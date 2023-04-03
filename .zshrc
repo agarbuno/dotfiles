@@ -120,17 +120,21 @@ POWERLEVEL9K_MODE="awesome-patched"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/agarbuno/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/agarbuno/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/agarbuno/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/agarbuno/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/agarbuno/mambaforge/etc/profile.d/conda.sh" ]; then
+        . "/home/agarbuno/mambaforge/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/agarbuno/anaconda3/bin:$PATH"
+        export PATH="/home/agarbuno/mambaforge/bin:$PATH"
     fi
 fi
 unset __conda_setup
+
+if [ -f "/home/agarbuno/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/home/agarbuno/mambaforge/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -140,8 +144,8 @@ export PATH="/usr/local/sbin:$PATH"
 # export PATH="/Users/agarbuno/.opm/opm-simulators/build/bin:$PATH"
 export PATH="/Users/agarbuno/.opm-mpi/opm-simulators/build/bin:$PATH"
 
-export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+# export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+# if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # eval "$(rbenv init -)"
 
 # export PATH="/usr/local/bin:$PATH"
@@ -154,7 +158,9 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # export CPLUS_INCLUDE_PATH=$XCBASE/usr/include
 # export LIBRARY_PATH=$XCBASE/usr/lib
 
-. /usr/local/opt/asdf/libexec/asdf.sh
+
+. "$HOME/.asdf/asdf.sh"
+# . /usr/local/opt/asdf/libexec/asdf.sh
 
 export PATH="/usr/local/opt/expat/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/expat/lib${LDFLAGS:+ }${LDFLAGS}"
@@ -200,6 +206,7 @@ export PATH="/usr/local/opt/icu4c/sbin:$PATH"
 export LDFLAGS="-L/usr/local/opt/icu4c/lib${LDFLAGS:+ }${LDFLAGS}"
 export CPPFLAGS="-I/usr/local/opt/icu4c/include${CPPFLAGS:+ }${CPPFLAGS}"
 export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}${PKG_CONFIG_PATH}"
+export PATH="$PATH:$HOME/.cargo/bin" 
 
 # To install R 4.1.1 with asdf 
 # export PATH="/usr/local/opt/curl/bin:$PATH"
@@ -215,5 +222,5 @@ export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}$
 
 # Aliases ----------------------------------------------------------------------
 alias cat=bat --paging=never
-alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user -U'
-alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
+alias ls='exa -l --group-directories-first --color=auto'
+alias ll='exa -lahF --group-directories-first --color=auto'
