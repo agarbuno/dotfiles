@@ -1375,11 +1375,11 @@
   (display-fill-column-indicator-mode 1)
   )
 
-;; (use-package auctex-latexmk
-;;   :ensure t
-;;   :config
-;;   (auctex-latexmk-setup)
-  ;; (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+(use-package auctex-latexmk
+  :ensure t
+  :config
+  (auctex-latexmk-setup)
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
 (use-package company-auctex
   :ensure t
@@ -1500,7 +1500,7 @@
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
   (setq bibtex-completion-display-formats
-      '((t . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+        '((t . "${=collection=:10} ${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:80} ${keywords:31}"))
     )
 
   (defun bibtex-completion-format-citation-org-cite-original (keys)
@@ -1605,57 +1605,57 @@
              )
 
 (add-to-list 'org-latex-classes
-               '("handout"
-                 "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-  \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
-  \\geometry{left=30mm,right=30mm,bottom=20mm}
-  \\usepackage[utf8]{inputenc}
-  \\usepackage{amsthm, amssymb, amsmath}
-  \\usepackage{graphicx}
-  \\usepackage{grffile}
-  \\usepackage{longtable}
-  \\usepackage{wrapfig}
-  \\usepackage{rotating}
-  \\usepackage[normalem]{ulem}
-  \\usepackage{amsmath}
-  \\usepackage{textcomp}
-  \\usepackage{amssymb}
-  \\usepackage{capt-of}
-  \\usepackage[pagebackref=true,%
-               colorlinks=true,%
-               urlcolor=blue,%
-               pdfborder={0 0 0}]{hyperref}
-  \\usepackage{fancyhdr}
-  \\renewcommand{\\textfraction}{0.05}
-  \\renewcommand{\\topfraction}{0.8}
-  \\renewcommand{\\bottomfraction}{0.8}
-  \\renewcommand{\\floatpagefraction}{0.75}
-  \\fancyfoot{}%
-  \\renewcommand{\\footrulewidth}{0.4pt}%
-  \\fancyfoot[C]{\\includegraphics[height=1cm]{%
-                 ~/.dotfiles/assets/itam-footer.png}%
-                 \\vspace{-1cm}}%
-  \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
-  \\pagestyle{fancy}
-  \\fancypagestyle{plain}{%
-  \\fancyhead{}%
-  \\renewcommand{\\headrulewidth}{0pt}%
-  \\pagestyle{fancy}}
-  \\fancypagestyle{toc}{%
-  \\fancyhf{}%
-  \\fancyhead[L]{\\nouppercase{\\rightmark}}
-  \\fancyhead[R]{\\nouppercase{\\leftmark}}
-  \\fancyfoot[C]{\\thepage}}
-  \\newcommand{\\chaptermark}[1]{%
-  \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
-        [NO-DEFAULT-PACKAGES]
-        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\n\\section{%s}")
-                 ("\\subsection{%s}" . "\n\\subsection{%s}")
-                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-                 ))
+             '("handout"
+               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+    \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
+    \\geometry{left=30mm,right=30mm,bottom=20mm}
+    \\usepackage[utf8]{inputenc}
+    \\usepackage{amsthm, amssymb, amsmath}
+    \\usepackage{graphicx}
+    \\usepackage{grffile}
+    \\usepackage{longtable}
+    \\usepackage{wrapfig}
+    \\usepackage{rotating}
+    \\usepackage[normalem]{ulem}
+    \\usepackage{amsmath}
+    \\usepackage{textcomp}
+    \\usepackage{amssymb}
+    \\usepackage{capt-of}
+    \\usepackage[pagebackref=true,%
+                 colorlinks=true,%
+                 urlcolor=blue,%
+                 pdfborder={0 0 0}]{hyperref}
+    \\usepackage{fancyhdr}
+    \\renewcommand{\\textfraction}{0.05}
+    \\renewcommand{\\topfraction}{0.8}
+    \\renewcommand{\\bottomfraction}{0.8}
+    \\renewcommand{\\floatpagefraction}{0.75}
+    \\fancyfoot{}%
+    \\renewcommand{\\footrulewidth}{0.4pt}%
+    \\fancyfoot[C]{\\includegraphics[height=1cm]{%
+                   ~/.dotfiles/assets/itam-footer.png}%
+                   \\vspace{-1cm}}%
+    \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
+    \\pagestyle{fancy}
+    \\fancypagestyle{plain}{%
+    \\fancyhead{}%
+    \\renewcommand{\\headrulewidth}{0pt}%
+    \\pagestyle{fancy}}
+    \\fancypagestyle{toc}{%
+    \\fancyhf{}%
+    \\fancyhead[L]{\\nouppercase{\\rightmark}}
+    \\fancyhead[R]{\\nouppercase{\\leftmark}}
+    \\fancyfoot[C]{\\thepage}}
+    \\newcommand{\\chaptermark}[1]{%
+    \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
+          [NO-DEFAULT-PACKAGES]
+          [NO-PACKAGES]"
+               ("\\section{%s}" . "\n\\section{%s}")
+               ("\\subsection{%s}" . "\n\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+               ))
 
 (add-to-list 'org-latex-classes        
              '("header"
@@ -1744,7 +1744,7 @@
     (org-download-image-dir "images")
     (org-download-heading-lvl nil)
     (org-download-timestamp "%Y%m%d-%H%M%S_")
-    (org-download-image-attr-list '("#+attr_html: :width 700 :align center"))
+    (org-download-image-attr-list '("#+attr_html: :width 1200 :align center"))
     (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
     :bind
     ("C-c n s" . org-download-screenshot)
