@@ -345,19 +345,27 @@ This section configures basic UI settings that remove unneeded elements to make 
 ** Dashboard
 
 #+begin_src emacs-lisp
+  (use-package all-the-icons)
+  (use-package nerd-icons)
+#+end_src
+
+#+begin_src emacs-lisp
   (use-package dashboard
     :ensure t
     :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner 'logo)  
+    (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+    ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
+    (setq dashboard-icon-type 'nerd-icons)  ;; use `all-the-icons' package
+    (setq dashboard-startup-banner 'logo)      
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
     (setq dashboard-set-navigator t)
-    (dashboard-modify-heading-icons '((projects . "rocket")
-                                      (agenda . "milestone")
-                                      (recents . "history")
-                                      (bookmarks . "bookmark")))
+    (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
+                                      (agenda . "nf-oct-milestone")
+                                      (recents . "nf-oct-history")
+                                      (bookmarks . "nf-oct-bookmark")))
     (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
     (setq dashboard-items '(
                             (recents  . 10)
@@ -365,19 +373,19 @@ This section configures basic UI settings that remove unneeded elements to make 
                             (bookmarks . 5)
                             (agenda . 10)
                             ))
-    (setq dashboard-navigator-buttons
-        `((;; Github
-           (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
-            "Github"
-            "Go to Github"
-            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
-           ;; Perspectives
-           (,(all-the-icons-octicon "history" :height 1.1 :v-adjust 0.0)
-            "Restore"
-            "Restore window configuration"
-            (lambda (&rest _) (persp-state-load persp-state-default-file)))
-           )))
-    )
+    ;; (setq dashboard-navigator-buttons
+    ;;       `((;; Github
+    ;;          (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
+    ;;           "Github"
+    ;;           "Go to Github"
+    ;;           (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+    ;;          ;; Perspectives
+    ;;          (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
+    ;;           "Restore"
+    ;;           "Restore window configuration"
+    ;;           (lambda (&rest _) (persp-state-load persp-state-default-file)))
+    ;;          ))) 
+   )
 #+end_src
 
 ** Font Configuration
@@ -388,13 +396,14 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
   (set-face-attribute
    'default nil
-   :font "Fira Code Retina"
+   :font "FiraCode Nerd Font Mono"
    :height ag/default-font-size)
 
   ;; Set the fixed pitch face
   (set-face-attribute
    'fixed-pitch nil
-   :font "Fira Code Retina"
+   :font "JetBrains Mono"
+   :weight 'medium
    :height ag/default-font-size)
 
   ;; Set the variable pitch face
@@ -527,12 +536,13 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
 #+begin_src emacs-lisp
   (defun ag/org-color-setup()
-    (set-face-attribute 'org-block nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) 5))
-    (set-face-attribute 'org-block-begin-line nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) -10))
+    (set-face-attribute 'org-block nil
+                        :background (color-darken-name
+                                     (face-attribute 'default :background) 5)
+                        :font "FiraCode Nerd Font Mono")
+    (set-face-attribute 'org-block-begin-line nil
+                        :background (color-darken-name
+                                     (face-attribute 'default :background) -10))
     )
 
 
@@ -545,10 +555,13 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
   (use-package color
     :after org
     :config
-    (set-face-attribute 'org-block nil :background
+    (set-face-attribute 'org-block nil
+                        :background
                         (color-darken-name
-                         (face-attribute 'default :background) 5))
-    (set-face-attribute 'org-block-begin-line nil :background
+                         (face-attribute 'default :background) 5)
+                        :font "FiraCode Nerd Font Mono")
+    (set-face-attribute 'org-block-begin-line nil
+                        :background
                         (color-darken-name
                          (face-attribute 'default :background) -10))
     ) 
@@ -562,8 +575,6 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 *NOTE:* The first time you load your configuration on a new machine, you'll need to run `M-x all-the-icons-install-fonts` so that mode line icons display correctly.
 
 #+begin_src emacs-lisp
-
-  (use-package all-the-icons)
 
   (use-package doom-modeline
       :init (doom-modeline-mode 1)
@@ -607,6 +618,8 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
 [[https://github.com/Yevgnen/ivy-rich][ivy-rich]] adds extra columns to a few of the Counsel commands to provide more information about each item.
 
+Maybe I need to change to ~ivy-rich~ with ~nerd-icons-ivy-rich~.
+
 #+begin_src emacs-lisp
 
   (use-package ivy
@@ -639,13 +652,14 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
     :config
     (counsel-mode 1))
 
-  (use-package all-the-icons-ivy-rich
-    :after ivy
+  (use-package nerd-icons-ivy-rich
+    :after ivy 
     :init
-    (all-the-icons-ivy-rich-mode 1))
+    (nerd-icons-ivy-rich-mode 1)
+    )
 
   (use-package ivy-rich
-    :after all-the-icons-ivy-rich
+    :after nerd-icons-ivy-rich
     :init
     (ivy-rich-mode 1))
 
@@ -734,7 +748,7 @@ Let's make indentation with 4 spaces and no tab
 
 You can use =persepective= to keep the buffers somewhat organized. Since I am using =ivy= as a completion framework I will keep using the appropriate configuration for it. Let's use =persp-ivy-switch-buffer= or =persp-counsel-switch-buffer= for better integration. 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp 
 
   (use-package perspective
     :ensure t
@@ -814,17 +828,18 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-  (use-package org-fancy-priorities ; priority icons
-    :hook (org-mode . org-fancy-priorities-mode)
-    :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
+    (use-package org-fancy-priorities ; priority icons
+      :hook (org-mode . org-fancy-priorities-mode)
+      :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
 
-  (defun ag/org-mode-setup ()
-    (org-indent-mode)
-    (variable-pitch-mode 1)
-    (visual-line-mode 1)
-    (ag/org-font-setup)
-    (ag/org-color-setup)
-    (setq fill-column 80))
+    (defun ag/org-mode-setup ()
+      (org-indent-mode)
+      (variable-pitch-mode 1)
+      (visual-line-mode 1)
+      (ag/org-font-setup)
+      (ag/org-color-setup)
+      (setq fill-column 80)
+      (setq org-image-actual-width (list 750)))
 #+end_src
 
 
@@ -1024,20 +1039,19 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-
   (setq org-agenda-category-icon-alist
-          `(;; Main categories =================================================
-            ("research" ,(list (all-the-icons-faicon "rocket")) nil nil :ascent center)
-            ("mcdatos" ,(list (all-the-icons-material "data_usage")) nil nil :ascent center)
-            ("projects" ,(list (all-the-icons-material "group")) nil nil :ascent center)
-            ("teaching" ,(list (all-the-icons-material "school")) nil nil :ascent center)
-            ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
-            ;; Subcategories ===================================================
-            ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
-            ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
-            ("thesis" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
-            )
+        `(;; Main categories =================================================
+          ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
+          ("mcdatos" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+          ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+          ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
+          ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
+          ;; Subcategories ===================================================
+          ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
+          ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+          ("thesis" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
           )
+        )
 
 #+end_src
 
@@ -2744,7 +2758,7 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 #+begin_src emacs-lisp
 
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (use-package org-fragtog
     :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
