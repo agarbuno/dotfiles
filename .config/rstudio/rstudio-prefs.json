@@ -1,7 +1,36 @@
 {
     "initial_working_directory": "~",
     "editor_theme": "Tomorrow Night Bright",
-    "posix_terminal_shell": "bash",
+    "posix_terminal_shell": "zsh",
     "insert_native_pipe_operator": true,
-    "source_with_echo": true
+    "source_with_echo": true,
+    "panes": {
+        "quadrants": [
+            "TabSet1",
+            "TabSet2",
+            "Source",
+            "Console"
+        ],
+        "tabSet1": [
+            "Environment",
+            "History",
+            "Connections",
+            "Build",
+            "VCS",
+            "Tutorial",
+            "Presentation"
+        ],
+        "tabSet2": [
+            "Files",
+            "Plots",
+            "Packages",
+            "Help",
+            "Viewer",
+            "Presentations"
+        ],
+        "hiddenTabSet": [],
+        "console_left_on_top": false,
+        "console_right_on_top": false,
+        "additional_source_columns": 0
+    }
 }
