@@ -373,18 +373,18 @@ This section configures basic UI settings that remove unneeded elements to make 
                             (bookmarks . 5)
                             (agenda . 10)
                             ))
-    ;; (setq dashboard-navigator-buttons
-    ;;       `((;; Github
-    ;;          (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
-    ;;           "Github"
-    ;;           "Go to Github"
-    ;;           (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
-    ;;          ;; Perspectives
-    ;;          (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
-    ;;           "Restore"
-    ;;           "Restore window configuration"
-    ;;           (lambda (&rest _) (persp-state-load persp-state-default-file)))
-    ;;          ))) 
+    (setq dashboard-navigator-buttons
+          `((;; Github
+             (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
+              "Github"
+              "Go to Github"
+              (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+             ;; Perspectives
+             (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
+              "Restore"
+              "Restore window configuration"
+              (lambda (&rest _) (persp-state-load persp-state-default-file)))
+             ))) 
    )
 #+end_src
 
