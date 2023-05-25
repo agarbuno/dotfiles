@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: answer-block     
+# key: <ans
+# group : rmarkdown
+# --
+
+::: {.noteblock data-latex=""}
+${1:Answers here.}
+:::
+$0

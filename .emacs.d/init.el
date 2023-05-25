@@ -51,7 +51,7 @@
 
 (use-package auto-package-update
   :custom
-  (auto-package-update-interval 7)
+  (auto-package-update-interval 15)
   (auto-package-update-prompt-before-update t)
   (auto-package-update-hide-results t)
   :config
@@ -111,20 +111,25 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0)))
   )
 
+(use-package all-the-icons)
+(use-package nerd-icons)
+
 (use-package dashboard
   :ensure t
   :config
   (dashboard-setup-startup-hook)
-  ;; (setq dashboard-page-separator "\n\f\n")
-  (setq dashboard-startup-banner 'logo)  
+  (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+  ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
+  (setq dashboard-icon-type 'nerd-icons)  ;; use `all-the-icons' package
+  (setq dashboard-startup-banner 'logo)      
   (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-navigator t)
-  (dashboard-modify-heading-icons '((projects . "rocket")
-                                    (agenda . "milestone")
-                                    (recents . "history")
-                                    (bookmarks . "bookmark")))
+  (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
+                                    (agenda . "nf-oct-milestone")
+                                    (recents . "nf-oct-history")
+                                    (bookmarks . "nf-oct-bookmark")))
   (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
   (setq dashboard-items '(
                           (recents  . 10)
@@ -133,28 +138,29 @@
                           (agenda . 10)
                           ))
   (setq dashboard-navigator-buttons
-      `((;; Github
-         (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
-          "Github"
-          "Go to Github"
-          (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
-         ;; Perspectives
-         (,(all-the-icons-octicon "history" :height 1.1 :v-adjust 0.0)
-          "Restore"
-          "Restore window configuration"
-          (lambda (&rest _) (persp-state-load persp-state-default-file)))
-         )))
-  )
+        `((;; Github
+           (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
+            "Github"
+            "Go to Github"
+            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+           ;; Perspectives
+           (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
+            "Restore"
+            "Restore window configuration"
+            (lambda (&rest _) (persp-state-load persp-state-default-file)))
+           ))) 
+ )
 
 (set-face-attribute
  'default nil
- :font "Fira Code Retina"
+ :font "FiraCode Nerd Font Mono"
  :height ag/default-font-size)
 
 ;; Set the fixed pitch face
 (set-face-attribute
  'fixed-pitch nil
- :font "Fira Code Retina"
+ :font "JetBrains Mono"
+ :weight 'medium
  :height ag/default-font-size)
 
 ;; Set the variable pitch face
@@ -244,32 +250,35 @@
   :commands command-log-mode)
 
 (defun ag/org-color-setup()
-  (set-face-attribute 'org-block nil :background
-                      (color-darken-name
-                       (face-attribute 'default :background) 5))
-  (set-face-attribute 'org-block-begin-line nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) -10))
+  (set-face-attribute 'org-block nil
+                      :background (color-darken-name
+                                   (face-attribute 'default :background) 5)
+                      :font "FiraCode Nerd Font Mono")
+  (set-face-attribute 'org-block-begin-line nil
+                      :background (color-darken-name
+                                   (face-attribute 'default :background) -10))
   )
 
 
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
-  :init (load-theme 'doom-snazzy t))
+  ;; :init (load-theme 'doom-snazzy t))
+  :init (load-theme 'doom-moonlight t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
   :after org
   :config
-  (set-face-attribute 'org-block nil :background
+  (set-face-attribute 'org-block nil
+                      :background
                       (color-darken-name
-                       (face-attribute 'default :background) 5))
-  (set-face-attribute 'org-block-begin-line nil :background
+                       (face-attribute 'default :background) 5)
+                      :font "FiraCode Nerd Font Mono")
+  (set-face-attribute 'org-block-begin-line nil
+                      :background
                       (color-darken-name
                        (face-attribute 'default :background) -10))
   )
-
-(use-package all-the-icons)
 
 (use-package doom-modeline
     :init (doom-modeline-mode 1)
@@ -315,7 +324,9 @@
          ("C-d" . ivy-reverse-i-search-kill))
   :config
   ;; (message "Ivy got loaded!")
-  (ivy-mode 1))
+  (ivy-mode 1)
+  (setq ivy-use-selectable-prompt t)
+  )
 
 
 (use-package counsel
@@ -325,13 +336,14 @@
   :config
   (counsel-mode 1))
 
-(use-package all-the-icons-ivy-rich
-  :after ivy
+(use-package nerd-icons-ivy-rich
+  :after ivy 
   :init
-  (all-the-icons-ivy-rich-mode 1))
+  (nerd-icons-ivy-rich-mode 1)
+  )
 
 (use-package ivy-rich
-  :after all-the-icons-ivy-rich
+  :after nerd-icons-ivy-rich
   :init
   (ivy-rich-mode 1))
 
@@ -434,7 +446,8 @@
   (visual-line-mode 1)
   (ag/org-font-setup)
   (ag/org-color-setup)
-  (setq fill-column 80))
+  (setq fill-column 80)
+  (setq org-image-actual-width (list 750)))
 
 (use-package org
   :commands (org-capture org-agenda)
@@ -551,6 +564,9 @@
           ("mp" "prospects" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
            "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("mt" "thesis" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
+           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
         ("r" "research") ;; ===================================================
           ("ra" "admin" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
@@ -564,6 +580,9 @@
           ("rs" "study" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
+          ("rt" "thesis" entry
+           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("rw" "write" entry
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
@@ -611,17 +630,18 @@
 ) ;; Termina configuracion
 
 (setq org-agenda-category-icon-alist
-        `(;; Main categories =================================================
-          ("research" ,(list (all-the-icons-faicon "rocket")) nil nil :ascent center)
-          ("mcdatos" ,(list (all-the-icons-material "data_usage")) nil nil :ascent center)
-          ("projects" ,(list (all-the-icons-material "group")) nil nil :ascent center)
-          ("teaching" ,(list (all-the-icons-material "school")) nil nil :ascent center)
-          ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
-          ;; Subcategories ===================================================
-          ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
-          ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
-          )
+      `(;; Main categories =================================================
+        ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
+        ("mcdatos" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+        ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+        ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
+        ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
+        ;; Subcategories ===================================================
+        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
+        ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+        ("thesis" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
         )
+      )
 
 (use-package org-bullets
   :after org
@@ -1260,17 +1280,13 @@
   :ensure t
   )
 
-;; NOTE: Make sure to configure a GitHub token before using this package!
-;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
-;; - https://magit.vc/manual/ghub/Getting-Started.html#Getting-Started
-(use-package forge
-  :after magit)
-
 (use-package git-timemachine
   :after magit
   :config
   (setq git-timemachine-abbreviation-length 4)
   )
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -1370,11 +1386,11 @@
   (display-fill-column-indicator-mode 1)
   )
 
-;; (use-package auctex-latexmk
-;;   :ensure t
-;;   :config
-;;   (auctex-latexmk-setup)
-  ;; (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+(use-package auctex-latexmk
+  :ensure t
+  :config
+  (auctex-latexmk-setup)
+  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
 (use-package company-auctex
   :ensure t
@@ -1495,7 +1511,7 @@
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
   (setq bibtex-completion-display-formats
-      '((t . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+        '((t . "${=collection=:10} ${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:80} ${keywords:31}"))
     )
 
   (defun bibtex-completion-format-citation-org-cite-original (keys)
@@ -1565,7 +1581,7 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 (use-package org-fragtog
   :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
@@ -1600,57 +1616,57 @@
              )
 
 (add-to-list 'org-latex-classes
-               '("handout"
-                 "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-  \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
-  \\geometry{left=30mm,right=30mm,bottom=20mm}
-  \\usepackage[utf8]{inputenc}
-  \\usepackage{amsthm, amssymb, amsmath}
-  \\usepackage{graphicx}
-  \\usepackage{grffile}
-  \\usepackage{longtable}
-  \\usepackage{wrapfig}
-  \\usepackage{rotating}
-  \\usepackage[normalem]{ulem}
-  \\usepackage{amsmath}
-  \\usepackage{textcomp}
-  \\usepackage{amssymb}
-  \\usepackage{capt-of}
-  \\usepackage[pagebackref=true,%
-               colorlinks=true,%
-               urlcolor=blue,%
-               pdfborder={0 0 0}]{hyperref}
-  \\usepackage{fancyhdr}
-  \\renewcommand{\\textfraction}{0.05}
-  \\renewcommand{\\topfraction}{0.8}
-  \\renewcommand{\\bottomfraction}{0.8}
-  \\renewcommand{\\floatpagefraction}{0.75}
-  \\fancyfoot{}%
-  \\renewcommand{\\footrulewidth}{0.4pt}%
-  \\fancyfoot[C]{\\includegraphics[height=1cm]{%
-                 ~/.dotfiles/assets/itam-footer.png}%
-                 \\vspace{-1cm}}%
-  \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
-  \\pagestyle{fancy}
-  \\fancypagestyle{plain}{%
-  \\fancyhead{}%
-  \\renewcommand{\\headrulewidth}{0pt}%
-  \\pagestyle{fancy}}
-  \\fancypagestyle{toc}{%
-  \\fancyhf{}%
-  \\fancyhead[L]{\\nouppercase{\\rightmark}}
-  \\fancyhead[R]{\\nouppercase{\\leftmark}}
-  \\fancyfoot[C]{\\thepage}}
-  \\newcommand{\\chaptermark}[1]{%
-  \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
-        [NO-DEFAULT-PACKAGES]
-        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\n\\section{%s}")
-                 ("\\subsection{%s}" . "\n\\subsection{%s}")
-                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-                 ))
+             '("handout"
+               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+    \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
+    \\geometry{left=30mm,right=30mm,bottom=20mm}
+    \\usepackage[utf8]{inputenc}
+    \\usepackage{amsthm, amssymb, amsmath}
+    \\usepackage{graphicx}
+    \\usepackage{grffile}
+    \\usepackage{longtable}
+    \\usepackage{wrapfig}
+    \\usepackage{rotating}
+    \\usepackage[normalem]{ulem}
+    \\usepackage{amsmath}
+    \\usepackage{textcomp}
+    \\usepackage{amssymb}
+    \\usepackage{capt-of}
+    \\usepackage[pagebackref=true,%
+                 colorlinks=true,%
+                 urlcolor=blue,%
+                 pdfborder={0 0 0}]{hyperref}
+    \\usepackage{fancyhdr}
+    \\renewcommand{\\textfraction}{0.05}
+    \\renewcommand{\\topfraction}{0.8}
+    \\renewcommand{\\bottomfraction}{0.8}
+    \\renewcommand{\\floatpagefraction}{0.75}
+    \\fancyfoot{}%
+    \\renewcommand{\\footrulewidth}{0.4pt}%
+    \\fancyfoot[C]{\\includegraphics[height=1cm]{%
+                   ~/.dotfiles/assets/itam-footer.png}%
+                   \\vspace{-1cm}}%
+    \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
+    \\pagestyle{fancy}
+    \\fancypagestyle{plain}{%
+    \\fancyhead{}%
+    \\renewcommand{\\headrulewidth}{0pt}%
+    \\pagestyle{fancy}}
+    \\fancypagestyle{toc}{%
+    \\fancyhf{}%
+    \\fancyhead[L]{\\nouppercase{\\rightmark}}
+    \\fancyhead[R]{\\nouppercase{\\leftmark}}
+    \\fancyfoot[C]{\\thepage}}
+    \\newcommand{\\chaptermark}[1]{%
+    \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
+          [NO-DEFAULT-PACKAGES]
+          [NO-PACKAGES]"
+               ("\\section{%s}" . "\n\\section{%s}")
+               ("\\subsection{%s}" . "\n\\subsection{%s}")
+               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+               ))
 
 (add-to-list 'org-latex-classes        
              '("header"
@@ -1690,7 +1706,10 @@
 
 (setq org-latex-default-class "custom")
 
-(setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
+(setq org-latex-pdf-process
+           '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
@@ -1736,7 +1755,7 @@
     (org-download-image-dir "images")
     (org-download-heading-lvl nil)
     (org-download-timestamp "%Y%m%d-%H%M%S_")
-    (org-download-image-attr-list '("#+attr_html: :width 700 :align center"))
+    (org-download-image-attr-list '("#+attr_html: :width 1200 :align center"))
     (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
     :bind
     ("C-c n s" . org-download-screenshot)
@@ -1762,7 +1781,23 @@
   (setq arxiv-default-bibliography "~/orgfiles/references/bibliography-arxiv.bib"
         arxiv-default-download-folder "~/orgfiles/references/arxiv-pdfs/"
         arxiv-default-category "stat"
-        arxiv-startup-with-abstract-window t)     
+        arxiv-startup-with-abstract-window t)
+
+  (defun arxiv-read-load ()
+    "Read recent (past month) submissions of arXiv in a given category."
+    (interactive)
+    (let*
+        ((date-end (format-time-string "%Y%m%d" (current-time)))
+         (date-start (format-time-string "%Y%m%d" (time-subtract (current-time) (* 30 86400))))
+         (category (completing-read "Select category: "
+                                    arxiv-categories nil t nil nil arxiv-default-category)))
+      (setq arxiv-query-info (format " Showing recent submissions in %s in the past month (%s to %s)." category date-start date-end))
+      (setq date-start (concat date-start "0000"))
+      (setq date-end (concat date-end "0000"))
+      (setq arxiv-entry-list (arxiv-query category date-start date-end))
+      (setq arxiv-query-data-list `((date-start . ,date-start) (date-end . ,date-end) (category . ,category)))
+      (setq arxiv-mode-entry-function 'arxiv-read-recent)
+      (arxiv-populate-page)))
   )
 
 (use-package elfeed-org

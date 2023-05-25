@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: stan sample
+# key: <stans
+# group : stan
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_src R :exports none :results none
+  muestras <- modelo$sample(data   = ${1:data}, 
+                            chains = ${2:4}, 
+                            iter   = ${3:1500}, 
+                            iter_warmup = ${4:500}, 
+                            seed   = ${5:10101}, 
+                            refresh= ${6:500},
+                            fixed_param = ${7:FALSE})
+#+end_src
+$0

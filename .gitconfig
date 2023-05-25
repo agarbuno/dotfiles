@@ -1,8 +1,3 @@
-#+Title: Git configuration
-#+PROPERTY: header-args :mkdirp y
-
-Basic User info
-#+begin_src conf :tangle ./.gitconfig
 [user]
         name = agarbuno
         email = alfredo.garbuno@itam.mx
@@ -17,4 +12,3 @@ Basic User info
         defaultBranch = main
 [log]
 	date = local
-#+end_src
