@@ -88,6 +88,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#magit][Magit]]
     - [[#forge][Forge]]
     - [[#git-timemachine][Git Timemachine]]
+    - [[#merge-control][Merge control]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#docker][Docker]]
 - [[#terminal][Terminal]]
@@ -259,7 +260,7 @@ You can also use =M-x auto-package-update-now= to update right now!
 
   (use-package auto-package-update
     :custom
-    (auto-package-update-interval 7)
+    (auto-package-update-interval 15)
     (auto-package-update-prompt-before-update t)
     (auto-package-update-hide-results t)
     :config
@@ -344,20 +345,27 @@ This section configures basic UI settings that remove unneeded elements to make 
 ** Dashboard
 
 #+begin_src emacs-lisp
+  (use-package all-the-icons)
+  (use-package nerd-icons)
+#+end_src
+
+#+begin_src emacs-lisp
   (use-package dashboard
     :ensure t
     :config
     (dashboard-setup-startup-hook)
-    ;; (setq dashboard-page-separator "\n\f\n")
-    (setq dashboard-startup-banner 'logo)  
+    (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+    ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
+    (setq dashboard-icon-type 'nerd-icons)  ;; use `all-the-icons' package
+    (setq dashboard-startup-banner 'logo)      
     (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
     (setq dashboard-set-navigator t)
-    (dashboard-modify-heading-icons '((projects . "rocket")
-                                      (agenda . "milestone")
-                                      (recents . "history")
-                                      (bookmarks . "bookmark")))
+    (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
+                                      (agenda . "nf-oct-milestone")
+                                      (recents . "nf-oct-history")
+                                      (bookmarks . "nf-oct-bookmark")))
     (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
     (setq dashboard-items '(
                             (recents  . 10)
@@ -366,18 +374,18 @@ This section configures basic UI settings that remove unneeded elements to make 
                             (agenda . 10)
                             ))
     (setq dashboard-navigator-buttons
-        `((;; Github
-           (,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
-            "Github"
-            "Go to Github"
-            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
-           ;; Perspectives
-           (,(all-the-icons-octicon "history" :height 1.1 :v-adjust 0.0)
-            "Restore"
-            "Restore window configuration"
-            (lambda (&rest _) (persp-state-load persp-state-default-file)))
-           )))
-    )
+          `((;; Github
+             (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
+              "Github"
+              "Go to Github"
+              (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+             ;; Perspectives
+             (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
+              "Restore"
+              "Restore window configuration"
+              (lambda (&rest _) (persp-state-load persp-state-default-file)))
+             ))) 
+   )
 #+end_src
 
 ** Font Configuration
@@ -388,13 +396,14 @@ I am using the [[https://github.com/tonsky/FiraCode][Fira Code]] and [[https://f
 
   (set-face-attribute
    'default nil
-   :font "Fira Code Retina"
+   :font "FiraCode Nerd Font Mono"
    :height ag/default-font-size)
 
   ;; Set the fixed pitch face
   (set-face-attribute
    'fixed-pitch nil
-   :font "Fira Code Retina"
+   :font "JetBrains Mono"
+   :weight 'medium
    :height ag/default-font-size)
 
   ;; Set the variable pitch face
@@ -527,27 +536,32 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
 #+begin_src emacs-lisp
   (defun ag/org-color-setup()
-    (set-face-attribute 'org-block nil :background
-                        (color-darken-name
-                         (face-attribute 'default :background) 5))
-    (set-face-attribute 'org-block-begin-line nil :background
-                          (color-darken-name
-                           (face-attribute 'default :background) -10))
+    (set-face-attribute 'org-block nil
+                        :background (color-darken-name
+                                     (face-attribute 'default :background) 5)
+                        :font "FiraCode Nerd Font Mono")
+    (set-face-attribute 'org-block-begin-line nil
+                        :background (color-darken-name
+                                     (face-attribute 'default :background) -10))
     )
 
 
   (use-package doom-themes
     ;; :init (load-theme 'doom-monokai-pro t))
-    :init (load-theme 'doom-snazzy t))
+    ;; :init (load-theme 'doom-snazzy t))
+    :init (load-theme 'doom-moonlight t))
   ;; :config (load-theme 'doom-nord t))
 
   (use-package color
     :after org
     :config
-    (set-face-attribute 'org-block nil :background
+    (set-face-attribute 'org-block nil
+                        :background
                         (color-darken-name
-                         (face-attribute 'default :background) 5))
-    (set-face-attribute 'org-block-begin-line nil :background
+                         (face-attribute 'default :background) 5)
+                        :font "FiraCode Nerd Font Mono")
+    (set-face-attribute 'org-block-begin-line nil
+                        :background
                         (color-darken-name
                          (face-attribute 'default :background) -10))
     ) 
@@ -561,8 +575,6 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 *NOTE:* The first time you load your configuration on a new machine, you'll need to run `M-x all-the-icons-install-fonts` so that mode line icons display correctly.
 
 #+begin_src emacs-lisp
-
-  (use-package all-the-icons)
 
   (use-package doom-modeline
       :init (doom-modeline-mode 1)
@@ -606,45 +618,50 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
 
 [[https://github.com/Yevgnen/ivy-rich][ivy-rich]] adds extra columns to a few of the Counsel commands to provide more information about each item.
 
+Maybe I need to change to ~ivy-rich~ with ~nerd-icons-ivy-rich~.
+
 #+begin_src emacs-lisp
 
-    (use-package ivy
-      :diminish
-      :bind (("C-s" . swiper)
-             :map ivy-minibuffer-map
-             ("TAB" . ivy-alt-done)
-             ("C-l" . ivy-alt-done)
-             ("C-j" . ivy-next-line)
-  
-             ("C-k" . ivy-previous-line)
-             :map ivy-switch-buffer-map
-             ("C-k" . ivy-previous-line)
-             ("C-l" . ivy-done)
-             ("C-d" . ivy-switch-buffer-kill)
-             :map ivy-reverse-i-search-map
-             ("C-k" . ivy-previous-line)
-             ("C-d" . ivy-reverse-i-search-kill))
-      :config
-      ;; (message "Ivy got loaded!")
-      (ivy-mode 1))
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    ;; (message "Ivy got loaded!")
+    (ivy-mode 1)
+    (setq ivy-use-selectable-prompt t)
+    )
 
 
-    (use-package counsel
-      :bind (("C-M-j" . 'counsel-switch-buffer)
-             :map minibuffer-local-map
-             ("C-r" . 'counsel-minibuffer-history))
-      :config
-      (counsel-mode 1))
+  (use-package counsel
+    :bind (("C-M-j" . 'counsel-switch-buffer)
+           :map minibuffer-local-map
+           ("C-r" . 'counsel-minibuffer-history))
+    :config
+    (counsel-mode 1))
 
-    (use-package all-the-icons-ivy-rich
-      :after ivy
-      :init
-      (all-the-icons-ivy-rich-mode 1))
+  (use-package nerd-icons-ivy-rich
+    :after ivy 
+    :init
+    (nerd-icons-ivy-rich-mode 1)
+    )
 
-    (use-package ivy-rich
-      :after all-the-icons-ivy-rich
-      :init
-      (ivy-rich-mode 1))
+  (use-package ivy-rich
+    :after nerd-icons-ivy-rich
+    :init
+    (ivy-rich-mode 1))
 
 #+end_src
 
@@ -731,7 +748,7 @@ Let's make indentation with 4 spaces and no tab
 
 You can use =persepective= to keep the buffers somewhat organized. Since I am using =ivy= as a completion framework I will keep using the appropriate configuration for it. Let's use =persp-ivy-switch-buffer= or =persp-counsel-switch-buffer= for better integration. 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp 
 
   (use-package perspective
     :ensure t
@@ -811,17 +828,18 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-  (use-package org-fancy-priorities ; priority icons
-    :hook (org-mode . org-fancy-priorities-mode)
-    :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
+    (use-package org-fancy-priorities ; priority icons
+      :hook (org-mode . org-fancy-priorities-mode)
+      :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
 
-  (defun ag/org-mode-setup ()
-    (org-indent-mode)
-    (variable-pitch-mode 1)
-    (visual-line-mode 1)
-    (ag/org-font-setup)
-    (ag/org-color-setup)
-    (setq fill-column 80))
+    (defun ag/org-mode-setup ()
+      (org-indent-mode)
+      (variable-pitch-mode 1)
+      (visual-line-mode 1)
+      (ag/org-font-setup)
+      (ag/org-color-setup)
+      (setq fill-column 80)
+      (setq org-image-actual-width (list 750)))
 #+end_src
 
 
@@ -946,6 +964,9 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("mp" "prospects" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
              "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
+            ("mt" "thesis" entry
+             (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
+             "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
           ("r" "research") ;; ===================================================
             ("ra" "admin" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "Research")
@@ -959,6 +980,9 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ("rs" "study" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
+            ("rt" "thesis" entry
+             (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+             "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
             ("rw" "write" entry
              (file+olp "~/orgfiles/agenda/tasks.org" "Research")
              "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
@@ -1015,19 +1039,19 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
 #+begin_src emacs-lisp
 
-
   (setq org-agenda-category-icon-alist
-          `(;; Main categories =================================================
-            ("research" ,(list (all-the-icons-faicon "rocket")) nil nil :ascent center)
-            ("mcdatos" ,(list (all-the-icons-material "data_usage")) nil nil :ascent center)
-            ("projects" ,(list (all-the-icons-material "group")) nil nil :ascent center)
-            ("teaching" ,(list (all-the-icons-material "school")) nil nil :ascent center)
-            ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
-            ;; Subcategories ===================================================
-            ("paper" ,(list (all-the-icons-octicon "file-pdf")) nil nil :ascent center)
-            ("book" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)
-            )
+        `(;; Main categories =================================================
+          ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
+          ("mcdatos" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+          ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+          ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
+          ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
+          ;; Subcategories ===================================================
+          ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
+          ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+          ("thesis" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
           )
+        )
 
 #+end_src
 
@@ -2095,7 +2119,7 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
 
 *** Forge 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 
   ;; NOTE: Make sure to configure a GitHub token before using this package!
   ;; - https://magit.vc/manual/forge/Token-Creation.html#Token-Creation
@@ -2116,6 +2140,12 @@ Emacs' built in commenting functionality =comment-dwim= (usually bound to =M-;=)
     (setq git-timemachine-abbreviation-length 4)
     )
 
+#+end_src
+
+*** Merge control
+
+#+begin_src emacs-lisp
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 #+end_src
 
 ** Rainbow Delimiters
@@ -2466,11 +2496,11 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
       (display-fill-column-indicator-mode 1)
       )
 
-    ;; (use-package auctex-latexmk
-    ;;   :ensure t
-    ;;   :config
-    ;;   (auctex-latexmk-setup)
-      ;; (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+    (use-package auctex-latexmk
+      :ensure t
+      :config
+      (auctex-latexmk-setup)
+      (setq auctex-latexmk-inherit-TeX-PDF-mode t))
 
     (use-package company-auctex
       :ensure t
@@ -2521,7 +2551,7 @@ This mode shows numbers in your windows' mode lines to tell you what keys you ca
 #+begin_src emacs-lisp :tangle no
   (add-hook 'LaTeX-mode-hook (lambda ()
     (push 
-      '("Latexmk" "latexmk -pdf %s" TeX-run-command nil t 
+      '("Latexmk (ag)" "latexmk -pdf %s" TeX-run-command nil t 
         :help "Run Latexmk on file")
       TeX-command-list)))
 #+end_src
@@ -2622,7 +2652,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
     (setq bibtex-completion-display-formats
-        '((t . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+          '((t . "${=collection=:10} ${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:80} ${keywords:31}"))
       )
 
     (defun bibtex-completion-format-citation-org-cite-original (keys)
@@ -2637,6 +2667,20 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
             (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
             (default       . bibtex-completion-format-citation-default)))
     )
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+    (setq bibtex-completion-display-formats
+          '((article       . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${=collection=:10} ${author:36} ${title:*} ${journal:40}")
+            (inbook        . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} Chapter ${chapter:32}")
+            (incollection  . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4}  ${author:36} ${title:*} ${booktitle:40}")
+            (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4}  ${author:36} ${title:*} ${booktitle:40}")
+            (t             . "${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${=collection=:10} ${author:36} ${title:*}"))
+          )
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  (setq bibtex-completion-additional-search-fields '(collection))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2714,7 +2758,7 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up.
 
 #+begin_src emacs-lisp
 
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.1))
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (use-package org-fragtog
     :config (add-hook 'org-mode-hook 'org-fragtog-mode))
 
@@ -2769,57 +2813,57 @@ such styles. So my custom class is
 
 #+begin_src emacs-lisp
   (add-to-list 'org-latex-classes
-                 '("handout"
-                   "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-    \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
-    \\geometry{left=30mm,right=30mm,bottom=20mm}
-    \\usepackage[utf8]{inputenc}
-    \\usepackage{amsthm, amssymb, amsmath}
-    \\usepackage{graphicx}
-    \\usepackage{grffile}
-    \\usepackage{longtable}
-    \\usepackage{wrapfig}
-    \\usepackage{rotating}
-    \\usepackage[normalem]{ulem}
-    \\usepackage{amsmath}
-    \\usepackage{textcomp}
-    \\usepackage{amssymb}
-    \\usepackage{capt-of}
-    \\usepackage[pagebackref=true,%
-                 colorlinks=true,%
-                 urlcolor=blue,%
-                 pdfborder={0 0 0}]{hyperref}
-    \\usepackage{fancyhdr}
-    \\renewcommand{\\textfraction}{0.05}
-    \\renewcommand{\\topfraction}{0.8}
-    \\renewcommand{\\bottomfraction}{0.8}
-    \\renewcommand{\\floatpagefraction}{0.75}
-    \\fancyfoot{}%
-    \\renewcommand{\\footrulewidth}{0.4pt}%
-    \\fancyfoot[C]{\\includegraphics[height=1cm]{%
-                   ~/.dotfiles/assets/itam-footer.png}%
-                   \\vspace{-1cm}}%
-    \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
-    \\pagestyle{fancy}
-    \\fancypagestyle{plain}{%
-    \\fancyhead{}%
-    \\renewcommand{\\headrulewidth}{0pt}%
-    \\pagestyle{fancy}}
-    \\fancypagestyle{toc}{%
-    \\fancyhf{}%
-    \\fancyhead[L]{\\nouppercase{\\rightmark}}
-    \\fancyhead[R]{\\nouppercase{\\leftmark}}
-    \\fancyfoot[C]{\\thepage}}
-    \\newcommand{\\chaptermark}[1]{%
-    \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
-          [NO-DEFAULT-PACKAGES]
-          [NO-PACKAGES]"
-                   ("\\section{%s}" . "\n\\section{%s}")
-                   ("\\subsection{%s}" . "\n\\subsection{%s}")
-                   ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-                   ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-                   ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-                   ))
+               '("handout"
+                 "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
+      \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
+      \\geometry{left=30mm,right=30mm,bottom=20mm}
+      \\usepackage[utf8]{inputenc}
+      \\usepackage{amsthm, amssymb, amsmath}
+      \\usepackage{graphicx}
+      \\usepackage{grffile}
+      \\usepackage{longtable}
+      \\usepackage{wrapfig}
+      \\usepackage{rotating}
+      \\usepackage[normalem]{ulem}
+      \\usepackage{amsmath}
+      \\usepackage{textcomp}
+      \\usepackage{amssymb}
+      \\usepackage{capt-of}
+      \\usepackage[pagebackref=true,%
+                   colorlinks=true,%
+                   urlcolor=blue,%
+                   pdfborder={0 0 0}]{hyperref}
+      \\usepackage{fancyhdr}
+      \\renewcommand{\\textfraction}{0.05}
+      \\renewcommand{\\topfraction}{0.8}
+      \\renewcommand{\\bottomfraction}{0.8}
+      \\renewcommand{\\floatpagefraction}{0.75}
+      \\fancyfoot{}%
+      \\renewcommand{\\footrulewidth}{0.4pt}%
+      \\fancyfoot[C]{\\includegraphics[height=1cm]{%
+                     ~/.dotfiles/assets/itam-footer.png}%
+                     \\vspace{-1cm}}%
+      \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
+      \\pagestyle{fancy}
+      \\fancypagestyle{plain}{%
+      \\fancyhead{}%
+      \\renewcommand{\\headrulewidth}{0pt}%
+      \\pagestyle{fancy}}
+      \\fancypagestyle{toc}{%
+      \\fancyhf{}%
+      \\fancyhead[L]{\\nouppercase{\\rightmark}}
+      \\fancyhead[R]{\\nouppercase{\\leftmark}}
+      \\fancyfoot[C]{\\thepage}}
+      \\newcommand{\\chaptermark}[1]{%
+      \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
+            [NO-DEFAULT-PACKAGES]
+            [NO-PACKAGES]"
+                 ("\\section{%s}" . "\n\\section{%s}")
+                 ("\\subsection{%s}" . "\n\\subsection{%s}")
+                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
+                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
+                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
+                 ))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2885,13 +2929,13 @@ In the end, I haven't been able to set this properly as I have duplicated titles
 
 Let's define the processing for the export through latexmk: 
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (setq org-latex-pdf-process '("latexmk -f -pdf %f -shell-escape -interaction=nonstopmode -output-directory=%o"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 
-(setq org-latex-to-pdf-process
+(setq org-latex-pdf-process
            '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
              "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
@@ -2984,7 +3028,7 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (org-download-image-dir "images")
       (org-download-heading-lvl nil)
       (org-download-timestamp "%Y%m%d-%H%M%S_")
-      (org-download-image-attr-list '("#+attr_html: :width 700 :align center"))
+      (org-download-image-attr-list '("#+attr_html: :width 1200 :align center"))
       (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
       :bind
       ("C-c n s" . org-download-screenshot)
@@ -3033,7 +3077,23 @@ Use ~M-x arxiv-search~ to perform a simple search on the arXiv database.
     (setq arxiv-default-bibliography "~/orgfiles/references/bibliography-arxiv.bib"
           arxiv-default-download-folder "~/orgfiles/references/arxiv-pdfs/"
           arxiv-default-category "stat"
-          arxiv-startup-with-abstract-window t)     
+          arxiv-startup-with-abstract-window t)
+
+    (defun arxiv-read-load ()
+      "Read recent (past month) submissions of arXiv in a given category."
+      (interactive)
+      (let*
+          ((date-end (format-time-string "%Y%m%d" (current-time)))
+           (date-start (format-time-string "%Y%m%d" (time-subtract (current-time) (* 30 86400))))
+           (category (completing-read "Select category: "
+                                      arxiv-categories nil t nil nil arxiv-default-category)))
+        (setq arxiv-query-info (format " Showing recent submissions in %s in the past month (%s to %s)." category date-start date-end))
+        (setq date-start (concat date-start "0000"))
+        (setq date-end (concat date-end "0000"))
+        (setq arxiv-entry-list (arxiv-query category date-start date-end))
+        (setq arxiv-query-data-list `((date-start . ,date-start) (date-end . ,date-end) (category . ,category)))
+        (setq arxiv-mode-entry-function 'arxiv-read-recent)
+        (arxiv-populate-page)))
     )
 #+end_src
 

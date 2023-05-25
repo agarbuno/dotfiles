@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: assignment title
+# key: <atitle
+# group : rmarkdown
+# --
+
+---
+title: ${1:Assignment title}
+output:
+  pdf_document:
+    extra_dependencies: awesomebox
+---
+$0

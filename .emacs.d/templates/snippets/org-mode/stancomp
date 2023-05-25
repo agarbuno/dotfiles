@@ -1,11 +1,13 @@
 # -*- mode: snippet -*-
 # name: stan comp
 # key: <stanc
-# group : stan  
+# group : stan
+# expand-env: ((yas-indent-line 'fixed))
 # --
 #+begin_src R :exports none :results none
-  modelos_files <- "modelos/compilados/${1:aplicacion}"
-  ruta <- file.path("modelos/$1/${2:modelo}.stan")
+  ## Modelo ${1:Nombre del modelo} -----------------------------------------------
+  modelos_files <- "modelos/compilados/${2:aplicacion}"
+  ruta <- file.path("modelos/$2/${3:modelo}.stan")
   modelo <- cmdstan_model(ruta, dir = modelos_files)
 #+end_src
 $0

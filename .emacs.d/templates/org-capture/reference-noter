@@ -9,7 +9,7 @@
 
 %?
 
-* %^{citekey} - %^{title}                                  :noter:
+* %^{citekey}                                   :noter:
 :PROPERTIES:
 :URL: %^{url}
 :AUTHOR: %^{author}

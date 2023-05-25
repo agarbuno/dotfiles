@@ -5,6 +5,11 @@
 \.rstudio
 \.zshrc
 \.config
+renv
+.Rprofile
+renv.lock
+rscripts
+\.condaenvs
 # By any reason this not should be included in the stow syncing 
 \.DS_Store
 auto
