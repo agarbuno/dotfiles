@@ -3,7 +3,7 @@
 
 ;; You will most likely need to adjust this font size for your system!
 (defvar ag/default-font-size 150)
-(defvar ag/default-variable-font-size 150)
+(defvar ag/default-variable-font-size 1.0)
 
 ;; Make frame transparency overridable
 (defvar ag/frame-transparency '(96 . 96))
@@ -153,22 +153,25 @@
 
 (set-face-attribute
  'default nil
- :font "FiraCode Nerd Font Mono"
- :height ag/default-font-size)
+ :font "JetBrains Mono"
+ :height ag/default-font-size
+ )
 
 ;; Set the fixed pitch face
 (set-face-attribute
  'fixed-pitch nil
  :font "JetBrains Mono"
  :weight 'medium
- :height ag/default-font-size)
+ :height ag/default-variable-font-size
+ )
 
 ;; Set the variable pitch face
 (set-face-attribute
  'variable-pitch nil
  :font "Cantarell"
- :height ag/default-font-size
- :weight 'regular)
+ :height ag/default-variable-font-size
+ :weight 'regular
+ )
 
 (use-package solaire-mode
   :config
@@ -253,7 +256,9 @@
   (set-face-attribute 'org-block nil
                       :background (color-darken-name
                                    (face-attribute 'default :background) 5)
-                      :font "FiraCode Nerd Font Mono")
+                      :font "JetBrains Mono"
+                      :height ag/default-variable-font-size
+                      )
   (set-face-attribute 'org-block-begin-line nil
                       :background (color-darken-name
                                    (face-attribute 'default :background) -10))
@@ -273,7 +278,8 @@
                       :background
                       (color-darken-name
                        (face-attribute 'default :background) 5)
-                      :font "FiraCode Nerd Font Mono")
+                      :font "JetBrains Mono"
+                      :height ag/default-variable-font-size)
   (set-face-attribute 'org-block-begin-line nil
                       :background
                       (color-darken-name
@@ -1510,9 +1516,11 @@
   (setq bibtex-completion-notes-symbol "✎")
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
+  (setq bibtex-completion-additional-search-fields '(collection keywords booktitle))
+
   (setq bibtex-completion-display-formats
-        '((t . "${=collection=:10} ${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:80} ${keywords:31}"))
-    )
+        '((t . "${collection:7}${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+        )
 
   (defun bibtex-completion-format-citation-org-cite-original (keys)
     "Format org-links using Org mode's own cite syntax."
