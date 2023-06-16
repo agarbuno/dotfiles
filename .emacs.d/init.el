@@ -1829,6 +1829,27 @@
   :config
   (elfeed-org)
   (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
+
+  (defface stats-elfeed-entry
+    `((t :background ,(color-lighten-name "palevioletred" -40)))
+    "Marks a relevant Elfeed entry.")
+
+  (defface ml-elfeed-entry
+    `((t :background ,(color-lighten-name "linen" -60)))
+    "Marks an important Elfeed entry.")
+
+  (defface siam-elfeed-entry
+    `((t :background ,(color-lighten-name "mediumturquoise" -30)))
+    "Marks an important Elfeed entry.")
+
+  (push '(uq siam-elfeed-entry)
+        elfeed-search-face-alist)
+
+  (push '(ml ml-elfeed-entry)
+        elfeed-search-face-alist)
+
+  (push '(stats stats-elfeed-entry)
+        elfeed-search-face-alist)
   )
 
 (defun ag/org-start-presentation ()
