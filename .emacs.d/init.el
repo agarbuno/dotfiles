@@ -2,8 +2,8 @@
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar ag/default-font-size 150)
-(defvar ag/default-variable-font-size 1.0)
+(defvar ag/default-font-size 160)
+(defvar ag/default-variable-font-size 1.02)
 
 ;; Make frame transparency overridable
 (defvar ag/frame-transparency '(96 . 96))
@@ -48,6 +48,8 @@
 
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
+(setq backup-directory-alist `(("." . "~/.emacs.d/data/backup")))
 
 (use-package auto-package-update
   :custom
@@ -262,6 +264,9 @@
   (set-face-attribute 'org-block-begin-line nil
                       :background (color-darken-name
                                    (face-attribute 'default :background) -10))
+  (set-face-attribute 'org-drawer nil
+                      :font "JetBrains Mono"
+                      )
   )
 
 
@@ -284,6 +289,9 @@
                       :background
                       (color-darken-name
                        (face-attribute 'default :background) -10))
+  (set-face-attribute 'org-drawer nil
+                      :font "JetBrains Mono"
+                      )
   )
 
 (use-package doom-modeline
@@ -1518,8 +1526,16 @@
 
   (setq bibtex-completion-additional-search-fields '(collection keywords booktitle))
 
+  ;; (setq bibtex-completion-display-formats
+  ;;       '((t . "${collection:7}${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+  ;;       )
+
   (setq bibtex-completion-display-formats
-        '((t . "${collection:7}${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+        '((article       . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${journal:40}")
+          (inbook        . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} Chapter ${chapter:32}")
+          (incollection  . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${booktitle:40}")
+          (inproceedings . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${booktitle:40}")
+          (t             . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*}"))
         )
 
   (defun bibtex-completion-format-citation-org-cite-original (keys)
