@@ -1829,6 +1829,7 @@
   :config
   (elfeed-org)
   (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
+  (setq elfeed-search-title-max-width 120)
 
   (defface stats-elfeed-entry
     `((t :background ,(color-lighten-name "palevioletred" -40)))
@@ -1851,6 +1852,15 @@
   (push '(stats stats-elfeed-entry)
         elfeed-search-face-alist)
   )
+
+(use-package elfeed-score
+  :ensure t
+  :config
+  (progn
+    (elfeed-score-enable)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map)))
+
+(setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
 
 (defun ag/org-start-presentation ()
   (interactive)

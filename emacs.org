@@ -131,7 +131,8 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#spell-checking][Spell checking]]
   - [[#pdf-viewing][PDF viewing]]
   - [[#arxiv-within-emacs][Arxiv within Emacs]]
-  - [[#rss-feeds][RSS Feeds]]
+  - [[#elfeeds][Elfeeds]]
+  - [[#elfeed-score][Elfeed-score]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
   - [[#org-reveal][Org-reveal]]
@@ -3119,7 +3120,7 @@ Use ~M-x arxiv-search~ to perform a simple search on the arXiv database.
     )
 #+end_src
 
-** RSS Feeds
+** Elfeeds
 
 I need to sort out how to make use of this within org-mode by following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/][this]], [[https://cundy.me/post/elfeed/][this]] and [[https://pragmaticemacs.wordpress.com/2016/08/17/read-your-rss-feeds-in-emacs-with-elfeed/][this]]. 
 
@@ -3146,6 +3147,7 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
     :config
     (elfeed-org)
     (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
+    (setq elfeed-search-title-max-width 120)
 
     (defface stats-elfeed-entry
       `((t :background ,(color-lighten-name "palevioletred" -40)))
@@ -3161,7 +3163,7 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
 
     (push '(uq siam-elfeed-entry)
           elfeed-search-face-alist)
-    
+
     (push '(ml ml-elfeed-entry)
           elfeed-search-face-alist)
 
@@ -3169,6 +3171,20 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
           elfeed-search-face-alist)
     )
 #+end_src
+
+** Elfeed-score
+
+#+begin_src emacs-lisp
+  (use-package elfeed-score
+    :ensure t
+    :config
+    (progn
+      (elfeed-score-enable)
+      (define-key elfeed-search-mode-map "=" elfeed-score-map)))
+
+  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+#+end_src
+
 
 * Presentations
 ** Org-tree-slide
