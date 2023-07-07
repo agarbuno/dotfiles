@@ -131,7 +131,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
   - [[#spell-checking][Spell checking]]
   - [[#pdf-viewing][PDF viewing]]
   - [[#arxiv-within-emacs][Arxiv within Emacs]]
-  - [[#elfeeds][Elfeeds]]
+  - [[#elfeed][Elfeed]]
   - [[#elfeed-score][Elfeed-score]]
 - [[#presentations][Presentations]]
   - [[#org-tree-slide][Org-tree-slide]]
@@ -3101,7 +3101,7 @@ Use ~M-x arxiv-search~ to perform a simple search on the arXiv database.
     )
 #+end_src
 
-** Elfeeds
+** Elfeed
 
 I need to sort out how to make use of this within org-mode by following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Scoring-elfeed-articles/][this]], [[https://cundy.me/post/elfeed/][this]] and [[https://pragmaticemacs.wordpress.com/2016/08/17/read-your-rss-feeds-in-emacs-with-elfeed/][this]]. 
 
@@ -3125,10 +3125,13 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
 #+begin_src emacs-lisp
   (use-package elfeed-org
     :ensure t
+    ;; :bind (("C-c n e" . elfeed))
     :config
     (elfeed-org)
     (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
-    (setq elfeed-search-title-max-width 120)
+    (setq elfeed-search-title-max-width 100)
+    (setq elfeed-show-entry-switch 'display-buffer)
+    (setq elfeed-search-remain-on-entry t)
 
     (defface stats-elfeed-entry
       `((t :background ,(color-lighten-name "palevioletred" -40)))
@@ -3142,8 +3145,16 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
       `((t :background ,(color-lighten-name "mediumturquoise" -30)))
       "Marks an important Elfeed entry.")
 
+    (defface review-elfeed-entry
+      `((t :background ,(color-lighten-name "powderblue" -40)))
+      "Marks an important Elfeed entry.")
+
     (push '(uq siam-elfeed-entry)
           elfeed-search-face-alist)
+
+    (push '(review review-elfeed-entry)
+          elfeed-search-face-alist)
+
 
     (push '(ml ml-elfeed-entry)
           elfeed-search-face-alist)
@@ -3151,6 +3162,20 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
     (push '(stats stats-elfeed-entry)
           elfeed-search-face-alist)
     )
+#+end_src
+
+#+begin_src emacs-lisp
+  (define-key elfeed-search-mode-map (kbd "i")
+    (lambda () (interactive)
+      (elfeed-search-set-filter "@6-months-ago +unread")))
+
+  (define-key elfeed-search-mode-map (kbd "o")
+    (lambda () (interactive)
+      (elfeed-search-set-filter "@2-years-old +unread")))
+
+  (define-key elfeed-search-mode-map (kbd "a")
+    (lambda () (interactive)
+      (elfeed-search-set-filter "@6-months-ago")))
 #+end_src
 
 ** Elfeed-score

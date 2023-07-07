@@ -473,6 +473,7 @@
   (setq org-latex-classes nil)
 
   (setq org-agenda-start-with-log-mode t)
+  (setq org-popup-calendar-for-date-prompt t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
 
@@ -505,11 +506,12 @@
           ("admin" . ?a)
           ("book"  . ?b)
           ("course" . ?c)
-          ("exam" . ?e)
-          ("hw"   . ?h)
+          ("email" . ?e)
+          ("followup" . ?f)
           ("papers" . ?p)
           ("read" . ?r)
           ("study"  . ?s)
+          ("thesis" . ?t)
           ("write"  . ?w)
           ))
 
@@ -518,30 +520,30 @@
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "/!-BACKLOG" (
-                      (org-agenda-start-on-weekday 0)
-                      (org-agenda-remove-tags t)
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")
-                      (org-deadline-warning-days 7)
-                      ))
-          (todo "NEXT|WAIT"
+                                (org-agenda-start-on-weekday 0)
+                                (org-agenda-remove-tags t)
+                                (org-agenda-show-inherited-tags nil)
+                                (org-agenda-prefix-format "   %-2i ")
+                                (org-deadline-warning-days 7)
+                                ))
+          (todo "NEXT"
                 ((org-agenda-overriding-header "Ongoing Tasks")
                  (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+research/!-NEXT-WAIT"
+          (tags-todo "+research/!-NEXT"
                      ((org-agenda-overriding-header "1. Research")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+teaching/!-NEXT-WAIT"
+          (tags-todo "+teaching/!-NEXT"
                      ((org-agenda-overriding-header "2. Teaching")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))            
-          (tags-todo "+mcdatos/!-NEXT-WAIT"
+          (tags-todo "+maestria/!-NEXT"
                      ((org-agenda-overriding-header "3. Maestria")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+projects/!-NEXT-WAIT"
+          (tags-todo "+projects/!-NEXT"
                      ((org-agenda-overriding-header "4. Projects")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
@@ -550,7 +552,7 @@
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
 
-          (tags-todo "-research-teaching-mcdatos-projects/!-NEXT"
+          (tags-todo "-research-teaching-mcdatos-projects-maestria/!-NEXT"
                      ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")
@@ -564,66 +566,40 @@
                 ((org-agenda-overriding-header "Next Tasks")))))
 
         ("W" "Work Tasks" tags-todo "+work-email")
-        ))
+        )
+      )
 
 (setq org-capture-templates
       `(
-        ("m" "mcdatos") ;; ====================================================
-          ("ma" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("ms" "students" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :students:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("mp" "prospects" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("mt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
-        ("r" "research") ;; ===================================================
-          ("ra" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("ri" "ideas" entry 
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rr" "read" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :read:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rs" "study" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rw" "write" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
-        ("t" "teaching") ;; ===================================================
-          ("ta" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("tc" "class" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :class:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("tg" "grades" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :grades:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("tt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
-        ("p" "projects") ;; ===================================================
-          ("pa" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("pi" "ideas" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("pf" "followup" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO %? \t :followup:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ))
+        ("m" "maestria" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Maestria")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|email|students|prospects|thesis}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("r" "research" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|email|ideas|read|write}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("t" "teaching" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|class|email|thesis}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("p" "projects" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|email|ideas|followup}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ))
 
 (define-key global-map (kbd "C-c t t")
   (lambda () (interactive) (org-capture nil "tt")))
@@ -646,13 +622,16 @@
 (setq org-agenda-category-icon-alist
       `(;; Main categories =================================================
         ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
-        ("mcdatos" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+        ("maestria" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
         ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
         ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
-        ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
         ;; Subcategories ===================================================
-        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
+        ("admin" ,(list (nerd-icons-mdicon "nf-md-android_studio")) nil nil :ascent center)
         ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+        ("class" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+        ("email" ,(list (nerd-icons-mdicon	"nf-md-email_outline")) nil nil :ascent center)
+        ("followup" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
         ("thesis" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
         )
       )
@@ -978,7 +957,7 @@
     )
 
 (add-to-list 'org-roam-capture-templates
-             '("n" "references notes"  plain
+             '("n" "notes | papers | books"  plain
                (file "~/.emacs.d/templates/org-capture/reference-noter")
                :if-new
                (file+head
@@ -988,12 +967,18 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("t" "thesis revision"  plain
+             '("r" "revision | papers | thesis"  plain
                (file "~/.emacs.d/templates/org-capture/thesis-rev")
                :if-new
                (file+head
                 "bibtex/%<%Y%m%d>-${citekey}.org"
                 "#+title: ${title}\n")
+               :unnarrowed t)
+             )
+
+(add-to-list 'org-roam-capture-templates
+             '("d" "default" plain "%?" :if-new
+               (file+head "pages/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
                :unnarrowed t)
              )
 
@@ -1826,10 +1811,13 @@
 
 (use-package elfeed-org
   :ensure t
+  ;; :bind (("C-c n e" . elfeed))
   :config
   (elfeed-org)
   (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
-  (setq elfeed-search-title-max-width 120)
+  (setq elfeed-search-title-max-width 100)
+  (setq elfeed-show-entry-switch 'display-buffer)
+  (setq elfeed-search-remain-on-entry t)
 
   (defface stats-elfeed-entry
     `((t :background ,(color-lighten-name "palevioletred" -40)))
@@ -1843,8 +1831,16 @@
     `((t :background ,(color-lighten-name "mediumturquoise" -30)))
     "Marks an important Elfeed entry.")
 
+  (defface review-elfeed-entry
+    `((t :background ,(color-lighten-name "powderblue" -40)))
+    "Marks an important Elfeed entry.")
+
   (push '(uq siam-elfeed-entry)
         elfeed-search-face-alist)
+
+  (push '(review review-elfeed-entry)
+        elfeed-search-face-alist)
+
 
   (push '(ml ml-elfeed-entry)
         elfeed-search-face-alist)
@@ -1852,6 +1848,18 @@
   (push '(stats stats-elfeed-entry)
         elfeed-search-face-alist)
   )
+
+(define-key elfeed-search-mode-map (kbd "i")
+  (lambda () (interactive)
+    (elfeed-search-set-filter "@6-months-ago +unread")))
+
+(define-key elfeed-search-mode-map (kbd "o")
+  (lambda () (interactive)
+    (elfeed-search-set-filter "@2-years-old +unread")))
+
+(define-key elfeed-search-mode-map (kbd "a")
+  (lambda () (interactive)
+    (elfeed-search-set-filter "@6-months-ago")))
 
 (use-package elfeed-score
   :ensure t
