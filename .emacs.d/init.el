@@ -590,7 +590,7 @@
          "* TODO \t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Task|admin|class|email|thesis}
+ :CATEGORY: %^{Task|admin|advisee|class|email|thesis}
  :END:\n %a\n  %i" :empty-lines 1)
         ("p" "projects" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
@@ -624,15 +624,17 @@
         ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
         ("maestria" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
         ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+        ("habits" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
         ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
         ;; Subcategories ===================================================
         ("admin" ,(list (nerd-icons-mdicon "nf-md-android_studio")) nil nil :ascent center)
         ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
-        ("class" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+        ("class" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
         ("email" ,(list (nerd-icons-mdicon	"nf-md-email_outline")) nil nil :ascent center)
         ("followup" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
         ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
-        ("thesis" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+        ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
+        ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
         )
       )
 
@@ -1896,7 +1898,7 @@
   (org-sticky-header-mode 1)
   (org-tree-slide-mode 0)
   (setq-local face-remapping-alist '((default variable-pitch default)))
-  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
+  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (visual-fill-column-mode 1)
   (setq org-src-window-setup 'split-window-below)
   (org-mode-restart)
