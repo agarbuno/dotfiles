@@ -980,14 +980,6 @@
         "vctrs"
       ]
     },
-    "distributions": {
-      "Package": "distributions",
-      "Version": "0.0.0.9000",
-      "Source": "unknown",
-      "Remotes": "agarbuno/distributions",
-      "Hash": "1c9cd4604e97e841b0de7cfd7e89eb7d",
-      "Requirements": []
-    },
     "doParallel": {
       "Package": "doParallel",
       "Version": "1.0.17",
