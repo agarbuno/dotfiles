@@ -4,17 +4,24 @@
 #+BEGIN_NOTES
 - authors :: %^{author}
 - year :: %^{year}
+- journal :: %^{journal}
+- link :: %^{doi}
 - keywords :: %^{keywords}
 #+END_NOTES
 
 %?
 
-* %^{citekey}                                   :noter:
+* Take-home messages
+
+* Summary
+
+* Figures 
+
+* Notes on %^{citekey}                                   :noter:
 :PROPERTIES:
-:URL: %^{url}
+:URL: %^{doi}
 :AUTHOR: %^{author}
-:NOTER_DOCUMENT: %^{file} 
+:NOTER_DOCUMENT: %^{file}
 :NOTER_PAGE:              
 :END:
-
 
