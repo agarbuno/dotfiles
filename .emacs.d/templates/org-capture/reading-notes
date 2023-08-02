@@ -5,8 +5,10 @@
 - authors :: %^{author}
 - year :: %^{year}
 - journal :: %^{journal}
-- link :: %^{doi}
+- doi :: %^{doi}
 - keywords :: %^{keywords}
+- roam-tags :: 
+- file :: [[%^{file}][document]]
 #+END_NOTES
 
 %?
@@ -14,6 +16,8 @@
 * Take-home messages
 
 * Summary
+
+%^{abstract}
 
 * Figures 
 
