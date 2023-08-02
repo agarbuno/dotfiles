@@ -273,7 +273,9 @@
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
-  :init (load-theme 'doom-moonlight t))
+  ;; :init (load-theme 'doom-moonlight t))
+  :init (load-theme 'doom-nord-aurora t))
+
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
@@ -552,7 +554,7 @@
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
 
-          (tags-todo "-research-teaching-mcdatos-projects-maestria/!-NEXT"
+          (tags-todo "-research-teaching-mcdatos-projects-maestria-habits/!-NEXT"
                      ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")
@@ -622,7 +624,7 @@
 (setq org-agenda-category-icon-alist
       `(;; Main categories =================================================
         ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
-        ("maestria" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+        ("maestria" ,(list (nerd-icons-octicon "nf-oct-log")) nil nil :ascent center)
         ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
         ("habits" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
         ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
@@ -796,26 +798,29 @@
     (concat
      (if functiontag
          (cond ((member "paper" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "journal" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
              ((member "conferences" functiontag)
-                  (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                  (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
-               ((member "online" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-book_open_page_variant_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "resources" functiontag)
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "meetings" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
-               ((member "courses" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "teaching" functiontag)
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-dependabot" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "projects" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "maestria" functiontag)
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-log" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "research" functiontag)
+                (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
            )
-       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
-       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
+       (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
        )
      " "
      (propertize (string-join functiontag ", ") 'face 'all-the-icons-lblue)
@@ -846,12 +851,12 @@
          (separator (concat " " (all-the-icons-material "chevron_right") " "))
          )
     (cond
-     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "list" :face 'all-the-icons-blue))
+     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
                            " "
                            (propertize shortentitle 'face 'org-roam-dim)
                            (propertize separator 'face 'org-roam-dim)
                            title))
-     (t (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "insert_drive_file" :face 'all-the-icons-yellow))
+     (t (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-faicon "nf-fa-file_text" :face 'all-the-icons-yellow))
                 " "
                 title))
      )
@@ -861,7 +866,7 @@
 )
 
 (setq ag/lit-categories
-          '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects" "conferences")
+          '("research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
           )
 (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
 
@@ -899,6 +904,8 @@
   )
 
 (use-package org-ref
+  :after org
+  :defer t
   :init
   (require 'bibtex)
   (require 'org-ref-ivy)
@@ -913,6 +920,8 @@
   )
 
 (use-package org-roam-bibtex
+  :after org
+  :defer t
   :bind (("C-c b d" . doi-add-bibtex-entry)
          ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
          ("C-c b k" . org-ref-clean-bibtex-entry))
@@ -922,7 +931,8 @@
   :config
   (require 'org-ref)
 
-  (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
+  (setq orb-preformat-keywords
+        '("citekey" "author" "year" "title" "keywords" "file" "doi" "journal" "abstract")
         orb-process-file-keyword t
         orb-file-field-extensions '("pdf"))
   )
@@ -945,22 +955,35 @@
   )
 
 (use-package org-noter
-    :config
-    (setq org-noter-always-create-frame nil
-          org-noter-separate-notes-from-heading t
-          org-noter-default-heading-title "Page $p$"
-          org-noter-auto-save-last-location t
-          org-noter-separate-notes-from-heading t
-          org-noter-doc-property-in-notes t
-          org-noter-hide-other t
-          org-noter-doc-split-fraction '(.60 . .5)
-          org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
-          )
-    )
+  :bind (("C-c n o" . org-noter)
+         ("C-c n q" . org-noter-kill-session))
+  :config
+  (setq org-noter-always-create-frame nil
+        org-noter-separate-notes-from-heading t
+        org-noter-default-heading-title "Page $p$"
+        org-noter-auto-save-last-location t
+        org-noter-separate-notes-from-heading t
+        org-noter-doc-property-in-notes t
+        org-noter-hide-other t
+        org-noter-doc-split-fraction '(.60 . .5)
+        org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
+        )
+  )
 
 (add-to-list 'org-roam-capture-templates
-             '("n" "notes | papers | books"  plain
-               (file "~/.emacs.d/templates/org-capture/reference-noter")
+             '("n" "notes"  plain
+               (file "~/.emacs.d/templates/org-capture/reading-notes")
+               :if-new
+               (file+head
+                "bibtex/%<%Y%m%d>-${citekey}.org"
+                "#+title: ${title}\n")
+               :unnarrowed t
+               :jump-to-captured t)
+             )
+
+(add-to-list 'org-roam-capture-templates
+             '("r" "revision"  plain
+               (file "~/.emacs.d/templates/org-capture/thesis-revision")
                :if-new
                (file+head
                 "bibtex/%<%Y%m%d>-${citekey}.org"
@@ -969,11 +992,11 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("r" "revision | papers | thesis"  plain
-               (file "~/.emacs.d/templates/org-capture/thesis-rev")
+             '("m" "mathematics"  plain
+               (file "~/.emacs.d/templates/org-capture/concept-template")
                :if-new
                (file+head
-                "bibtex/%<%Y%m%d>-${citekey}.org"
+                "pages/%<%Y%m%d%H%M%S>-${slug}.org"
                 "#+title: ${title}\n")
                :unnarrowed t)
              )
@@ -1501,12 +1524,15 @@
          ("C-c b h" . org-ref-bibtex-hydra/body)
          )
   :config
-  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
-                                         "~/orgfiles/references/bibliography-wpdfs.bib"
-                                         "~/orgfiles/references/bibliography-arxiv.bib"))
+  (setq bibtex-completion-bibliography
+        '("~/orgfiles/references/bibliography.bib"
+          "~/orgfiles/references/bibliography-wpdfs.bib"
+          "~/orgfiles/references/bibliography-arxiv.bib"))
   (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
          bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
+
+  (setq bibtex-completion-pdf-field "file")
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
@@ -1586,6 +1612,7 @@
 
 (use-package lsp-latex
   :after auctex
+  :defer t
   :config
   (add-hook 'TeX-mode-hook 'lsp)
   (add-hook 'LaTeX-mode-hook 'lsp)
@@ -1953,6 +1980,8 @@
     )
 
 (use-package org-re-reveal-citeproc
+  :after org
+  :defer t
   :config
   (require 'org-re-reveal)
   )
