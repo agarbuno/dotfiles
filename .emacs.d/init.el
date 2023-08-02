@@ -1619,9 +1619,31 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+;; Used to replace graphics generation of latex frags.
+(use-package math-preview
+  :custom
+  ;; (math-preview-command "/opt/homebrew/bin/math-preview")
+  (math-preview-command "/usr/local/bin/math-preview")
+  (math-preview-scale 1.5)
+  (math-preview-tex-marks-inline
+   '(("$" "$")))
+  (math-preview-tex-marks
+   '(("\\begin{equation}" "\\end{equation}")
+     ("\\begin{equation*}" "\\end{equation*}")
+     ("\\begin{align}" "\\end{align}")
+     ("\\begin{gather}" "\\end{gather}")
+     ("\\begin{subequations}" "\\end{subequations}")
+     ("$$" "$$")
+     ))
+  )
+(add-hook 'org-mode-hook #'math-preview-all)
+
+;; Used to get enter-ext display of latex
 (use-package org-fragtog
-  :config (add-hook 'org-mode-hook 'org-fragtog-mode))
+  :config 
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
+(defalias #'org-latex-preview #'math-preview-at-point)
+(defalias #'org-clear-latex-preview #'math-preview-clear-region)
 
 (setenv "TEXMFHOME" "~/.texmf")
 
