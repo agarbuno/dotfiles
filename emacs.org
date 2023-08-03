@@ -2932,16 +2932,6 @@ Let's define the processing for the export through latexmk:
           "pdflatex -interaction nonstopmode -output-directory %o %f"))
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
-  (require 'ox-latex)
-  (setq org-latex-pdf-process
-        '("pdflatex -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -interaction nonstopmode -output-directory %o %f"
-          "pdflatex -interaction nonstopmode -output-directory %o %f"))
-
-#+end_src
-
 The next chunk is added for my listings configuration. Listing config can be found in [[https://stat.ethz.ch/pipermail/r-help/2012-November/327858.html][here]] and [[https://tex.stackexchange.com/questions/110722/trying-to-include-r-code-with-listings-package][here]]. 
 
 #+begin_src emacs-lisp :tangle no
