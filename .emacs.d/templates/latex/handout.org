@@ -18,6 +18,8 @@
 #+LATEX_HEADER: \usepackage{textcomp}
 #+LATEX_HEADER: \usepackage{amssymb}
 #+LATEX_HEADER: \usepackage{capt-of}
+#+LATEX_HEADER: \usepackage{framed}
+#+LATEX_HEADER: \usepackage[most]{tcolorbox}
 
 #+LATEX_HEADER: \usepackage[pagebackref=true, colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
 #+LATEX_HEADER: \usepackage{fancyhdr}
@@ -60,6 +62,45 @@
 #+LATEX_HEADER: {}
 #+LATEX_HEADER: {\lstset{language={R},basicstyle={\ttfamily\footnotesize},frame=single,breaklines=true,fancyvrb=true,literate={"}{{\texttt{"}}}1{<-}{{$\bm\leftarrow$}}1{<<-}{{$\bm\twoheadleftarrow$}}1{~}{{$\bm\sim$}}1{<=}{{$\bm\le$}}1{>=}{{$\bm\ge$}}1{!=}{{$\bm\neq$}}1{^}{{$^{\bm\wedge}$}}1{|>}{{$\rhd$}}1,otherkeywords={!=, ~, $, \&, \%/\%, \%*\%, \%\%, <-, <<-, ::, /},extendedchars=false,commentstyle={\ttfamily \itshape\color{codegreen}},stringstyle={\color{red}}}
 #+LATEX_HEADER: {}
+
+#+LATEX_HEADER: \newtheoremstyle{mystyle}{}{}{}{}{\sffamily\bfseries}{.}{ }{}
+#+LATEX_HEADER: \newtheoremstyle{cstyle}{}{}{}{}{\sffamily\bfseries}{.}{ }{\thmnote{#3}}
+#+LATEX_HEADER: \makeatletter
+
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{definition}{Definition}[section]}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{proposition}[definition]{Proposition}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{theorem}[definition]{Theorem}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{lemma}[definition]{Lemma}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{corollary}[definition]{Corollary}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{remark}{Remark}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{remarks}{Remarks}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{example}{Example}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{examples}{Examples}}
+#+LATEX_HEADER: \theoremstyle{definition}{\newtheorem*{exercise}{Exercise}}
+#+LATEX_HEADER: \theoremstyle{cstyle}{\newtheorem*{cthm}{}}
+
+#+LATEX_HEADER: %Warning environment -------------------------------------------
+#+LATEX_HEADER: \newtheoremstyle{warn}{}{}{}{}{\normalfont}{}{ }{}
+#+LATEX_HEADER: \theoremstyle{warn}
+#+LATEX_HEADER: \newtheorem*{warning}{\warningsign{0.2}\relax}
+
+#+LATEX_HEADER: %Symbol for the warning environment, designed to be easily scalable
+#+LATEX_HEADER: \newcommand{\warningsign}[1]{\tikz[scale=#1,every node/.style={transform shape}]{\draw[-,line width={#1*0.8mm},red,fill=yellow,rounded corners={#1*2.5mm}] (0,0)--(1,{-sqrt(3)})--(-1,{-sqrt(3)})--cycle;
+#+LATEX_HEADER: \nod#+LATEX_HEADER: e at (0,-1) {\fontsize{48}{60}\selectfont\bfseries!};}}
+
+#+LATEX_HEADER: \tcolorboxenvironment{definition}{boxrule=0pt,boxsep=0pt,colback={red!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{red},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{proposition}{boxrule=0pt,boxsep=0pt,colback={Orange!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{Orange},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{theorem}{boxrule=0pt,boxsep=0pt,colback={blue!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{blue},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{lemma}{boxrule=0pt,boxsep=0pt,colback={Cyan!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{Cyan},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{corollary}{boxrule=0pt,boxsep=0pt,colback={violet!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{violet},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{proof}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{CadetBlue!80!white},left=8pt,right=8pt,sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{remark}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Green},left=8pt,right=8pt,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{remarks}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Green},left=8pt,right=8pt,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{example}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Black},left=8pt,right=8pt,sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{examples}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Black},left=8pt,right=8pt,sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{cthm}{boxrule=0pt,boxsep=0pt,colback={gray!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{gray},sharp corners,before skip=10pt,after skip=10pt,breakable}
+
+
 
 #+LATEX_HEADER: \theoremstyle{plain}
 #+LATEX_HEADER: \newtheorem{theorem}{Teorema}[section]
