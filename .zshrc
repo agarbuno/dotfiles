@@ -218,3 +218,4 @@ alias cat=bat --paging=never
 alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user -U'
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export TEXMFHOME="/Users/agarbuno/.texmf"
