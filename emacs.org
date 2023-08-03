@@ -2880,6 +2880,29 @@ which I need to define as the default class:
 
 In the end, I haven't been able to set this properly as I have duplicated titles and author names. But if sorted out, I believe it should be something along these lines:
 
+#+begin_src emacs-lisp
+  (setq org-latex-title-command "\n
+  %% Front matter ------------------------------------------------------------
+  %%
+  \\title{%t}
+  \\begin{aug}
+      \\author{%a}
+  \\end{aug}
+  \\maketitle
+  %%
+  %% -------------------------------------------------------------------------
+  %%
+  \n\n")
+#+end_src
+
+#+begin_src emacs-lisp 
+  ;; This function removes the title in the preamble.
+  (defun my-org-latex-remove-title (str)
+    (replace-regexp-in-string "^\\\\title{.*}$" "" str))
+
+  (advice-add 'org-latex-template :filter-return 'my-org-latex-remove-title)
+#+end_src
+
 #+begin_src emacs-lisp :tangle no
 
   (setq org-latex-title-command "\n
@@ -2887,7 +2910,7 @@ In the end, I haven't been able to set this properly as I have duplicated titles
    %% 
    \\begin{frontmatter}
       \\title{%t}
-      \\author{%a}
+      %% \\author{%a}
    \\end{frontmatter} 
   ")
 

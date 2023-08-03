@@ -1662,6 +1662,25 @@
 
 (setq org-latex-default-class "org-plain-latex")
 
+(setq org-latex-title-command "\n
+%% Front matter ------------------------------------------------------------
+%%
+\\title{%t}
+\\begin{aug}
+    \\author{%a}
+\\end{aug}
+\\maketitle
+%%
+%% -------------------------------------------------------------------------
+%%
+\n\n")
+
+;; This function removes the title in the preamble.
+(defun my-org-latex-remove-title (str)
+  (replace-regexp-in-string "^\\\\title{.*}$" "" str))
+
+(advice-add 'org-latex-template :filter-return 'my-org-latex-remove-title)
+
 (setq org-latex-pdf-process
       '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
         "pdflatex -interaction nonstopmode -output-directory %o %f"
