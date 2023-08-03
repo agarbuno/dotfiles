@@ -1649,34 +1649,6 @@
 (setenv "TEXMFHOME" "~/.texmf")
 
 (add-to-list 'org-latex-classes
-             '("custom"
-               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-\\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
-\\geometry{left=30mm,right=30mm}
-\\usepackage[utf8]{inputenc}
-\\usepackage{amsthm, amssymb, amsmath}
-\\usepackage{graphicx}
-\\usepackage{grffile}
-\\usepackage{longtable}
-\\usepackage{wrapfig}
-\\usepackage{rotating}
-\\usepackage[normalem]{ulem}
-\\usepackage{amsmath}
-\\usepackage{textcomp}
-\\usepackage{amssymb}
-\\usepackage{capt-of}
-\\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
-      [NO-DEFAULT-PACKAGES]
-      [NO-PACKAGES]"
-               ("\\section{%s}" . "\n\\section{%s}")
-               ("\\subsection{%s}" . "\n\\subsection{%s}")
-               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-               )           
-             )
-
-(add-to-list 'org-latex-classes
              '("org-plain-latex" ;; I use this in base class in all of my org exports.
                "\\documentclass{imsart}
 [NO-DEFAULT-PACKAGES]
@@ -1688,7 +1660,7 @@
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-(setq org-latex-default-class "custom")
+(setq org-latex-default-class "org-plain-latex")
 
 (setq org-latex-pdf-process
       '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
