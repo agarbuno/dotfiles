@@ -637,6 +637,7 @@
         ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
         ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
         ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
+        ("read" ,(list (nerd-icons-mdicon "nf-md-book_open_page_variant_outline")) nil nil :ascent center)
         )
       )
 
@@ -1675,42 +1676,6 @@
                )           
              )
 
-(add-to-list 'org-latex-classes        
-             '("header"
-               "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
-\\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
-\\geometry{left=30mm,right=30mm}
-\\usepackage[utf8]{inputenc}
-\\usepackage{amsthm, amssymb, amsmath}
-\\usepackage{graphicx}
-\\usepackage{grffile}
-\\usepackage{longtable}
-\\usepackage{wrapfig}
-\\usepackage{rotating}
-\\usepackage[normalem]{ulem}
-\\usepackage{amsmath}
-\\usepackage{textcomp}
-\\usepackage{amssymb}
-\\usepackage{capt-of}
-\\definecolor{myGreen}{HTML}{006953}
-\\usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
-\\usepackage{fancyhdr} \\fancyhead{}
-\\fancyhead[L]{\\includegraphics[height=3cm]{~/.dotfiles/assets/mcd-header.png} \\vspace{-.7cm}}
-\\fancyhead[R]{{\\parbox[b][10mm][t]{0.5\\textwidth}{\\raggedleft{Departamento
-      Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
-      México.}}}\\vspace{.3cm}}
-\\renewcommand{\\headrulewidth}{.5pt}
-\\pagestyle{fancy}
-      [NO-DEFAULT-PACKAGES]
-      [NO-PACKAGES]"
-               ("\\section{%s}" . "\n\\section{%s}")
-               ("\\subsection{%s}" . "\n\\subsection{%s}")
-               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-               )
-             )
-
 (add-to-list 'org-latex-classes
              '("org-plain-latex" ;; I use this in base class in all of my org exports.
                "\\documentclass{imsart}
@@ -1725,10 +1690,8 @@
 
 (setq org-latex-default-class "custom")
 
-(require 'ox-latex)
 (setq org-latex-pdf-process
-      '("pdflatex -interaction nonstopmode -output-directory %o %f"
-        "pdflatex -interaction nonstopmode -output-directory %o %f"
+      '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
         "pdflatex -interaction nonstopmode -output-directory %o %f"
         "pdflatex -interaction nonstopmode -output-directory %o %f"))
 

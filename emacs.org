@@ -1050,6 +1050,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
           ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
           ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
           ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
+          ("read" ,(list (nerd-icons-mdicon "nf-md-book_open_page_variant_outline")) nil nil :ascent center)
           )
         )
 #+end_src
@@ -1789,7 +1790,6 @@ Make sure you have the =pyls= language server installed before trying =lsp-mode=
 
 There are a number of other language servers for Python so if you find that =pyls= doesn't work for you, consult the =lsp-mode= [[https://emacs-lsp.github.io/lsp-mode/page/languages/][language configuration documentation]] to try the others!
 
-
 *** Formatting using black
 
 #+begin_src emacs-lisp
@@ -1863,7 +1863,6 @@ Shamelessly porting config from [[https://gitlab.com/skalas/dotfiles/-/blob/mast
     :ensure t)
 
 #+end_src
-
 
 *** Jedi autocompletion (graveyard)
 
@@ -2888,44 +2887,6 @@ such styles. So my custom class is
 #+end_src
 
 #+begin_src emacs-lisp
-  (add-to-list 'org-latex-classes        
-               '("header"
-                 "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
-  \\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
-  \\geometry{left=30mm,right=30mm}
-  \\usepackage[utf8]{inputenc}
-  \\usepackage{amsthm, amssymb, amsmath}
-  \\usepackage{graphicx}
-  \\usepackage{grffile}
-  \\usepackage{longtable}
-  \\usepackage{wrapfig}
-  \\usepackage{rotating}
-  \\usepackage[normalem]{ulem}
-  \\usepackage{amsmath}
-  \\usepackage{textcomp}
-  \\usepackage{amssymb}
-  \\usepackage{capt-of}
-  \\definecolor{myGreen}{HTML}{006953}
-  \\usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
-  \\usepackage{fancyhdr} \\fancyhead{}
-  \\fancyhead[L]{\\includegraphics[height=3cm]{~/.dotfiles/assets/mcd-header.png} \\vspace{-.7cm}}
-  \\fancyhead[R]{{\\parbox[b][10mm][t]{0.5\\textwidth}{\\raggedleft{Departamento
-        Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
-        México.}}}\\vspace{.3cm}}
-  \\renewcommand{\\headrulewidth}{.5pt}
-  \\pagestyle{fancy}
-        [NO-DEFAULT-PACKAGES]
-        [NO-PACKAGES]"
-                 ("\\section{%s}" . "\n\\section{%s}")
-                 ("\\subsection{%s}" . "\n\\subsection{%s}")
-                 ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-                 ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-                 ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-                 )
-               )
-#+end_src
-
-#+begin_src emacs-lisp
   (add-to-list 'org-latex-classes
                '("org-plain-latex" ;; I use this in base class in all of my org exports.
                  "\\documentclass{imsart}
@@ -2964,14 +2925,14 @@ In the end, I haven't been able to set this properly as I have duplicated titles
 
 Let's define the processing for the export through latexmk: 
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
   (setq org-latex-pdf-process
         '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
           "pdflatex -interaction nonstopmode -output-directory %o %f"
           "pdflatex -interaction nonstopmode -output-directory %o %f"))
 #+end_src
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle no
   (require 'ox-latex)
   (setq org-latex-pdf-process
         '("pdflatex -interaction nonstopmode -output-directory %o %f"

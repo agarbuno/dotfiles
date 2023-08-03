@@ -4,7 +4,7 @@
 # group : latex
 # --
 :LATEX_PROPERTIES:
-#+SETUPFILE: ~/.emacs.d/templates/latex/handout.org
-#+EXPORT_FILE_NAME: ${1:../docs/}${2:filename}.pdf
+#+SETUPFILE: ~/.emacs.d/templates/latex/${1:$$(yas-choose-value '("handout" "letterhead"))}.org
+#+EXPORT_FILE_NAME: ${2:../docs/}${3:filename}.pdf
 :END:
 $0
