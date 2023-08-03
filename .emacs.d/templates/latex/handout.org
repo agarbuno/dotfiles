@@ -1,0 +1,65 @@
+#+OPTIONS: toc:nil date:nil author:nil tasks:nil
+#+LANGUAGE: sp
+
+#+LATEX_CLASS: org-plain-latex
+#+LATEX_CLASS_OPTIONS: [stslayout, reqno, noinfoline, preprint]
+
+#+LATEX_HEADER: \usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
+#+LATEX_HEADER: \geometry{left=30mm,right=30mm,bottom=20mm}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage{amsthm, amssymb, amsmath}
+#+LATEX_HEADER: \usepackage{grffile}
+#+LATEX_HEADER: \usepackage{longtable}
+#+LATEX_HEADER: \usepackage{wrapfig}
+#+LATEX_HEADER: \usepackage{rotating}
+#+LATEX_HEADER: \usepackage[normalem]{ulem}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{textcomp}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{capt-of}
+
+#+LATEX_HEADER: \usepackage[pagebackref=true, colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
+#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \renewcommand{\textfraction}{0.05}
+#+LATEX_HEADER: \renewcommand{\topfraction}{0.8}
+#+LATEX_HEADER: \renewcommand{\bottomfraction}{0.8}
+#+LATEX_HEADER: \renewcommand{\floatpagefraction}{0.75}
+#+LATEX_HEADER: \fancyfoot{}
+#+LATEX_HEADER: \renewcommand{\footrulewidth}{0.4pt}
+#+LATEX_HEADER: \fancyfoot[C]{\includegraphics[height=1cm]{~/.dotfiles/assets/itam-footer.png}\vspace{-1cm}}
+#+LATEX_HEADER: \fancyfoot[RE,LO]{\vspace{-1cm}\thepage}
+#+LATEX_HEADER: \pagestyle{fancy}
+
+#+LATEX_HEADER: \fancypagestyle{plain}{
+#+LATEX_HEADER: \fancyhead{}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0pt}
+#+LATEX_HEADER: \pagestyle{fancy}}
+
+#+LATEX_HEADER: \fancypagestyle{toc}{
+#+LATEX_HEADER: \fancyhf{}
+#+LATEX_HEADER: \fancyhead[L]{\nouppercase{\rightmark}}
+#+LATEX_HEADER: \fancyhead[R]{\nouppercase{\leftmark}}
+#+LATEX_HEADER: \fancyfoot[C]{\thepage}}
+#+LATEX_HEADER: \newcommand{\chaptermark}[1]{
+#+LATEX_HEADER: \markboth{\chaptername\ \thechapter.\ #1}{}}
+        
+#+LATEX_HEADER: \usepackage[spanish, ]{babel}
+#+LATEX_HEADER: \usepackage[sort,numbers]{natbib}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[capitalize]{cleveref}
+#+LATEX_HEADER: \decimalpoint
+#+LATEX_HEADER: \usepackage{framed}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage{fancyvrb}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \definecolor{backcolour}{rgb}{.95,0.95,0.92}
+#+LATEX_HEADER: \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+#+LATEX_HEADER: \definecolor{codegreen}{rgb}{0,0.6,0}
+
+#+LATEX_HEADER: {}
+#+LATEX_HEADER: {\lstset{language={R},basicstyle={\ttfamily\footnotesize},frame=single,breaklines=true,fancyvrb=true,literate={"}{{\texttt{"}}}1{<-}{{$\bm\leftarrow$}}1{<<-}{{$\bm\twoheadleftarrow$}}1{~}{{$\bm\sim$}}1{<=}{{$\bm\le$}}1{>=}{{$\bm\ge$}}1{!=}{{$\bm\neq$}}1{^}{{$^{\bm\wedge}$}}1{|>}{{$\rhd$}}1,otherkeywords={!=, ~, $, \&, \%/\%, \%*\%, \%\%, <-, <<-, ::, /},extendedchars=false,commentstyle={\ttfamily \itshape\color{codegreen}},stringstyle={\color{red}}}
+#+LATEX_HEADER: {}
+
+#+LATEX_HEADER_EXTRA: \definecolor{shadecolor}{gray}{.95}
+#+LATEX_HEADER_EXTRA: \newenvironment{NOTES}{\begin{lrbox}{\mybox}\begin{minipage}{0.95\textwidth}\begin{shaded}}{\end{shaded}\end{minipage}\end{lrbox}\fbox{\usebox{\mybox}}}
+

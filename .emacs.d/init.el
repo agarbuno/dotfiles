@@ -2,7 +2,7 @@
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar ag/default-font-size 160)
+(defvar ag/default-font-size 130)
 (defvar ag/default-variable-font-size 1.02)
 
 ;; Make frame transparency overridable
@@ -1675,58 +1675,6 @@
                )           
              )
 
-(add-to-list 'org-latex-classes
-             '("handout"
-               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-\\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
-\\geometry{left=30mm,right=30mm,bottom=20mm}
-\\usepackage[utf8]{inputenc}
-\\usepackage{amsthm, amssymb, amsmath}
-\\usepackage{grffile}
-\\usepackage{longtable}
-\\usepackage{wrapfig}
-\\usepackage{rotating}
-\\usepackage[normalem]{ulem}
-\\usepackage{amsmath}
-\\usepackage{textcomp}
-\\usepackage{amssymb}
-\\usepackage{capt-of}
-\\usepackage[pagebackref=true,%
-             colorlinks=true,%
-             urlcolor=blue,%
-             pdfborder={0 0 0}]{hyperref}
-\\usepackage{fancyhdr}
-\\renewcommand{\\textfraction}{0.05}
-\\renewcommand{\\topfraction}{0.8}
-\\renewcommand{\\bottomfraction}{0.8}
-\\renewcommand{\\floatpagefraction}{0.75}
-\\fancyfoot{}%
-\\renewcommand{\\footrulewidth}{0.4pt}%
-\\fancyfoot[C]{\\includegraphics[height=1cm]{%
-               ~/.dotfiles/assets/itam-footer.png}%
-               \\vspace{-1cm}}%
-\\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
-\\pagestyle{fancy}
-\\fancypagestyle{plain}{%
-\\fancyhead{}%
-\\renewcommand{\\headrulewidth}{0pt}%
-\\pagestyle{fancy}}
-\\fancypagestyle{toc}{%
-\\fancyhf{}%
-\\fancyhead[L]{\\nouppercase{\\rightmark}}
-\\fancyhead[R]{\\nouppercase{\\leftmark}}
-\\fancyfoot[C]{\\thepage}}
-\\newcommand{\\chaptermark}[1]{%
-\\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
-      [NO-DEFAULT-PACKAGES]
-      [NO-PACKAGES]"
-           ("\\section{%s}" . "\n\\section{%s}")
-           ("\\subsection{%s}" . "\n\\subsection{%s}")
-           ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-           ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-           ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-           ))
-
 (add-to-list 'org-latex-classes        
              '("header"
                "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
@@ -1763,12 +1711,26 @@
                )
              )
 
+(add-to-list 'org-latex-classes
+             '("org-plain-latex" ;; I use this in base class in all of my org exports.
+               "\\documentclass{imsart}
+[NO-DEFAULT-PACKAGES]
+[PACKAGES]
+[EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
 (setq org-latex-default-class "custom")
 
+(require 'ox-latex)
 (setq org-latex-pdf-process
-           '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+      '("pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
