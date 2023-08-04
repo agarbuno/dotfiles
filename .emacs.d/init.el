@@ -274,8 +274,8 @@
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
   ;; :init (load-theme 'doom-moonlight t))
-  :init (load-theme 'doom-nord-aurora t))
-
+  ;; :init (load-theme 'doom-nord-aurora t))
+  :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
@@ -1665,9 +1665,9 @@
 (setq org-latex-title-command "\n
 %% Front matter ------------------------------------------------------------
 %%
-\\title{%t}
+\\title{%t}%%  Needed for export purposes (messes with the regexp)
 \\begin{aug}
-    \\author{%a}
+    %%\\author{%a}
 \\end{aug}
 \\maketitle
 %%
