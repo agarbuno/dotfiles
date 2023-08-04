@@ -79,9 +79,9 @@
 #+LATEX_HEADER: \newtheoremstyle{cstyle}{}{}{}{}{\sffamily\bfseries}{.}{ }{\thmnote{#3}}
 #+LATEX_HEADER: \makeatletter
 
-#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{definition}{Definition}[section]}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{definition}{Definición}[section]}
 #+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{proposition}[definition]{Proposition}}
-#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{theorem}[definition]{Theorem}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{theorem}[definition]{Teorema}}
 #+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{lemma}[definition]{Lemma}}
 #+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{corollary}[definition]{Corollary}}
 #+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{remark}{Remark}}
