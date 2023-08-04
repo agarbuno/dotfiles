@@ -27,15 +27,20 @@
 #+LATEX_HEADER: \sectionfont{\sffamily\fontsize{15}{15}\selectfont}
 #+LATEX_HEADER: \subsectionfont{\sffamily\fontsize{10}{5}\selectfont}
 
-#+LATEX_HEADER: \usepackage{fancyhdr}
+#+LATEX_HEADER: \usepackage[twoside]{fancyhdr}
 #+LATEX_HEADER: \renewcommand{\textfraction}{0.05}
 #+LATEX_HEADER: \renewcommand{\topfraction}{0.8}
 #+LATEX_HEADER: \renewcommand{\bottomfraction}{0.8}
 #+LATEX_HEADER: \renewcommand{\floatpagefraction}{0.75}
+
 #+LATEX_HEADER: \fancyfoot{}
 #+LATEX_HEADER: \renewcommand{\footrulewidth}{0.4pt}
 #+LATEX_HEADER: \fancyfoot[C]{\includegraphics[height=1cm]{~/.dotfiles/assets/itam-footer.png}\vspace{-1cm}}
 #+LATEX_HEADER: \fancyfoot[RE,LO]{\vspace{-1cm}\thepage}
+
+#+LATEX_HEADER: \fancyhead{}
+#+LATEX_HEADER: \fancyhead[LE]{\nouppercase{\leftmark}}
+#+LATEX_HEADER: \fancyhead[RO]{\nouppercase{\leftmark}}
 #+LATEX_HEADER: \pagestyle{fancy}
 
 #+LATEX_HEADER: \fancypagestyle{plain}{
