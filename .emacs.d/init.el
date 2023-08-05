@@ -30,9 +30,9 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-    ;; Initialize use-package on non-Linux platforms
+;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
+  (package-install 'use-package))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
@@ -342,6 +342,7 @@
   ;; (message "Ivy got loaded!")
   (ivy-mode 1)
   (setq ivy-use-selectable-prompt t)
+  (setq ivy-wrap t)
   )
 
 
