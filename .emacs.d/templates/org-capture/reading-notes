@@ -1,0 +1,31 @@
+#+startup: content
+#+filetags: :%^{type|paper|book}:
+
+#+BEGIN_NOTES
+- authors :: %^{author}
+- year :: %^{year}
+- journal :: %^{journal}
+- doi :: %^{doi}
+- keywords :: %^{keywords}
+- roam-tags :: 
+- file :: [[%^{file}][document]]
+#+END_NOTES
+
+%?
+
+* Take-home messages
+
+* Summary
+
+%^{abstract}
+
+* Figures 
+
+* Notes on %^{citekey}                                   :noter:
+:PROPERTIES:
+:URL: %^{doi}
+:AUTHOR: %^{author}
+:NOTER_DOCUMENT: %^{file}
+:NOTER_PAGE:              
+:END:
+

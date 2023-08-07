@@ -1,0 +1,30 @@
+#+OPTIONS: toc:nil date:nil author:nil tasks:nil
+#+LANGUAGE: sp
+
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [reqno, noinfoline, preprint, oneside]
+
+\documentclass[ xreqno, noinfoline, preprint, oneside]{article}
+#+LATEX_HEADER: \usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
+#+LATEX_HEADER: \geometry{left=30mm,right=30mm}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage{amsthm, amssymb, amsmath}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{grffile}
+#+LATEX_HEADER: \usepackage{longtable}
+#+LATEX_HEADER: \usepackage{wrapfig}
+#+LATEX_HEADER: \usepackage{rotating}
+#+LATEX_HEADER: \usepackage[normalem]{ulem}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{textcomp}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{capt-of}
+#+LATEX_HEADER: \definecolor{myGreen}{HTML}{006953}
+#+LATEX_HEADER: \usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
+#+LATEX_HEADER: \usepackage{fancyhdr} \fancyhead{}
+#+LATEX_HEADER: \fancyhead[L]{\includegraphics[height=3cm]{~/.dotfiles/assets/mcd-header.png} \vspace{-.7cm}}
+#+LATEX_HEADER: \fancyhead[R]{{\parbox[b][10mm][t]{0.5\textwidth}{\raggedleft{Departamento
+#+LATEX_HEADER:    Académico de Estadística.\ Campus Río Hondo.\ Ciudad de
+#+LATEX_HEADER:    México.}}}\vspace{.3cm}}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{.5pt}
+#+LATEX_HEADER: \pagestyle{fancy}

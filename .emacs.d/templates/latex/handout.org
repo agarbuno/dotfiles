@@ -1,0 +1,116 @@
+# This controls the options defined in the preamble (no date, no author, don't print tasks)
+#+OPTIONS: toc:nil date:nil author:nil tasks:nil 
+#+LANGUAGE: sp
+
+#+LATEX_CLASS: org-plain-latex
+#+LATEX_CLASS_OPTIONS: [stslayout, reqno, noinfoline, preprint]
+
+#+LATEX_HEADER: \usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
+#+LATEX_HEADER: \geometry{left=30mm,right=30mm,bottom=20mm}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage{amsthm, amssymb, amsmath}
+#+LATEX_HEADER: \usepackage{grffile}
+#+LATEX_HEADER: \usepackage{longtable}
+#+LATEX_HEADER: \usepackage{wrapfig}
+#+LATEX_HEADER: \usepackage{rotating}
+#+LATEX_HEADER: \usepackage[normalem]{ulem}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{textcomp}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{capt-of}
+#+LATEX_HEADER: \usepackage{framed}
+#+LATEX_HEADER: \usepackage[most]{tcolorbox}
+
+#+LATEX_HEADER: \usepackage[pagebackref=true, colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
+
+#+LATEX_HEADER: \usepackage{sectsty}
+#+LATEX_HEADER: \sectionfont{\sffamily\fontsize{15}{15}\selectfont}
+#+LATEX_HEADER: \subsectionfont{\sffamily\fontsize{10}{5}\selectfont}
+
+#+LATEX_HEADER: \usepackage[twoside]{fancyhdr}
+#+LATEX_HEADER: \renewcommand{\textfraction}{0.05}
+#+LATEX_HEADER: \renewcommand{\topfraction}{0.8}
+#+LATEX_HEADER: \renewcommand{\bottomfraction}{0.8}
+#+LATEX_HEADER: \renewcommand{\floatpagefraction}{0.75}
+
+#+LATEX_HEADER: \fancyfoot{}
+#+LATEX_HEADER: \renewcommand{\footrulewidth}{0.4pt}
+#+LATEX_HEADER: \fancyfoot[C]{\includegraphics[height=1cm]{~/.dotfiles/assets/itam-footer.png}\vspace{-1cm}}
+#+LATEX_HEADER: \fancyfoot[RE,LO]{\vspace{-1cm}\thepage}
+
+#+LATEX_HEADER: \fancyhead{}
+#+LATEX_HEADER: \fancyhead[LE]{\nouppercase{\leftmark}}
+#+LATEX_HEADER: \fancyhead[RO]{\nouppercase{\leftmark}}
+#+LATEX_HEADER: \pagestyle{fancy}
+
+#+LATEX_HEADER: \fancypagestyle{plain}{
+#+LATEX_HEADER: \fancyhead{}
+#+LATEX_HEADER: \renewcommand{\headrulewidth}{0pt}
+#+LATEX_HEADER: \pagestyle{fancy}}
+
+#+LATEX_HEADER: \fancypagestyle{toc}{
+#+LATEX_HEADER: \fancyhf{}
+#+LATEX_HEADER: \fancyhead[L]{\nouppercase{\leftmark}}
+#+LATEX_HEADER: \fancyhead[R]{\nouppercase{\rightmark}}
+#+LATEX_HEADER: \fancyfoot[C]{\thepage}}
+#+LATEX_HEADER: \newcommand{\chaptermark}[1]{
+#+LATEX_HEADER: \markboth{\chaptername\ \thechapter.\ \MakeLowercase{##1}}{}}
+        
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+LATEX_HEADER: \usepackage[sort,numbers]{natbib}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage[spanish,noabbrev,capitalize]{cleveref}
+#+LATEX_HEADER: \decimalpoint
+#+LATEX_HEADER: \usepackage{framed}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage{fancyvrb}
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \definecolor{backcolour}{rgb}{.95,0.95,0.92}
+#+LATEX_HEADER: \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+#+LATEX_HEADER: \definecolor{codegreen}{rgb}{0,0.6,0}
+#+LATEX_HEADER: \definecolor{itamlight}{HTML}{006953}
+#+LATEX_HEADER: \definecolor{itamdark}{HTML}{00362b}
+
+#+LATEX_HEADER: {}
+#+LATEX_HEADER: {\lstset{language={R},basicstyle={\ttfamily\footnotesize},frame=single,breaklines=true,fancyvrb=true,literate={"}{{\texttt{"}}}1{<-}{{$\bm\leftarrow$}}1{<<-}{{$\bm\twoheadleftarrow$}}1{~}{{$\bm\sim$}}1{<=}{{$\bm\le$}}1{>=}{{$\bm\ge$}}1{!=}{{$\bm\neq$}}1{^}{{$^{\bm\wedge}$}}1{|>}{{$\rhd$}}1,otherkeywords={!=, ~, $, \&, \%/\%, \%*\%, \%\%, <-, <<-, ::, /},extendedchars=false,commentstyle={\ttfamily \itshape\color{codegreen}},stringstyle={\color{red}}}
+#+LATEX_HEADER: {}
+
+#+LATEX_HEADER: \newtheoremstyle{mystyle}{}{}{}{}{\sffamily\bfseries}{.}{ }{}
+#+LATEX_HEADER: \newtheoremstyle{cstyle}{}{}{}{}{\sffamily\bfseries}{.}{ }{\thmnote{#3}}
+#+LATEX_HEADER: \makeatletter
+
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{definition}{Definición}[section]}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{proposition}[definition]{Proposition}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{theorem}[definition]{Teorema}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{lemma}[definition]{Lemma}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem{corollary}[definition]{Corollary}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{remark}{Remark}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{remarks}{Remarks}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{example}{Example}}
+#+LATEX_HEADER: \theoremstyle{mystyle}{\newtheorem*{examples}{Examples}}
+#+LATEX_HEADER: \theoremstyle{definition}{\newtheorem*{exercise}{Exercise}}
+#+LATEX_HEADER: \theoremstyle{cstyle}{\newtheorem*{cthm}{}}
+
+#+LATEX_HEADER: %Warning environment -------------------------------------------
+#+LATEX_HEADER: \newtheoremstyle{warn}{}{}{}{}{\normalfont}{}{ }{}
+#+LATEX_HEADER: \theoremstyle{warn}
+#+LATEX_HEADER: \newtheorem*{warning}{\warningsign{0.2}\relax}
+
+#+LATEX_HEADER: %Symbol for the warning environment, designed to be easily scalable
+#+LATEX_HEADER: \newcommand{\warningsign}[1]{\tikz[scale=#1,every node/.style={transform shape}]{\draw[-,line width={#1*0.8mm},red,fill=yellow,rounded corners={#1*2.5mm}] (0,0)--(1,{-sqrt(3)})--(-1,{-sqrt(3)})--cycle;
+#+LATEX_HEADER: \nod#+LATEX_HEADER: e at (0,-1) {\fontsize{48}{60}\selectfont\bfseries!};}}
+
+#+LATEX_HEADER: \tcolorboxenvironment{definition}{boxrule=0pt,boxsep=0pt,colback={itamdark!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{itamdark},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{proposition}{boxrule=0pt,boxsep=0pt,colback={Orange!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{Orange},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{theorem}{boxrule=0pt,boxsep=0pt,colback={itamlight!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{itamlight},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{lemma}{boxrule=0pt,boxsep=0pt,colback={Cyan!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{Cyan},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{corollary}{boxrule=0pt,boxsep=0pt,colback={violet!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{violet},sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{proof}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{CadetBlue!80!white},left=8pt,right=8pt,sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{remark}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Green},left=8pt,right=8pt,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{remarks}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Green},left=8pt,right=8pt,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{example}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Black},left=8pt,right=8pt,sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{examples}{boxrule=0pt,boxsep=0pt,blanker,borderline west={2pt}{0pt}{Black},left=8pt,right=8pt,sharp corners,before skip=10pt,after skip=10pt,breakable}
+#+LATEX_HEADER: \tcolorboxenvironment{cthm}{boxrule=0pt,boxsep=0pt,colback={gray!10},left=8pt,right=8pt,enhanced jigsaw, borderline west={2pt}{0pt}{gray},sharp corners,before skip=10pt,after skip=10pt,breakable}
+
+#+LATEX_HEADER_EXTRA: \definecolor{shadecolor}{gray}{.95}
+#+LATEX_HEADER_EXTRA: \newenvironment{NOTES}{\begin{lrbox}{\mybox}\begin{minipage}{0.95\textwidth}\begin{shaded}}{\end{shaded}\end{minipage}\end{lrbox}\fbox{\usebox{\mybox}}}

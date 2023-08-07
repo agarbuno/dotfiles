@@ -2,8 +2,8 @@
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
-(defvar ag/default-font-size 150)
-(defvar ag/default-variable-font-size 150)
+(defvar ag/default-font-size 130)
+(defvar ag/default-variable-font-size 1.02)
 
 ;; Make frame transparency overridable
 (defvar ag/frame-transparency '(96 . 96))
@@ -30,9 +30,9 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-    ;; Initialize use-package on non-Linux platforms
+;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
+  (package-install 'use-package))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
@@ -48,6 +48,8 @@
 
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
+(setq backup-directory-alist `(("." . "~/.emacs.d/data/backup")))
 
 (use-package auto-package-update
   :custom
@@ -113,62 +115,30 @@
 
 (use-package all-the-icons)
 (use-package nerd-icons)
-
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
-  ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
-  (setq dashboard-icon-type 'nerd-icons)  ;; use `all-the-icons' package
-  (setq dashboard-startup-banner 'logo)      
-  (setq dashboard-center-content t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-navigator t)
-  (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
-                                    (agenda . "nf-oct-milestone")
-                                    (recents . "nf-oct-history")
-                                    (bookmarks . "nf-oct-bookmark")))
-  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
-  (setq dashboard-items '(
-                          (recents  . 10)
-                          (projects . 5)
-                          (bookmarks . 5)
-                          (agenda . 10)
-                          ))
-  (setq dashboard-navigator-buttons
-        `((;; Github
-           (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
-            "Github"
-            "Go to Github"
-            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
-           ;; Perspectives
-           (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
-            "Restore"
-            "Restore window configuration"
-            (lambda (&rest _) (persp-state-load persp-state-default-file)))
-           ))) 
- )
+(use-package page-break-lines)
+(use-package projectile)
 
 (set-face-attribute
  'default nil
- :font "FiraCode Nerd Font Mono"
- :height ag/default-font-size)
+ :font "JetBrains Mono"
+ :height ag/default-font-size
+ )
 
 ;; Set the fixed pitch face
 (set-face-attribute
  'fixed-pitch nil
  :font "JetBrains Mono"
  :weight 'medium
- :height ag/default-font-size)
+ :height ag/default-variable-font-size
+ )
 
 ;; Set the variable pitch face
 (set-face-attribute
  'variable-pitch nil
  :font "Cantarell"
- :height ag/default-font-size
- :weight 'regular)
+ :height ag/default-variable-font-size
+ :weight 'regular
+ )
 
 (use-package solaire-mode
   :config
@@ -253,17 +223,24 @@
   (set-face-attribute 'org-block nil
                       :background (color-darken-name
                                    (face-attribute 'default :background) 5)
-                      :font "FiraCode Nerd Font Mono")
+                      :font "JetBrains Mono"
+                      :height ag/default-variable-font-size
+                      )
   (set-face-attribute 'org-block-begin-line nil
                       :background (color-darken-name
                                    (face-attribute 'default :background) -10))
+  (set-face-attribute 'org-drawer nil
+                      :font "JetBrains Mono"
+                      )
   )
 
 
 (use-package doom-themes
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
-  :init (load-theme 'doom-moonlight t))
+  ;; :init (load-theme 'doom-moonlight t))
+  ;; :init (load-theme 'doom-nord-aurora t))
+  :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
@@ -273,11 +250,15 @@
                       :background
                       (color-darken-name
                        (face-attribute 'default :background) 5)
-                      :font "FiraCode Nerd Font Mono")
+                      :font "JetBrains Mono"
+                      :height ag/default-variable-font-size)
   (set-face-attribute 'org-block-begin-line nil
                       :background
                       (color-darken-name
                        (face-attribute 'default :background) -10))
+  (set-face-attribute 'org-drawer nil
+                      :font "JetBrains Mono"
+                      )
   )
 
 (use-package doom-modeline
@@ -326,6 +307,7 @@
   ;; (message "Ivy got loaded!")
   (ivy-mode 1)
   (setq ivy-use-selectable-prompt t)
+  ;; (setq ivy-wrap t)
   )
 
 
@@ -459,6 +441,7 @@
   (setq org-latex-classes nil)
 
   (setq org-agenda-start-with-log-mode t)
+  (setq org-popup-calendar-for-date-prompt t)
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
 
@@ -491,11 +474,12 @@
           ("admin" . ?a)
           ("book"  . ?b)
           ("course" . ?c)
-          ("exam" . ?e)
-          ("hw"   . ?h)
+          ("email" . ?e)
+          ("followup" . ?f)
           ("papers" . ?p)
           ("read" . ?r)
           ("study"  . ?s)
+          ("thesis" . ?t)
           ("write"  . ?w)
           ))
 
@@ -504,30 +488,30 @@
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "/!-BACKLOG" (
-                      (org-agenda-start-on-weekday 0)
-                      (org-agenda-remove-tags t)
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")
-                      (org-deadline-warning-days 7)
-                      ))
-          (todo "NEXT|WAIT"
+                                (org-agenda-start-on-weekday 0)
+                                (org-agenda-remove-tags t)
+                                (org-agenda-show-inherited-tags nil)
+                                (org-agenda-prefix-format "   %-2i ")
+                                (org-deadline-warning-days 7)
+                                ))
+          (todo "NEXT"
                 ((org-agenda-overriding-header "Ongoing Tasks")
                  (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+research/!-NEXT-WAIT"
+          (tags-todo "+research/!-NEXT"
                      ((org-agenda-overriding-header "1. Research")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+teaching/!-NEXT-WAIT"
+          (tags-todo "+teaching/!-NEXT"
                      ((org-agenda-overriding-header "2. Teaching")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))            
-          (tags-todo "+mcdatos/!-NEXT-WAIT"
+          (tags-todo "+maestria/!-NEXT"
                      ((org-agenda-overriding-header "3. Maestria")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+projects/!-NEXT-WAIT"
+          (tags-todo "+projects/!-NEXT"
                      ((org-agenda-overriding-header "4. Projects")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
@@ -536,7 +520,7 @@
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
 
-          (tags-todo "-research-teaching-mcdatos-projects/!-NEXT"
+          (tags-todo "-research-teaching-mcdatos-projects-maestria-habits/!-NEXT"
                      ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")
@@ -550,66 +534,40 @@
                 ((org-agenda-overriding-header "Next Tasks")))))
 
         ("W" "Work Tasks" tags-todo "+work-email")
-        ))
+        )
+      )
 
 (setq org-capture-templates
       `(
-        ("m" "mcdatos") ;; ====================================================
-          ("ma" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("ms" "students" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :students:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("mp" "prospects" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :prospects:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("mt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "MCDATOS")
-           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
-        ("r" "research") ;; ===================================================
-          ("ra" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("ri" "ideas" entry 
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rr" "read" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :read:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rs" "study" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :study:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("rw" "write" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO %? \t :write:\n  %U\n  %a\n  %i" :empty-lines 1)
-        ("t" "teaching") ;; ===================================================
-          ("ta" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("tc" "class" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :class:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("tg" "grades" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :grades:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("tt" "thesis" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO %? \t :thesis:\n  %U\n  %a\n  %i" :empty-lines 1)
-        ("p" "projects") ;; ===================================================
-          ("pa" "admin" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO %? \t :admin:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("pi" "ideas" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO %? \t :ideas:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ("pf" "followup" entry
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO %? \t :followup:\n  %U\n  %a\n  %i" :empty-lines 1)
-          ))
+        ("m" "maestria" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Maestria")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|email|students|prospects|thesis}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("r" "research" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Research")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|email|ideas|read|write}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("t" "teaching" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|advisee|class|email|thesis}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("p" "projects" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Task|admin|email|ideas|followup}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ))
 
 (define-key global-map (kbd "C-c t t")
   (lambda () (interactive) (org-capture nil "tt")))
@@ -632,14 +590,20 @@
 (setq org-agenda-category-icon-alist
       `(;; Main categories =================================================
         ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
-        ("mcdatos" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+        ("maestria" ,(list (nerd-icons-octicon "nf-oct-log")) nil nil :ascent center)
         ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+        ("habits" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
         ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
-        ("email" ,(list (all-the-icons-material "email")) nil nil :ascent center)
         ;; Subcategories ===================================================
-        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
+        ("admin" ,(list (nerd-icons-mdicon "nf-md-android_studio")) nil nil :ascent center)
         ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
-        ("thesis" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
+        ("class" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
+        ("email" ,(list (nerd-icons-mdicon	"nf-md-email_outline")) nil nil :ascent center)
+        ("followup" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
+        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
+        ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
+        ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
+        ("read" ,(list (nerd-icons-mdicon "nf-md-book_open_page_variant_outline")) nil nil :ascent center)
         )
       )
 
@@ -801,26 +765,29 @@
     (concat
      (if functiontag
          (cond ((member "paper" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "journal" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
              ((member "conferences" functiontag)
-                  (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                  (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "book" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
-               ((member "online" functiontag)
-                (propertize "=@=" 'display (all-the-icons-faicon "globe" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-book_open_page_variant_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "resources" functiontag)
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "meetings" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "broadcast" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
-               ((member "courses" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "teaching" functiontag)
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-dependabot" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "projects" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "puzzle" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.8)))
+                (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "maestria" functiontag)
+                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-log" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "research" functiontag)
+                (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
            )
-       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :cache :height 0.7))
-       (propertize "=@=" 'display (all-the-icons-faicon "tags" :face 'all-the-icons-dgreen :v-adjust 0.02 :height 0.7))
+       (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
        )
      " "
      (propertize (string-join functiontag ", ") 'face 'all-the-icons-lblue)
@@ -851,12 +818,12 @@
          (separator (concat " " (all-the-icons-material "chevron_right") " "))
          )
     (cond
-     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "list" :face 'all-the-icons-blue))
+     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
                            " "
                            (propertize shortentitle 'face 'org-roam-dim)
                            (propertize separator 'face 'org-roam-dim)
                            title))
-     (t (concat (propertize (format "=level:%d=" level) 'display (all-the-icons-material "insert_drive_file" :face 'all-the-icons-yellow))
+     (t (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-faicon "nf-fa-file_text" :face 'all-the-icons-yellow))
                 " "
                 title))
      )
@@ -866,7 +833,7 @@
 )
 
 (setq ag/lit-categories
-          '("book" "paper" "online" "journal" "thesis" "meetings" "courses" "projects" "conferences")
+          '("research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
           )
 (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
 
@@ -904,6 +871,8 @@
   )
 
 (use-package org-ref
+  :after org
+  :defer t
   :init
   (require 'bibtex)
   (require 'org-ref-ivy)
@@ -918,6 +887,8 @@
   )
 
 (use-package org-roam-bibtex
+  :after org
+  :defer t
   :bind (("C-c b d" . doi-add-bibtex-entry)
          ("C-c b a" . arxiv-get-pdf-add-bibtex-entry)
          ("C-c b k" . org-ref-clean-bibtex-entry))
@@ -927,7 +898,8 @@
   :config
   (require 'org-ref)
 
-  (setq orb-preformat-keywords '("citekey" "author" "year" "title" "keywords" "file")
+  (setq orb-preformat-keywords
+        '("citekey" "author" "year" "title" "keywords" "file" "doi" "journal" "abstract")
         orb-process-file-keyword t
         orb-file-field-extensions '("pdf"))
   )
@@ -950,22 +922,35 @@
   )
 
 (use-package org-noter
-    :config
-    (setq org-noter-always-create-frame nil
-          org-noter-separate-notes-from-heading t
-          org-noter-default-heading-title "Page $p$"
-          org-noter-auto-save-last-location t
-          org-noter-separate-notes-from-heading t
-          org-noter-doc-property-in-notes t
-          org-noter-hide-other t
-          org-noter-doc-split-fraction '(.60 . .5)
-          org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
-          )
-    )
+  :bind (("C-c n o" . org-noter)
+         ("C-c n q" . org-noter-kill-session))
+  :config
+  (setq org-noter-always-create-frame nil
+        org-noter-separate-notes-from-heading t
+        org-noter-default-heading-title "Page $p$"
+        org-noter-auto-save-last-location t
+        org-noter-separate-notes-from-heading t
+        org-noter-doc-property-in-notes t
+        org-noter-hide-other t
+        org-noter-doc-split-fraction '(.60 . .5)
+        org-noter-notes-search-path '(file-truename "~/orgfiles/bibtex/")
+        )
+  )
 
 (add-to-list 'org-roam-capture-templates
-             '("n" "references notes"  plain
-               (file "~/.emacs.d/templates/org-capture/reference-noter")
+             '("n" "notes"  plain
+               (file "~/.emacs.d/templates/org-capture/reading-notes")
+               :if-new
+               (file+head
+                "bibtex/%<%Y%m%d>-${citekey}.org"
+                "#+title: ${title}\n")
+               :unnarrowed t
+               :jump-to-captured t)
+             )
+
+(add-to-list 'org-roam-capture-templates
+             '("r" "revision"  plain
+               (file "~/.emacs.d/templates/org-capture/thesis-revision")
                :if-new
                (file+head
                 "bibtex/%<%Y%m%d>-${citekey}.org"
@@ -974,12 +959,18 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("t" "thesis revision"  plain
-               (file "~/.emacs.d/templates/org-capture/thesis-rev")
+             '("m" "mathematics"  plain
+               (file "~/.emacs.d/templates/org-capture/concept-template")
                :if-new
                (file+head
-                "bibtex/%<%Y%m%d>-${citekey}.org"
+                "pages/%<%Y%m%d%H%M%S>-${slug}.org"
                 "#+title: ${title}\n")
+               :unnarrowed t)
+             )
+
+(add-to-list 'org-roam-capture-templates
+             '("d" "default" plain "%?" :if-new
+               (file+head "pages/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
                :unnarrowed t)
              )
 
@@ -1500,19 +1491,32 @@
          ("C-c b h" . org-ref-bibtex-hydra/body)
          )
   :config
-  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"
-                                         "~/orgfiles/references/bibliography-wpdfs.bib"
-                                         "~/orgfiles/references/bibliography-arxiv.bib"))
+  (setq bibtex-completion-bibliography
+        '("~/orgfiles/references/bibliography.bib"
+          "~/orgfiles/references/bibliography-wpdfs.bib"
+          "~/orgfiles/references/bibliography-arxiv.bib"))
   (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
          bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
+
+  (setq bibtex-completion-pdf-field "file")
   (setq bibtex-completion-pdf-symbol "⌘")
   (setq bibtex-completion-notes-symbol "✎")
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
+  (setq bibtex-completion-additional-search-fields '(collection keywords booktitle))
+
+  ;; (setq bibtex-completion-display-formats
+  ;;       '((t . "${collection:7}${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
+  ;;       )
+
   (setq bibtex-completion-display-formats
-        '((t . "${=collection=:10} ${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:80} ${keywords:31}"))
-    )
+        '((article       . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${journal:40}")
+          (inbook        . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} Chapter ${chapter:32}")
+          (incollection  . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${booktitle:40}")
+          (inproceedings . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${booktitle:40}")
+          (t             . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*}"))
+        )
 
   (defun bibtex-completion-format-citation-org-cite-original (keys)
     "Format org-links using Org mode's own cite syntax."
@@ -1575,141 +1579,78 @@
 
 (use-package lsp-latex
   :after auctex
+  :defer t
   :config
   (add-hook 'TeX-mode-hook 'lsp)
   (add-hook 'LaTeX-mode-hook 'lsp)
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+;; Used to replace graphics generation of latex frags.
+(use-package math-preview
+  :custom
+  ;; (math-preview-command "/opt/homebrew/bin/math-preview")
+  (math-preview-command "/usr/local/bin/math-preview")
+  (math-preview-scale 1.5)
+  (math-preview-tex-marks-inline
+   '(("$" "$")))
+  (math-preview-tex-marks
+   '(("\\begin{equation}" "\\end{equation}")
+     ("\\begin{equation*}" "\\end{equation*}")
+     ("\\begin{align}" "\\end{align}")
+     ("\\begin{gather}" "\\end{gather}")
+     ("\\begin{subequations}" "\\end{subequations}")
+     ("$$" "$$")
+     ))
+  )
+(add-hook 'org-mode-hook #'math-preview-all)
+
+;; Used to get enter-ext display of latex
 (use-package org-fragtog
-  :config (add-hook 'org-mode-hook 'org-fragtog-mode))
+  :config 
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
+(defalias #'org-latex-preview #'math-preview-at-point)
+(defalias #'org-clear-latex-preview #'math-preview-clear-region)
 
 (setenv "TEXMFHOME" "~/.texmf")
 
 (add-to-list 'org-latex-classes
-             '("custom"
-               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-\\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
-\\geometry{left=30mm,right=30mm}
-\\usepackage[utf8]{inputenc}
-\\usepackage{amsthm, amssymb, amsmath}
-\\usepackage{graphicx}
-\\usepackage{grffile}
-\\usepackage{longtable}
-\\usepackage{wrapfig}
-\\usepackage{rotating}
-\\usepackage[normalem]{ulem}
-\\usepackage{amsmath}
-\\usepackage{textcomp}
-\\usepackage{amssymb}
-\\usepackage{capt-of}
-\\usepackage[pagebackref=true,colorlinks=true,urlcolor=blue,pdfborder={0 0 0}]{hyperref}
-      [NO-DEFAULT-PACKAGES]
-      [NO-PACKAGES]"
-               ("\\section{%s}" . "\n\\section{%s}")
-               ("\\subsection{%s}" . "\n\\subsection{%s}")
-               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-               )           
-             )
+             '("org-plain-latex" ;; I use this in base class in all of my org exports.
+               "\\documentclass{imsart}
+[NO-DEFAULT-PACKAGES]
+[PACKAGES]
+[EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-(add-to-list 'org-latex-classes
-             '("handout"
-               "\\documentclass[stslayout, reqno, noinfoline, preprint]{imsart}
-    \\usepackage[hmarginratio=1:1,top=25mm,columnsep=20pt,footskip=15mm]{geometry}
-    \\geometry{left=30mm,right=30mm,bottom=20mm}
-    \\usepackage[utf8]{inputenc}
-    \\usepackage{amsthm, amssymb, amsmath}
-    \\usepackage{graphicx}
-    \\usepackage{grffile}
-    \\usepackage{longtable}
-    \\usepackage{wrapfig}
-    \\usepackage{rotating}
-    \\usepackage[normalem]{ulem}
-    \\usepackage{amsmath}
-    \\usepackage{textcomp}
-    \\usepackage{amssymb}
-    \\usepackage{capt-of}
-    \\usepackage[pagebackref=true,%
-                 colorlinks=true,%
-                 urlcolor=blue,%
-                 pdfborder={0 0 0}]{hyperref}
-    \\usepackage{fancyhdr}
-    \\renewcommand{\\textfraction}{0.05}
-    \\renewcommand{\\topfraction}{0.8}
-    \\renewcommand{\\bottomfraction}{0.8}
-    \\renewcommand{\\floatpagefraction}{0.75}
-    \\fancyfoot{}%
-    \\renewcommand{\\footrulewidth}{0.4pt}%
-    \\fancyfoot[C]{\\includegraphics[height=1cm]{%
-                   ~/.dotfiles/assets/itam-footer.png}%
-                   \\vspace{-1cm}}%
-    \\fancyfoot[RE,LO]{\\vspace{-1cm}\\thepage}
-    \\pagestyle{fancy}
-    \\fancypagestyle{plain}{%
-    \\fancyhead{}%
-    \\renewcommand{\\headrulewidth}{0pt}%
-    \\pagestyle{fancy}}
-    \\fancypagestyle{toc}{%
-    \\fancyhf{}%
-    \\fancyhead[L]{\\nouppercase{\\rightmark}}
-    \\fancyhead[R]{\\nouppercase{\\leftmark}}
-    \\fancyfoot[C]{\\thepage}}
-    \\newcommand{\\chaptermark}[1]{%
-    \\markboth{\\chaptername\\ \\thechapter.\\ #1}{}}
-          [NO-DEFAULT-PACKAGES]
-          [NO-PACKAGES]"
-               ("\\section{%s}" . "\n\\section{%s}")
-               ("\\subsection{%s}" . "\n\\subsection{%s}")
-               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-               ))
+(setq org-latex-default-class "org-plain-latex")
 
-(add-to-list 'org-latex-classes        
-             '("header"
-               "\\documentclass[reqno, noinfoline, preprint, oneside]{article}
-\\usepackage[hmarginratio=1:1,top=16mm,columnsep=20pt]{geometry}
-\\geometry{left=30mm,right=30mm}
-\\usepackage[utf8]{inputenc}
-\\usepackage{amsthm, amssymb, amsmath}
-\\usepackage{graphicx}
-\\usepackage{grffile}
-\\usepackage{longtable}
-\\usepackage{wrapfig}
-\\usepackage{rotating}
-\\usepackage[normalem]{ulem}
-\\usepackage{amsmath}
-\\usepackage{textcomp}
-\\usepackage{amssymb}
-\\usepackage{capt-of}
-\\definecolor{myGreen}{HTML}{006953}
-\\usepackage[pagebackref=true,colorlinks=true,pdfborder={0 0 0}]{hyperref}
-\\usepackage{fancyhdr} \\fancyhead{}
-\\fancyhead[L]{\\includegraphics[height=3cm]{~/.dotfiles/assets/mcd-header.png} \\vspace{-.7cm}}
-\\fancyhead[R]{{\\parbox[b][10mm][t]{0.5\\textwidth}{\\raggedleft{Departamento
-      Académico de Estadística.\\ Campus Río Hondo.\\ Ciudad de
-      México.}}}\\vspace{.3cm}}
-\\renewcommand{\\headrulewidth}{.5pt}
-\\pagestyle{fancy}
-      [NO-DEFAULT-PACKAGES]
-      [NO-PACKAGES]"
-               ("\\section{%s}" . "\n\\section{%s}")
-               ("\\subsection{%s}" . "\n\\subsection{%s}")
-               ("\\subsubsection{%s}" . "\n\\subsubsection{%s}")
-               ("\\paragraph{%s}" . "\n\\paragraph{%s}")
-               ("\\subparagraph{%s}" . "\n\\subparagraph{%s}")
-               )
-             )
+(setq org-latex-title-command "\n
+%% Front matter ------------------------------------------------------------
+%%
+\\title{%t}%%  Needed for export purposes (messes with the regexp)
+\\begin{aug}
+    %%\\author{%a}
+\\end{aug}
+\\maketitle
+%%
+%% -------------------------------------------------------------------------
+%%
+\n\n")
 
-(setq org-latex-default-class "custom")
+;; This function removes the title in the preamble.
+(defun my-org-latex-remove-title (str)
+  (replace-regexp-in-string "^\\\\title{.*}$" "" str))
+
+(advice-add 'org-latex-template :filter-return 'my-org-latex-remove-title)
 
 (setq org-latex-pdf-process
-           '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-             "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+      '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -interaction nonstopmode -output-directory %o %f"))
 
 (setq org-latex-listings 'listings)
 (setq org-latex-custom-lang-environments
@@ -1802,10 +1743,64 @@
 
 (use-package elfeed-org
   :ensure t
+  ;; :bind (("C-c n e" . elfeed))
   :config
   (elfeed-org)
   (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
+  (setq elfeed-search-title-max-width 100)
+  (setq elfeed-show-entry-switch 'display-buffer)
+  (setq elfeed-search-remain-on-entry t)
+
+  (defface stats-elfeed-entry
+    `((t :background ,(color-lighten-name "palevioletred" 10)))
+    "Marks a relevant Elfeed entry.")
+
+  (defface ml-elfeed-entry
+    `((t :background ,(color-lighten-name "linen" -20)))
+    "Marks an important Elfeed entry.")
+
+  (defface siam-elfeed-entry
+    `((t :background ,(color-lighten-name "mediumturquoise" 10)))
+    "Marks an important Elfeed entry.")
+
+  (defface review-elfeed-entry
+    `((t :background ,(color-lighten-name "powderblue" 10)))
+    "Marks an important Elfeed entry.")
+
+  (push '(uq siam-elfeed-entry)
+        elfeed-search-face-alist)
+
+  (push '(review review-elfeed-entry)
+        elfeed-search-face-alist)
+
+
+  (push '(ml ml-elfeed-entry)
+        elfeed-search-face-alist)
+
+  (push '(stats stats-elfeed-entry)
+        elfeed-search-face-alist)
   )
+
+(define-key elfeed-search-mode-map (kbd "i")
+  (lambda () (interactive)
+    (elfeed-search-set-filter "@6-months-ago +unread")))
+
+(define-key elfeed-search-mode-map (kbd "o")
+  (lambda () (interactive)
+    (elfeed-search-set-filter "@2-years-old +unread")))
+
+(define-key elfeed-search-mode-map (kbd "a")
+  (lambda () (interactive)
+    (elfeed-search-set-filter "@6-months-ago")))
+
+(use-package elfeed-score
+  :ensure t
+  :config
+  (progn
+    (elfeed-score-enable)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map)))
+
+(setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
 
 (defun ag/org-start-presentation ()
   (interactive)
@@ -1833,7 +1828,7 @@
   (org-sticky-header-mode 1)
   (org-tree-slide-mode 0)
   (setq-local face-remapping-alist '((default variable-pitch default)))
-  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.2))
+  (setq-local org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (visual-fill-column-mode 1)
   (setq org-src-window-setup 'split-window-below)
   (org-mode-restart)
@@ -1888,6 +1883,7 @@
     )
 
 (use-package org-re-reveal-citeproc
+  :after org
   :config
   (require 'org-re-reveal)
   )

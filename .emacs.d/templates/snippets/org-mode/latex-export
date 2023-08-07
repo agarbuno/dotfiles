@@ -1,21 +1,11 @@
 # -*- mode: snippet -*-
-# name: org-latex export
-# key: <latex-export
-# group: latex
+# name: latex-export
+# key: <le
+# group : latex
 # --
 :LATEX_PROPERTIES:
-#+OPTIONS: toc:nil date:nil author:nil tasks:nil
-#+LANGUAGE: sp
-#+LATEX_CLASS: custom
-#+LATEX_HEADER: \usepackage[spanish]{babel}
-#+LATEX_HEADER: \usepackage[sort,numbers]{natbib}
-#+LATEX_HEADER: \usepackage[utf8]{inputenc} 
-#+LATEX_HEADER: \usepackage[capitalize]{cleveref}
-#+LATEX_HEADER: \decimalpoint
-#+LATEX_HEADER: \usepackage{framed}
-#+LATEX_HEADER: \usepackage{xcolor}
-#+LATEX_HEADER_EXTRA: \definecolor{shadecolor}{gray}{.95}
-#+LATEX_HEADER_EXTRA: \newenvironment{NOTES}{\begin{lrbox}{\mybox}\begin{minipage}{0.95\textwidth}\begin{shaded}}{\end{shaded}\end{minipage}\end{lrbox}\fbox{\usebox{\mybox}}}
-#+EXPORT_FILE_NAME: ./${1:latex}/${2:filename}.pdf
+#+SETUPFILE: ~/.emacs.d/templates/latex/${1:$$(yas-choose-value
+             '("default" "handout" "letterhead"))}.org
+#+EXPORT_FILE_NAME: ${2:../docs/}${3:filename}.pdf
 :END:
 $0
