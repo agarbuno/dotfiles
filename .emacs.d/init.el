@@ -115,43 +115,8 @@
 
 (use-package all-the-icons)
 (use-package nerd-icons)
-
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
-  ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
-  (setq dashboard-icon-type 'nerd-icons)  ;; use `all-the-icons' package
-  (setq dashboard-startup-banner 'logo)      
-  (setq dashboard-center-content t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-navigator t)
-  (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
-                                    (agenda . "nf-oct-milestone")
-                                    (recents . "nf-oct-history")
-                                    (bookmarks . "nf-oct-bookmark")))
-  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
-  (setq dashboard-items '(
-                          (recents  . 10)
-                          (projects . 5)
-                          (bookmarks . 5)
-                          (agenda . 10)
-                          ))
-  (setq dashboard-navigator-buttons
-        `((;; Github
-           (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
-            "Github"
-            "Go to Github"
-            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
-           ;; Perspectives
-           (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
-            "Restore"
-            "Restore window configuration"
-            (lambda (&rest _) (persp-state-load persp-state-default-file)))
-           ))) 
- )
+(use-package page-break-lines)
+(use-package projectile)
 
 (set-face-attribute
  'default nil
@@ -342,7 +307,7 @@
   ;; (message "Ivy got loaded!")
   (ivy-mode 1)
   (setq ivy-use-selectable-prompt t)
-  (setq ivy-wrap t)
+  ;; (setq ivy-wrap t)
   )
 
 
@@ -1787,19 +1752,19 @@
   (setq elfeed-search-remain-on-entry t)
 
   (defface stats-elfeed-entry
-    `((t :background ,(color-lighten-name "palevioletred" -40)))
+    `((t :background ,(color-lighten-name "palevioletred" 10)))
     "Marks a relevant Elfeed entry.")
 
   (defface ml-elfeed-entry
-    `((t :background ,(color-lighten-name "linen" -60)))
+    `((t :background ,(color-lighten-name "linen" -20)))
     "Marks an important Elfeed entry.")
 
   (defface siam-elfeed-entry
-    `((t :background ,(color-lighten-name "mediumturquoise" -30)))
+    `((t :background ,(color-lighten-name "mediumturquoise" 10)))
     "Marks an important Elfeed entry.")
 
   (defface review-elfeed-entry
-    `((t :background ,(color-lighten-name "powderblue" -40)))
+    `((t :background ,(color-lighten-name "powderblue" 10)))
     "Marks an important Elfeed entry.")
 
   (push '(uq siam-elfeed-entry)

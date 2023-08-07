@@ -353,18 +353,19 @@ This section configures basic UI settings that remove unneeded elements to make 
 #+begin_src emacs-lisp
   (use-package all-the-icons)
   (use-package nerd-icons)
+  (use-package page-break-lines)
+  (use-package projectile)
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package dashboard
     :ensure t
     :config
-    (dashboard-setup-startup-hook)
     (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
     ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
-    (setq dashboard-icon-type 'nerd-icons)  ;; use `all-the-icons' package
+    (setq dashboard-icon-type 'nerd-icons)  ;; use `nerd-icons' package
     (setq dashboard-startup-banner 'logo)      
-    (setq dashboard-center-content t)
+    (setq dashboard-center-content nil)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
     (setq dashboard-set-navigator t)
@@ -390,8 +391,9 @@ This section configures basic UI settings that remove unneeded elements to make 
               "Restore"
               "Restore window configuration"
               (lambda (&rest _) (persp-state-load persp-state-default-file)))
-             ))) 
-   )
+             )))
+    (dashboard-setup-startup-hook)
+    )
 #+end_src
 
 ** Font Configuration
@@ -662,7 +664,7 @@ Maybe I need to change to ~ivy-rich~ with ~nerd-icons-ivy-rich~.
     ;; (message "Ivy got loaded!")
     (ivy-mode 1)
     (setq ivy-use-selectable-prompt t)
-    (setq ivy-wrap t)
+    ;; (setq ivy-wrap t)
     )
 
 
@@ -3114,19 +3116,19 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
     (setq elfeed-search-remain-on-entry t)
 
     (defface stats-elfeed-entry
-      `((t :background ,(color-lighten-name "palevioletred" -40)))
+      `((t :background ,(color-lighten-name "palevioletred" 10)))
       "Marks a relevant Elfeed entry.")
 
     (defface ml-elfeed-entry
-      `((t :background ,(color-lighten-name "linen" -60)))
+      `((t :background ,(color-lighten-name "linen" -20)))
       "Marks an important Elfeed entry.")
 
     (defface siam-elfeed-entry
-      `((t :background ,(color-lighten-name "mediumturquoise" -30)))
+      `((t :background ,(color-lighten-name "mediumturquoise" 10)))
       "Marks an important Elfeed entry.")
 
     (defface review-elfeed-entry
-      `((t :background ,(color-lighten-name "powderblue" -40)))
+      `((t :background ,(color-lighten-name "powderblue" 10)))
       "Marks an important Elfeed entry.")
 
     (push '(uq siam-elfeed-entry)
