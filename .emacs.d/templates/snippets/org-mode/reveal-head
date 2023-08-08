@@ -4,8 +4,10 @@
 # group: reveal
 # --
 :REVEAL_PROPERTIES:
+# ==============================================================================
 # Template uses org export with export option <R B>
-# Alternatives: use with citeproc
+# Alternatives: use with reveal-citeproc
+# ==============================================================================
 #+LANGUAGE: es
 #+OPTIONS: num:nil toc:nil timestamp:nil
 #+REVEAL_REVEAL_JS_VERSION: 4
@@ -14,7 +16,7 @@
 #+REVEAL_SLIDE_NUMBER: t
 #+REVEAL_HEAD_PREAMBLE: <meta name="description" content="${1:Titulo}">
 #+REVEAL_INIT_OPTIONS: width:1600, height:900, margin:.2
-#+REVEAL_EXTRA_CSS: ${2:./mods.css}
+#+REVEAL_EXTRA_CSS: ${2:./}${3:mods}.css
 #+REVEAL_PLUGINS: (notes)
 :END:
 $0
