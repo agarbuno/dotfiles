@@ -1,14 +1,12 @@
 # -*- mode: snippet -*-
-# name: reveal-head-citeproc
-# key: <re
+# name: reveal-export
+# key: <reveal
 # group: reveal
 # --
 :REVEAL_PROPERTIES:
 #+SETUPFILE: ~/.emacs.d/templates/reveal/${1:$$(yas-choose-value
              '("default" "citeproc"))}.org
 #+REVEAL_HEAD_PREAMBLE: <meta name="description" content="${2:Titulo}">
-#+REVEAL_EXTRA_CSS: ~/.emacs.d/templates/css/${3:mods-citeproc}.css
-#+bibliography: references.bib
-#+cite_export: csl
+#+REVEAL_EXTRA_CSS: ~/.emacs.d/templates/css/${3:mods}.css
 :END:
 $0
