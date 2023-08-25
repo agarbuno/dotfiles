@@ -5,7 +5,7 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 #+attr_latex: :options [${1:Concepto}]
-#+begin_property
+#+begin_proposition
     $2
-#+end_property
+#+end_proposition
 $0
