@@ -121,6 +121,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#parenthesis][Parenthesis]]
     - [[#bibtex][BibTex]]
     - [[#reference-management][Reference management]]
+    - [[#citar-for-bib-management][Citar for bib management]]
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
   - [[#latex-in-org-mode][Latex in org mode]]
     - [[#math-preview][math-preview]]
@@ -2693,11 +2694,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
     (setq bibtex-completion-notes-symbol "✎")
     (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
-    (setq bibtex-completion-additional-search-fields '(collection keywords booktitle))
-
-    ;; (setq bibtex-completion-display-formats
-    ;;       '((t . "${collection:7}${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
-    ;;       )
+    (setq bibtex-completion-additional-search-fields '(booktitle))
 
     (setq bibtex-completion-display-formats
           '((article       . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${journal:40}")
@@ -2728,7 +2725,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
-  (setq bibtex-completion-additional-search-fields '(collection))
+  (setq bibtex-completion-additional-search-fields '(collection keywords))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2779,6 +2776,70 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
 
           reftex-cite-prompt-optional-args nil
           reftex-cite-cleanup-optional-args t))
+#+end_src
+
+
+*** Citar for bib management                                      :pending:
+
+#+Begin_src emacs-lisp :tangle no
+  (use-package citar
+    :custom
+    (citar-bibliography '("~/orgfiles/references/bibliography.bib"))
+    (org-cite-global-bibliography '("~/orgfiles/references/bibliography.bib"))
+    )
+
+  (setq citar-templates
+        '((main . "${author editor:30%sn}     ${date year issued:4}     ${title:48}")
+          (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
+          (preview . "${author editor:%etal} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
+          (note . "Notes on ${author editor:%etal}, ${title}")))
+
+  (setq citar-indicators
+        (list citar-indicator-files-icons
+              citar-indicator-links-icons
+              citar-indicator-notes-icons
+              citar-indicator-cited-icons)) 
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  (defvar citar-indicator-files-icons
+    (citar-indicator-create
+     :symbol (all-the-icons-faicon
+              "file-o"
+              :face 'all-the-icons-green
+              :v-adjust -0.1)
+     :function #'citar-has-files
+     :padding "  " ; need this because the default padding is too low for these icons
+     :tag "has:files"))
+
+  (defvar citar-indicator-links-icons
+    (citar-indicator-create
+     :symbol (all-the-icons-octicon
+              "link"
+              :face 'all-the-icons-orange
+              :v-adjust 0.01)
+     :function #'citar-has-links
+     :padding "  "
+     :tag "has:links"))
+
+  (defvar citar-indicator-notes-icons
+    (citar-indicator-create
+     :symbol (all-the-icons-material
+              "speaker_notes"
+              :face 'all-the-icons-blue
+              :v-adjust -0.3)
+     :function #'citar-has-notes
+     :padding "  "
+     :tag "has:notes"))
+
+  (defvar citar-indicator-cited-icons
+    (citar-indicator-create
+     :symbol (all-the-icons-faicon
+              "circle-o"
+              :face 'all-the-icon-green)
+     :function #'citar-is-cited
+     :padding "  "
+     :tag "is:cited"))
 #+end_src
 
 *** Autocompletion with lsp
@@ -3014,7 +3075,7 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (org-download-image-dir "images")
       (org-download-heading-lvl nil)
       (org-download-timestamp "%Y%m%d-%H%M%S_")
-      (org-download-image-attr-list '("#+attr_html: :width 1200 :align center"))
+      (org-download-image-attr-list '("#+attr_html: :width 800 :align center"))
       (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
       :bind
       ("C-c n s" . org-download-screenshot)

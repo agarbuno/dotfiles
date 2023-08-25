@@ -7,6 +7,6 @@
 #+SETUPFILE: ~/.emacs.d/templates/reveal/${1:$$(yas-choose-value
              '("default" "citeproc"))}.org
 #+REVEAL_HEAD_PREAMBLE: <meta name="description" content="${2:Titulo}">
-#+REVEAL_EXTRA_CSS: ~/.emacs.d/templates/css/${3:mods}.css
+#+REVEAL_EXTRA_CSS: /Users/agarbuno/.emacs.d/templates/css/${3:mods}.css
 :END:
 $0

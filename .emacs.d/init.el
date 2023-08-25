@@ -1504,11 +1504,7 @@
   (setq bibtex-completion-notes-symbol "✎")
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
-  (setq bibtex-completion-additional-search-fields '(collection keywords booktitle))
-
-  ;; (setq bibtex-completion-display-formats
-  ;;       '((t . "${collection:7}${=has-pdf=:1}${=has-note=:1} ${=type=:7} ${year:4} ${author:36} ${title:*} ${keywords:31}"))
-  ;;       )
+  (setq bibtex-completion-additional-search-fields '(booktitle))
 
   (setq bibtex-completion-display-formats
         '((article       . "${=has-pdf=:1}${=has-note=:1}  ${=type=:7}  ${year:4}  ${author:36} ${title:*} ${journal:40}")
@@ -1696,7 +1692,7 @@
     (org-download-image-dir "images")
     (org-download-heading-lvl nil)
     (org-download-timestamp "%Y%m%d-%H%M%S_")
-    (org-download-image-attr-list '("#+attr_html: :width 1200 :align center"))
+    (org-download-image-attr-list '("#+attr_html: :width 800 :align center"))
     (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
     :bind
     ("C-c n s" . org-download-screenshot)

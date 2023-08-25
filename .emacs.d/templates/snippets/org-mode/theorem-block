@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: theorem-block
+# key: <thm
+# group: blocks
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+attr_latex: :options [${1:Teorema}]
+#+begin_theorem
+    $2
+#+end_theorem
+$0

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: property-block
+# key: <prop
+# group: blocks
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+attr_latex: :options [${1:Concepto}]
+#+begin_property
+    $2
+#+end_property
+$0

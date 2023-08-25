@@ -19,6 +19,7 @@
   options(pillar.subtle = FALSE)
   options(rlang_backtrace_on_error = "none")
   options(crayon.enabled = FALSE)
+  options(width=60)
 
   ## Para el tema de ggplot
   color.itam  <- c("#00362b","#004a3b", "#00503f", "#006953", "#008367", "#009c7b", "#00b68f", NA)
