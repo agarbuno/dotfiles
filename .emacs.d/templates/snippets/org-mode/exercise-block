@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: exercise-block
+# key: <exercise
+# group: blocks
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+attr_latex:
+#+begin_exercise
+    $1
+#+end_exercise
+$0

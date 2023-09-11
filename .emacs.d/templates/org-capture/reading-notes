@@ -21,7 +21,7 @@
 
 * Figures 
 
-* Notes on %^{citekey}                                   :noter:
+* First pass on %^{citekey}                                   :noter:
 :PROPERTIES:
 :URL: %^{doi}
 :AUTHOR: %^{author}
@@ -29,3 +29,51 @@
 :NOTER_PAGE:              
 :END:
 
+** What is the problem being solved?
+
+** Why is it interesting?
+
+** What is the main claim?
+
+* Second pass on %^{citekey}                                   :noter:
+:PROPERTIES:
+:URL: %^{doi}
+:AUTHOR: %^{author}
+:NOTER_DOCUMENT: %^{file}
+:NOTER_PAGE:              
+:END:
+dd
+#+begin_quote
+Sources: examples, special cases, key lemmas/propositions, proof outlines. 
+#+end_quote
+
+** What was the main technical hurdle faced by past work? How does this paper overcome it?
+
+** What is the simplest nontrivial baseline? According to what metric is the new method better?
+
+** What’s still open and why does their insight not apply there?
+
+** Does their insight apply to other unconsidered problems?
+
+** What are the caveats and takeaways?
+
+
+* Third pass on %^{citekey}                                   :noter:
+:PROPERTIES:
+:URL: %^{doi}
+:AUTHOR: %^{author}
+:NOTER_DOCUMENT: %^{file}
+:NOTER_PAGE:              
+:END:
+
+#+begin_quote
+Sources: appendices, proof details, corollaries, remarks, related work.
+#+end_quote
+
+** How did they prove their lemmas, propositions, theorems?
+
+** Can I reprove (in spirit) their result from scratch?
+
+** If I cannot, what piece of intuition am I missing? Does an additional assumption make it easier?
+
+** Can I simplify their proof using the tools I know, or prove their main result in a very different way, once I get their intuition?
