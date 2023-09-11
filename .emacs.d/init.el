@@ -1088,13 +1088,13 @@
   :after python-mode
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
-(setenv "WORKON_HOME" "~/anaconda3/envs")
+(setenv "WORKON_HOME" "~/miniconda3/envs")
 
 (use-package pyvenv
   :after python-mode
   :config
   (pyvenv-mode 1)
-  (pyvenv-activate "~/anaconda3"))
+  (pyvenv-activate "~/miniconda3"))
 
 (use-package elpy
   :after python-mode
