@@ -977,7 +977,7 @@
 (setq directory-abbrev-alist
       '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
         ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
-        ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/bibliography")
+        ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/3-resources/bibliography")
         )
       )
 
@@ -1897,3 +1897,16 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(ox-hugo yasnippet-snippets yaml-mode winum which-key vterm visual-fill-column visual-fill use-package treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poly-R poetry pdf-tools page-break-lines ox-reveal org-web-tools org-tree-slide org-sticky-header org-special-block-extras org-roam-bibtex org-ref org-re-reveal-citeproc org-noter org-make-toc org-fragtog org-fancy-priorities org-download org-bullets org-appear no-littering nerd-icons-ivy-rich minions mic-paren math-preview lsp-ui lsp-treemacs lsp-latex lsp-ivy ivy-prescient ivy-bibtex hide-lines helpful git-timemachine general flyspell-correct-ivy flycheck-stan evil-nerd-commenter evil-collection eterm-256color ess elpy elfeed-score elfeed-org eldoc-stan doom-themes doom-modeline dockerfile-mode dired-single dired-open dired-hide-dotfiles deft dashboard counsel-projectile company-stan company-box company-auctex command-log-mode citar cdlatex buffer-move beacon auto-package-update auctex-latexmk arxiv-mode all-the-icons-dired)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

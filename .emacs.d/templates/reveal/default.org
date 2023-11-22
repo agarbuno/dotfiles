@@ -10,3 +10,4 @@
 #+REVEAL_SLIDE_NUMBER: t
 #+REVEAL_INIT_OPTIONS: width:1600, height:900, margin:.2
 #+REVEAL_PLUGINS: (notes)
+#+REVEAL_TRANS: none
