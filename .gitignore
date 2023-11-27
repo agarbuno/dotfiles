@@ -1,3 +1,4 @@
 .DS_Store
 /.emacs.d/perspective/*.persp
 /.emacs.d/elfeed/score.el.~8~
+.secrets
