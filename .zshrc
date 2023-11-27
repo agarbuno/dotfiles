@@ -219,3 +219,4 @@ alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permi
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export TEXMFHOME="/Users/agarbuno/.texmf"
+source /Users/agarbuno/.dotfiles/.secrets
