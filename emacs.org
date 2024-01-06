@@ -1371,6 +1371,14 @@ This should be updated accordingly with respect to =org-roam-v2=.
   (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
 #+end_src
 
+#+begin_src emacs-lisp :tangle no
+  (use-package org-roam-sbl-show-broken-links
+    :after org-roam
+    :bind (:map org-roam-mode-map
+                (("C-c n b" . org-roam-sbl-show-broken-links)
+                 ("C-c n B" . org-roam-sbl-show-all-broken-links))))
+#+end_src
+
 ** Deft
 
 #+begin_src emacs-lisp
