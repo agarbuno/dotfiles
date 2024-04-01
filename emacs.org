@@ -358,7 +358,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   (use-package projectile)
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package dashboard
     :ensure t
     :config
