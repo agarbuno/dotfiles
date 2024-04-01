@@ -2859,12 +2859,13 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up. S
 
 *** math-preview
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp  
   ;; Used to replace graphics generation of latex frags.
   (use-package math-preview
     :custom
     ;; (math-preview-command "/opt/homebrew/bin/math-preview")
-    (math-preview-command "/usr/local/bin/math-preview")
+    ;; (math-preview-command "/usr/local/bin/math-preview")
+    (math-preview-command "/Users/mi29569/homebrew/bin/math-preview")
     (math-preview-scale 1.5)
     (math-preview-tex-marks-inline
      '(("$" "$")))
