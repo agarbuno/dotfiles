@@ -420,7 +420,7 @@
 
 (use-package org-fancy-priorities ; priority icons
   :hook (org-mode . org-fancy-priorities-mode)
-  :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
+  :config (setq org-fancy-priorities-list '("★★★" "★★☆" "★☆☆")))
 
 (defun ag/org-mode-setup ()
   (org-indent-mode)
@@ -498,6 +498,7 @@
                  (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+projects/!-NEXT"
                      ((org-agenda-overriding-header "1. Projects")
+                      (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+personal/!-NEXT"
@@ -680,12 +681,6 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Meetings")))
-     ("s" "students" entry
-      "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name} \t:students:\n\n%?\n\n"
-      :if-new (file+head+olp
-               "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
-               ("Students")))
      ))
 
 :bind (("C-c n b" . org-roam-buffer-toggle)
