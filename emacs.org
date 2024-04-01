@@ -921,6 +921,9 @@ This section contains the basic configuration for =org-mode= plus the configurat
 #+begin_src emacs-lisp
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
+#+end_src
+
+#+begin_src emacs-lisp
   (setq org-agenda-custom-commands
         '(("d" "Dashboard"
            ((agenda "/!-BACKLOG" (
@@ -930,29 +933,33 @@ This section contains the basic configuration for =org-mode= plus the configurat
                                   (org-agenda-prefix-format "   %-2i ")
                                   (org-deadline-warning-days 7)
                                   ))
-            (todo "NEXT"
+            (todo "NEXT|WAIT"
                   ((org-agenda-overriding-header "Ongoing Tasks")
                    (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+projects/!-NEXT"
-                       ((org-agenda-overriding-header "1. Projects")
+            (tags-todo "+projects-CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                       ((org-agenda-overriding-header "Ongoing Projects")
+                        (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
+                        (org-agenda-show-inherited-tags nil)
+                        (org-agenda-prefix-format "   %-2i ")))
+             (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                       ((org-agenda-overriding-header "Specific Project tasks")
                         (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+personal/!-NEXT"
-                       ((org-agenda-overriding-header "2. Personal")
+                       ((org-agenda-overriding-header "Personal todos")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+research/!-NEXT"
-                       ((org-agenda-overriding-header "3. Research")
+                       ((org-agenda-overriding-header "Research")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))         
             (todo "BACKLOG|BACK"
-                  ((org-agenda-overriding-header "4. Backlog")
+                  ((org-agenda-overriding-header "Backlog")
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
-
             (tags-todo "-research-teaching-mcdatos-projects-maestria-habits/!-NEXT"
                        ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                         (org-agenda-show-inherited-tags nil)
@@ -963,12 +970,21 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ))
 
           ("n" "Next Tasks"
-           ((todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks")))))
+           ((todo "NEXT|WAIT"
+             ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+              (org-agenda-show-inherited-tags nil)
+              (org-agenda-prefix-format "   %-2i ")
+              (org-agenda-overriding-header "Next Tasks"))
+             )))
 
-          ("W" "Work Tasks" tags-todo "+work-email")
-          )
-        )
+          ("w" "Work Tasks"
+           ((tags-todo "+projects+CATEGORY=\"tasks\""
+             ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+              (org-agenda-show-inherited-tags nil)
+              (org-agenda-prefix-format "   %-2i ")
+              (org-agenda-overriding-header "Task List"))
+             )))
+          ))
 #+end_src    
 
 
