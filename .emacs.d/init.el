@@ -1582,32 +1582,6 @@
   (add-hook 'bibtex-mode-hook 'lsp)
   )
 
-;; Used to replace graphics generation of latex frags.
-(use-package math-preview
-  :custom
-  ;; (math-preview-command "/opt/homebrew/bin/math-preview")
-  (math-preview-command "/usr/local/bin/math-preview")
-  (math-preview-scale 1.5)
-  (math-preview-tex-marks-inline
-   '(("$" "$")))
-  (math-preview-tex-marks
-   '(("\\begin{equation}" "\\end{equation}")
-     ("\\begin{equation*}" "\\end{equation*}")
-     ("\\begin{align}" "\\end{align}")
-     ("\\begin{gather}" "\\end{gather}")
-     ("\\begin{subequations}" "\\end{subequations}")
-     ("$$" "$$")
-     ))
-  )
-(add-hook 'org-mode-hook #'math-preview-all)
-
-;; Used to get enter-ext display of latex
-(use-package org-fragtog
-  :config 
-  (add-hook 'org-mode-hook 'org-fragtog-mode))
-(defalias #'org-latex-preview #'math-preview-at-point)
-(defalias #'org-clear-latex-preview #'math-preview-clear-region)
-
 (setenv "TEXMFHOME" "~/.texmf")
 
 (add-to-list 'org-latex-classes
@@ -1742,6 +1716,7 @@
   ;; :bind (("C-c n e" . elfeed))
   :config
   (elfeed-org)
+  (setq elfeed-db-directory "~/orgfiles/feeds/database/")
   (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
   (setq elfeed-search-title-max-width 100)
   (setq elfeed-show-entry-switch 'display-buffer)
@@ -1897,16 +1872,3 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(ox-hugo yasnippet-snippets yaml-mode winum which-key vterm visual-fill-column visual-fill use-package treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poly-R poetry pdf-tools page-break-lines ox-reveal org-web-tools org-tree-slide org-sticky-header org-special-block-extras org-roam-bibtex org-ref org-re-reveal-citeproc org-noter org-make-toc org-fragtog org-fancy-priorities org-download org-bullets org-appear no-littering nerd-icons-ivy-rich minions mic-paren math-preview lsp-ui lsp-treemacs lsp-latex lsp-ivy ivy-prescient ivy-bibtex hide-lines helpful git-timemachine general flyspell-correct-ivy flycheck-stan evil-nerd-commenter evil-collection eterm-256color ess elpy elfeed-score elfeed-org eldoc-stan doom-themes doom-modeline dockerfile-mode dired-single dired-open dired-hide-dotfiles deft dashboard counsel-projectile company-stan company-box company-auctex command-log-mode citar cdlatex buffer-move beacon auto-package-update auctex-latexmk arxiv-mode all-the-icons-dired)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

@@ -358,7 +358,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   (use-package projectile)
 #+end_src
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle no 
   (use-package dashboard
     :ensure t
     :config
@@ -2876,12 +2876,12 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up. S
 
 *** math-preview
 
-#+begin_src emacs-lisp 
+#+begin_src emacs-lisp :tangle yes
   ;; Used to replace graphics generation of latex frags.
   (use-package math-preview
     :custom
     ;; (math-preview-command "/opt/homebrew/bin/math-preview")
-    (math-preview-command "/usr/local/bin/math-preview")
+    (math-preview-command "/Users/mi29569/homebrew/bin/math-preview")
     (math-preview-scale 1.5)
     (math-preview-tex-marks-inline
      '(("$" "$")))
@@ -3160,6 +3160,7 @@ I need to sort out how to make use of this within org-mode by following [[https:
             ("http://understandinguncertainty.org/rss.xml" uq) ;; no longer maintained
             ("http://xkcd.com/rss.xml" comics)
             ))
+    (setq elfeed-db-directory "~/orgfiles/feeds/database/")
     )
 #+end_src
 
@@ -3171,6 +3172,7 @@ I am using the following [[https://kitchingroup.cheme.cmu.edu/blog/2017/01/05/Sc
     ;; :bind (("C-c n e" . elfeed))
     :config
     (elfeed-org)
+    (setq elfeed-db-directory "~/orgfiles/feeds/database/")
     (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
     (setq elfeed-search-title-max-width 100)
     (setq elfeed-show-entry-switch 'display-buffer)
