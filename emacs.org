@@ -121,6 +121,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#parenthesis][Parenthesis]]
     - [[#bibtex][BibTex]]
     - [[#reference-management][Reference management]]
+    - [[#toggle-between-bib-files][Toggle between bib files]]
     - [[#citar-for-bib-management][Citar for bib management]]
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
   - [[#latex-in-org-mode][Latex in org mode]]
@@ -1570,7 +1571,7 @@ This is a particular use case in my worflow.
 
 #+begin_src emacs-lisp
   (setq directory-abbrev-alist
-        '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
+        '(
           ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
           ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/3-resources/bibliography")
           )
@@ -2681,9 +2682,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
            )
     :config
     (setq bibtex-completion-bibliography
-          '("~/orgfiles/references/bibliography.bib"
-            "~/orgfiles/references/bibliography-wpdfs.bib"
-            "~/orgfiles/references/bibliography-arxiv.bib"))
+          '("~/orgfiles/references/bibliography.bib"))
     (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
            bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
@@ -2777,6 +2776,19 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
           reftex-cite-cleanup-optional-args t))
 #+end_src
 
+*** Toggle between bib files
+
+#+begin_src emacs-lisp
+  (defun use-short-bib-file ()
+    (interactive)
+    (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"))
+    (message "Using short bibliography file."))
+
+  (defun use-large-bib-file ()
+    (interactive)
+    (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography-all.bib"))
+    (message "Using large bibliography file."))
+#+end_src
 
 *** Citar for bib management                                      :pending:
 
