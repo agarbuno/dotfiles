@@ -2878,7 +2878,7 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up. S
        ("$$" "$$")
        ))
     )
-  (add-hook 'org-mode-hook #'math-preview-all)
+  ;; (add-hook 'org-mode-hook #'math-preview-all)
 
   ;; Used to get enter-ext display of latex
   (use-package org-fragtog
