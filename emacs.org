@@ -358,7 +358,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   (use-package projectile)
 #+end_src
 
-#+begin_src emacs-lisp :tangle no 
+#+begin_src emacs-lisp :tangle yes
   (use-package dashboard
     :ensure t
     :config
@@ -567,8 +567,8 @@ For more keybinding configurations take a look in: [[https://emacs.stackexchange
     ;; :init (load-theme 'doom-monokai-pro t))
     ;; :init (load-theme 'doom-snazzy t))
     ;; :init (load-theme 'doom-moonlight t))
-    ;; :init (load-theme 'doom-nord-aurora t))
-    :init (load-theme 'doom-nord-light t))
+    :init (load-theme 'doom-nord-aurora t))
+    ;; :init (load-theme 'doom-nord-light t))
   ;; :config (load-theme 'doom-nord t))
 
   (use-package color
@@ -854,7 +854,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
     (use-package org-fancy-priorities ; priority icons
       :hook (org-mode . org-fancy-priorities-mode)
-      :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
+      :config (setq org-fancy-priorities-list '("★★★" "★★☆" "★☆☆")))
 
     (defun ag/org-mode-setup ()
       (org-indent-mode)
@@ -908,16 +908,13 @@ This section contains the basic configuration for =org-mode= plus the configurat
           '((:startgroup)
             ;; Put mutually exclusive tags here
             (:endgroup)
-            ("admin" . ?a)
-            ("book"  . ?b)
+            ("discipline" . ?d)
             ("course" . ?c)
             ("email" . ?e)
             ("followup" . ?f)
-            ("papers" . ?p)
+            ("project". ?p)
             ("read" . ?r)
-            ("study"  . ?s)
-            ("thesis" . ?t)
-            ("write"  . ?w)
+            ("wait"  . ?w)
             ))
 #+end_src
 
@@ -938,24 +935,21 @@ This section contains the basic configuration for =org-mode= plus the configurat
                    (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+research/!-NEXT"
-                       ((org-agenda-overriding-header "1. Research")
-                        (org-agenda-show-inherited-tags nil)
-                        (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+teaching/!-NEXT"
-                       ((org-agenda-overriding-header "2. Teaching")
-                        (org-agenda-show-inherited-tags nil)
-                        (org-agenda-prefix-format "   %-2i ")))            
-            (tags-todo "+maestria/!-NEXT"
-                       ((org-agenda-overriding-header "3. Maestria")
-                        (org-agenda-show-inherited-tags nil)
-                        (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+projects/!-NEXT"
-                       ((org-agenda-overriding-header "4. Projects")
+                       ((org-agenda-overriding-header "1. Projects")
+                        (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
+            (tags-todo "+personal/!-NEXT"
+                       ((org-agenda-overriding-header "2. Personal")
+                        (org-agenda-show-inherited-tags nil)
+                        (org-agenda-prefix-format "   %-2i ")))
+            (tags-todo "+research/!-NEXT"
+                       ((org-agenda-overriding-header "3. Research")
+                        (org-agenda-show-inherited-tags nil)
+                        (org-agenda-prefix-format "   %-2i ")))         
             (todo "BACKLOG|BACK"
-                  ((org-agenda-overriding-header "5. Backlog")
+                  ((org-agenda-overriding-header "4. Backlog")
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
 
@@ -981,33 +975,26 @@ This section contains the basic configuration for =org-mode= plus the configurat
 #+begin_src emacs-lisp 
   (setq org-capture-templates
         `(
-          ("m" "maestria" entry ;; ==============================================
-           (file+olp "~/orgfiles/agenda/tasks.org" "Maestria")
+          ("w" "projects" entry ;; ==============================================
+           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
            "* TODO \t %?
    :PROPERTIES:
    :CAPTURED: %U
-   :CATEGORY: %^{Task|admin|email|students|prospects|thesis}
+   :CATEGORY: %^{Category|projects|tasks|followup|wait}
+   :END:\n %a\n  %i" :empty-lines 1)
+          ("m" "personal" entry ;; ==============================================
+           (file+olp "~/orgfiles/agenda/tasks.org" "Personal")
+           "* TODO \t %?
+   :PROPERTIES:
+   :CAPTURED: %U
+   :CATEGORY: %^{Category|tasks|reminders}
    :END:\n %a\n  %i" :empty-lines 1)
           ("r" "research" entry ;; ==============================================
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
            "* TODO \t %?
    :PROPERTIES:
    :CAPTURED: %U
-   :CATEGORY: %^{Task|admin|email|ideas|read|write}
-   :END:\n %a\n  %i" :empty-lines 1)
-          ("t" "teaching" entry ;; ==============================================
-           (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-           "* TODO \t %?
-   :PROPERTIES:
-   :CAPTURED: %U
-   :CATEGORY: %^{Task|admin|advisee|class|email|thesis}
-   :END:\n %a\n  %i" :empty-lines 1)
-          ("p" "projects" entry ;; ==============================================
-           (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO \t %?
-   :PROPERTIES:
-   :CAPTURED: %U
-   :CATEGORY: %^{Task|admin|email|ideas|followup}
+   :CATEGORY: %^{Task|ideas|read|write|book|paper}
    :END:\n %a\n  %i" :empty-lines 1)
           ))
 #+end_src
@@ -1041,19 +1028,13 @@ This section contains the basic configuration for =org-mode= plus the configurat
   (setq org-agenda-category-icon-alist
         `(;; Main categories =================================================
           ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
-          ("maestria" ,(list (nerd-icons-octicon "nf-oct-log")) nil nil :ascent center)
-          ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+          ("projects" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
+          ("tasks" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
           ("habits" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
-          ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
           ;; Subcategories ===================================================
-          ("admin" ,(list (nerd-icons-mdicon "nf-md-android_studio")) nil nil :ascent center)
           ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
-          ("class" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
           ("email" ,(list (nerd-icons-mdicon	"nf-md-email_outline")) nil nil :ascent center)
           ("followup" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
-          ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
-          ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
-          ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
           ("read" ,(list (nerd-icons-mdicon "nf-md-book_open_page_variant_outline")) nil nil :ascent center)
           )
         )
@@ -1202,12 +1183,6 @@ This should be updated accordingly with respect to =org-roam-v2=.
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                  ("Meetings")))
-       ("s" "students" entry
-        "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name} \t:students:\n\n%?\n\n"
-        :if-new (file+head+olp
-                 "%<%Y-%m-%d>.org"
-                 "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
-                 ("Students")))
        ))
 
 #+end_src
@@ -1369,6 +1344,14 @@ This should be updated accordingly with respect to =org-roam-v2=.
             '("research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
             )
   (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  (use-package org-roam-sbl-show-broken-links
+    :after org-roam
+    :bind (:map org-roam-mode-map
+                (("C-c n b" . org-roam-sbl-show-broken-links)
+                 ("C-c n B" . org-roam-sbl-show-all-broken-links))))
 #+end_src
 
 ** Deft
@@ -1809,13 +1792,13 @@ There are a number of other language servers for Python so if you find that =pyl
 
 #+begin_src emacs-lisp
 
-  (setenv "WORKON_HOME" "~/miniconda3/envs")
+  (setenv "WORKON_HOME" "~/anaconda3/envs")
 
   (use-package pyvenv
     :after python-mode
     :config
     (pyvenv-mode 1)
-    (pyvenv-activate "~/miniconda3"))
+    (pyvenv-activate "~/anaconda3"))
 
 #+end_src
 
@@ -2876,12 +2859,12 @@ $\LaTeX$ rendering is very small in my configuration. I needed to scale it up. S
 
 *** math-preview
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp 
   ;; Used to replace graphics generation of latex frags.
   (use-package math-preview
     :custom
     ;; (math-preview-command "/opt/homebrew/bin/math-preview")
-    (math-preview-command "/Users/mi29569/homebrew/bin/math-preview")
+    (math-preview-command "/usr/local/bin/math-preview")
     (math-preview-scale 1.5)
     (math-preview-tex-marks-inline
      '(("$" "$")))
@@ -3160,7 +3143,6 @@ I need to sort out how to make use of this within org-mode by following [[https:
             ("http://understandinguncertainty.org/rss.xml" uq) ;; no longer maintained
             ("http://xkcd.com/rss.xml" comics)
             ))
-    (setq elfeed-db-directory "~/orgfiles/feeds/database/")
     )
 #+end_src
 
