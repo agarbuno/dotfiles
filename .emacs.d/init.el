@@ -239,8 +239,8 @@
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
   ;; :init (load-theme 'doom-moonlight t))
-  ;; :init (load-theme 'doom-nord-aurora t))
-  :init (load-theme 'doom-nord-light t))
+  :init (load-theme 'doom-nord-aurora t))
+  ;; :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
@@ -471,16 +471,13 @@
         '((:startgroup)
           ;; Put mutually exclusive tags here
           (:endgroup)
-          ("admin" . ?a)
-          ("book"  . ?b)
+          ("discipline" . ?d)
           ("course" . ?c)
           ("email" . ?e)
           ("followup" . ?f)
-          ("papers" . ?p)
+          ("project". ?p)
           ("read" . ?r)
-          ("study"  . ?s)
-          ("thesis" . ?t)
-          ("write"  . ?w)
+          ("wait"  . ?w)
           ))
 
 ;; Save Org buffers after refiling!
@@ -499,24 +496,20 @@
                  (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+research/!-NEXT"
-                     ((org-agenda-overriding-header "1. Research")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+teaching/!-NEXT"
-                     ((org-agenda-overriding-header "2. Teaching")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))            
-          (tags-todo "+maestria/!-NEXT"
-                     ((org-agenda-overriding-header "3. Maestria")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+projects/!-NEXT"
-                     ((org-agenda-overriding-header "4. Projects")
+                     ((org-agenda-overriding-header "1. Projects")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+personal/!-NEXT"
+                     ((org-agenda-overriding-header "2. Personal")
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+research/!-NEXT"
+                     ((org-agenda-overriding-header "3. Research")
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))         
           (todo "BACKLOG|BACK"
-                ((org-agenda-overriding-header "5. Backlog")
+                ((org-agenda-overriding-header "4. Backlog")
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
 
@@ -539,33 +532,26 @@
 
 (setq org-capture-templates
       `(
-        ("m" "maestria" entry ;; ==============================================
-         (file+olp "~/orgfiles/agenda/tasks.org" "Maestria")
+        ("w" "projects" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
          "* TODO \t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Task|admin|email|students|prospects|thesis}
+ :CATEGORY: %^{Category|projects|tasks|followup|wait}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("m" "personal" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Personal")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Category|tasks|reminders}
  :END:\n %a\n  %i" :empty-lines 1)
         ("r" "research" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Research")
          "* TODO \t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Task|admin|email|ideas|read|write}
- :END:\n %a\n  %i" :empty-lines 1)
-        ("t" "teaching" entry ;; ==============================================
-         (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-         "* TODO \t %?
- :PROPERTIES:
- :CAPTURED: %U
- :CATEGORY: %^{Task|admin|advisee|class|email|thesis}
- :END:\n %a\n  %i" :empty-lines 1)
-        ("p" "projects" entry ;; ==============================================
-         (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-         "* TODO \t %?
- :PROPERTIES:
- :CAPTURED: %U
- :CATEGORY: %^{Task|admin|email|ideas|followup}
+ :CATEGORY: %^{Task|ideas|read|write|book|paper}
  :END:\n %a\n  %i" :empty-lines 1)
         ))
 
@@ -590,19 +576,13 @@
 (setq org-agenda-category-icon-alist
       `(;; Main categories =================================================
         ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
-        ("maestria" ,(list (nerd-icons-octicon "nf-oct-log")) nil nil :ascent center)
-        ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+        ("projects" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
+        ("tasks" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
         ("habits" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
-        ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
         ;; Subcategories ===================================================
-        ("admin" ,(list (nerd-icons-mdicon "nf-md-android_studio")) nil nil :ascent center)
         ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
-        ("class" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
         ("email" ,(list (nerd-icons-mdicon	"nf-md-email_outline")) nil nil :ascent center)
         ("followup" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
-        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
-        ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
-        ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
         ("read" ,(list (nerd-icons-mdicon "nf-md-book_open_page_variant_outline")) nil nil :ascent center)
         )
       )
@@ -1088,13 +1068,13 @@
   :after python-mode
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
-(setenv "WORKON_HOME" "~/miniconda3/envs")
+(setenv "WORKON_HOME" "~/anaconda3/envs")
 
 (use-package pyvenv
   :after python-mode
   :config
   (pyvenv-mode 1)
-  (pyvenv-activate "~/miniconda3"))
+  (pyvenv-activate "~/anaconda3"))
 
 (use-package elpy
   :after python-mode
@@ -1742,6 +1722,7 @@
   ;; :bind (("C-c n e" . elfeed))
   :config
   (elfeed-org)
+  (setq elfeed-db-directory "~/orgfiles/feeds/database/")
   (setq rmh-elfeed-org-files (list "~/orgfiles/feeds/rss-list.org"))
   (setq elfeed-search-title-max-width 100)
   (setq elfeed-show-entry-switch 'display-buffer)
