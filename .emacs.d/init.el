@@ -118,6 +118,43 @@
 (use-package page-break-lines)
 (use-package projectile)
 
+(use-package dashboard
+  :ensure t
+  :config
+  (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+  ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
+  (setq dashboard-icon-type 'nerd-icons)  ;; use `nerd-icons' package
+  (setq dashboard-startup-banner 'logo)      
+  (setq dashboard-center-content nil)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
+                                    (agenda . "nf-oct-milestone")
+                                    (recents . "nf-oct-history")
+                                    (bookmarks . "nf-oct-bookmark")))
+  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+  (setq dashboard-items '(
+                          (recents  . 10)
+                          (projects . 5)
+                          (bookmarks . 5)
+                          (agenda . 10)
+                          ))
+  (setq dashboard-navigator-buttons
+        `((;; Github
+           (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
+            "Github"
+            "Go to Github"
+            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+           ;; Perspectives
+           (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
+            "Restore"
+            "Restore window configuration"
+            (lambda (&rest _) (persp-state-load persp-state-default-file)))
+           )))
+  (dashboard-setup-startup-hook)
+  )
+
 (set-face-attribute
  'default nil
  :font "JetBrains Mono"
@@ -239,8 +276,8 @@
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
   ;; :init (load-theme 'doom-moonlight t))
-  ;; :init (load-theme 'doom-nord-aurora t))
-  :init (load-theme 'doom-nord-light t))
+  :init (load-theme 'doom-nord-aurora t))
+  ;; :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
 (use-package color
@@ -420,7 +457,7 @@
 
 (use-package org-fancy-priorities ; priority icons
   :hook (org-mode . org-fancy-priorities-mode)
-  :config (setq org-fancy-priorities-list '("⚑" "⬆" "⬇")))
+  :config (setq org-fancy-priorities-list '("★★★" "★★☆" "★☆☆")))
 
 (defun ag/org-mode-setup ()
   (org-indent-mode)
@@ -471,20 +508,18 @@
         '((:startgroup)
           ;; Put mutually exclusive tags here
           (:endgroup)
-          ("admin" . ?a)
-          ("book"  . ?b)
+          ("discipline" . ?d)
           ("course" . ?c)
           ("email" . ?e)
           ("followup" . ?f)
-          ("papers" . ?p)
+          ("project". ?p)
           ("read" . ?r)
-          ("study"  . ?s)
-          ("thesis" . ?t)
-          ("write"  . ?w)
+          ("wait"  . ?w)
           ))
 
 ;; Save Org buffers after refiling!
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "/!-BACKLOG" (
@@ -494,32 +529,33 @@
                                 (org-agenda-prefix-format "   %-2i ")
                                 (org-deadline-warning-days 7)
                                 ))
-          (todo "NEXT"
+          (todo "NEXT|WAIT"
                 ((org-agenda-overriding-header "Ongoing Tasks")
                  (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+projects-CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                     ((org-agenda-overriding-header "Ongoing Projects")
+                      (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))
+           (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                     ((org-agenda-overriding-header "Specific Project tasks")
+                      (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+personal/!-NEXT"
+                     ((org-agenda-overriding-header "Personal todos")
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+research/!-NEXT"
-                     ((org-agenda-overriding-header "1. Research")
+                     ((org-agenda-overriding-header "Research")
                       (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+teaching/!-NEXT"
-                     ((org-agenda-overriding-header "2. Teaching")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))            
-          (tags-todo "+maestria/!-NEXT"
-                     ((org-agenda-overriding-header "3. Maestria")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+projects/!-NEXT"
-                     ((org-agenda-overriding-header "4. Projects")
-                      (org-agenda-show-inherited-tags nil)
-                      (org-agenda-prefix-format "   %-2i ")))
+                      (org-agenda-prefix-format "   %-2i ")))         
           (todo "BACKLOG|BACK"
-                ((org-agenda-overriding-header "5. Backlog")
+                ((org-agenda-overriding-header "Backlog")
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-
           (tags-todo "-research-teaching-mcdatos-projects-maestria-habits/!-NEXT"
                      ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                       (org-agenda-show-inherited-tags nil)
@@ -530,42 +566,44 @@
           ))
 
         ("n" "Next Tasks"
-         ((todo "NEXT"
-                ((org-agenda-overriding-header "Next Tasks")))))
+         ((todo "NEXT|WAIT"
+           ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+            (org-agenda-show-inherited-tags nil)
+            (org-agenda-prefix-format "   %-2i ")
+            (org-agenda-overriding-header "Next Tasks"))
+           )))
 
-        ("W" "Work Tasks" tags-todo "+work-email")
-        )
-      )
+        ("w" "Work Tasks"
+         ((tags-todo "+projects+CATEGORY=\"tasks\""
+           ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+            (org-agenda-show-inherited-tags nil)
+            (org-agenda-prefix-format "   %-2i ")
+            (org-agenda-overriding-header "Task List"))
+           )))
+        ))
 
 (setq org-capture-templates
       `(
-        ("m" "maestria" entry ;; ==============================================
-         (file+olp "~/orgfiles/agenda/tasks.org" "Maestria")
+        ("w" "projects" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
          "* TODO \t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Task|admin|email|students|prospects|thesis}
+ :CATEGORY: %^{Category|projects|tasks|followup|wait}
+ :END:\n %a\n  %i" :empty-lines 1)
+        ("m" "personal" entry ;; ==============================================
+         (file+olp "~/orgfiles/agenda/tasks.org" "Personal")
+         "* TODO \t %?
+ :PROPERTIES:
+ :CAPTURED: %U
+ :CATEGORY: %^{Category|tasks|reminders}
  :END:\n %a\n  %i" :empty-lines 1)
         ("r" "research" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Research")
          "* TODO \t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Task|admin|email|ideas|read|write}
- :END:\n %a\n  %i" :empty-lines 1)
-        ("t" "teaching" entry ;; ==============================================
-         (file+olp "~/orgfiles/agenda/tasks.org" "Teaching")
-         "* TODO \t %?
- :PROPERTIES:
- :CAPTURED: %U
- :CATEGORY: %^{Task|admin|advisee|class|email|thesis}
- :END:\n %a\n  %i" :empty-lines 1)
-        ("p" "projects" entry ;; ==============================================
-         (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-         "* TODO \t %?
- :PROPERTIES:
- :CAPTURED: %U
- :CATEGORY: %^{Task|admin|email|ideas|followup}
+ :CATEGORY: %^{Task|ideas|read|write|book|paper}
  :END:\n %a\n  %i" :empty-lines 1)
         ))
 
@@ -590,19 +628,13 @@
 (setq org-agenda-category-icon-alist
       `(;; Main categories =================================================
         ("research" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
-        ("maestria" ,(list (nerd-icons-octicon "nf-oct-log")) nil nil :ascent center)
-        ("projects" ,(list (nerd-icons-mdicon "nf-md-account_group")) nil nil :ascent center)
+        ("projects" ,(list (nerd-icons-octicon "nf-oct-rocket")) nil nil :ascent center)
+        ("tasks" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
         ("habits" ,(list (nerd-icons-sucicon "nf-seti-todo")) nil nil :ascent center)
-        ("teaching" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
         ;; Subcategories ===================================================
-        ("admin" ,(list (nerd-icons-mdicon "nf-md-android_studio")) nil nil :ascent center)
         ("book" ,(list (nerd-icons-mdicon "nf-md-bookshelf")) nil nil :ascent center)
-        ("class" ,(list (nerd-icons-mdicon "nf-md-school_outline")) nil nil :ascent center)
         ("email" ,(list (nerd-icons-mdicon	"nf-md-email_outline")) nil nil :ascent center)
         ("followup" ,(list (nerd-icons-flicon "nf-linux-void")) nil nil :ascent center)
-        ("paper" ,(list (nerd-icons-faicon "nf-fa-file_pdf_o")) nil nil :ascent center)
-        ("thesis" ,(list (nerd-icons-mdicon "nf-md-book_outline")) nil nil :ascent center)
-        ("advisee" ,(list (nerd-icons-mdicon "nf-md-book_education")) nil nil :ascent center)
         ("read" ,(list (nerd-icons-mdicon "nf-md-book_open_page_variant_outline")) nil nil :ascent center)
         )
       )
@@ -700,12 +732,6 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Meetings")))
-     ("s" "students" entry
-      "\n*  %<%I:%M %p> - Monitoring development: %^{Student's Name} \t:students:\n\n%?\n\n"
-      :if-new (file+head+olp
-               "%<%Y-%m-%d>.org"
-               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
-               ("Students")))
      ))
 
 :bind (("C-c n b" . org-roam-buffer-toggle)
@@ -975,7 +1001,7 @@
              )
 
 (setq directory-abbrev-alist
-      '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
+      '(
         ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
         ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/3-resources/bibliography")
         )
@@ -1492,9 +1518,7 @@
          )
   :config
   (setq bibtex-completion-bibliography
-        '("~/orgfiles/references/bibliography.bib"
-          "~/orgfiles/references/bibliography-wpdfs.bib"
-          "~/orgfiles/references/bibliography-arxiv.bib"))
+        '("~/orgfiles/references/bibliography.bib"))
   (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
          bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
@@ -1573,6 +1597,16 @@
         reftex-cite-prompt-optional-args nil
         reftex-cite-cleanup-optional-args t))
 
+(defun use-short-bib-file ()
+  (interactive)
+  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"))
+  (message "Using short bibliography file."))
+
+(defun use-large-bib-file ()
+  (interactive)
+  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography-all.bib"))
+  (message "Using large bibliography file."))
+
 (use-package lsp-latex
   :after auctex
   :defer t
@@ -1581,6 +1615,33 @@
   (add-hook 'LaTeX-mode-hook 'lsp)
   (add-hook 'bibtex-mode-hook 'lsp)
   )
+
+;; Used to replace graphics generation of latex frags.
+(use-package math-preview
+  :custom
+  ;; (math-preview-command "/opt/homebrew/bin/math-preview")
+  ;; (math-preview-command "/usr/local/bin/math-preview")
+  (math-preview-command "/Users/mi29569/homebrew/bin/math-preview")
+  (math-preview-scale 1.5)
+  (math-preview-tex-marks-inline
+   '(("$" "$")))
+  (math-preview-tex-marks
+   '(("\\begin{equation}" "\\end{equation}")
+     ("\\begin{equation*}" "\\end{equation*}")
+     ("\\begin{align}" "\\end{align}")
+     ("\\begin{gather}" "\\end{gather}")
+     ("\\begin{subequations}" "\\end{subequations}")
+     ("$$" "$$")
+     ))
+  )
+;; (add-hook 'org-mode-hook #'math-preview-all)
+
+;; Used to get enter-ext display of latex
+(use-package org-fragtog
+  :config 
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
+(defalias #'org-latex-preview #'math-preview-at-point)
+(defalias #'org-clear-latex-preview #'math-preview-clear-region)
 
 (setenv "TEXMFHOME" "~/.texmf")
 
