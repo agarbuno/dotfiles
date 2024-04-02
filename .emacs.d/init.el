@@ -1728,7 +1728,7 @@
     (org-download-heading-lvl nil)
     (org-download-timestamp "%Y%m%d-%H%M%S_")
     (org-download-image-attr-list '("#+attr_html: :width 800 :align center"))
-    (org-download-screenshot-method "/usr/local/bin/pngpaste %s")
+    (org-download-screenshot-method "/Users/mi29569/homebrew/bin/pngpaste %s")
     :bind
     ("C-c n s" . org-download-screenshot)
     :config
