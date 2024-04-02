@@ -121,6 +121,7 @@ Based on the awesome /Emacs from scratch/  series by [[https://github.com/daviwi
     - [[#parenthesis][Parenthesis]]
     - [[#bibtex][BibTex]]
     - [[#reference-management][Reference management]]
+    - [[#toggle-between-bib-files][Toggle between bib files]]
     - [[#citar-for-bib-management][Citar for bib management]]
     - [[#autocompletion-with-lsp][Autocompletion with lsp]]
   - [[#latex-in-org-mode][Latex in org mode]]
@@ -358,7 +359,7 @@ This section configures basic UI settings that remove unneeded elements to make 
   (use-package projectile)
 #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
   (use-package dashboard
     :ensure t
     :config
@@ -921,6 +922,9 @@ This section contains the basic configuration for =org-mode= plus the configurat
 #+begin_src emacs-lisp
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
+#+end_src
+
+#+begin_src emacs-lisp
   (setq org-agenda-custom-commands
         '(("d" "Dashboard"
            ((agenda "/!-BACKLOG" (
@@ -930,29 +934,33 @@ This section contains the basic configuration for =org-mode= plus the configurat
                                   (org-agenda-prefix-format "   %-2i ")
                                   (org-deadline-warning-days 7)
                                   ))
-            (todo "NEXT"
+            (todo "NEXT|WAIT"
                   ((org-agenda-overriding-header "Ongoing Tasks")
                    (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
-            (tags-todo "+projects/!-NEXT"
-                       ((org-agenda-overriding-header "1. Projects")
+            (tags-todo "+projects-CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                       ((org-agenda-overriding-header "Ongoing Projects")
+                        (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
+                        (org-agenda-show-inherited-tags nil)
+                        (org-agenda-prefix-format "   %-2i ")))
+             (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                       ((org-agenda-overriding-header "Specific Project tasks")
                         (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+personal/!-NEXT"
-                       ((org-agenda-overriding-header "2. Personal")
+                       ((org-agenda-overriding-header "Personal todos")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
             (tags-todo "+research/!-NEXT"
-                       ((org-agenda-overriding-header "3. Research")
+                       ((org-agenda-overriding-header "Research")
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))         
             (todo "BACKLOG|BACK"
-                  ((org-agenda-overriding-header "4. Backlog")
+                  ((org-agenda-overriding-header "Backlog")
                    (org-agenda-show-inherited-tags nil)
                    (org-agenda-prefix-format "   %-2i ")))
-
             (tags-todo "-research-teaching-mcdatos-projects-maestria-habits/!-NEXT"
                        ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                         (org-agenda-show-inherited-tags nil)
@@ -963,12 +971,21 @@ This section contains the basic configuration for =org-mode= plus the configurat
             ))
 
           ("n" "Next Tasks"
-           ((todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks")))))
+           ((todo "NEXT|WAIT"
+             ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+              (org-agenda-show-inherited-tags nil)
+              (org-agenda-prefix-format "   %-2i ")
+              (org-agenda-overriding-header "Next Tasks"))
+             )))
 
-          ("W" "Work Tasks" tags-todo "+work-email")
-          )
-        )
+          ("w" "Work Tasks"
+           ((tags-todo "+projects+CATEGORY=\"tasks\""
+             ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+              (org-agenda-show-inherited-tags nil)
+              (org-agenda-prefix-format "   %-2i ")
+              (org-agenda-overriding-header "Task List"))
+             )))
+          ))
 #+end_src    
 
 
@@ -1554,7 +1571,7 @@ This is a particular use case in my worflow.
 
 #+begin_src emacs-lisp
   (setq directory-abbrev-alist
-        '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
+        '(
           ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
           ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/3-resources/bibliography")
           )
@@ -2665,9 +2682,7 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
            )
     :config
     (setq bibtex-completion-bibliography
-          '("~/orgfiles/references/bibliography.bib"
-            "~/orgfiles/references/bibliography-wpdfs.bib"
-            "~/orgfiles/references/bibliography-arxiv.bib"))
+          '("~/orgfiles/references/bibliography.bib"))
     (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
            bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
@@ -2761,6 +2776,19 @@ Use =mic-paren= to highlight parehthesis for math environments in latex.
           reftex-cite-cleanup-optional-args t))
 #+end_src
 
+*** Toggle between bib files
+
+#+begin_src emacs-lisp
+  (defun use-short-bib-file ()
+    (interactive)
+    (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"))
+    (message "Using short bibliography file."))
+
+  (defun use-large-bib-file ()
+    (interactive)
+    (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography-all.bib"))
+    (message "Using large bibliography file."))
+#+end_src
 
 *** Citar for bib management                                      :pending:
 
