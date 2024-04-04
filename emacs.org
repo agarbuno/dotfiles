@@ -951,7 +951,7 @@ This section contains the basic configuration for =org-mode= plus the configurat
                         (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                         (org-agenda-show-inherited-tags nil)
                         (org-agenda-prefix-format "   %-2i ")))
-             (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
+            (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
                        ((org-agenda-overriding-header "Specific Project tasks")
                         (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                         (org-agenda-show-inherited-tags nil)
@@ -979,19 +979,19 @@ This section contains the basic configuration for =org-mode= plus the configurat
 
           ("n" "Next Tasks"
            ((todo "NEXT|WAIT"
-             ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
-              (org-agenda-show-inherited-tags nil)
-              (org-agenda-prefix-format "   %-2i ")
-              (org-agenda-overriding-header "Next Tasks"))
-             )))
+                  ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+                   (org-agenda-show-inherited-tags nil)
+                   (org-agenda-prefix-format "   %-2i ")
+                   (org-agenda-overriding-header "Next Tasks"))
+                  )))
 
           ("w" "Work Tasks"
            ((tags-todo "+projects+CATEGORY=\"tasks\""
-             ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
-              (org-agenda-show-inherited-tags nil)
-              (org-agenda-prefix-format "   %-2i ")
-              (org-agenda-overriding-header "Task List"))
-             )))
+                       ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+                        (org-agenda-show-inherited-tags nil)
+                        (org-agenda-prefix-format "   %-2i ")
+                        (org-agenda-overriding-header "Task List"))
+                       )))
           ))
 #+end_src    
 
@@ -1001,21 +1001,21 @@ This section contains the basic configuration for =org-mode= plus the configurat
         `(
           ("w" "projects" entry ;; ==============================================
            (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-           "* TODO \t %?
+           "* TODO\t %?
    :PROPERTIES:
    :CAPTURED: %U
-   :CATEGORY: %^{Category|projects|tasks|followup|wait}
+   :CATEGORY: %^{Category|projects|tasks}
    :END:\n %a\n  %i" :empty-lines 1)
           ("m" "personal" entry ;; ==============================================
            (file+olp "~/orgfiles/agenda/tasks.org" "Personal")
-           "* TODO \t %?
+           "* TODO\t %?
    :PROPERTIES:
    :CAPTURED: %U
    :CATEGORY: %^{Category|tasks|reminders}
    :END:\n %a\n  %i" :empty-lines 1)
           ("r" "research" entry ;; ==============================================
            (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-           "* TODO \t %?
+           "* TODO\t %?
    :PROPERTIES:
    :CAPTURED: %U
    :CATEGORY: %^{Task|ideas|read|write|book|paper}
@@ -1201,9 +1201,9 @@ This should be updated accordingly with respect to =org-roam-v2=.
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                  ("Talks")))
-       ("m" "meeting" entry
-        "\n\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
-        :if-new (file+head
+       ("m" "meetings" entry
+        ;; "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
+        (file "~/.emacs.d/templates/org-capture/meetings-template")
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                  ))
