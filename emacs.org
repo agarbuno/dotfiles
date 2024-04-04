@@ -1204,6 +1204,7 @@ This should be updated accordingly with respect to =org-roam-v2=.
        ("m" "meetings" entry
         ;; "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
         (file "~/.emacs.d/templates/org-capture/meetings-template")
+        :if-new (file+head
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                  ))

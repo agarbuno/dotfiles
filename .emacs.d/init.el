@@ -125,10 +125,17 @@
   ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
   (setq dashboard-icon-type 'nerd-icons)  ;; use `nerd-icons' package
   (setq dashboard-startup-banner 'logo)      
-  (setq dashboard-center-content nil)
+  (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-navigator t)
+
+  (setq dashboard-week-agenda t)
+  (setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+  (setq dashboard-match-agenda-entry "+projects+CATEGORY=\"tasks\"/!")
+  (setq dashboard-agenda-prefix-format "%-2i  ")
+  (setq dashboard-agenda-tags-format 'ignore)
+
   (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
                                     (agenda . "nf-oct-milestone")
                                     (recents . "nf-oct-history")
@@ -137,7 +144,7 @@
   (setq dashboard-items '(
                           (recents  . 10)
                           (projects . 5)
-                          (bookmarks . 5)
+                          ;; (bookmarks .s 5)
                           (agenda . 10)
                           ))
   (setq dashboard-navigator-buttons
@@ -539,7 +546,7 @@
                       (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-           (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
+          (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
                      ((org-agenda-overriding-header "Specific Project tasks")
                       (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                       (org-agenda-show-inherited-tags nil)
@@ -567,40 +574,40 @@
 
         ("n" "Next Tasks"
          ((todo "NEXT|WAIT"
-           ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
-            (org-agenda-show-inherited-tags nil)
-            (org-agenda-prefix-format "   %-2i ")
-            (org-agenda-overriding-header "Next Tasks"))
-           )))
+                ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+                 (org-agenda-show-inherited-tags nil)
+                 (org-agenda-prefix-format "   %-2i ")
+                 (org-agenda-overriding-header "Next Tasks"))
+                )))
 
         ("w" "Work Tasks"
          ((tags-todo "+projects+CATEGORY=\"tasks\""
-           ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
-            (org-agenda-show-inherited-tags nil)
-            (org-agenda-prefix-format "   %-2i ")
-            (org-agenda-overriding-header "Task List"))
-           )))
+                     ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")
+                      (org-agenda-overriding-header "Task List"))
+                     )))
         ))
 
 (setq org-capture-templates
       `(
         ("w" "projects" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-         "* TODO \t %?
+         "* TODO\t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Category|projects|tasks|followup|wait}
+ :CATEGORY: %^{Category|projects|tasks}
  :END:\n %a\n  %i" :empty-lines 1)
         ("m" "personal" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Personal")
-         "* TODO \t %?
+         "* TODO\t %?
  :PROPERTIES:
  :CAPTURED: %U
  :CATEGORY: %^{Category|tasks|reminders}
  :END:\n %a\n  %i" :empty-lines 1)
         ("r" "research" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-         "* TODO \t %?
+         "* TODO\t %?
  :PROPERTIES:
  :CAPTURED: %U
  :CATEGORY: %^{Task|ideas|read|write|book|paper}
@@ -726,8 +733,9 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Talks")))
-     ("m" "meeting" entry
-      "\n\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
+     ("m" "meetings" entry
+      ;; "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
+      (file "~/.emacs.d/templates/org-capture/meetings-template")
       :if-new (file+head
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
