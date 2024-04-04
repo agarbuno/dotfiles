@@ -716,22 +716,22 @@
   (org-roam-dailies-directory "journals/")
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
-      "\n*  %?"
+      "\n\n*  %?"
       :if-new (file+head
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"))
      ("t" "talks" entry
-      "\n* %^{Talk Title} by %^{Speaker} \t:talks: \n\n%?\n\n"
+      "\n\n* %^{Talk Title} by %^{Speaker} \t:talks: \n\n%?\n\n"
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Talks")))
      ("m" "meeting" entry
-      "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
-      :if-new (file+head+olp
+      "\n\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
+      :if-new (file+head
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
-               ("Meetings")))
+               ))
      ))
 
 :bind (("C-c n b" . org-roam-buffer-toggle)
