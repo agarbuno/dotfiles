@@ -367,10 +367,17 @@ This section configures basic UI settings that remove unneeded elements to make 
     ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
     (setq dashboard-icon-type 'nerd-icons)  ;; use `nerd-icons' package
     (setq dashboard-startup-banner 'logo)      
-    (setq dashboard-center-content nil)
+    (setq dashboard-center-content t)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
     (setq dashboard-set-navigator t)
+
+    (setq dashboard-week-agenda t)
+    (setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+    (setq dashboard-match-agenda-entry "+projects+CATEGORY=\"tasks\"/!")
+    (setq dashboard-agenda-prefix-format "%-2i  ")
+    (setq dashboard-agenda-tags-format 'ignore)
+
     (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
                                       (agenda . "nf-oct-milestone")
                                       (recents . "nf-oct-history")
@@ -379,7 +386,7 @@ This section configures basic UI settings that remove unneeded elements to make 
     (setq dashboard-items '(
                             (recents  . 10)
                             (projects . 5)
-                            (bookmarks . 5)
+                            ;; (bookmarks .s 5)
                             (agenda . 10)
                             ))
     (setq dashboard-navigator-buttons
