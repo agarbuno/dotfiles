@@ -118,6 +118,50 @@
 (use-package page-break-lines)
 (use-package projectile)
 
+(use-package dashboard
+  :ensure t
+  :config
+  (setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+  ;; (setq dashboard-icon-type 'all-the-icons)  ;; use `all-the-icons' package
+  (setq dashboard-icon-type 'nerd-icons)  ;; use `nerd-icons' package
+  (setq dashboard-startup-banner 'logo)      
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+
+  (setq dashboard-week-agenda t)
+  (setq dashboard-filter-agenda-entry 'dashboard-no-filter-agenda)
+  (setq dashboard-match-agenda-entry "+projects+CATEGORY=\"tasks\"/!")
+  (setq dashboard-agenda-prefix-format "%-2i  ")
+  (setq dashboard-agenda-tags-format 'ignore)
+
+  (dashboard-modify-heading-icons '((projects . "nf-oct-rocket")
+                                    (agenda . "nf-oct-milestone")
+                                    (recents . "nf-oct-history")
+                                    (bookmarks . "nf-oct-bookmark")))
+  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+  (setq dashboard-items '(
+                          (recents  . 10)
+                          (projects . 5)
+                          ;; (bookmarks .s 5)
+                          (agenda . 10)
+                          ))
+  (setq dashboard-navigator-buttons
+        `((;; Github
+           (,(nerd-icons-octicon "nf-oct-mark_github" :height 1.1 :v-adjust 0.0)
+            "Github"
+            "Go to Github"
+            (lambda (&rest _) (browse-url "https://github.com/agarbuno/")))
+           ;; Perspectives
+           (,(nerd-icons-octicon "nf-oct-history" :height 1.1 :v-adjust 0.0)
+            "Restore"
+            "Restore window configuration"
+            (lambda (&rest _) (persp-state-load persp-state-default-file)))
+           )))
+  (dashboard-setup-startup-hook)
+  )
+
 (set-face-attribute
  'default nil
  :font "JetBrains Mono"
@@ -482,6 +526,7 @@
 
 ;; Save Org buffers after refiling!
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "/!-BACKLOG" (
@@ -491,29 +536,33 @@
                                 (org-agenda-prefix-format "   %-2i ")
                                 (org-deadline-warning-days 7)
                                 ))
-          (todo "NEXT"
+          (todo "NEXT|WAIT"
                 ((org-agenda-overriding-header "Ongoing Tasks")
                  (org-agenda-sorting-strategy '(todo-state-up priority-down timestamp-up))
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+projects/!-NEXT"
-                     ((org-agenda-overriding-header "1. Projects")
+          (tags-todo "+projects-CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                     ((org-agenda-overriding-header "Ongoing Projects")
                       (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
-          (tags-todo "+personal/!-NEXT"
-                     ((org-agenda-overriding-header "2. Personal")
+           (tags-todo "+projects+CATEGORY=\"tasks\"/!-NEXT-WAIT"
+                     ((org-agenda-overriding-header "Specific Project tasks")
+                      (org-agenda-sorting-strategy '(todo-state-up category-up priority-down))
+                      (org-agenda-show-inherited-tags nil)
+                      (org-agenda-prefix-format "   %-2i ")))
+          (tags-todo "+personal/!-NEXTgr"
+                     ((org-agenda-overriding-header "Personal todos")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))
           (tags-todo "+research/!-NEXT"
-                     ((org-agenda-overriding-header "3. Research")
+                     ((org-agenda-overriding-header "Research")
                       (org-agenda-show-inherited-tags nil)
                       (org-agenda-prefix-format "   %-2i ")))         
           (todo "BACKLOG|BACK"
-                ((org-agenda-overriding-header "4. Backlog")
+                ((org-agenda-overriding-header "Backlog")
                  (org-agenda-show-inherited-tags nil)
                  (org-agenda-prefix-format "   %-2i ")))
-
           (tags-todo "-research-teaching-mcdatos-projects-maestria-habits/!-NEXT"
                      ((org-agenda-overriding-header "Unprocessed Inbox Tasks")
                       (org-agenda-show-inherited-tags nil)
@@ -524,32 +573,41 @@
           ))
 
         ("n" "Next Tasks"
-         ((todo "NEXT"
-                ((org-agenda-overriding-header "Next Tasks")))))
+         ((todo "NEXT|WAIT"
+           ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+            (org-agenda-show-inherited-tags nil)
+            (org-agenda-prefix-format "   %-2i ")
+            (org-agenda-overriding-header "Next Tasks"))
+           )))
 
-        ("W" "Work Tasks" tags-todo "+work-email")
-        )
-      )
+        ("w" "Work Tasks"
+         ((tags-todo "+projects+CATEGORY=\"tasks\""
+           ((org-agenda-sorting-strategy '(todo-state-down category-up priority-down))
+            (org-agenda-show-inherited-tags nil)
+            (org-agenda-prefix-format "   %-2i ")
+            (org-agenda-overriding-header "Task List"))
+           )))
+        ))
 
 (setq org-capture-templates
       `(
         ("w" "projects" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Projects")
-         "* TODO \t %?
+         "* TODO\t %?
  :PROPERTIES:
  :CAPTURED: %U
- :CATEGORY: %^{Category|projects|tasks|followup|wait}
+ :CATEGORY: %^{Category|projects|tasks}
  :END:\n %a\n  %i" :empty-lines 1)
         ("m" "personal" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Personal")
-         "* TODO \t %?
+         "* TODO\t %?
  :PROPERTIES:
  :CAPTURED: %U
  :CATEGORY: %^{Category|tasks|reminders}
  :END:\n %a\n  %i" :empty-lines 1)
         ("r" "research" entry ;; ==============================================
          (file+olp "~/orgfiles/agenda/tasks.org" "Research")
-         "* TODO \t %?
+         "* TODO\t %?
  :PROPERTIES:
  :CAPTURED: %U
  :CATEGORY: %^{Task|ideas|read|write|book|paper}
@@ -675,8 +733,9 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ("Talks")))
-     ("m" "meeting" entry
-      "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
+     ("m" "meetings" entry
+      ;; "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
+      (file "~/.emacs.d/templates/org-capture/meetings-template")
       :if-new (file+head+olp
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
@@ -950,7 +1009,7 @@
              )
 
 (setq directory-abbrev-alist
-      '(("~/OneDrive" . "~/Library/CloudStorage/OneDrive-INSTITUTOTECNOLOGICOAUTONOMODEMEXICO")
+      '(
         ("~/Google Drive" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive")
         ("/Users/agarbuno/bibliography" . "~/Library/CloudStorage/GoogleDrive-alfredogarbuno@gmail.com/My Drive/3-resources/bibliography")
         )
@@ -1467,9 +1526,7 @@
          )
   :config
   (setq bibtex-completion-bibliography
-        '("~/orgfiles/references/bibliography.bib"
-          "~/orgfiles/references/bibliography-wpdfs.bib"
-          "~/orgfiles/references/bibliography-arxiv.bib"))
+        '("~/orgfiles/references/bibliography.bib"))
   (setq  bibtex-completion-library-path "~/orgfiles/references/bibtex-pdfs/"
          bibtex-completion-notes-path   "~/orgfiles/bibtex/")
 
@@ -1547,6 +1604,16 @@
 
         reftex-cite-prompt-optional-args nil
         reftex-cite-cleanup-optional-args t))
+
+(defun use-short-bib-file ()
+  (interactive)
+  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography.bib"))
+  (message "Using short bibliography file."))
+
+(defun use-large-bib-file ()
+  (interactive)
+  (setq bibtex-completion-bibliography '("~/orgfiles/references/bibliography-all.bib"))
+  (message "Using large bibliography file."))
 
 (use-package lsp-latex
   :after auctex
@@ -1873,3 +1940,16 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
