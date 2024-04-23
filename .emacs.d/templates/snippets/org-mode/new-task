@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name:  new task
+# key: <nt
+# group: agenda
+# expand-env: ((yas-indent-line 'fixed))
+# --
+TODO $2
+:PROPERTIES:
+:CAPTURED: [`(format-time-string "%Y-%m-%d %a %H:%M")`]
+:CATEGORY: ${1:$$(yas-choose-value '("projects" "tasks"))}
+:END:
+$0
