@@ -729,12 +729,11 @@
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"))
      ("t" "talks" entry
       "\n\n* %^{Talk Title} by %^{Speaker} \t:talks: \n\n%?\n\n"
-      :if-new (file+head+olp
+      :if-new (file+head
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
-               ("Talks")))
+               ))
      ("m" "meetings" entry
-      ;; "\n*  %<%I:%M %p> - %^{Meeting Title} \t:meetings: \n\n%?\n\n"
       (file "~/.emacs.d/templates/org-capture/meetings-template")
       :if-new (file+head
                "%<%Y-%m-%d>.org"
@@ -800,6 +799,8 @@
      (if functiontag
          (cond ((member "paper" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "unprocessed" functiontag)
+                (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-circle_edit_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "journal" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "thesis" functiontag)
@@ -849,7 +850,7 @@
          (level (org-roam-node-level node))
          (filetitle (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
          (shortentitle (if (> (length filetitle) 20) (concat (substring filetitle 0 20)  "...") filetitle))
-         (separator (concat " " (all-the-icons-material "chevron_right") " "))
+         (separator (concat " " (all-the-icons-octicon "chevron-right") " "))
          )
     (cond
      ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
@@ -867,9 +868,9 @@
 )
 
 (setq ag/lit-categories
-          '("research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
+          '("unprocessed" "research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
           )
-(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:12} " " ${othertags:25} " " ${hierarchy:180} "))
+(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:15} " " ${othertags:25} " " ${hierarchy:180} "))
 
 (use-package deft
   :commands (deft)
