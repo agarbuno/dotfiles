@@ -1,7 +1,6 @@
 
 
-*  %<%I:%M %p> - %^{Meeting Title}            :meetings:
-#+filetags: :%^{status|unprocessed|completed}:
+*  %<%I:%M %p> - %^{Meeting Title}            :meetings:%^{status|unprocessed|completed}:
 
 #+BEGIN_NOTES
 - asistentes :: %^{Asistentes}
@@ -16,4 +15,4 @@
 - %?
 
 ** Compromisos
-- [ ]
+- [ ]   

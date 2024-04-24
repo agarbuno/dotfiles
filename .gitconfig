@@ -1,6 +1,6 @@
 [user]
         name = agarbuno
-        email = alfredo.garbuno@itam.mx
+        email = alfredo.garbuno@gmail.com
 [filter "lfs"]
         clean = git-lfs clean -- %f
         smudge = git-lfs smudge -- %f
