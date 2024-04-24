@@ -217,6 +217,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}$
 alias cat=bat --paging=never
 alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user -U'
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
+alias upb="cd ~/orgfiles && git add feeds/** && git add **/*.png && git add **/*.org && git commit -m ':computer: working session sync' && git pull && git push"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export TEXMFHOME="/Users/agarbuno/.texmf"
-source /Users/agarbuno/.dotfiles/.secrets
+source $HOME/.dotfiles/.secrets

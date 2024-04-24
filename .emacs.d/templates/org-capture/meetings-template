@@ -1,15 +1,19 @@
 
+
 *  %<%I:%M %p> - %^{Meeting Title}            :meetings:
 #+filetags: :%^{status|unprocessed|completed}:
 
 #+BEGIN_NOTES
-- asistentes :: %?
+- asistentes :: %^{Asistentes}
 - related ::
-- objetivos :: 
+#+END_NOTES
+
+#+BEGIN_NOTES
+- Objetivo :: %^{Objetivo de la reunión}
 #+END_NOTES
 
 ** Notas de la sesión
-- 
+- %?
 
 ** Compromisos
 - [ ]

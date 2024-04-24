@@ -983,16 +983,6 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("r" "revision"  plain
-               (file "~/.emacs.d/templates/org-capture/thesis-revision")
-               :if-new
-               (file+head
-                "bibtex/%<%Y%m%d>-${citekey}.org"
-                "#+title: ${title}\n")
-               :unnarrowed t)
-             )
-
-(add-to-list 'org-roam-capture-templates
              '("m" "mathematics"  plain
                (file "~/.emacs.d/templates/org-capture/concept-template")
                :if-new
@@ -1426,8 +1416,7 @@
   :hook (LaTeX-mode . ag/latex-mode-visual-fill)
   :custom
   (reftex-plug-into-AUCTeX t)
-  (reftex-default-bibliography '("~/orgfiles/references/bibliography.bib"
-                                 "~/orgfiles/references/bibliographypdfs.bib"))
+  (reftex-default-bibliography '("~/orgfiles/references/bibliography.bib"))
   (LaTeX-indent-level 4
                       LaTeX-item-indent 0
                       TeX-brace-indent-level 4
@@ -1940,16 +1929,3 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("34cf3305b35e3a8132a0b1bdf2c67623bc2cb05b125f8d7d26bd51fd16d547ec" default)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
