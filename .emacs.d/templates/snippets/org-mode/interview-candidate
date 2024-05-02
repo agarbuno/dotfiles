@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name:  new candidate
+# key: <ncand
+# group: agenda
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:Nombre} - ${2:$$(yas-choose-value '("Analyst" "Associate" "Expert" "SrExpert"))}
+$0

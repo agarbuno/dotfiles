@@ -1,0 +1,14 @@
+
+*  %<%I:%M %p> - Entrevistas de candidatos          :meetings:
+
+#+BEGIN_NOTES
+Recordar el método STAR:
+- =S=ituación: Qué problema y objetivo tuvieron que resolver
+- =T=area: Qué modelos consideraron para atacar el problema
+- =A=cción: Cómo escogieron el modelo para resolver el problema.
+- =R=esultado: Cuál fue el impacto de la solución.
+#+END_NOTES
+
+** %^{Nombre} - %^{Rol|Analyst|Associate|Expert|SrExpert}
+
+- %?

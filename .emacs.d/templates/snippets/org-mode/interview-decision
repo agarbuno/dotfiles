@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name:  interview decision
+# key: <decision
+# group: agenda
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:$$(yas-choose-value '("👍" "👎" "🤔"))}$0
