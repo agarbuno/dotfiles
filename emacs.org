@@ -1207,6 +1207,12 @@ This should be updated accordingly with respect to =org-roam-v2=.
                  "%<%Y-%m-%d>.org"
                  "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                  ))
+       ("i" "interviews" entry
+        (file "~/.emacs.d/templates/org-capture/interviews-template")
+        :if-new (file+head
+                 "%<%Y-%m-%d>.org"
+                 "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
+                 ))
        ))
 
 #+end_src

@@ -739,6 +739,12 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ))
+     ("i" "interviews" entry
+      (file "~/.emacs.d/templates/org-capture/interviews-template")
+      :if-new (file+head
+               "%<%Y-%m-%d>.org"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
+               ))
      ))
 
 :bind (("C-c n b" . org-roam-buffer-toggle)
