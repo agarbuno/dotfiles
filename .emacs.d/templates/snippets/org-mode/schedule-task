@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name:  schedule task
+# key: <sc
+# group: agenda
+# expand-env: ((yas-indent-line 'fixed))
+# --
+:SCHEDULED: <`(format-time-string "%Y-%m-%d %a")`>
+$0

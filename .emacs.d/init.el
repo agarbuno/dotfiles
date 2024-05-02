@@ -739,6 +739,12 @@
                "%<%Y-%m-%d>.org"
                "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
                ))
+     ("i" "interviews" entry
+      (file "~/.emacs.d/templates/org-capture/interviews-template")
+      :if-new (file+head
+               "%<%Y-%m-%d>.org"
+               "#+title: %<%Y-%m-%d %a>\n#+filetags: :journal:\n"
+               ))
      ))
 
 :bind (("C-c n b" . org-roam-buffer-toggle)
@@ -984,16 +990,6 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("r" "revision"  plain
-               (file "~/.emacs.d/templates/org-capture/thesis-revision")
-               :if-new
-               (file+head
-                "bibtex/%<%Y%m%d>-${citekey}.org"
-                "#+title: ${title}\n")
-               :unnarrowed t)
-             )
-
-(add-to-list 'org-roam-capture-templates
              '("m" "mathematics"  plain
                (file "~/.emacs.d/templates/org-capture/concept-template")
                :if-new
@@ -1123,13 +1119,13 @@
   :after python-mode
   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
-(setenv "WORKON_HOME" "~/miniconda3/envs")
+(setenv "WORKON_HOME" "~/anaconda3/envs")
 
 (use-package pyvenv
   :after python-mode
   :config
   (pyvenv-mode 1)
-  (pyvenv-activate "~/miniconda3"))
+  (pyvenv-activate "~/anaconda3"))
 
 (use-package elpy
   :after python-mode
@@ -1427,8 +1423,7 @@
   :hook (LaTeX-mode . ag/latex-mode-visual-fill)
   :custom
   (reftex-plug-into-AUCTeX t)
-  (reftex-default-bibliography '("~/orgfiles/references/bibliography.bib"
-                                 "~/orgfiles/references/bibliographypdfs.bib"))
+  (reftex-default-bibliography '("~/orgfiles/references/bibliography.bib"))
   (LaTeX-indent-level 4
                       LaTeX-item-indent 0
                       TeX-brace-indent-level 4
@@ -1942,16 +1937,3 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(yasnippet-snippets yaml-mode winum which-key vterm visual-fill-column treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poly-R poetry pkg-info pdf-tools page-break-lines ox-reveal org-web-tools org-tree-slide org-sticky-header org-roam-bibtex org-ref org-re-reveal-citeproc org-ql org-noter org-make-toc org-fragtog org-fancy-priorities org-download org-bullets org-appear no-littering nerd-icons-ivy-rich minions mic-paren math-preview lsp-ui lsp-treemacs lsp-latex lsp-ivy ivy-prescient ivy-bibtex hide-lines helpful git-timemachine general flyspell-correct-ivy flycheck-stan evil-nerd-commenter evil-collection eterm-256color ess elpy elfeed-score elfeed-org eldoc-stan doom-themes doom-modeline dockerfile-mode dired-single dired-open dired-hide-dotfiles deft dashboard counsel-projectile company-stan company-box company-auctex command-log-mode cdlatex buffer-move beacon auto-package-update auctex-latexmk arxiv-mode all-the-icons-dired)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

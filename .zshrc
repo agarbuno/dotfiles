@@ -120,14 +120,14 @@ POWERLEVEL9K_MODE="awesome-patched"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/agarbuno/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/agarbuno/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/agarbuno/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/agarbuno/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/agarbuno/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/agarbuno/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/agarbuno/miniconda3/bin:$PATH"
+        export PATH="/Users/agarbuno/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -217,5 +217,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}$
 alias cat=bat --paging=never
 alias ls='exa -l --group-directories-first --color=auto --git --icons --no-permissions --no-user -U'
 alias ll='exa -lahF --group-directories-first --color=auto --git --icons'
+alias upb="cd ~/orgfiles && git add feeds/** && git add **/*.png && git add **/*.org && git commit -m ':computer: working session sync' && git pull && git push"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export TEXMFHOME="/Users/agarbuno/.texmf"
+source $HOME/.dotfiles/.secrets
