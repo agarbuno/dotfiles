@@ -283,7 +283,9 @@
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
   ;; :init (load-theme 'doom-moonlight t))
-  :init (load-theme 'doom-nord-aurora t))
+  ;; :init (load-theme 'doom-nord-aurora t))
+  ;; :init (load-theme 'doom-ayu-mirage  t))
+  :init (load-theme 'doom-ayu-light  t))
   ;; :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
