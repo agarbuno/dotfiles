@@ -3,16 +3,16 @@
 *  %<%I:%M %p> - %^{Meeting Title}            :meetings:%^{status|unprocessed|completed}:
 
 #+BEGIN_NOTES
-- asistentes :: %^{Asistentes}
-- related ::
+- Objetivo :: %^{Objetivo de la reunión}
+- Asistentes :: %^{Asistentes}
+- Related ::
 #+END_NOTES
 
-#+BEGIN_NOTES
-- Objetivo :: %^{Objetivo de la reunión}
-#+END_NOTES
 
 ** Notas de la sesión
-- %?
+
+-   %?
 
 ** Compromisos
+
 - [ ]   
