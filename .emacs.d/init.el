@@ -283,7 +283,9 @@
   ;; :init (load-theme 'doom-monokai-pro t))
   ;; :init (load-theme 'doom-snazzy t))
   ;; :init (load-theme 'doom-moonlight t))
-  :init (load-theme 'doom-nord-aurora t))
+  ;; :init (load-theme 'doom-nord-aurora t))
+  :init (load-theme 'doom-ayu-light t))
+
   ;; :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
@@ -1936,3 +1938,16 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(winum use-package stan-snippets sphinx-doc rainbow-delimiters python-django poly-R pkg-info ox-reveal org-sticky-header org-special-block-extras org-re-reveal-citeproc org-fragtog org-fancy-priorities org-download org-bullets nerd-icons-ivy-rich mic-paren lsp-ivy ivy-bibtex hide-lines flyspell-correct-ivy flycheck-stan evil-nerd-commenter eterm-256color eldoc-stan counsel-projectile company-stan company-auctex command-log-mode buffer-move beacon auto-package-update auctex-latexmk)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
