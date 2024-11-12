@@ -3103,7 +3103,7 @@ Configuration taken from [[https://zzamboni.org/post/how-to-insert-screenshots-i
       (org-download-image-dir "images")
       (org-download-heading-lvl nil)
       (org-download-timestamp "%Y%m%d-%H%M%S_")
-      (org-download-image-attr-list '("#+attr_html: :width 800 :align center"))
+      (org-download-image-attr-list '("#+attr_html: :width 700 :align center"))
       (org-download-screenshot-method "/Users/mi29569/homebrew/bin/pngpaste %s")
       :bind
       ("C-c n s" . org-download-screenshot)
