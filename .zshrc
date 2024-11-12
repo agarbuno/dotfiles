@@ -221,3 +221,5 @@ alias upb="cd ~/orgfiles && git add feeds/** && git add **/*.png && git add **/*
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export TEXMFHOME="/Users/agarbuno/.texmf"
 source $HOME/.dotfiles/.secrets
+export NODE_PATH='/usr/local/lib/node_modules'
+export PATH="/usr/local/opt/node@20/bin:$PATH"

@@ -284,8 +284,7 @@
   ;; :init (load-theme 'doom-snazzy t))
   ;; :init (load-theme 'doom-moonlight t))
   ;; :init (load-theme 'doom-nord-aurora t))
-  ;; :init (load-theme 'doom-ayu-mirage  t))
-  :init (load-theme 'doom-ayu-light  t))
+  :init (load-theme 'doom-ayu-light t))
   ;; :init (load-theme 'doom-nord-light t))
 ;; :config (load-theme 'doom-nord t))
 
@@ -462,7 +461,10 @@
   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  (set-face-underline 'org-link nil)
+  (set-face-foreground 'org-link "#B92A45")
+  )
 
 (use-package org-fancy-priorities ; priority icons
   :hook (org-mode . org-fancy-priorities-mode)
@@ -1939,16 +1941,3 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(yasnippet-snippets yaml-mode winum which-key vterm visual-fill-column treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poly-R poetry pkg-info pdf-tools page-break-lines ox-reveal org-web-tools org-tree-slide org-sticky-header org-roam-bibtex org-ref org-re-reveal-citeproc org-ql org-noter org-make-toc org-fragtog org-fancy-priorities org-download org-bullets org-appear no-littering nerd-icons-ivy-rich minions mic-paren math-preview lsp-ui lsp-treemacs lsp-latex lsp-ivy ivy-prescient ivy-bibtex hide-lines helpful git-timemachine git-commit general flyspell-correct-ivy flycheck-stan evil-nerd-commenter evil-collection eterm-256color ess elpy elfeed-score elfeed-org eldoc-stan doom-themes doom-modeline dockerfile-mode dired-single dired-open dired-hide-dotfiles deft dashboard counsel-projectile company-stan company-box company-auctex command-log-mode cdlatex buffer-move beacon auto-package-update auctex-latexmk arxiv-mode all-the-icons-dired)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
