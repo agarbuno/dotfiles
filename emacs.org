@@ -1541,7 +1541,7 @@ This template allows to have a noter drawer so that I can link both org roam fil
 
 #+begin_src emacs-lisp
     (add-to-list 'org-roam-capture-templates
-                 '("n" "notes"  plain
+                 '("r" "reading notes"  plain
                    (file "~/.emacs.d/templates/org-capture/reading-notes")
                    :if-new
                    (file+head
@@ -1582,8 +1582,12 @@ This is a particular use case in my worflow.
 
 #+begin_src emacs-lisp
   (add-to-list 'org-roam-capture-templates
-               '("d" "default" plain "%?" :if-new
-                 (file+head "pages/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+               '("n" "notes" plain
+                 (file "~/.emacs.d/templates/org-capture/notes-template")
+                 :if-new
+                 (file+head
+                  "pages/%<%Y%m%d%H%M%S>-${slug}.org"
+                  "#+title: ${title}\n")
                  :unnarrowed t)
                )
 #+end_src

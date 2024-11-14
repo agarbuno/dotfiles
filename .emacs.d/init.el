@@ -984,7 +984,7 @@
   )
 
 (add-to-list 'org-roam-capture-templates
-             '("n" "notes"  plain
+             '("r" "reading notes"  plain
                (file "~/.emacs.d/templates/org-capture/reading-notes")
                :if-new
                (file+head
@@ -1005,8 +1005,12 @@
              )
 
 (add-to-list 'org-roam-capture-templates
-             '("d" "default" plain "%?" :if-new
-               (file+head "pages/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+             '("n" "notes" plain
+               (file "~/.emacs.d/templates/org-capture/notes-template")
+               :if-new
+               (file+head
+                "pages/%<%Y%m%d%H%M%S>-${slug}.org"
+                "#+title: ${title}\n")
                :unnarrowed t)
              )
 
