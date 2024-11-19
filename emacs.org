@@ -1273,97 +1273,93 @@ This should be updated accordingly with respect to =org-roam-v2=.
 
 #+begin_src emacs-lisp  
 
-  (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
-    "Return the file TITLE for the node."
-    (org-collect-kewords "TITLE" (org-roam-node-file node))
-    )
+    (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
+      "Return the file TITLE for the node."
+      (org-collect-kewords "TITLE" (org-roam-node-file node))
+      )
 
-  (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
-    (let* ((count (caar (org-roam-db-query
-                         [:select (funcall count source)
-                                  :from links
-                                  :where (= dest $s1)
-                                  :and (= type "id")]
-                         (org-roam-node-id node)))))
-      (if (> count 0)
-          (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
-        (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
-        ))
-    )
+    (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
+      (let* ((count (caar (org-roam-db-query
+                           [:select (funcall count source)
+                                    :from links
+                                    :where (= dest $s1)
+                                    :and (= type "id")]
+                           (org-roam-node-id node)))))
+        (if (> count 0)
+            (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
+          (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
+          ))
+      )
 
-  (cl-defmethod org-roam-node-functiontag ((node org-roam-node))
-    "The first tag of notes are used to denote note type"
-    (let* ((specialtags ag/lit-categories)
-           (tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
-           (functiontag (seq-intersection specialtags tags 'string=)))
-      (concat
-       (if functiontag
-           (cond ((member "paper" functiontag)
-                  (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "unprocessed" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-circle_edit_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "journal" functiontag)
-                  (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "thesis" functiontag)
-                  (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-               ((member "conferences" functiontag)
-                    (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "book" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-book_open_page_variant_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "resources" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "meetings" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "teaching" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-dependabot" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "projects" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "maestria" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-log" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "research" functiontag)
-                  (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
+    (cl-defmethod org-roam-node-functiontag ((node org-roam-node))
+      "The first tag of notes are used to denote note type"
+      (let* ((specialtags ag/lit-categories)
+             (tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
+             (functiontag (seq-intersection specialtags tags 'string=)))
+        (concat
+         (if functiontag
+             (cond ((member "paper" functiontag)
+                    (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "unprocessed" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-circle_edit_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "journal" functiontag)
+                    (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "conferences" functiontag)
+                      (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "book" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-book_open_page_variant_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "resources" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "meetings" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "projects" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "work" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-area_chart" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                   ((member "research" functiontag)
+                    (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
+               )
+           (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
+           )
+         " "
+         (propertize (string-join functiontag ",") 'face 'all-the-icons-lblue)
+         ))
+      )
+
+    (cl-defmethod org-roam-node-othertags ((node org-roam-node))
+      "Return the file TITLE for the node."
+      (let* ((tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
+             (specialtags ag/lit-categories)
+             (othertags (seq-difference tags specialtags 'string=))
              )
-         (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
-         )
-       " "
-       (propertize (string-join functiontag ", ") 'face 'all-the-icons-lblue)
-       ))
-    )
-
-  (cl-defmethod org-roam-node-othertags ((node org-roam-node))
-    "Return the file TITLE for the node."
-    (let* ((tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
-           (specialtags ag/lit-categories)
-           (othertags (seq-difference tags specialtags 'string=))
+        (concat
+         (if othertags
+           (propertize "=@=" 'display "")
+           (propertize "= =" 'display "")
            )
-      (concat
-       (if othertags
-         (propertize "=@=" 'display "")
-         (propertize "= =" 'display "")
-         )
-       (propertize (string-join othertags ", ") 'face 'all-the-icons-lorange))
-      ))
+         (propertize (string-join othertags ",") 'face 'all-the-icons-lorange))
+        ))
 
-  (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
-    "Return the hierarchy for the node."
-    (let* ((title (org-roam-node-title node))
-           (olp (mapcar (lambda (s) (if (> (length s) 10) (concat (substring s 0 10)  "...") s)) (org-roam-node-olp node)))
-           (level (org-roam-node-level node))
-           (filetitle (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
-           (shortentitle (if (> (length filetitle) 20) (concat (substring filetitle 0 20)  "...") filetitle))
-           (separator (concat " " (all-the-icons-octicon "chevron-right") " "))
-           )
-      (cond
-       ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
-                             " "
-                             (propertize shortentitle 'face 'org-roam-dim)
-                             (propertize separator 'face 'org-roam-dim)
-                             title))
-       (t (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-faicon "nf-fa-file_text" :face 'all-the-icons-yellow))
-                  " "
-                  title))
-       )
-      ))
+    (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
+      "Return the hierarchy for the node."
+      (let* ((title (org-roam-node-title node))
+             (olp (mapcar (lambda (s) (if (> (length s) 10) (concat (substring s 0 10)  "...") s)) (org-roam-node-olp node)))
+             (level (org-roam-node-level node))
+             (filetitle (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
+             (shortentitle (if (> (length filetitle) 20) (concat (substring filetitle 0 20)  "...") filetitle))
+             (separator (concat " " (all-the-icons-octicon "chevron-right") " "))
+             )
+        (cond
+         ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
+                               " "
+                               (propertize shortentitle 'face 'org-roam-dim)
+                               (propertize separator 'face 'org-roam-dim)
+                               title))
+         (t (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-faicon "nf-fa-file_text" :face 'all-the-icons-yellow))
+                    " "
+                    title))
+         )
+        ))
 
 #+end_src
 
@@ -1378,9 +1374,14 @@ This should be updated accordingly with respect to =org-roam-v2=.
 
 #+begin_src emacs-lisp
   (setq ag/lit-categories
-            '("unprocessed" "research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
+            '("unprocessed" "research" "book" "paper" "resources" "journal" "meetings" "projects" "conferences" "work")
             )
-  (setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:15} " " ${othertags:25} " " ${hierarchy:180} "))
+  (setq org-roam-node-display-template (concat " ${backlinkscount:6} " " ${functiontag:15} " " ${othertags:25} " " ${hierarchy:180} "))
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+  ;; Estas son las categorías que eliminé
+  "thesis" "maestria" "teaching"
 #+end_src
 
 #+begin_src emacs-lisp :tangle no

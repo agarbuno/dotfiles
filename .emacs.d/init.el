@@ -813,8 +813,6 @@
                 (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-circle_edit_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "journal" functiontag)
                 (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-               ((member "thesis" functiontag)
-                (propertize "=@=" 'display (all-the-icons-octicon "mortar-board" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
              ((member "conferences" functiontag)
                   (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "book" functiontag)
@@ -823,19 +821,17 @@
                 (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "meetings" functiontag)
                 (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-               ((member "teaching" functiontag)
-                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-dependabot" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "projects" functiontag)
                 (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-               ((member "maestria" functiontag)
-                (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-log" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "work" functiontag)
+                (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-area_chart" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
                ((member "research" functiontag)
                 (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
            )
        (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
        )
      " "
-     (propertize (string-join functiontag ", ") 'face 'all-the-icons-lblue)
+     (propertize (string-join functiontag ",") 'face 'all-the-icons-lblue)
      ))
   )
 
@@ -850,7 +846,7 @@
        (propertize "=@=" 'display "")
        (propertize "= =" 'display "")
        )
-     (propertize (string-join othertags ", ") 'face 'all-the-icons-lorange))
+     (propertize (string-join othertags ",") 'face 'all-the-icons-lorange))
     ))
 
 (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
@@ -878,9 +874,9 @@
 )
 
 (setq ag/lit-categories
-          '("unprocessed" "research" "book" "paper" "resources" "journal" "thesis" "meetings" "teaching" "projects" "conferences" "maestria")
+          '("unprocessed" "research" "book" "paper" "resources" "journal" "meetings" "projects" "conferences" "work")
           )
-(setq org-roam-node-display-template (concat " ${backlinkscount:8} " " ${functiontag:15} " " ${othertags:25} " " ${hierarchy:180} "))
+(setq org-roam-node-display-template (concat " ${backlinkscount:6} " " ${functiontag:15} " " ${othertags:25} " " ${hierarchy:180} "))
 
 (use-package deft
   :commands (deft)
@@ -1945,3 +1941,16 @@
   (use-package htmlize)
   (require 'ox-reveal)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(winum stan-snippets sphinx-doc rainbow-delimiters python-django poly-R pkg-info ox-reveal org-tree-slide org-sticky-header org-re-reveal-citeproc org-fragtog org-fancy-priorities org-bullets nerd-icons-ivy-rich mic-paren lsp-ivy ivy-bibtex hide-lines flyspell-correct-ivy flycheck-stan evil-nerd-commenter eterm-256color elfeed-org eldoc-stan counsel-projectile company-stan company-auctex command-log-mode buffer-move beacon auto-package-update auctex-latexmk)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
