@@ -464,6 +464,8 @@
   (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
   (set-face-underline 'org-link nil)
   (set-face-foreground 'org-link "#B92A45")
+  (set-face-foreground 'org-verbatim "#8F7AE5")
+  (set-face-foreground 'org-code "#1973B8")
   )
 
 (use-package org-fancy-priorities ; priority icons
@@ -859,7 +861,7 @@
          (separator (concat " " (all-the-icons-octicon "chevron-right") " "))
          )
     (cond
-     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
+     ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-orange))
                            " "
                            (propertize shortentitle 'face 'org-roam-dim)
                            (propertize separator 'face 'org-roam-dim)
@@ -1947,7 +1949,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(winum stan-snippets sphinx-doc rainbow-delimiters python-django poly-R pkg-info ox-reveal org-tree-slide org-sticky-header org-re-reveal-citeproc org-fragtog org-fancy-priorities org-bullets nerd-icons-ivy-rich mic-paren lsp-ivy ivy-bibtex hide-lines flyspell-correct-ivy flycheck-stan evil-nerd-commenter eterm-256color elfeed-org eldoc-stan counsel-projectile company-stan company-auctex command-log-mode buffer-move beacon auto-package-update auctex-latexmk)))
+   '(yaml-mode winum which-key vterm visual-fill-column treemacs-projectile treemacs-perspective treemacs-magit treemacs-evil stan-snippets sphinx-doc solaire-mode smartparens rainbow-delimiters python-mode python-django python-black poetry pkg-info pdf-tools page-break-lines ox-reveal org-web-tools org-tree-slide org-sticky-header org-roam-bibtex org-re-reveal-citeproc org-ql org-noter org-make-toc org-fragtog org-fancy-priorities org-download org-bullets org-appear nerd-icons-ivy-rich mic-paren math-preview lsp-treemacs lsp-latex ivy-prescient ivy-bibtex hide-lines helpful general flyspell-correct-ivy flycheck-stan evil-nerd-commenter eterm-256color elpy elfeed-score elfeed-org eldoc-stan dockerfile-mode dired-single dired-open dired-hide-dotfiles deft counsel-projectile company-stan company-box company-auctex command-log-mode cdlatex buffer-move beacon auto-package-update auctex-latexmk arxiv-mode all-the-icons-dired)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

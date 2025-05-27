@@ -200,6 +200,7 @@ export PATH="/usr/local/opt/icu4c/sbin:$PATH"
 export LDFLAGS="-L/usr/local/opt/icu4c/lib${LDFLAGS:+ }${LDFLAGS}"
 export CPPFLAGS="-I/usr/local/opt/icu4c/include${CPPFLAGS:+ }${CPPFLAGS}"
 export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig${PKG_CONFIG_PATH:+:}${PKG_CONFIG_PATH}"
+export PATH="/Users/mi29569/.texlive/usr/local/texlive/2024basic/bin/universal-darwin:$PATH"
 
 # To install R 4.1.1 with asdf 
 # export PATH="/usr/local/opt/curl/bin:$PATH"

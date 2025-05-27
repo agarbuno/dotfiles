@@ -823,40 +823,42 @@ Visit [[https://systemcrafters.cc/effective-emacs-workflow/declutter-your-buffer
 
 ** Better Font Faces
 
-The =ag/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.
+The =ag/org-font-setup= function configures various text faces to tweak the sizes of headings and use variable width fonts in most cases so that it looks more like we're editing a document in =org-mode=.  We switch back to fixed width (monospace) fonts for code blocks and tables so that they display correctly.  
 
 #+begin_src emacs-lisp
 
-          (defun ag/org-font-setup ()
-            ;; Replace list hyphen with dot
-            (font-lock-add-keywords 'org-mode
-                                    '(("^ *\\([-]\\) "
-                                       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (defun ag/org-font-setup ()
+    ;; Replace list hyphen with dot
+    (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
-            ;; Set faces for heading levels
-            (dolist (face '((org-level-1 . 1.2)
-                            (org-level-2 . 1.1)
-                            (org-level-3 . 1.05)
-                            (org-level-4 . 1.0)
-                            (org-level-5 . 1.1)
-                            (org-level-6 . 1.1)
-                            (org-level-7 . 1.1)
-                            (org-level-8 . 1.1)))
-              (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+    ;; Set faces for heading levels
+    (dolist (face '((org-level-1 . 1.2)
+                    (org-level-2 . 1.1)
+                    (org-level-3 . 1.05)
+                    (org-level-4 . 1.0)
+                    (org-level-5 . 1.1)
+                    (org-level-6 . 1.1)
+                    (org-level-7 . 1.1)
+                    (org-level-8 . 1.1)))
+      (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
-            ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-            (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-            (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-            (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
-            (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-            (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-            (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-            (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
-            (set-face-underline 'org-link nil)
-            (set-face-foreground 'org-link "#B92A45")
-            )
+    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+    (set-face-underline 'org-link nil)
+    (set-face-foreground 'org-link "#B92A45")
+    (set-face-foreground 'org-verbatim "#8F7AE5")
+    (set-face-foreground 'org-code "#1973B8")
+    )
 
-  
+
 #+end_src
 
 ** Basic Config
@@ -1273,93 +1275,93 @@ This should be updated accordingly with respect to =org-roam-v2=.
 
 #+begin_src emacs-lisp  
 
-    (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
-      "Return the file TITLE for the node."
-      (org-collect-kewords "TITLE" (org-roam-node-file node))
-      )
+  (cl-defmethod org-roam-node-filetitle ((node org-roam-node))
+    "Return the file TITLE for the node."
+    (org-collect-kewords "TITLE" (org-roam-node-file node))
+    )
 
-    (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
-      (let* ((count (caar (org-roam-db-query
-                           [:select (funcall count source)
-                                    :from links
-                                    :where (= dest $s1)
-                                    :and (= type "id")]
-                           (org-roam-node-id node)))))
-        (if (> count 0)
-            (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
-          (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
-          ))
-      )
-
-    (cl-defmethod org-roam-node-functiontag ((node org-roam-node))
-      "The first tag of notes are used to denote note type"
-      (let* ((specialtags ag/lit-categories)
-             (tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
-             (functiontag (seq-intersection specialtags tags 'string=)))
-        (concat
-         (if functiontag
-             (cond ((member "paper" functiontag)
-                    (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "unprocessed" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-circle_edit_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "journal" functiontag)
-                    (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                 ((member "conferences" functiontag)
-                      (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "book" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-book_open_page_variant_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "resources" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "meetings" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "projects" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "work" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-area_chart" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
-                   ((member "research" functiontag)
-                    (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
-               )
-           (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
-           )
-         " "
-         (propertize (string-join functiontag ",") 'face 'all-the-icons-lblue)
-         ))
-      )
-
-    (cl-defmethod org-roam-node-othertags ((node org-roam-node))
-      "Return the file TITLE for the node."
-      (let* ((tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
-             (specialtags ag/lit-categories)
-             (othertags (seq-difference tags specialtags 'string=))
-             )
-        (concat
-         (if othertags
-           (propertize "=@=" 'display "")
-           (propertize "= =" 'display "")
-           )
-         (propertize (string-join othertags ",") 'face 'all-the-icons-lorange))
+  (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
+    (let* ((count (caar (org-roam-db-query
+                         [:select (funcall count source)
+                                  :from links
+                                  :where (= dest $s1)
+                                  :and (= type "id")]
+                         (org-roam-node-id node)))))
+      (if (> count 0)
+          (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'all-the-icons-dblue :height 0.9)) (format "%3d" count))
+        (concat (propertize "=@=" 'display (all-the-icons-material "link" :face 'org-roam-dim :height 0.9))  "   ")
         ))
+    )
 
-    (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
-      "Return the hierarchy for the node."
-      (let* ((title (org-roam-node-title node))
-             (olp (mapcar (lambda (s) (if (> (length s) 10) (concat (substring s 0 10)  "...") s)) (org-roam-node-olp node)))
-             (level (org-roam-node-level node))
-             (filetitle (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
-             (shortentitle (if (> (length filetitle) 20) (concat (substring filetitle 0 20)  "...") filetitle))
-             (separator (concat " " (all-the-icons-octicon "chevron-right") " "))
+  (cl-defmethod org-roam-node-functiontag ((node org-roam-node))
+    "The first tag of notes are used to denote note type"
+    (let* ((specialtags ag/lit-categories)
+           (tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
+           (functiontag (seq-intersection specialtags tags 'string=)))
+      (concat
+       (if functiontag
+           (cond ((member "paper" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-faicon "file-pdf-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "unprocessed" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-circle_edit_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "journal" functiontag)
+                  (propertize "=@=" 'display (all-the-icons-faicon "clock-o" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+               ((member "conferences" functiontag)
+                    (propertize "=@=" 'display (all-the-icons-octicon "megaphone" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "book" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-book_open_page_variant_outline" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "resources" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-globe" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "meetings" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-octicon "nf-oct-broadcast" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "projects" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-mdicon "nf-md-atom_variant" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "work" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-area_chart" :face 'all-the-icons-dmaroon :v-adjust 0.02 :height 0.8)))
+                 ((member "research" functiontag)
+                  (propertize "=@=" 'display (nerd-icons-powerline "nf-ple-lego_separator_thin" :face 'all-the-icons-dpurple :v-adjust 0.02 :height 0.8)))
              )
-        (cond
-         ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-blue))
-                               " "
-                               (propertize shortentitle 'face 'org-roam-dim)
-                               (propertize separator 'face 'org-roam-dim)
-                               title))
-         (t (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-faicon "nf-fa-file_text" :face 'all-the-icons-yellow))
-                    " "
-                    title))
+         (propertize "=@=" 'display (nerd-icons-faicon "nf-fa-tags" :face 'all-the-icons-dmaroon :v-adjust 0.02 :cache :height 0.7))
          )
-        ))
+       " "
+       (propertize (string-join functiontag ",") 'face 'all-the-icons-lblue)
+       ))
+    )
+
+  (cl-defmethod org-roam-node-othertags ((node org-roam-node))
+    "Return the file TITLE for the node."
+    (let* ((tags (seq-filter (lambda (tag) (not (string= tag "ATTACH"))) (org-roam-node-tags node)))
+           (specialtags ag/lit-categories)
+           (othertags (seq-difference tags specialtags 'string=))
+           )
+      (concat
+       (if othertags
+         (propertize "=@=" 'display "")
+         (propertize "= =" 'display "")
+         )
+       (propertize (string-join othertags ",") 'face 'all-the-icons-lorange))
+      ))
+
+  (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
+    "Return the hierarchy for the node."
+    (let* ((title (org-roam-node-title node))
+           (olp (mapcar (lambda (s) (if (> (length s) 10) (concat (substring s 0 10)  "...") s)) (org-roam-node-olp node)))
+           (level (org-roam-node-level node))
+           (filetitle (org-roam-get-keyword "TITLE" (org-roam-node-file node)))
+           (shortentitle (if (> (length filetitle) 20) (concat (substring filetitle 0 20)  "...") filetitle))
+           (separator (concat " " (all-the-icons-octicon "chevron-right") " "))
+           )
+      (cond
+       ((>= level 1) (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-mdicon "nf-md-file_tree_outline" :face 'all-the-icons-orange))
+                             " "
+                             (propertize shortentitle 'face 'org-roam-dim)
+                             (propertize separator 'face 'org-roam-dim)
+                             title))
+       (t (concat (propertize (format "=level:%d=" level) 'display (nerd-icons-faicon "nf-fa-file_text" :face 'all-the-icons-yellow))
+                  " "
+                  title))
+       )
+      ))
 
 #+end_src
 
